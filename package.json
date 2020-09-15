@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --open --history-api-fallback",
+    "start": "webpack-dev-server --open --history-api-fallback --https --port 30443",
     "build": "webpack",
     "build-prod": "webpack --mode=production",
     "watch": "webpack --watch",

@@ -1,5 +1,6 @@
 // pathモジュールの読み込み
-const path = require("path");
+const path = require("path")
+const fs = require('fs')
 
 module.exports = {
   // モードを開発モードにする
@@ -33,6 +34,10 @@ module.exports = {
   // 開発モード設定
   devtool: "source-map",
   devServer: {
-    contentBase: "./dist"
+    contentBase: "./dist",
+    https: {
+      key: fs.readFileSync('./ssl/server.key'),
+      cert: fs.readFileSync('./ssl/server.crt'),
+    }
   }
 };
