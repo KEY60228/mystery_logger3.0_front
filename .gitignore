@@ -7,3 +7,6 @@ dist/bundle.js.map
 
 # ssl
 ssl/
+
+# photos
+photos/

@@ -35,6 +35,7 @@ module.exports = {
   devtool: "source-map",
   devServer: {
     contentBase: "./dist",
+    historyApiFallback: true,
     https: {
       key: fs.readFileSync('./ssl/server.key'),
       cert: fs.readFileSync('./ssl/server.crt'),
