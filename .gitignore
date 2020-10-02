@@ -9,4 +9,5 @@ dist/bundle.js.map
 ssl/
 
 # photos
-photos/
+dist/product_img/
+dist/user_img/
