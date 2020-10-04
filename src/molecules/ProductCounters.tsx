@@ -31,9 +31,21 @@ export const ProductCounters: FC<Props> = ({
 
   return (
     <Grid container justify='space-around' alignItems='center' wrap='nowrap' className={classes.root}>
-      <DoneCounter number={product.reviews_count} />
-      <SuccessRateCounter number={product.successRate ? `${product.successRate * 100}%` : '-'} />
-      <RatingCounter number={product.avgRating ? parseFloat(product.avgRating.toFixed(1)) : '-'} />
+      <DoneCounter
+        number={product.reviews_count}
+        className={{fontSize: '10px'}}
+        iconSize='small'
+      />
+      <SuccessRateCounter
+        number={product.successRate ? `${(product.successRate * 100).toFixed(1)}%` : '-'} 
+        className={{fontSize: '10px'}}
+        iconSize='small'
+      />
+      <RatingCounter
+        number={product.avgRating ? product.avgRating.toFixed(1) : '-'}
+        className={{fontSize: '10px'}}
+        iconSize='small'
+      />
     </Grid>
   )
 }
