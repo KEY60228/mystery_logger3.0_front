@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Grid } from '@material-ui/core'
-import { Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
 
 interface Props {

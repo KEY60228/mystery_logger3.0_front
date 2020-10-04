@@ -1,8 +1,7 @@
 import React, { FC  } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
-import { Typography } from '@material-ui/core'
 
 interface Props {
   number: number

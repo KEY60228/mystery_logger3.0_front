@@ -1,8 +1,6 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Grid } from '@material-ui/core'
-import { Button } from '@material-ui/core'
-import { Typography } from '@material-ui/core'
+import { Grid, Button, Typography } from '@material-ui/core'
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 
 interface Props {
