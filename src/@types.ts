@@ -5,7 +5,7 @@ export interface Product {
   image_name: string
   created_at: Date
   updated_at: Date|null
-  reviews: Review[]
+  reviews: Review[]|null
   reviews_count: number,
   avgRating: number|null,
   successRate: number|null,
