@@ -6,6 +6,9 @@ import { EmailForm } from '../atoms/EmailForm'
 import { SubmitButton } from '../atoms/SubmitButton'
 
 interface Props {
+  email: string
+  setEmail: (value: string) => void
+  preRegister: () => void
   className?: ClassProps
 }
 
@@ -20,12 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const PreRegisterForm: FC<Props> = ({
-  className
+  email, setEmail, preRegister, className
 }) => {
   const classes = useStyles(className)
-  // 仮
-  const [email, setEmail] = useState<string>('')
-  const onClick = () => console.log(email)
 
   return (
     <form>
@@ -36,7 +36,7 @@ export const PreRegisterForm: FC<Props> = ({
           className={{width: '300px', margin: '12px auto'}}
         />
         <SubmitButton
-          onClick={onClick}
+          onClick={preRegister}
           size='large'
           className={{}}
         />
