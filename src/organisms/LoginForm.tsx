@@ -7,6 +7,11 @@ import { EmailForm } from '../atoms/EmailForm'
 import { SubmitButton } from '../atoms/SubmitButton'
 
 interface Props {
+  email: string
+  setEmail: (value: string) => void
+  password: string
+  setPassword: (value: string) => void
+  login: () => void
   className?: ClassProps
 }
 
@@ -21,13 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const LoginForm: FC<Props> = ({
-  className
+  email, setEmail, password, setPassword, login, className
 }) => {
   const classes = useStyles(className)
-  // 仮
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const onClick = () => console.log(email, password)
 
   return (
     <form>
@@ -43,7 +44,7 @@ export const LoginForm: FC<Props> = ({
           className={{width: '300px', margin: '12px auto'}}
         />
         <SubmitButton
-          onClick={onClick}
+          onClick={login}
           size='large'
           className={{}}
         />
