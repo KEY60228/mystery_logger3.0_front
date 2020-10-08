@@ -7,6 +7,7 @@ import { BottomNav } from './organisms/BottomNav'
 import { TopPage } from './pages/TopPage'
 import { Login } from './pages/Login'
 import { PreRegister } from './pages/PreRegister'
+import { Register } from './pages/Register'
 
 const App: FC = () => {
   return (
@@ -17,7 +18,8 @@ const App: FC = () => {
         <Switch>
           <Route path="/" exact children={<TopPage />} />
           <Route path='/login' children={<Login />} />
-          <Route path='/register' children={<PreRegister />} />
+          <Route path='/preregister' children={<PreRegister />} />
+          <Route path='/register' children={<Register />} />
         </Switch>
         <BottomNav />
       </BrowserRouter>
