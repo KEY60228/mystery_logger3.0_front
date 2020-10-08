@@ -29,7 +29,7 @@ export const PreRegisterForm: FC<Props> = ({
 
   return (
     <form>
-      <Grid container justify='center' alignItems='center'>
+      <Grid container direction='column' justify='center' alignItems='center'>
         <EmailForm
           email={email}
           setEmail={setEmail}

@@ -52,7 +52,7 @@ export const BottomNav: FC = (
       />
       <BottomNavigationAction
         component={Link}
-        to={'/register'} 
+        to={'/preregister'} 
         label='Sign up' 
         icon={<HowToRegIcon />} 
       />
