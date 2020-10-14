@@ -2,11 +2,11 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
-import { User } from '../@types'
+import { UserDetail } from '../@types'
 import { ListedProducts } from './ListedProducts'
 
 interface Props {
-  user: User
+  user: UserDetail
   className?: ClassProps
 }
 

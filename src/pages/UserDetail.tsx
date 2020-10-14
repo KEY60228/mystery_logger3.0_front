@@ -1,12 +1,12 @@
 import React, { FC, useState } from 'react'
 import axios from 'axios'
 
-import { User } from '../@types'
+import { UserDetail as UserDetailInterface } from '../@types'
 import { UserDetail as UserDetailTemp} from '../templates/UserDetail'
 
 export const UserDetail: FC = () => {
   // 仮
-  const dummyUser: User = {
+  const dummyUser: UserDetailInterface = {
     id: 3,
     account_id: 'guest2',
     name: 'GUEST2',
@@ -14,13 +14,16 @@ export const UserDetail: FC = () => {
     image_name: 'default.jpeg',
     created_at: new Date('2020/10/1 20:00:00'),
     updated_at: null,
-    reviews: null,
     reviews_count: 1,
-    follows: null,
     follows_count: 0,
-    followers: null,
     followers_count: 0,
     successRate: null,
+    wannaProducts_count: 4,
+    likeReviews_count: 1,
+
+    reviews: null,
+    follows: null,
+    followers: null,
     joinedProducts: [
       {
       id: 1,
@@ -121,7 +124,6 @@ export const UserDetail: FC = () => {
       successCount: 421,
       },
     ],
-    wannaProducts_count: 4,
     likeReviews: [
       {
         id: 1,
@@ -145,9 +147,9 @@ export const UserDetail: FC = () => {
           reviews_count: 1,
           follows_count: 0,
           followers_count: 0,
+          successRate: null,
           wannaProducts_count: 1,
           likeReviews_count: 1,
-          successRate: null,
         },
         product: {
           id: 8,
@@ -163,9 +165,8 @@ export const UserDetail: FC = () => {
         },
       }
     ],
-    likeReviews_count: 1
   }
-  const [user, setUser] = useState<User|null>(dummyUser)
+  const [user, setUser] = useState<UserDetailInterface|null>(dummyUser)
 
   return (
     <>

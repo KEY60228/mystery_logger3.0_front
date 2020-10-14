@@ -5,7 +5,6 @@ export interface Product {
   image_name: string
   created_at: Date
   updated_at: Date|null
-  reviews: Review[]|null
   reviews_count: number,
   avgRating: number|null,
   successRate: number|null,
@@ -16,10 +15,16 @@ export interface User {
   id: number
   account_id: string
   name: string
+  profile: string
   image_name: string
   created_at: Date
   updated_at: Date|null
-  reviews: Review[]
+  reviews_count: number
+  follows_count: number
+  followers_count: number
+  successRate: number|null
+  wannaProducts_count: number
+  likeReviews_count: number
 }
 
 export interface Review {
@@ -33,6 +38,29 @@ export interface Review {
   joined_at: Date|null
   created_at: Date
   updated_at: Date|null
+}
+
+export interface ProductDetail extends Product {
+  reviews: ReviewWithUser[]|null
+}
+
+export interface UserDetail extends User {
+  reviews: ReviewWithProduct[]|null
+  follows: User[]|null
+  followers: User[]|null
+  joinedProducts: Product[]|null
+  wannaProducts: Product[]|null
+  likeReviews: ReviewDetail[]|null
+}
+
+export interface ReviewWithUser extends Review {
   user: User
+}
+
+export interface ReviewWithProduct extends Review {
   product: Product
+}
+
+export interface ReviewDetail extends ReviewWithUser, ReviewWithProduct {
+  
 }
