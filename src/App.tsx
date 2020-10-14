@@ -8,6 +8,7 @@ import { TopPage } from './pages/TopPage'
 import { Login } from './pages/Login'
 import { PreRegister } from './pages/PreRegister'
 import { Register } from './pages/Register'
+import { UserDetail } from './pages/UserDetail'
 
 const App: FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: FC = () => {
           <Route path='/login' children={<Login />} />
           <Route path='/preregister' children={<PreRegister />} />
           <Route path='/register' children={<Register />} />
+          <Route path='/users/:id' children={<UserDetail />} />
         </Switch>
         <BottomNav />
       </BrowserRouter>
