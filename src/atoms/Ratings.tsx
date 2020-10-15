@@ -8,6 +8,7 @@ interface Props {
   size?: 'large'
   | 'medium'
   | 'small'
+  justify?: 'flex-start'
   className?: ClassProps
 }
 
@@ -30,12 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const Ratings: FC<Props> =({
-  number, size, className
+  number, size, justify, className
 }) => {
   const classes = useStyles(className)
   
   return (
-    <Grid container justify='center' alignItems='center' className={classes.root}>
+    <Grid container justify={justify || 'center'} alignItems='center' className={classes.root}>
       <Rating
         value={number == 0 ? 0 : parseFloat(number.toFixed(1))}
         precision={0.1}
@@ -43,7 +44,7 @@ export const Ratings: FC<Props> =({
         size={size}
       />
       <Typography variant='caption' className={classes.text}>
-        {number == 0 ? 0 : number.toFixed(1)}
+        {number == 0 ? '-' : number.toFixed(1)}
       </Typography>
     </Grid>
   )
