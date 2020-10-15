@@ -7,7 +7,7 @@ interface Props {
   number: number
   onClick: (value: boolean) => void
   wanna: boolean
-  iconSize: 'default'
+  iconSize?: 'default'
   | 'inherit'
   | 'large'
   | 'small'
@@ -18,6 +18,7 @@ interface ClassProps {
   width?: string
   height?: string
   fontSize?: string
+  margin?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: (className: ClassProps) => ({
       width: className.width,
       height: className.height,
+      margin: className.margin,
     }),
     text: (className: ClassProps) => ({
       fontSize: className.fontSize,

@@ -14,6 +14,7 @@ interface Props {
 interface ClassProps {
   width?: string
   fontSize?: string
+  marginLeft?: string
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
       width: className.width
     }),
     text: (className: ClassProps) => ({
-      fontSize: className.fontSize
+      fontSize: className.fontSize,
+      marginLeft: className.marginLeft
     })
   })
 )
@@ -33,7 +35,7 @@ export const Ratings: FC<Props> =({
   const classes = useStyles(className)
   
   return (
-    <Grid container justify='space-around' alignItems='center' className={classes.root}>
+    <Grid container justify='center' alignItems='center' className={classes.root}>
       <Rating
         value={number == 0 ? 0 : parseFloat(number.toFixed(1))}
         precision={0.1}
