@@ -3,8 +3,8 @@ export interface Product {
   name: string
   contents: string|null
   image_name: string
-  created_at: Date
-  updated_at: Date|null
+  created_at: string
+  updated_at: string|null
   reviews_count: number,
   avgRating: number|null,
   successRate: number|null,
@@ -17,8 +17,8 @@ export interface User {
   name: string
   profile: string
   image_name: string
-  created_at: Date
-  updated_at: Date|null
+  created_at: string
+  updated_at: string|null
   reviews_count: number
   follows_count: number
   followers_count: number
@@ -35,9 +35,9 @@ export interface Review {
   result: number
   clear_time: number|null
   rating: number|null
-  joined_at: Date|null
-  created_at: Date
-  updated_at: Date|null
+  joined_at: string|null
+  created_at: string
+  updated_at: string|null
 }
 
 export interface ProductDetail extends Product {
