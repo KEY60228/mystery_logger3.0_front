@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: (className: ClassProps) => ({
       display: className.display,
       whiteSpace: className.whiteSpace,
-      width: className.rootWidth || '100px',
+      minWidth: className.rootWidth || '100px',
       margin: '4px', 
     }),
     media: (className: ClassProps) => ({
