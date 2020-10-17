@@ -2,8 +2,9 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
-import { UserDetail } from '../@types'
+import { UserDetail, ReviewDetail } from '../@types'
 import { ListedProducts } from './ListedProducts'
+import { ReviewCard } from './ReviewCard'
 
 interface Props {
   user: UserDetail
@@ -54,7 +55,7 @@ export const UserTabs: FC<Props> = ({
         <Tabs value={value} onChange={(ev, newValue) => setValue(newValue)}>
           <Tab label={`行った公演 ${user.reviews_count}`} />
           <Tab label={`行きたい公演 ${user.wannaProducts_count}`} />
-          <Tab label="LIKEした投稿 0" />
+          <Tab label={`LIKEした投稿 ${user.likeReviews_count}`} />
         </Tabs>
       </Grid>
       <TabPanel value={value} index={0}>
@@ -73,7 +74,26 @@ export const UserTabs: FC<Props> = ({
           <Typography>まだ行きたい公演はありません</Typography>
         }
       </TabPanel>
-      <TabPanel value={value} index={2}>Likeした投稿</TabPanel>
+      <TabPanel value={value} index={2}>
+        { user.likeReviews &&
+          <Box>
+            { user.likeReviews.map((likeReview: ReviewDetail) => (
+              <ReviewCard 
+                key={likeReview.id}
+                review={likeReview}
+                reviewerProfile
+                cardActionArea
+                productTitle
+                productCard
+                
+              />
+            ))}
+          </Box>
+        }
+        { !user.likeReviews &&
+          <Typography>まだLIKEした投稿はありません</Typography>
+        }
+      </TabPanel>
     </Card>
   )
 }
