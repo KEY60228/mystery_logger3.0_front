@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Grid, Typography } from '@material-ui/core'
 
 import { ProductDetail, ReviewWithUser } from '../@types'
-import { ReviewCardWithUser } from './ReviewCardWithUser'
+import { ReviewCard } from './ReviewCard'
 
 interface Props {
   product: ProductDetail
@@ -31,7 +31,12 @@ export const ProductReviews: FC<Props> = ({
     <Card className={classes.root}>
       { product.reviews &&
         product.reviews.map((review: ReviewWithUser) => (
-          <ReviewCardWithUser key={review.id} review={review} />
+          <ReviewCard
+            key={review.id}
+            review={review}
+            reviewerProfile
+            cardActionArea
+          />
         ))
       }
       { !product.reviews &&
