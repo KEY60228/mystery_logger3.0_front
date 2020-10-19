@@ -4,11 +4,11 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, CardMedia, CardActionArea, Grid, Box, Typography } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import { Product } from '../@types'
+import { ProductDetailWithoutReviews, PerformanceWithVenue } from '../@types'
 import { Ratings } from '../atoms/Ratings'
 
 interface Props {
-  product: Product
+  product: ProductDetailWithoutReviews
   className?: ClassProps
 }
 
@@ -54,9 +54,17 @@ export const ProductCardInReviewDetail: FC<Props> = ({
           <Grid container direction='column' justify='center' className={classes.profile}>
             <Typography>{product.name}</Typography>
             <Box className={classes.box}>
-              <Typography className={classes.text}>制作会社: スクラップ</Typography>
-              <Typography className={classes.text}>開催場所: 東新宿GUNKAN</Typography>
-              <Typography className={classes.text}>カテゴリ: 屋内型</Typography>
+              <Typography className={classes.text}>
+                制作会社: {product.organizer.name}
+              </Typography>
+              <Typography className={classes.text}>
+                開催場所: {product.performances.map((performance: PerformanceWithVenue) => (
+                  <span key={performance.id}>{performance.venue.name}</span>
+                ))}
+              </Typography>
+              <Typography className={classes.text}>
+                カテゴリ: {product.category.name}
+              </Typography>
             </Box>
             <Ratings number={product.avgRating || 0} justify='flex-start' size='small' className={{marginLeft: '4px'}} />
           </Grid>

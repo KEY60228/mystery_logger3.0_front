@@ -15,6 +15,16 @@ export const ProductDetail: FC = () => {
     avgRating: 2.8,
     successRate: 0.99999,
     successCount: 421,
+    organizer_id: 1,
+    category_id: 1,
+    category: {
+      id: 1,
+      name: '屋内型',
+    },
+    limitTime: '60',
+    requiredTime: '120',
+    minParty: 1,
+    maxParty: 6,
     reviews: [
       {
         id: 1,
@@ -22,7 +32,7 @@ export const ProductDetail: FC = () => {
         product_id: 1,
         contents: '面白かった',
         result: 1,
-        clear_time: 78,
+        clear_time: null,
         rating: 2,
         joined_at: '2020/9/30',
         created_at: '2020-10-1 20:00:00',
@@ -71,6 +81,37 @@ export const ProductDetail: FC = () => {
         },
       }
     ],
+    performances: [
+      {
+        id: 1,
+        product_id: 8,
+        venue_id: 1,
+        date: null,
+        time: null,
+        created_at: '2020/10/1 20:00:00',
+        updated_at: null,
+        venue: {
+          id: 1,
+          name: '東新宿GUNKAN',
+          address: '東京都新宿区',
+          tel: '03-1234-5678',
+          organizer_id: 1,
+          created_at: '2020/10/1 20:00:00',
+          updated_at: null,
+        },
+      }
+    ],
+    organizer: {
+      id: 1,
+      name: 'スクラップ',
+      website: 'https://hogehoge',
+      address: '東京都',
+      tel: '0120-111-222',
+      mail: 'scrup@aaa.com',
+      establish: '2000',
+      created_at: '2020/10/1 20:00:00',
+      updated_at: null
+    }
   }
 
   return (

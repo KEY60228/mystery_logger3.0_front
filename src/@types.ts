@@ -1,3 +1,4 @@
+// ORM
 export interface Product {
   id: number
   name: string
@@ -9,6 +10,13 @@ export interface Product {
   avgRating: number|null,
   successRate: number|null,
   successCount: number,
+  organizer_id: number,
+  category_id: number,
+  category: Category,
+  limitTime: string,
+  requiredTime: string,
+  minParty: number,
+  maxParty: number,
 }
 
 export interface User {
@@ -33,15 +41,66 @@ export interface Review {
   product_id: number
   contents: string|null
   result: number
-  clear_time: number|null
+  clear_time: string|null
   rating: number|null
   joined_at: string|null
   created_at: string
   updated_at: string|null
 }
 
-export interface ProductDetail extends Product {
+export interface Organizer {
+  id: number
+  name: string
+  website: string
+  address: string
+  tel: string
+  mail: string
+  establish: string|null
+  created_at: string
+  updated_at: string|null
+}
+
+export interface Venue {
+  id: number
+  name: string
+  address: string
+  tel: string
+  organizer_id: number
+  created_at: string
+  updated_at: string|null
+}
+
+export interface Performance {
+  id: number
+  product_id: number
+  venue_id: number
+  date: string|null
+  time: string|null
+  created_at: string
+  updated_at: string|null
+}
+
+export interface Category {
+  id: number
+  name: string
+}
+
+// extends model
+export interface ProductDetailWithoutReviews extends Product {
+  performances: PerformanceWithVenue[]
+  organizer: Organizer
+}
+
+export interface ProductDetail extends ProductDetailWithoutReviews {
   reviews: ReviewWithUser[]|null
+}
+
+export interface ReviewWithUser extends Review {
+  user: User
+}
+
+export interface PerformanceWithVenue extends Performance {
+  venue: Venue
 }
 
 export interface UserDetail extends User {
@@ -53,14 +112,22 @@ export interface UserDetail extends User {
   likeReviews: ReviewDetail[]|null
 }
 
-export interface ReviewWithUser extends Review {
-  user: User
-}
-
 export interface ReviewWithProduct extends Review {
-  product: Product
+  product: ProductDetailWithoutReviews
 }
 
-export interface ReviewDetail extends ReviewWithUser, ReviewWithProduct {
-  
+export interface ReviewDetail extends ReviewWithUser, ReviewWithProduct {}
+
+export interface OrganizerDetail extends Organizer {
+  products: Product[]
+  venues: Venue[]
+}
+
+export interface VenueDetail extends Venue {
+  performances: PerformanceWithProduct[]
+  organizer: Organizer
+}
+
+export interface PerformanceWithProduct extends Performance {
+  product: Product
 }

@@ -54,7 +54,7 @@ export const ReviewContents: FC<Props> = ({
           { cardActionArea &&
             <CardActionArea component={Link} to={`/reviews/${review.id}`} className={classes.actionArea}>
               <Grid container justify='space-between' wrap='nowrap' alignItems='center'>
-                <Grid direction='column'>
+                <Grid container direction='column'>
                   { (productTitle && review.product) &&
                     <Typography>{ review.product.name }</Typography>
                   }

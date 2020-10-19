@@ -2,14 +2,14 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Typography } from '@material-ui/core'
 
-import { Product } from '../@types'
+import { ProductDetail } from '../@types'
 import { Ratings } from '../atoms/Ratings'
 import { DoneButton } from '../atoms/DoneButton'
 import { WannaButton } from '../atoms/WannaButton'
 import { ProductProfile } from '../molecules/ProductProfile'
 
 interface Props {
-  product: Product
+  product: ProductDetail
   className?: ClassProps
 }
 
