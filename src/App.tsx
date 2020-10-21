@@ -23,7 +23,7 @@ const App: FC = () => {
           <Route path='/login' children={<Login />} />
           <Route path='/preregister' children={<PreRegister />} />
           <Route path='/register' children={<Register />} />
-          <Route path='/users/:id' children={<UserDetail />} />
+          <Route path='/users/:account_id' children={<UserDetail />} />
           <Route path="/products/:id" children={<ProductDetail />} />
           <Route path="/reviews/:id" children={<ReviewDetail />} />
         </Switch>
