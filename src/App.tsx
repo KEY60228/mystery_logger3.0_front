@@ -10,6 +10,7 @@ import { PreRegister } from './pages/PreRegister'
 import { Register } from './pages/Register'
 import { UserDetail } from './pages/UserDetail'
 import { ProductDetail } from './pages/ProductDetail'
+import { ReviewDetail } from './pages/ReviewDetail'
 
 const App: FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: FC = () => {
           <Route path='/register' children={<Register />} />
           <Route path='/users/:id' children={<UserDetail />} />
           <Route path="/products/:id" children={<ProductDetail />} />
+          <Route path="/reviews/:id" children={<ReviewDetail />} />
         </Switch>
         <BottomNav />
       </BrowserRouter>
