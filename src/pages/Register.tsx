@@ -22,6 +22,12 @@ export const Register: FC = () => {
   const [status, setStatus] = useState<number>(0)
 
   const verify = async() => {
+    // 仮処理
+    axios.interceptors.response.use(
+      (response: any) => response,
+      (error: any) => error.response || error
+    )
+
     // メール認証処理
     const response = await axios.post(
       'https://localhost:1443/v1/register/verify',
@@ -87,6 +93,9 @@ export const Register: FC = () => {
       }
       { status === 422 &&
         <FailVerifyTemp />
+      }
+      { status === 0 &&
+        <div>loading</div>
       }
     </>
   )

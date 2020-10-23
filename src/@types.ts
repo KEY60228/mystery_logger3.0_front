@@ -6,17 +6,17 @@ export interface Product {
   image_name: string
   created_at: string
   updated_at: string|null
-  reviews_count: number,
-  avgRating: number|null,
-  successRate: number|null,
-  successCount: number,
-  organizer_id: number,
-  category_id: number,
-  category: Category,
-  limitTime: string,
-  requiredTime: string,
-  minParty: number,
-  maxParty: number,
+  reviews_count: number
+  avgRating: number|null
+  successRate: number|null
+  successCount: number
+  organizer_id: number
+  category_id: number
+  category: Category
+  limitTime: string
+  requiredTime: string
+  minParty: number
+  maxParty: number
 }
 
 export interface User {
@@ -83,6 +83,8 @@ export interface Performance {
 export interface Category {
   id: number
   name: string
+  created_at: string
+  updated_at: string|null
 }
 
 // extends model
