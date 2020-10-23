@@ -2,9 +2,10 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
-import { UserDetail, ReviewDetail } from '../@types'
+import { UserDetail, ReviewDetail, ReviewWithProduct } from '../@types'
 import { ListedProducts } from './ListedProducts'
 import { ReviewCard } from './ReviewCard'
+import { ProductCard } from './ProductCard'
 
 interface Props {
   user: UserDetail
@@ -25,6 +26,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       margin: '8px'
+    },
+    list: {
+      '&::after': {
+        content: "''",
+        flex: 'auto',
+      }
     }
   })
 )
@@ -53,16 +60,21 @@ export const UserTabs: FC<Props> = ({
     <Card className={classes.root}>
       <Grid container justify='center' alignItems='center'>
         <Tabs value={value} onChange={(ev, newValue) => setValue(newValue)}>
-          <Tab label={`行った公演 ${user.reviews_count}`} />
-          <Tab label={`行きたい公演 ${user.wannaProducts_count}`} />
-          <Tab label={`LIKEした投稿 ${user.likeReviews_count}`} />
+          <Tab label={`行った公演 ${user.reviews_count || 0}`} />
+          <Tab label={`行きたい公演 ${user.wannaProducts_count || 0}`} />
+          <Tab label={`LIKEした投稿 ${user.likeReviews_count || 0}`} />
         </Tabs>
       </Grid>
       <TabPanel value={value} index={0}>
-        { user.joinedProducts &&
-          <ListedProducts products={user.joinedProducts} />
+        { user.reviews &&
+          <Grid container justify='space-between' className={classes.list}>
+            { user.reviews.map((review: ReviewWithProduct) => (
+                <ProductCard key={review.product.id} product={review.product} />
+              ))
+            }
+          </Grid>
         }
-        { !user.joinedProducts &&
+        { !user.reviews &&
           <Typography>まだ行った公演はありません</Typography>
         }
       </TabPanel>
