@@ -52,7 +52,7 @@ export const UserCounters: FC<Props> = ({
       </Grid>
       <Grid container direction='column' justify='center' alignItems='center'>
         <Typography variant='body1' className={classes.text}>
-          {user.successRate ? `${user.successRate * 100}%` : '-'}
+          {user.success_rate ? `${user.success_rate * 100}%` : '-'}
         </Typography>
         <Typography variant='subtitle1' className={classes.subtitle}>
           成功率

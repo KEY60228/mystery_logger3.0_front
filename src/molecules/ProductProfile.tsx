@@ -80,7 +80,7 @@ export const ProductProfile: FC<Props> = ({
       {getParty(product.minParty, product.maxParty)}
       <Typography variant='subtitle1' className={classes.subtitle}>成功率</Typography>
       <Typography variant='body1' className={classes.body}>
-        {product.successRate ? `${parseFloat(product.successRate.toFixed(1)) * 100}%` : '-'} ({product.successCount}/{product.reviews_count})
+        {product.success_rate ? `${parseFloat(product.success_rate.toFixed(1)) * 100}%` : '-'} ({product.success_count}/{product.reviews_count})
       </Typography>
       <Typography variant='subtitle1' className={classes.subtitle}>募集中の同行者募集</Typography>
       <Typography variant='body1' className={classes.body}>3件</Typography>

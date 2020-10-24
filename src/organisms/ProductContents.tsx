@@ -55,7 +55,7 @@ export const ProductContents: FC<Props> = ({
             src={`/product_img/${product.image_name}`}
             alt={product.name}
           />
-          <Ratings number={product.avgRating || 0} size='medium' className={{marginLeft: '4px'}} />
+          <Ratings number={product.avg_rating || 0} size='medium' className={{marginLeft: '4px'}} />
           <Grid container direction="row" justify="center" alignItems="center" >
             <DoneButton number={product.reviews_count} onClick={() => post(true)} className={{margin: '8px'}} />
             <WannaButton number={800} wanna={wanna} onClick={setWanna} className={{margin: '8px'}} />

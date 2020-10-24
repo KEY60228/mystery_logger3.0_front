@@ -66,7 +66,7 @@ export const ProductCardInReviewDetail: FC<Props> = ({
                 カテゴリ: {product.category.name}
               </Typography>
             </Box>
-            <Ratings number={product.avgRating || 0} justify='flex-start' size='small' className={{marginLeft: '4px'}} />
+            <Ratings number={product.avg_rating || 0} justify='flex-start' size='small' className={{marginLeft: '4px'}} />
           </Grid>
           <NavigateNextIcon />
         </Grid>

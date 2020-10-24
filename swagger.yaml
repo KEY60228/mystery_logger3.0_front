@@ -318,11 +318,11 @@ definitions:
         type: "string"
       reviews_count:
         type: "integer"
-      avgRating:
+      avg_rating:
         type: "integer"
-      successRate:
+      success_rate:
         type: "integer"
-      successCount:
+      success_count:
         type: "integer"
       organizer_id:
         type: "integer"
@@ -361,7 +361,7 @@ definitions:
         type: "integer"
       followers_count:
         type: "integer"
-      successRate:
+      success_rate:
         type: "integer"
       wannaProducts_count:
         type: "integer"

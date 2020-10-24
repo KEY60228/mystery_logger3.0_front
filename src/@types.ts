@@ -7,9 +7,9 @@ export interface Product {
   created_at: string
   updated_at: string|null
   reviews_count: number
-  avgRating: number|null
-  successRate: number|null
-  successCount: number
+  avg_rating: number|null
+  success_rate: number|null
+  success_count: number
   organizer_id: number
   category_id: number
   category: Category
@@ -30,7 +30,7 @@ export interface User {
   reviews_count: number
   follows_count: number
   followers_count: number
-  successRate: number|null
+  success_rate: number|null
   wannaProducts_count: number
   likeReviews_count: number
 }

@@ -37,12 +37,12 @@ export const ProductCounters: FC<Props> = ({
         iconSize='small'
       />
       <SuccessRateCounter
-        number={product.successRate ? `${(product.successRate * 100).toFixed(1)}%` : '-'} 
+        number={product.success_rate ? `${(product.success_rate * 100).toFixed(1)}%` : '-'} 
         className={{fontSize: '10px'}}
         iconSize='small'
       />
       <RatingCounter
-        number={product.avgRating ? product.avgRating.toFixed(1) : '-'}
+        number={product.avg_rating ? product.avg_rating.toFixed(1) : '-'}
         className={{fontSize: '10px'}}
         iconSize='small'
       />

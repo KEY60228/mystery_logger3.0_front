@@ -56,8 +56,8 @@ export const TopPage: FC<Props> = ({
   const sortProductsByAvgRatings = (products: Product[]) => {
     return (
       products.sort((a, b) => {
-        const avgRatingA = a.avgRating || 0
-        const avgRatingB = b.avgRating || 0
+        const avgRatingA = a.avg_rating || 0
+        const avgRatingB = b.avg_rating || 0
 
         return (
           avgRatingB - avgRatingA
@@ -70,8 +70,8 @@ export const TopPage: FC<Props> = ({
   const sortProductsBySuccessRates = (products: Product[]) => {
     return (
       products.sort((a, b) => {
-        const successRateA = a.successRate || 0
-        const successRateB = b.successRate || 0
+        const successRateA = a.success_rate || 0
+        const successRateB = b.success_rate || 0
 
         return (
           successRateB - successRateA
