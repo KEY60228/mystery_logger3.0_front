@@ -36,7 +36,7 @@ export const UserCounters: FC<Props> = ({
     <Grid container direction='row' wrap='nowrap' className={classes.root}>
       <Grid container direction='column' justify='center' alignItems='center'>
         <Typography variant='body1' className={classes.text}>
-          {user.follows_count}
+          {user.follows_count || 0}
         </Typography>
         <Typography variant='subtitle1' className={classes.subtitle}>
           フォロー
@@ -44,7 +44,7 @@ export const UserCounters: FC<Props> = ({
       </Grid>
       <Grid container direction='column' justify='center' alignItems='center'>
         <Typography variant='body1' className={classes.text}>
-          {user.followers_count}
+          {user.followers_count || 0}
         </Typography>
         <Typography variant='subtitle1' className={classes.subtitle}>
           フォロワー
