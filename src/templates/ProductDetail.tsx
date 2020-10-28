@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { ProductDetail as ProductDetailInterface } from '../@types'
@@ -8,6 +8,7 @@ import { TempSpace } from '../organisms/TempSpace'
 
 interface Props {
   product: ProductDetailInterface
+  setOpen: (value: boolean) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,13 +20,13 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ProductDetail: FC<Props> = ({
-  product
+  product, setOpen
 }) => {
   const classes = useStyles()
 
   return (
     <>
-      <ProductContents product={product} />
+      <ProductContents product={product} setModalOpen={setOpen} />
       <ProductReviews product={product} />
       <TempSpace text='Ad Space' className={{height: '320px', margin:'12px auto 60px'}} />
     </>
