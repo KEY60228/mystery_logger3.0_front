@@ -10,6 +10,7 @@ import { ProductProfile } from '../molecules/ProductProfile'
 
 interface Props {
   product: ProductDetail
+  setModalOpen: (value: boolean) => void
   className?: ClassProps
 }
 
@@ -35,11 +36,10 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ProductContents: FC<Props> = ({
-  product, className
+  product, setModalOpen, className
 }) => {
   const classes = useStyles(className)
   // 仮
-  const post = (value: boolean) => console.log(value)
   const [wanna, setWanna] = useState<boolean>(false)
 
   return (
@@ -57,7 +57,7 @@ export const ProductContents: FC<Props> = ({
           />
           <Ratings number={product.avg_rating || 0} size='medium' className={{marginLeft: '4px'}} />
           <Grid container direction="row" justify="center" alignItems="center" >
-            <DoneButton number={product.reviews_count} onClick={() => post(true)} className={{margin: '8px'}} />
+            <DoneButton number={product.reviews_count} onClick={() => setModalOpen(true)} className={{margin: '8px'}} />
             <WannaButton number={800} wanna={wanna} onClick={setWanna} className={{margin: '8px'}} />
           </Grid>
         </Grid>
