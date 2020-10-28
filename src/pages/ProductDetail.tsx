@@ -1,125 +1,21 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+// import { useSelector } from 'react-redux'
+// import { RootState } from '../stores/index'
 
 import { ProductDetail as ProductDetailInterface } from '../@types'
 import { ProductDetail as ProductDetailTemp } from '../templates/ProductDetail'
+import { ReviewForm } from '../organisms/ReviewForm'
 
 export const ProductDetail: FC = () => {
-  // const dummyProductDetail: ProductDetailInterface = {
-  //   id: 8,
-  //   name: '現実からの脱出',
-  //   contents: '逃げ出せるか！？',
-  //   image_name: 'snowy_mountain.jpg',
-  //   created_at: '2020/10/1 20:00:00',
-  //   updated_at: null,
-  //   reviews_count: 534,
-  //   avgRating: 2.8,
-  //   successRate: 0.99999,
-  //   successCount: 421,
-  //   organizer_id: 1,
-  //   category_id: 1,
-  //   category: {
-  //     id: 1,
-  //     name: '屋内型',
-  //   },
-  //   limitTime: '60',
-  //   requiredTime: '120',
-  //   minParty: 1,
-  //   maxParty: 6,
-  //   reviews: [
-  //     {
-  //       id: 1,
-  //       user_id: 1,
-  //       product_id: 1,
-  //       contents: '面白かった',
-  //       result: 1,
-  //       clear_time: null,
-  //       rating: 2,
-  //       joined_at: '2020/9/30',
-  //       created_at: '2020-10-1 20:00:00',
-  //       updated_at: null,
-  //       user: {
-  //         id: 3,
-  //         account_id: 'guest2',
-  //         name: 'GUEST2',
-  //         profile: 'GUEST2です！ スクラップの脱出ゲームが好きです！ 今までおおよそ30公演ほど参加してきました！ 成功率は50%程です！ よろしくお願いします！',
-  //         image_name: 'default.jpeg',
-  //         created_at: '2020/10/1 20:00:00',
-  //         updated_at: null,
-  //         reviews_count: 1,
-  //         follows_count: 0,
-  //         followers_count: 0,
-  //         successRate: null,
-  //         wannaProducts_count: 1,
-  //         likeReviews_count: 1,
-  //       },
-  //     },
-  //     {
-  //       id: 2,
-  //       user_id: 1,
-  //       product_id: 1,
-  //       contents: '面白かった',
-  //       result: 1,
-  //       clear_time: null,
-  //       rating: 2,
-  //       joined_at: null,
-  //       created_at: '2020/10/1 20:00:00',
-  //       updated_at: null,
-  //       user: {
-  //         id: 3,
-  //         account_id: 'guest2',
-  //         name: 'GUEST2',
-  //         profile: 'GUEST2です！ スクラップの脱出ゲームが好きです！ 今までおおよそ30公演ほど参加してきました！ 成功率は50%程です！ よろしくお願いします！',
-  //         image_name: 'default.jpeg',
-  //         created_at: '2020/10/1 20:00:00',
-  //         updated_at: null,
-  //         reviews_count: 1,
-  //         follows_count: 0,
-  //         followers_count: 0,
-  //         successRate: null,
-  //         wannaProducts_count: 1,
-  //         likeReviews_count: 1,
-  //       },
-  //     }
-  //   ],
-  //   performances: [
-  //     {
-  //       id: 1,
-  //       product_id: 8,
-  //       venue_id: 1,
-  //       date: null,
-  //       time: null,
-  //       created_at: '2020/10/1 20:00:00',
-  //       updated_at: null,
-  //       venue: {
-  //         id: 1,
-  //         name: '東新宿GUNKAN',
-  //         address: '東京都新宿区',
-  //         tel: '03-1234-5678',
-  //         organizer_id: 1,
-  //         created_at: '2020/10/1 20:00:00',
-  //         updated_at: null,
-  //       },
-  //     }
-  //   ],
-  //   organizer: {
-  //     id: 1,
-  //     name: 'スクラップ',
-  //     website: 'https://hogehoge',
-  //     address: '東京都',
-  //     tel: '0120-111-222',
-  //     mail: 'scrup@aaa.com',
-  //     establish: '2000',
-  //     created_at: '2020/10/1 20:00:00',
-  //     updated_at: null
-  //   }
-  // }
   interface Params {
     id: string
   }
-
   const { id } = useParams<Params>()
+
+  const [open, setOpen] = useState<boolean>(false)
+
   const [product, setProduct] = useState<ProductDetailInterface|null>(null)
   const getProduct = async() => {
     const response = await axios.get(`https://localhost:1443/v1/products/${id}`)
@@ -133,6 +29,40 @@ export const ProductDetail: FC = () => {
     }
   }
 
+  const [rating, setRating] = useState<number>(0)
+  const [result, setResult] = useState<number>(0)
+  const [joined_at, setJoined_at] = useState<string|null>('')
+  const [contents, setContents] = useState<string|null>('')
+  // const user = useSelector((state: RootState) => state.auth.user)
+  const post = async() => {
+    const data = {
+      rating: rating,
+      result: result,
+      joined_at: joined_at,
+      contents: contents,
+      user_id: 1, // 仮
+      product_id: product?.id, // 仮
+      clear_time: null,
+    }
+
+    await axios.post(
+      'https://localhost:1443/v1/reviews',
+      data
+    ).then((response) => {
+      if (response.status === 201) {
+        console.log(response.data)
+      }
+      setOpen(false)
+      getProduct()
+      setRating(0)
+      setResult(0)
+      setJoined_at('')
+      setContents('')
+    }).catch((error) =>
+      console.log(error)
+    )
+  }
+
   useEffect(() => {
     getProduct()
   }, [])
@@ -140,7 +70,23 @@ export const ProductDetail: FC = () => {
   return (
     <>
       { product &&
-        <ProductDetailTemp product={product} />
+        <>
+          <ProductDetailTemp product={product} setOpen={setOpen} />
+          <ReviewForm
+            open={open}
+            setOpen={setOpen}
+            rating={rating}
+            setRating={setRating}
+            result={result}
+            setResult={setResult}
+            joined_at={joined_at}
+            setJoined_at={setJoined_at}
+            contents={contents}
+            setContents={setContents}
+            post={post}
+            product={product}
+          />
+        </>
       }
       { !product &&
         <div>loading</div>
