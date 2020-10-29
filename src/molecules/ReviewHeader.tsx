@@ -7,7 +7,7 @@ import { Product } from '../@types'
 
 interface Props {
     setOpen: (value: boolean) => void
-    post: () => void
+    post?: () => void
     edit: () => void
     isEdit: boolean
     product: Product

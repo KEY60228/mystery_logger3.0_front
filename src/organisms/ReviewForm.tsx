@@ -21,7 +21,7 @@ interface Props {
     contents: string|null
     setContents: (value: string|null) => void
     product: Product
-    post: () => void
+    post?: () => void
     edit: () => void
     isEdit: boolean
     className?: ClassProps
