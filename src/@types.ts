@@ -42,7 +42,7 @@ export interface Review {
   contents: string|null
   result: number
   clear_time: string|null
-  rating: number|null
+  rating: number
   joined_at: string|null
   created_at: string
   updated_at: string|null
