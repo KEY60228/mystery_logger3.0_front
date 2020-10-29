@@ -22,6 +22,8 @@ interface Props {
     setContents: (value: string|null) => void
     product: Product
     post: () => void
+    edit: () => void
+    isEdit: boolean
     className?: ClassProps
 }
 
@@ -63,13 +65,13 @@ const Transition = forwardRef((
 });
 
 export const ReviewForm: FC<Props> = ({
-    open, setOpen, rating, setRating, result, setResult, joined_at, setJoined_at, contents, setContents, post, product, className
+    open, setOpen, rating, setRating, result, setResult, joined_at, setJoined_at, contents, setContents, post, edit, isEdit, product, className
 }) => {
     const classes = useStyles(className)
 
     return (
         <Dialog fullScreen open={open} onClose={() => setOpen(false)} TransitionComponent={Transition}>
-            <ReviewHeader setOpen={setOpen} post={post} product={product} />
+            <ReviewHeader setOpen={setOpen} post={post} edit={edit} isEdit={isEdit} product={product} />
             <Card className={classes.card}>
                 <Grid container justify='center' wrap='nowrap'>
                     <CardMedia
