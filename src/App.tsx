@@ -11,6 +11,7 @@ import { Register } from './pages/Register'
 import { UserDetail } from './pages/UserDetail'
 import { ProductDetail } from './pages/ProductDetail'
 import { ReviewDetail } from './pages/ReviewDetail'
+import { Timeline } from './pages/Timeline'
 
 const App: FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: FC = () => {
           <Route path='/users/:account_id' children={<UserDetail />} />
           <Route path="/products/:id" children={<ProductDetail />} />
           <Route path="/reviews/:id" children={<ReviewDetail />} />
+          <Route path="/timeline" children={<Timeline />} />
         </Switch>
         <BottomNav />
       </BrowserRouter>
