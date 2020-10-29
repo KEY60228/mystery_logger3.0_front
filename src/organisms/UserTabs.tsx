@@ -97,7 +97,14 @@ export const UserTabs: FC<Props> = ({
                 cardActionArea
                 productTitle
                 productCard
-                
+                // 仮
+                setOpen={() => console.log()}
+                setRating={() => console.log()}
+                setResult={() => console.log()}
+                setJoined_at={() => console.log()}
+                setContents={() => console.log()}
+                setIsEdit={() => console.log()}
+                setReviewId={() => console.log()}
               />
             ))}
           </Box>
