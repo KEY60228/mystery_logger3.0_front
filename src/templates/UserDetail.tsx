@@ -9,6 +9,7 @@ import { TempSpace } from '../organisms/TempSpace'
 
 interface Props {
   user: UserDetailInterface
+  follow: () => void
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -18,13 +19,13 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const UserDetail: FC<Props> = ({
-  user
+  user, follow
 }) => {
   const classes = useStyles()
 
   return (
     <>
-      <UserProfile user={user} />
+      <UserProfile user={user} follow={follow} />
       <UserStatics />
       <UserTabs user={user} />
       <TempSpace text='Ad Space' className={{height: '320px', margin:'12px auto 60px'}} />

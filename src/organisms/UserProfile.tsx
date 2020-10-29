@@ -1,12 +1,15 @@
 import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, CardMedia, Grid, Typography, Button } from '@material-ui/core'
 
+import { RootState } from '../stores/index'
 import { User } from '../@types'
 import { UserCounters } from '../molecules/UserCounters'
 
 interface Props {
   user: User
+  follow: () => void
   className?: ClassProps
 }
 
@@ -48,9 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const UserProfile: FC<Props> = ({
-  user, className
+  user, follow, className
 }) => {
   const classes = useStyles(className)
+  const currentUser = useSelector((state: RootState) => state.auth.user)
 
   return (
     <Card className={classes.root}>
@@ -67,11 +71,11 @@ export const UserProfile: FC<Props> = ({
             @{user.account_id}
           </Typography>
         </Grid>
-        { user.account_id === 'guest' &&
+        { user.account_id === currentUser?.account_id &&
           <Button>設定</Button>
         }
-        { user.account_id !== 'guest' &&
-          <Button color='primary' variant='contained' className={classes.button}>フォローする</Button>
+        { user.account_id !== currentUser?.account_id &&
+          <Button color='primary' variant='contained' onClick={follow} className={classes.button}>フォローする</Button>
         }
       </Grid>
       <Typography variant='body1' className={classes.profile}>{ user.profile }</Typography>
