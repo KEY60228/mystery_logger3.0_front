@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card } from '@material-ui/core'
 
@@ -25,6 +25,7 @@ interface Props {
   setContents: (value: string|null) => void
   setIsEdit: (value: boolean) => void
   setReviewId: (value: number) => void
+  setReview?: (value: ReviewDetail) => void
   className?: ClassProps
 }
 
@@ -42,9 +43,15 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ReviewCard: FC<Props> = ({
-  review, reviewerProfile, cardActionArea, productTitle, productCard, shorten, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, setReviewId, className
+  review, reviewerProfile, cardActionArea, productTitle, productCard, shorten, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, setReviewId, setReview, className
 }) => {
   const classes = useStyles(className)
+
+  useEffect(() => {
+    if (setReview) {
+      setReview(review)
+    }
+  }, [])
 
   return (
     <Card className={classes.root}>
