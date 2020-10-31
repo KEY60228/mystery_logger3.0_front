@@ -1,34 +1,35 @@
-import React, { FC, useState } from 'react'
-import axios from 'axios'
+import React, { FC, useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
+import { RootState } from '../stores/index'
+import { asyncPreRegister } from '../ajax/auth'
 import { PreRegister as PreRegisterTemp } from '../templates/PreRegister'
 
 export const PreRegister: FC = () => {
-  const [email, setEmail] = useState<string>('')
-  const [open, setOpen] = useState<boolean>(false)
+    const dispatch = useDispatch()
 
-  const preRegister = async() => {
-    // 仮登録処理
-    const response = await axios.post(
-      'https://localhost:1443/v1/preregister',
-      {email: email}
-    )
+    const apiStatus = useSelector((state: RootState) => state.auth.apiStatus)
 
-    if (response.status === 422) {
-      // エラーハンドリング
+    const [email, setEmail] = useState<string>('')
+    const [open, setOpen] = useState<boolean>(false)
+
+    const preRegister = () => {
+        dispatch(asyncPreRegister(email))
     }
 
-    // モーダル
-    setOpen(true)
-  }
+    useEffect(() => {
+        if (apiStatus) {
+            setOpen(true)
+        }
+    }, [apiStatus])
 
-  return (
-    <PreRegisterTemp
-      email={email}
-      setEmail={setEmail}
-      open={open}
-      setOpen={setOpen}
-      preRegister={preRegister}
-    />
-  )
+    return (
+        <PreRegisterTemp
+            email={email}
+            setEmail={setEmail}
+            open={open}
+            setOpen={setOpen}
+            preRegister={preRegister}
+        />
+    )
 }

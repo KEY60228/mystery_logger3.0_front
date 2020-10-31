@@ -16,6 +16,25 @@ axios.interceptors.response.use(
     error => error.response || error
 )
 
+export const asyncPreRegister = (email: string) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+
+        const response = await axios.post(
+            'https://localhost:1443/v1/preregister',
+            {email: email}
+        )
+
+        if (response.status === 201) {
+            dispatch(setApiStatus(true))
+        }
+        
+        if (response.status === 422) {
+            dispatch(setApiStatus(false))
+        }
+    }
+}
+    
 export const asyncLogin = (email: string, password: string) => {
     return async(dispatch: any) => {
         dispatch(setApiStatus(null))
