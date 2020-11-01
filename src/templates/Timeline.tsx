@@ -12,7 +12,6 @@ interface Props {
     setJoined_at: (value: string|null) => void
     setContents: (value: string|null) => void
     setIsEdit: (value: boolean) => void
-    setReviewId: (value: number) => void
     setReview?: (value: ReviewDetail) => void
 }
 
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const Timeline: FC<Props> = ({
-    reviews, setOpen, setRating, setResult, setJoined_at, setContents, setReview, setIsEdit, setReviewId
+    reviews, setOpen, setRating, setResult, setJoined_at, setContents, setReview, setIsEdit
 }) => {
     const classes = useStyles()
 
@@ -46,7 +45,6 @@ export const Timeline: FC<Props> = ({
                     setContents={setContents}
                     setReview={setReview}
                     setIsEdit={setIsEdit}
-                    setReviewId={setReviewId}
                     className={{margin: '8px'}}
                 />
             ))}

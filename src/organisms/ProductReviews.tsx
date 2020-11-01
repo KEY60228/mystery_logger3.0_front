@@ -13,7 +13,6 @@ interface Props {
   setJoined_at: (value: string|null) => void
   setContents: (value: string|null) => void
   setIsEdit: (value: boolean) => void
-  setReviewId: (value: number) => void
   className?: ClassProps
 }
 
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ProductReviews: FC<Props> = ({
-  product, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, setReviewId, className
+  product, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, className
 }) => {
   const classes = useStyles(className)
 
@@ -49,7 +48,6 @@ export const ProductReviews: FC<Props> = ({
             setJoined_at={setJoined_at}
             setContents={setContents}
             setIsEdit={setIsEdit}
-            setReviewId={setReviewId}
           />
         ))
       }

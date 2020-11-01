@@ -21,7 +21,6 @@ interface Props {
   setJoined_at: (value: string|null) => void
   setContents: (value: string|null) => void
   setIsEdit: (value: boolean) => void
-  setReviewId: (value: number) => void
   className?: ClassProps
 }
 
@@ -64,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ReviewerProfile: FC<Props> = ({
-  review, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, setReviewId, className
+  review, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, className
 }) => {
   const classes = useStyles(className)
   const currentUser = useSelector((state: RootState) => state.auth.user)
@@ -101,7 +100,6 @@ export const ReviewerProfile: FC<Props> = ({
           setJoined_at={setJoined_at}
           setContents={setContents}
           setIsEdit={setIsEdit}
-          setReviewId={setReviewId}
         />
       }
     </Grid>

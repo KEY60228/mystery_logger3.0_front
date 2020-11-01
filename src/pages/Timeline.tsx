@@ -81,7 +81,6 @@ export const Timeline: FC = () => {
                         setContents={setContents}
                         setReview={setReview}
                         setIsEdit={setIsEdit}
-                        setReviewId={() => console.log()} // 仮
                     />
                     { review &&
                         <ReviewForm

@@ -24,7 +24,6 @@ interface Props {
   setJoined_at: (value: string|null) => void
   setContents: (value: string|null) => void
   setIsEdit: (value: boolean) => void
-  setReviewId: (value: number) => void
   setReview?: (value: ReviewDetail) => void
   className?: ClassProps
 }
@@ -43,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ReviewCard: FC<Props> = ({
-  review, reviewerProfile, cardActionArea, productTitle, productCard, shorten, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, setReviewId, setReview, className
+  review, reviewerProfile, cardActionArea, productTitle, productCard, shorten, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, setReview, className
 }) => {
   const classes = useStyles(className)
 
@@ -64,7 +63,6 @@ export const ReviewCard: FC<Props> = ({
           setJoined_at={setJoined_at}
           setContents={setContents}
           setIsEdit={setIsEdit}
-          setReviewId={setReviewId}
         />
       }
       <ReviewContents

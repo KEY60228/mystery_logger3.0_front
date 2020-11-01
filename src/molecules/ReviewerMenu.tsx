@@ -3,6 +3,9 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
+import { useDispatch } from 'react-redux'
+import { setFocusedReview } from '../stores/review'
+
 import { Review, User, Product } from '../@types'
 
 interface ReviewDetail extends Review {
@@ -18,7 +21,6 @@ interface Props {
     setJoined_at: (value: string|null) => void
     setContents: (value: string|null) => void
     setIsEdit: (value: boolean) => void
-    setReviewId: (value: number) => void
     className?: ClassProps
 }
 
@@ -35,18 +37,20 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ReviewerMenu: FC<Props> = ({
-    review, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, setReviewId, className
+    review, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, className
 }) => {
     const classes = useStyles(className)
     const [menu, setMenu] = useState<null|HTMLElement>(null)
+    const dispatch = useDispatch()
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setMenu(event.currentTarget);
     };
 
     const editReview = () => {
+        dispatch(setFocusedReview(review))
+
         setIsEdit(true)
-        setReviewId(review.id)
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at)

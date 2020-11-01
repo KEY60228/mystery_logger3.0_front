@@ -37,7 +37,6 @@ export const ReviewDetail: FC<Props> = ({
         setJoined_at={() => console.log()}
         setContents={() => console.log()}
         setIsEdit={() => console.log()}
-        setReviewId={() => console.log()}
       />
     </>
   )

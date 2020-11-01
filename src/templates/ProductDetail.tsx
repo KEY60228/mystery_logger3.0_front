@@ -14,7 +14,6 @@ interface Props {
   setJoined_at: (value: string|null) => void
   setContents: (value: string|null) => void
   setIsEdit: (value: boolean) => void
-  setReviewId: (value: number) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ProductDetail: FC<Props> = ({
-  product, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, setReviewId
+  product, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit
 }) => {
   const classes = useStyles()
 
@@ -41,7 +40,6 @@ export const ProductDetail: FC<Props> = ({
         setJoined_at={setJoined_at}
         setContents={setContents}
         setIsEdit={setIsEdit}
-        setReviewId={setReviewId}
       />
       <TempSpace text='Ad Space' className={{height: '320px', margin:'12px auto 60px'}} />
     </>

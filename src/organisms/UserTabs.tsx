@@ -104,7 +104,6 @@ export const UserTabs: FC<Props> = ({
                 setJoined_at={() => console.log()}
                 setContents={() => console.log()}
                 setIsEdit={() => console.log()}
-                setReviewId={() => console.log()}
               />
             ))}
           </Box>
