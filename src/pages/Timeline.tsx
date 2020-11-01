@@ -1,72 +1,47 @@
 import React, { FC, useState, useEffect } from 'react'
-import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '../stores/index'
 import { ReviewDetail } from '../@types'
 import { Timeline as TimelineTemp } from '../templates/Timeline'
 import { ReviewForm } from '../organisms/ReviewForm'
+import { asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
 
 export const Timeline: FC = () => {
+    const dispatch = useDispatch()
+    
+    const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
     const user = useSelector((state: RootState) => state.auth.user)
+    const review = useSelector((state: RootState) => state.review.focusedReview)
+
     const [open, setOpen] = useState<boolean>(false)
-
     const [reviews, setReviews] = useState<ReviewDetail[]|null>(null)
-    const getReviews = async() => {
-        await axios.get(
-            'https://localhost:1443/v1/reviews',
-            {
-                params: {
-                    user_id: user?.id // 仮
-                }
-            }
-        ).then((response) => {
-            setReviews(response.data)
-        }).catch((error) => {
-            console.log(error)
-        })
-    }
-
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string|null>('')
     const [contents, setContents] = useState<string|null>('')
-    
-    const [review, setReview] = useState<ReviewDetail|null>(null)
-    const edit = async() => {
-        const data = {
-            rating: rating,
-            result: result,
-            joined_at: joined_at,
-            contents: contents,
-            user_id: user?.id, // 仮
-            product_id: review?.product.id, // 仮
-            clear_time: null,
-        }
-
-        await axios.put(
-            `https://localhost:1443/v1/reviews/${review?.id}`,
-            data
-        ).then((response) => {
-            if (response.status === 201) {
-                console.log(response.data)
-            }
-            setOpen(false)
-            getReviews()
-            setRating(0)
-            setResult(0)
-            setJoined_at('')
-            setContents('')
-        }).catch((error) =>
-            console.log(error)
-        )
-    }
-
     const [isEdit, setIsEdit] = useState<boolean>(false)
+
+    const getReviews = async() => {
+        dispatch(asyncGetTimeline(user?.id, setReviews))
+    }
+    const edit = () => {
+        dispatch(asyncUpdateReview(rating, result, joined_at, contents, user?.id, review?.product.id, review?.id))
+    }
 
     useEffect(() => {
         getReviews()
     }, [])
+
+    useEffect(() => {
+        if (apiStatus) {
+            setOpen(false)
+            setRating(0)
+            setResult(0)
+            setJoined_at('')
+            setContents('')
+        }
+    }, [apiStatus])
     
     return (
         <>
@@ -79,7 +54,6 @@ export const Timeline: FC = () => {
                         setResult={setResult}
                         setJoined_at={setJoined_at}
                         setContents={setContents}
-                        setReview={setReview}
                         setIsEdit={setIsEdit}
                     />
                     { review &&

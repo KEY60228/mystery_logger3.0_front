@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const Timeline: FC<Props> = ({
-    reviews, setOpen, setRating, setResult, setJoined_at, setContents, setReview, setIsEdit
+    reviews, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit
 }) => {
     const classes = useStyles()
 
@@ -43,7 +43,6 @@ export const Timeline: FC<Props> = ({
                     setResult={setResult}
                     setJoined_at={setJoined_at}
                     setContents={setContents}
-                    setReview={setReview}
                     setIsEdit={setIsEdit}
                     className={{margin: '8px'}}
                 />

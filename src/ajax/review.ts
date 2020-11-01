@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ReviewDetail } from '../@types'
 import { setApiStatus } from '../stores/error'
 import { setFocusedReview } from '../stores/review'
 import { asyncGetProduct } from './product'
@@ -17,6 +18,33 @@ axios.interceptors.response.use(
     response => response,
     error => error.response || error
 )
+
+export const asyncGetTimeline = (
+    user_id: number|undefined, // 仮！！！
+    setReviews: (value: ReviewDetail[]|null) => void
+) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+
+        const response = await axios.get(
+            'https://localhost:1443/v1/reviews',
+            {
+                params: {
+                    'user_id': user_id // 仮
+                }
+            }
+        )
+
+        if (response.status === 200) {
+            setReviews(response.data)
+            dispatch(setApiStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setApiStatus(false))
+        }
+    }
+}
 
 export const asyncGetReview = (id: string) => {
     return async(dispatch: any) => {
