@@ -1,10 +1,8 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Grid } from '@material-ui/core'
+import { Card, Grid, Typography, Button } from '@material-ui/core'
 
-import { PasswordForm } from '../atoms/PasswordForm'
-import { EmailForm } from '../atoms/EmailForm'
-import { SubmitButton } from '../atoms/SubmitButton'
+import { Form } from '../molecules/Form'
 
 interface Props {
     email: string
@@ -19,7 +17,22 @@ interface ClassProps {
     width?: string
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({}))
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        root: {
+            margin: '8px',
+        },
+        subtitle: {
+            width: '100%',
+            textAlign: 'center',
+            borderBottom: '1px groove grey',
+            padding: '24px',
+        },
+        button: {
+            margin: '24px'
+        }
+    })
+)
 
 export const LoginForm: FC<Props> = ({
     email,
@@ -32,25 +45,42 @@ export const LoginForm: FC<Props> = ({
     const classes = useStyles(className)
 
     return (
-        <form>
+        <Card className={classes.root}>
             <Grid
                 container
                 direction="column"
                 justify="center"
                 alignItems="center"
             >
-                <EmailForm
-                    email={email}
-                    setEmail={setEmail}
-                    className={{ width: '300px', margin: '12px auto' }}
-                />
-                <PasswordForm
-                    password={password}
-                    setPassword={setPassword}
-                    className={{ width: '300px', margin: '12px auto' }}
-                />
-                <SubmitButton onClick={login} size="large" className={{}} />
+                <Typography variant="h5" className={classes.subtitle}>
+                    ログイン
+                </Typography>
+                <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                >
+                    <Form
+                        label='Email'
+                        value={email}
+                        setValue={setEmail}
+                    />
+                    <Form
+                        label='Password'
+                        value={password}
+                        setValue={setPassword}
+                    />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={login}
+                        className={classes.button}
+                    >
+                        Submit
+                    </Button>
+                </Grid>
             </Grid>
-        </form>
+        </Card>
     )
 }
