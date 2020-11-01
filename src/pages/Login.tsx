@@ -11,7 +11,7 @@ export const Login: FC = () => {
     const dispatch = useDispatch()
     
     const user = useSelector((state: RootState) => state.auth.user)
-    const apiStatus = useSelector((state: RootState) => state.auth.apiStatus)
+    const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')

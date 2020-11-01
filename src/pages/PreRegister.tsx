@@ -8,7 +8,7 @@ import { PreRegister as PreRegisterTemp } from '../templates/PreRegister'
 export const PreRegister: FC = () => {
     const dispatch = useDispatch()
 
-    const apiStatus = useSelector((state: RootState) => state.auth.apiStatus)
+    const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
 
     const [email, setEmail] = useState<string>('')
     const [open, setOpen] = useState<boolean>(false)

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { setUser, setApiStatus } from '../stores/auth'
+import { setUser } from '../stores/auth'
+import { setApiStatus } from '../stores/error'
 import queryString from 'query-string'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
