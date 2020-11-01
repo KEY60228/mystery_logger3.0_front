@@ -11,6 +11,7 @@ export const Timeline: FC = () => {
     const dispatch = useDispatch()
     
     const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
+    const postStatus = useSelector((state: RootState) => state.review.postStatus)
     const user = useSelector((state: RootState) => state.auth.user)
     const review = useSelector((state: RootState) => state.review.focusedReview)
 
@@ -34,14 +35,15 @@ export const Timeline: FC = () => {
     }, [])
 
     useEffect(() => {
-        if (apiStatus) {
+        if (postStatus) {
+            getReviews()
             setOpen(false)
             setRating(0)
             setResult(0)
             setJoined_at('')
             setContents('')
         }
-    }, [apiStatus])
+    }, [postStatus])
     
     return (
         <>

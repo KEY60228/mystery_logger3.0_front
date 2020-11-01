@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { ReviewDetail } from '../@types'
 import { setApiStatus } from '../stores/error'
-import { setFocusedReview } from '../stores/review'
-import { asyncGetProduct } from './product'
+import { setFocusedReview, setPostStatus } from '../stores/review'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -75,6 +74,7 @@ export const asyncPostReview = (
 ) => {
     return async(dispatch: any) => {
         dispatch(setApiStatus(null))
+        dispatch(setPostStatus(null))
 
         const response = await axios.post(
             '/v1/reviews',
@@ -90,11 +90,12 @@ export const asyncPostReview = (
         )
 
         if (response.status === 201) {
-            if (product_id) dispatch(asyncGetProduct(product_id.toString())) // 仮！！
+            dispatch(setPostStatus(true))
             dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
+            dispatch(setPostStatus(false))
             dispatch(setApiStatus(false))
         }
     }
@@ -111,6 +112,7 @@ export const asyncUpdateReview = (
 ) => {
     return async(dispatch: any) => {
         dispatch(setApiStatus(null))
+        dispatch(setPostStatus(null))
 
         const response = await axios.put(
             `/v1/reviews/${review_id}`,
@@ -126,11 +128,12 @@ export const asyncUpdateReview = (
         )
 
         if (response.status === 200) {
-            if (product_id) dispatch(asyncGetProduct(product_id.toString())) // 仮！！
+            dispatch(setPostStatus(true))
             dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
+            dispatch(setPostStatus(false))
             dispatch(setApiStatus(false))
         }
     }

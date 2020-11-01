@@ -17,6 +17,7 @@ export const ProductDetail: FC = () => {
     const { id } = useParams<Params>()
 
     const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
+    const postStatus = useSelector((state: RootState) => state.review.postStatus)
     const product = useSelector((state: RootState) => state.product.focusedProduct)
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const user = useSelector((state: RootState) => state.auth.user)
@@ -48,7 +49,8 @@ export const ProductDetail: FC = () => {
     }, [])
 
     useEffect(() => {
-        if (apiStatus) {
+        if (postStatus) {
+            getProduct()
             setOpen(false)
             setRating(0)
             setResult(0)
@@ -56,7 +58,7 @@ export const ProductDetail: FC = () => {
             setContents('')
             setIsEdit(false)
         }
-    }, [apiStatus])
+    }, [postStatus])
 
     return (
         <>
