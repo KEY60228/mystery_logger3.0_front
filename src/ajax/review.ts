@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { setApiStatus } from '../stores/error'
+import { setFocusedReview } from '../stores/review'
 import { asyncGetProduct } from './product'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -16,6 +17,25 @@ axios.interceptors.response.use(
     response => response,
     error => error.response || error
 )
+
+export const asyncGetReview = (id: string) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+
+        const response = await axios.get(
+            `/v1/reviews/${id}`
+        )
+
+        if (response.status === 200) {
+            dispatch(setFocusedReview(response.data))
+            dispatch(setApiStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setApiStatus(false))
+        }
+    }
+}
 
 export const asyncPostReview = (
     rating: number,
