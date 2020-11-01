@@ -11,7 +11,7 @@ import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify
 export const Register: FC = () => {
     const history = useHistory()
     const dispatch = useDispatch()
-    const query = queryString.parse(useLocation().search);
+    const query = queryString.parse(useLocation().search)
 
     const user = useSelector((state: RootState) => state.auth.user)
     const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
@@ -26,9 +26,18 @@ export const Register: FC = () => {
     const verify = () => {
         dispatch(asyncVerify(query, setPreRegisterId, setEmail))
     }
-    
+
     const register = () => {
-        dispatch(asyncRegister(accountId, email, name, password, passwordConfirmation, preRegisterId))
+        dispatch(
+            asyncRegister(
+                accountId,
+                email,
+                name,
+                password,
+                passwordConfirmation,
+                preRegisterId,
+            ),
+        )
     }
 
     useEffect(() => {
@@ -43,8 +52,8 @@ export const Register: FC = () => {
 
     return (
         <>
-            { apiStatus === true &&
-                <RegisterTemp 
+            {apiStatus === true && (
+                <RegisterTemp
                     accountId={accountId}
                     setAccountId={setAccountId}
                     name={name}
@@ -55,13 +64,9 @@ export const Register: FC = () => {
                     setPasswordConfirmation={setPasswordConfirmation}
                     register={register}
                 />
-            }
-            { apiStatus === false &&
-                <FailVerifyTemp />
-            }
-            { apiStatus === null &&
-                <div>loading</div>
-            }
+            )}
+            {apiStatus === false && <FailVerifyTemp />}
+            {apiStatus === null && <div>loading</div>}
         </>
     )
 }

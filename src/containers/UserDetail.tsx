@@ -4,15 +4,15 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '../stores/index'
 import { UserDetail as UserDetailInterface } from '../@types'
-import { UserDetail as UserDetailTemp} from '../components/templates/UserDetail'
+import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import { asyncGetUser, asyncFollow } from '../ajax/user'
 
 export const UserDetail: FC = () => {
     const dispatch = useDispatch()
 
-    const { account_id } = useParams<{account_id: string}>()
-    
-    const [user, setUser] = useState<UserDetailInterface|null>(null)
+    const { account_id } = useParams<{ account_id: string }>()
+
+    const [user, setUser] = useState<UserDetailInterface | null>(null)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -30,12 +30,8 @@ export const UserDetail: FC = () => {
 
     return (
         <>
-            { user &&
-                <UserDetailTemp user={user} follow={follow} />
-            }
-            { !user &&
-                <div>loading</div>
-            }
+            {user && <UserDetailTemp user={user} follow={follow} />}
+            {!user && <div>loading</div>}
         </>
     )
 }

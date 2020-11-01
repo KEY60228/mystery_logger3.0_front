@@ -8,27 +8,24 @@ import { UserTabs } from '../organisms/UserTabs'
 import { TempSpace } from '../organisms/TempSpace'
 
 interface Props {
-  user: UserDetailInterface
-  follow: () => void
+    user: UserDetailInterface
+    follow: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) => 
-  createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({}))
 
-  })
-)
+export const UserDetail: FC<Props> = ({ user, follow }) => {
+    const classes = useStyles()
 
-export const UserDetail: FC<Props> = ({
-  user, follow
-}) => {
-  const classes = useStyles()
-
-  return (
-    <>
-      <UserProfile user={user} follow={follow} />
-      <UserStatics />
-      <UserTabs user={user} />
-      <TempSpace text='Ad Space' className={{height: '320px', margin:'12px auto 60px'}} />
-    </>
-  )
+    return (
+        <>
+            <UserProfile user={user} follow={follow} />
+            <UserStatics />
+            <UserTabs user={user} />
+            <TempSpace
+                text="Ad Space"
+                className={{ height: '320px', margin: '12px auto 60px' }}
+            />
+        </>
+    )
 }

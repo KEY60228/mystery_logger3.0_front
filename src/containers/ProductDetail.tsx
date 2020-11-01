@@ -17,15 +17,19 @@ export const ProductDetail: FC = () => {
     const { id } = useParams<Params>()
 
     const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
-    const postStatus = useSelector((state: RootState) => state.review.postStatus)
-    const product = useSelector((state: RootState) => state.product.focusedProduct)
+    const postStatus = useSelector(
+        (state: RootState) => state.review.postStatus,
+    )
+    const product = useSelector(
+        (state: RootState) => state.product.focusedProduct,
+    )
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const user = useSelector((state: RootState) => state.auth.user)
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
-    const [joined_at, setJoined_at] = useState<string|null>('')
-    const [contents, setContents] = useState<string|null>('')
+    const [joined_at, setJoined_at] = useState<string | null>('')
+    const [contents, setContents] = useState<string | null>('')
 
     // 投稿フォームの開閉
     const [open, setOpen] = useState<boolean>(false)
@@ -37,11 +41,30 @@ export const ProductDetail: FC = () => {
     }
 
     const post = () => {
-        dispatch(asyncPostReview(rating, result, joined_at, contents, user?.id, product?.id))
+        dispatch(
+            asyncPostReview(
+                rating,
+                result,
+                joined_at,
+                contents,
+                user?.id,
+                product?.id,
+            ),
+        )
     }
 
     const edit = () => {
-        dispatch(asyncUpdateReview(rating, result, joined_at, contents, user?.id, product?.id, review?.id))
+        dispatch(
+            asyncUpdateReview(
+                rating,
+                result,
+                joined_at,
+                contents,
+                user?.id,
+                product?.id,
+                review?.id,
+            ),
+        )
     }
 
     useEffect(() => {
@@ -62,7 +85,7 @@ export const ProductDetail: FC = () => {
 
     return (
         <>
-            { product &&
+            {product && (
                 <>
                     <ProductDetailTemp
                         product={product}
@@ -90,10 +113,8 @@ export const ProductDetail: FC = () => {
                         product={product}
                     />
                 </>
-            }
-            { !product &&
-                <div>loading</div>
-            }
+            )}
+            {!product && <div>loading</div>}
         </>
     )
 }

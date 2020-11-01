@@ -6,41 +6,45 @@ import { EmailForm } from '../atoms/EmailForm'
 import { SubmitButton } from '../atoms/SubmitButton'
 
 interface Props {
-  email: string
-  setEmail: (value: string) => void
-  preRegister: () => void
-  className?: ClassProps
+    email: string
+    setEmail: (value: string) => void
+    preRegister: () => void
+    className?: ClassProps
 }
 
 interface ClassProps {
-  width?: string
+    width?: string
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    
-  })
-)
+const useStyles = makeStyles((theme: Theme) => createStyles({}))
 
 export const PreRegisterForm: FC<Props> = ({
-  email, setEmail, preRegister, className
+    email,
+    setEmail,
+    preRegister,
+    className,
 }) => {
-  const classes = useStyles(className)
+    const classes = useStyles(className)
 
-  return (
-    <form>
-      <Grid container direction='column' justify='center' alignItems='center'>
-        <EmailForm
-          email={email}
-          setEmail={setEmail}
-          className={{width: '300px', margin: '12px auto'}}
-        />
-        <SubmitButton
-          onClick={preRegister}
-          size='large'
-          className={{}}
-        />
-      </Grid>
-    </form>
-  )
+    return (
+        <form>
+            <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+            >
+                <EmailForm
+                    email={email}
+                    setEmail={setEmail}
+                    className={{ width: '300px', margin: '12px auto' }}
+                />
+                <SubmitButton
+                    onClick={preRegister}
+                    size="large"
+                    className={{}}
+                />
+            </Grid>
+        </form>
+    )
 }

@@ -21,8 +21,8 @@ interface Props {
     setOpen: (value: boolean) => void
     setRating: (value: number) => void
     setResult: (value: number) => void
-    setJoined_at: (value: string|null) => void
-    setContents: (value: string|null) => void
+    setJoined_at: (value: string | null) => void
+    setContents: (value: string | null) => void
     setIsEdit: (value: boolean) => void
     className?: ClassProps
 }
@@ -35,37 +35,48 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: (className: ClassProps) => ({
             margin: className.margin,
-            padding: '8px'
+            padding: '8px',
         }),
-    })
+    }),
 )
 
 export const ReviewCard: FC<Props> = ({
-    review, reviewerProfile, cardActionArea, productTitle, productCard, shorten, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit, className
+    review,
+    reviewerProfile,
+    cardActionArea,
+    productTitle,
+    productCard,
+    shorten,
+    setOpen,
+    setRating,
+    setResult,
+    setJoined_at,
+    setContents,
+    setIsEdit,
+    className,
 }) => {
     const classes = useStyles(className)
 
     return (
         <Card className={classes.root}>
-            { (reviewerProfile && review.user) &&
+            {reviewerProfile && review.user && (
                 <ReviewerProfile
-                review={review}
-                setOpen={setOpen}
-                setRating={setRating}
-                setResult={setResult}
-                setJoined_at={setJoined_at}
-                setContents={setContents}
-                setIsEdit={setIsEdit}
+                    review={review}
+                    setOpen={setOpen}
+                    setRating={setRating}
+                    setResult={setResult}
+                    setJoined_at={setJoined_at}
+                    setContents={setContents}
+                    setIsEdit={setIsEdit}
                 />
-            }
+            )}
             <ReviewContents
                 review={review}
                 productCard={productCard}
                 productTitle={productTitle}
                 cardActionArea={cardActionArea}
-                className={productCard ? {minHeight:'200px'} : {}}
+                className={productCard ? { minHeight: '200px' } : {}}
             />
         </Card>
     )
 }
-

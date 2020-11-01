@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { User } from '../@types'
 
 export interface AuthStore {
-    user: User|null
+    user: User | null
 }
 
 // Stateの初期状態

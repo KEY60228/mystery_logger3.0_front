@@ -9,7 +9,7 @@ import { Login as LoginTemp } from '../components/templates/Login'
 export const Login: FC = () => {
     const history = useHistory()
     const dispatch = useDispatch()
-    
+
     const user = useSelector((state: RootState) => state.auth.user)
     const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
 

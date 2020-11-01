@@ -6,38 +6,36 @@ import { ReviewCard } from '../organisms/ReviewCard'
 import { ProductCardInReviewDetail } from '../organisms/ProductCardInReviewDetail'
 
 interface Props {
-  review: ReviewDetailInterface
+    review: ReviewDetailInterface
 }
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      margin: '8px',
-    }
-  })
+    createStyles({
+        root: {
+            margin: '8px',
+        },
+    }),
 )
 
-export const ReviewDetail: FC<Props> = ({
-  review
-}) => {
-  const classes = useStyles()
+export const ReviewDetail: FC<Props> = ({ review }) => {
+    const classes = useStyles()
 
-  return (
-    <>
-      <ProductCardInReviewDetail product={review.product} />
-      <ReviewCard
-        review={review}
-        reviewerProfile
-        productTitle
-        className={{margin: '8px'}}
-        // 仮
-        setOpen={() => console.log()}
-        setRating={() => console.log()}
-        setResult={() => console.log()}
-        setJoined_at={() => console.log()}
-        setContents={() => console.log()}
-        setIsEdit={() => console.log()}
-      />
-    </>
-  )
+    return (
+        <>
+            <ProductCardInReviewDetail product={review.product} />
+            <ReviewCard
+                review={review}
+                reviewerProfile
+                productTitle
+                className={{ margin: '8px' }}
+                // 仮
+                setOpen={() => console.log()}
+                setRating={() => console.log()}
+                setResult={() => console.log()}
+                setJoined_at={() => console.log()}
+                setContents={() => console.log()}
+                setIsEdit={() => console.log()}
+            />
+        </>
+    )
 }

@@ -17,24 +17,27 @@ interface ClassProps {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         slider: {
             width: '180px',
             margin: 'auto',
         },
-    })
+    }),
 )
 
-export const SlideRatings: FC<Props> = ({
-    rating, setRating, className
-}) => {
+export const SlideRatings: FC<Props> = ({ rating, setRating, className }) => {
     const classes = useStyles(className)
 
     return (
         <>
-            <Ratings number={rating} size='large' className={{marginLeft: className?.marginLeft, fontSize: className?.fontSize}}/>
+            <Ratings
+                number={rating}
+                size="large"
+                className={{
+                    marginLeft: className?.marginLeft,
+                    fontSize: className?.fontSize,
+                }}
+            />
             <Slider
                 value={rating}
                 onChange={(ev, newValue: number) => setRating(newValue)}
@@ -45,5 +48,3 @@ export const SlideRatings: FC<Props> = ({
         </>
     )
 }
-
-

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { ProductDetail } from '../@types'
 
 export interface ProductStore {
-    focusedProduct: ProductDetail|null
+    focusedProduct: ProductDetail | null
 }
 
 // Stateの初期状態

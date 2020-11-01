@@ -14,18 +14,14 @@ interface ClassProps {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         select: (className: ClassProps) => ({
-            width: className.width
-        })
-    })
+            width: className.width,
+        }),
+    }),
 )
 
-export const ResultForm: FC<Props> = ({
-    result, setResult, className
-}) => {
+export const ResultForm: FC<Props> = ({ result, setResult, className }) => {
     const classes = useStyles(className)
 
     return (
@@ -35,7 +31,9 @@ export const ResultForm: FC<Props> = ({
                 labelId="result-select-label"
                 id="result-select"
                 value={result}
-                onChange={(ev: ChangeEvent<{ value: unknown }>) => setResult(ev.target.value as number)}
+                onChange={(ev: ChangeEvent<{ value: unknown }>) =>
+                    setResult(ev.target.value as number)
+                }
                 className={classes.select}
             >
                 <MenuItem value={0}>---</MenuItem>

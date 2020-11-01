@@ -25,12 +25,8 @@ export const ReviewDetail: FC = () => {
 
     return (
         <>
-            { review &&
-                <ReviewDetailTemp review={review} />
-            }
-            { !review &&
-                <div>loading</div>
-            }
+            {review && <ReviewDetailTemp review={review} />}
+            {!review && <div>loading</div>}
         </>
     )
 }

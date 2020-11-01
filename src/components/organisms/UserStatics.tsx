@@ -6,32 +6,30 @@ import { User } from '../../@types'
 import { SuccessRateByCategory as CategoryStatics } from '../molecules/SuccessRateByCategory'
 
 interface Props {
-  // user: User
-  className?: ClassProps
+    // user: User
+    className?: ClassProps
 }
 
 interface ClassProps {
-  width?: string
+    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      margin: '8px',
-    },
-  })
+    createStyles({
+        root: {
+            margin: '8px',
+        },
+    }),
 )
 
-export const UserStatics: FC<Props> = ({
-  className
-}) => {
-  const classes = useStyles(className)
+export const UserStatics: FC<Props> = ({ className }) => {
+    const classes = useStyles(className)
 
-  return (
-    <Card className={classes.root}>
-      <Grid container justify='center' alignItems='center'>
-        <CategoryStatics />
-      </Grid>
-    </Card>
-  )
+    return (
+        <Card className={classes.root}>
+            <Grid container justify="center" alignItems="center">
+                <CategoryStatics />
+            </Grid>
+        </Card>
+    )
 }

@@ -9,28 +9,32 @@ interface Props {
     setOpen: (value: boolean) => void
     setRating: (value: number) => void
     setResult: (value: number) => void
-    setJoined_at: (value: string|null) => void
-    setContents: (value: string|null) => void
+    setJoined_at: (value: string | null) => void
+    setContents: (value: string | null) => void
     setIsEdit: (value: boolean) => void
     setReview?: (value: ReviewDetail) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        }
-    })
+        root: {},
+    }),
 )
 
 export const Timeline: FC<Props> = ({
-    reviews, setOpen, setRating, setResult, setJoined_at, setContents, setIsEdit
+    reviews,
+    setOpen,
+    setRating,
+    setResult,
+    setJoined_at,
+    setContents,
+    setIsEdit,
 }) => {
     const classes = useStyles()
 
     return (
         <>
-            { reviews.map((review: ReviewDetail) => (
+            {reviews.map((review: ReviewDetail) => (
                 <ReviewCard
                     key={review.id}
                     review={review}
@@ -44,10 +48,9 @@ export const Timeline: FC<Props> = ({
                     setJoined_at={setJoined_at}
                     setContents={setContents}
                     setIsEdit={setIsEdit}
-                    className={{margin: '8px'}}
+                    className={{ margin: '8px' }}
                 />
             ))}
         </>
     )
 }
-

@@ -14,16 +14,17 @@ axios.defaults.baseURL = 'https://localhost:1443'
 // エラーレスポンスが返って来た場合、レスポンスオブジェクトを返す
 axios.interceptors.response.use(
     response => response,
-    error => error.response || error
+    error => error.response || error,
 )
 
-export const asyncGetUser = (account_id: string, setUser: (value: UserDetail) => void) => {
-    return async(dispatch: any) => {
+export const asyncGetUser = (
+    account_id: string,
+    setUser: (value: UserDetail) => void,
+) => {
+    return async (dispatch: any) => {
         dispatch(setApiStatus(null))
 
-        const response = await axios.get(
-            `/v1/users/${account_id}`
-        )
+        const response = await axios.get(`/v1/users/${account_id}`)
 
         if (response.status === 200) {
             setUser(response.data)
@@ -37,19 +38,16 @@ export const asyncGetUser = (account_id: string, setUser: (value: UserDetail) =>
 }
 
 export const asyncFollow = (
-    following_id: number|undefined, // 仮！！
-    followed_id: number|undefined // 仮！！
+    following_id: number | undefined, // 仮！！
+    followed_id: number | undefined, // 仮！！
 ) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setApiStatus(null))
 
-        const response = await axios.put(
-            '/v1/follow',
-            {
-                'following_id': following_id,
-                'followed_id': followed_id
-            }
-        )
+        const response = await axios.put('/v1/follow', {
+            following_id: following_id,
+            followed_id: followed_id,
+        })
 
         if (response.status === 200) {
             dispatch(setApiStatus(true))

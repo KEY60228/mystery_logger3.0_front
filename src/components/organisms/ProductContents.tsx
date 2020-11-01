@@ -9,60 +9,80 @@ import { WannaButton } from '../atoms/WannaButton'
 import { ProductProfile } from '../molecules/ProductProfile'
 
 interface Props {
-  product: ProductDetail
-  setModalOpen: (value: boolean) => void
-  className?: ClassProps
+    product: ProductDetail
+    setModalOpen: (value: boolean) => void
+    className?: ClassProps
 }
 
 interface ClassProps {
-  width?: string
+    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      margin: '8px',
-    },
-    box: {
-      marginTop: '12px',
-      marginLeft: '12px',
-    },
-    media: {
-      height: "240px",
-      backgroundSize: 'contain',
-      margin: "6px",
-    },
-  })
+    createStyles({
+        root: {
+            margin: '8px',
+        },
+        box: {
+            marginTop: '12px',
+            marginLeft: '12px',
+        },
+        media: {
+            height: '240px',
+            backgroundSize: 'contain',
+            margin: '6px',
+        },
+    }),
 )
 
 export const ProductContents: FC<Props> = ({
-  product, setModalOpen, className
+    product,
+    setModalOpen,
+    className,
 }) => {
-  const classes = useStyles(className)
-  // 仮
-  const [wanna, setWanna] = useState<boolean>(false)
+    const classes = useStyles(className)
+    // 仮
+    const [wanna, setWanna] = useState<boolean>(false)
 
-  return (
-    <Card className={classes.root}>
-      <Box className={classes.box}>
-        <Typography variant='h6'>{ product.name }</Typography>
-        <Typography variant='subtitle1'>{ product.contents }</Typography>
-      </Box>
-      <Grid container direction="row" wrap='nowrap'>
-        <Grid>
-          <img
-            className={classes.media}
-            src={`/product_img/${product.image_name}`}
-            alt={product.name}
-          />
-          <Ratings number={product.avg_rating || 0} size='medium' className={{marginLeft: '4px'}} />
-          <Grid container direction="row" justify="center" alignItems="center" >
-            <DoneButton number={product.reviews_count} onClick={() => setModalOpen(true)} className={{margin: '8px'}} />
-            <WannaButton number={800} wanna={wanna} onClick={setWanna} className={{margin: '8px'}} />
-          </Grid>
-        </Grid>
-        <ProductProfile product={product} />
-      </Grid>
-    </Card>
-  )
+    return (
+        <Card className={classes.root}>
+            <Box className={classes.box}>
+                <Typography variant="h6">{product.name}</Typography>
+                <Typography variant="subtitle1">{product.contents}</Typography>
+            </Box>
+            <Grid container direction="row" wrap="nowrap">
+                <Grid>
+                    <img
+                        className={classes.media}
+                        src={`/product_img/${product.image_name}`}
+                        alt={product.name}
+                    />
+                    <Ratings
+                        number={product.avg_rating || 0}
+                        size="medium"
+                        className={{ marginLeft: '4px' }}
+                    />
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <DoneButton
+                            number={product.reviews_count}
+                            onClick={() => setModalOpen(true)}
+                            className={{ margin: '8px' }}
+                        />
+                        <WannaButton
+                            number={800}
+                            wanna={wanna}
+                            onClick={setWanna}
+                            className={{ margin: '8px' }}
+                        />
+                    </Grid>
+                </Grid>
+                <ProductProfile product={product} />
+            </Grid>
+        </Card>
+    )
 }
