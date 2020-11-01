@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { setUser, setApiStatus } from '../stores/auth'
+import queryString from 'query-string'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -16,6 +17,7 @@ axios.interceptors.response.use(
     error => error.response || error
 )
 
+// 仮登録処理
 export const asyncPreRegister = (email: string) => {
     return async(dispatch: any) => {
         dispatch(setApiStatus(null))
@@ -34,7 +36,69 @@ export const asyncPreRegister = (email: string) => {
         }
     }
 }
-    
+
+// メールアドレス認証処理
+export const asyncVerify = (
+    query: queryString.ParsedQuery<string>,
+    setPreRegisterId: (value: number) => void,
+    setEmail: (value: string) => void
+) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+
+        const response = await axios.post(
+            '/v1/register/verify',
+            { token: query.token }
+        )
+        
+        if (response.status === 200) {
+            setPreRegisterId(response.data.pre_register_id)
+            setEmail(response.data.email)
+            dispatch(setApiStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setApiStatus(false))
+        }
+    }
+}
+
+// 本登録処理
+export const asyncRegister = (
+    accountId: string,
+    email: string,
+    name: string,
+    password: string,
+    passwordConfirmation: string,
+    preRegisterId: number
+) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+
+        const response = await axios.post(
+            '/v1/register',
+            {
+                'account_id': accountId,
+                'email': email,
+                'name': name,
+                'password': password,
+                'password_confirmation': passwordConfirmation,
+                'pre_register_id': preRegisterId
+            }
+        )
+            
+        if (response.status === 201) {
+            dispatch(setUser(response.data))
+            dispatch(setApiStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setApiStatus(false))
+        }            
+    }
+}
+
+// ログイン処理
 export const asyncLogin = (email: string, password: string) => {
     return async(dispatch: any) => {
         dispatch(setApiStatus(null))
