@@ -1,22 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { ProductDetail } from '../@types'
 
-export interface ErrorStore {
-    apiStatus: boolean|null
+export interface ProductStore {
+    focusedProduct: ProductDetail|null
 }
 
 // Stateの初期状態
-const initialState: ErrorStore = {
-    apiStatus: null,
+const initialState: ProductStore = {
+    focusedProduct: null,
 }
 
 // Sliceを生成する
 const slice = createSlice({
-    name: 'error', // Sliceの名称
+    name: 'product', // Sliceの名称
     initialState, // Stateの初期状態 (上で定義)
     reducers: {
         // action.payloadに渡された引数が入っている
-        setApiStatus: (state, action) => {
-            return Object.assign({}, state, { apiStatus: action.payload })
+        setFocusedProduct: (state, action) => {
+            return Object.assign({}, state, { focusedProduct: action.payload })
         },
     },
 })
@@ -25,4 +26,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setApiStatus } = slice.actions
+export const { setFocusedProduct } = slice.actions
