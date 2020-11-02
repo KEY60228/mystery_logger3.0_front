@@ -69,7 +69,6 @@ export const asyncRegister = (
     email: string,
     name: string,
     password: string,
-    passwordConfirmation: string,
     preRegisterId: number,
 ) => {
     return async (dispatch: any) => {
@@ -80,7 +79,7 @@ export const asyncRegister = (
             email: email,
             name: name,
             password: password,
-            password_confirmation: passwordConfirmation,
+            password_confirmation: password,
             pre_register_id: preRegisterId,
         })
 

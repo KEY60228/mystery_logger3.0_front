@@ -4,6 +4,7 @@ import {
     FormControl,
     InputLabel,
     Input,
+    FormHelperText,
     InputAdornment,
     IconButton,
 } from '@material-ui/core'
@@ -24,8 +25,8 @@ interface ClassProps {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: (className: ClassProps) => ({
-            width: className.width,
-            margin: className.margin,
+            width: className.width || '300px',
+            margin: className.margin || '12px auto',
         }),
     }),
 )
@@ -44,6 +45,7 @@ export const PasswordForm: FC<Props> = ({
             <Input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
+                aria-describedby={`password-helper`}
                 value={password}
                 onChange={ev => setPassword(ev.target.value)}
                 endAdornment={
@@ -56,6 +58,9 @@ export const PasswordForm: FC<Props> = ({
                     </InputAdornment>
                 }
             />
+            {/* <FormHelperText id={`password-helper`}>
+                
+            </FormHelperText> */}
         </FormControl>
     )
 }

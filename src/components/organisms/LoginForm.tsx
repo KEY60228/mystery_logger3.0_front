@@ -3,6 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Grid, Typography, Button } from '@material-ui/core'
 
 import { Form } from '../molecules/Form'
+import { PasswordForm } from '../molecules/PasswordForm'
 
 interface Props {
     email: string
@@ -66,10 +67,9 @@ export const LoginForm: FC<Props> = ({
                         value={email}
                         setValue={setEmail}
                     />
-                    <Form
-                        label='Password'
-                        value={password}
-                        setValue={setPassword}
+                    <PasswordForm
+                        password={password}
+                        setPassword={setPassword}
                     />
                     <Button
                         variant="contained"

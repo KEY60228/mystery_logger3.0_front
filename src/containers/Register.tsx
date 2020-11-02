@@ -19,7 +19,6 @@ export const Register: FC = () => {
     const [accountId, setAccountId] = useState<string>('')
     const [name, setName] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [passwordConfirmation, setPasswordConfirmation] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [preRegisterId, setPreRegisterId] = useState<number>(0)
 
@@ -34,7 +33,6 @@ export const Register: FC = () => {
                 email,
                 name,
                 password,
-                passwordConfirmation,
                 preRegisterId,
             ),
         )
@@ -60,8 +58,6 @@ export const Register: FC = () => {
                     setName={setName}
                     password={password}
                     setPassword={setPassword}
-                    passwordConfirmation={passwordConfirmation}
-                    setPasswordConfirmation={setPasswordConfirmation}
                     register={register}
                 />
             )}
