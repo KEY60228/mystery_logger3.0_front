@@ -41,23 +41,11 @@ export const PreRegister: FC<Props> = ({
 
     return (
         <>
-            <Paper elevation={3} className={classes.paper}>
-                <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                >
-                    <Typography variant="h5" className={classes.subtitle}>
-                        会員登録
-                    </Typography>
-                    <PreRegisterForm
-                        email={email}
-                        setEmail={setEmail}
-                        preRegister={preRegister}
-                    />
-                </Grid>
-            </Paper>
+            <PreRegisterForm
+                email={email}
+                setEmail={setEmail}
+                preRegister={preRegister}
+            />
             <PreRegisterModal
                 open={open}
                 setOpen={setOpen}
