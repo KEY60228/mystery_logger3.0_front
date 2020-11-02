@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Typography } from '@material-ui/core'
 
 import { ProductDetail, ReviewWithUser } from '../../@types'
-import { ReviewCard } from './ReviewCard'
+import { ReviewCard } from '../molecules/ReviewCard'
 
 interface Props {
     product: ProductDetail
@@ -41,7 +41,7 @@ export const ProductReviews: FC<Props> = ({
     const classes = useStyles(className)
 
     return (
-        <Card className={classes.root}>
+        <>
             {product.reviews &&
                 product.reviews.map((review: ReviewWithUser) => (
                     <ReviewCard
@@ -55,9 +55,15 @@ export const ProductReviews: FC<Props> = ({
                         setJoined_at={setJoined_at}
                         setContents={setContents}
                         setIsEdit={setIsEdit}
+                        className={{margin: '8px'}}
                     />
-                ))}
-            {!product.reviews && <Typography>まだ投稿はありません</Typography>}
-        </Card>
+                ))
+            }
+            {!product.reviews &&
+                <Card className={classes.root}>
+                    <Typography>まだ投稿はありません</Typography>
+                </Card>
+            }
+        </>
     )
 }

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { ReviewDetail } from '../../@types'
-import { ReviewCard } from '../organisms/ReviewCard'
+import { ReviewCard } from '../molecules/ReviewCard'
 
 interface Props {
     reviews: ReviewDetail[]

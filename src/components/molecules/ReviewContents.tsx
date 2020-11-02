@@ -5,7 +5,7 @@ import { Box, Grid, CardActionArea, Typography } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { Review, Product } from '../../@types'
-import { Ratings } from '../atoms/Ratings'
+import { Ratings } from './Ratings'
 import { ProductCard } from '../organisms/ProductCard'
 
 interface ReviewWithProduct extends Review {

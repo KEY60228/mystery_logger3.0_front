@@ -12,7 +12,7 @@ import {
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { ProductDetailWithoutReviews, PerformanceWithVenue } from '../../@types'
-import { Ratings } from '../atoms/Ratings'
+import { Ratings } from '../molecules/Ratings'
 
 interface Props {
     product: ProductDetailWithoutReviews

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Slider } from '@material-ui/core'
 
-import { Ratings } from '../atoms/Ratings'
+import { Ratings } from './Ratings'
 
 interface Props {
     rating: number

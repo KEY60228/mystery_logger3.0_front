@@ -4,7 +4,7 @@ import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
 import { UserDetail, ReviewDetail, ReviewWithProduct } from '../../@types'
 import { ListedProducts } from './ListedProducts'
-import { ReviewCard } from './ReviewCard'
+import { ReviewCard } from '../molecules/ReviewCard'
 import { ProductCard } from './ProductCard'
 
 interface Props {

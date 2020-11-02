@@ -2,11 +2,10 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Typography } from '@material-ui/core'
 
-import { ProductDetail } from '../../@types'
-import { Ratings } from '../atoms/Ratings'
-import { DoneButton } from '../atoms/DoneButton'
-import { WannaButton } from '../atoms/WannaButton'
-import { ProductProfile } from '../molecules/ProductProfile'
+import { ProductDetail } from '../../../@types'
+import { Ratings } from '../../molecules/Ratings'
+import { Buttons } from './Buttons'
+import { ProductProfile } from './ProductProfile'
 
 interface Props {
     product: ProductDetail
@@ -32,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundSize: 'contain',
             margin: '6px',
         },
+        button: {
+            margin: '8px',
+        }
     }),
 )
 
@@ -62,24 +64,12 @@ export const ProductContents: FC<Props> = ({
                         size="medium"
                         className={{ marginLeft: '4px' }}
                     />
-                    <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                    >
-                        <DoneButton
-                            number={product.reviews_count}
-                            onClick={() => setModalOpen(true)}
-                            className={{ margin: '8px' }}
-                        />
-                        <WannaButton
-                            number={800}
-                            wanna={wanna}
-                            onClick={setWanna}
-                            className={{ margin: '8px' }}
-                        />
-                    </Grid>
+                    <Buttons
+                        product={product}
+                        setModalOpen={setModalOpen}
+                        wanna={wanna}
+                        setWanna={setWanna}
+                    />
                 </Grid>
                 <ProductProfile product={product} />
             </Grid>
