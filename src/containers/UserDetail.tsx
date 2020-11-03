@@ -21,7 +21,8 @@ export const UserDetail: FC = () => {
     }
 
     const follow = () => {
-        asyncFollow(currentUser?.id, user?.id)
+        if (!currentUser || !user) return false
+        asyncFollow(currentUser.id, user.id)
     }
 
     useEffect(() => {

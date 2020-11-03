@@ -38,8 +38,8 @@ export const asyncGetUser = (
 }
 
 export const asyncFollow = (
-    following_id: number | undefined, // 仮！！
-    followed_id: number | undefined, // 仮！！
+    following_id: number,
+    followed_id: number,
 ) => {
     return async (dispatch: any) => {
         dispatch(setApiStatus(null))
