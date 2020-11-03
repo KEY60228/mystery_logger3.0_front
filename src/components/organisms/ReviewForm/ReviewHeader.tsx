@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
-import { Product } from '../../@types'
+import { Product } from '../../../@types'
 
 interface Props {
     setOpen: (value: boolean) => void

@@ -1,24 +1,8 @@
-import React, { FC, forwardRef, ReactElement, Ref } from 'react'
+import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import {
-    Dialog,
-    Grid,
-    Card,
-    Checkbox,
-    Box,
-    TextField,
-    Typography,
-    CardMedia,
-    FormControl,
-    Slide,
-} from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions'
 
 import { Product } from '../../@types'
-import { Calender } from '../atoms/Calender'
-import { SlideRatings } from '../molecules/SlideRatings'
-import { ReviewHeader } from '../molecules/ReviewHeader'
-import { ResultForm } from '../molecules/ResultForm'
+import { ReviewForm as ReviewFormMod } from '../organisms/ReviewForm/index'
 
 interface Props {
     open: boolean
@@ -35,44 +19,14 @@ interface Props {
     post?: () => void
     edit: () => void
     isEdit: boolean
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {},
-        card: {
-            margin: '8px',
-        },
-        img: {
-            height: '180px',
-            minWidth: '120px',
-            backgroundSize: 'contain',
-            margin: '12px',
-        },
-        box: {
-            width: '100%',
-            padding: '8px',
-        },
-        alert: {
-            fontSize: '12px',
-            color: 'red',
-            fontWeight: 'bold',
+        root: {
+
         },
     }),
-)
-
-const Transition = forwardRef(
-    (
-        props: TransitionProps & { children?: ReactElement },
-        ref: Ref<unknown>,
-    ) => {
-        return <Slide direction="up" ref={ref} {...props} />
-    },
 )
 
 export const ReviewForm: FC<Props> = ({
@@ -90,74 +44,25 @@ export const ReviewForm: FC<Props> = ({
     edit,
     isEdit,
     product,
-    className,
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     return (
-        <Dialog
-            fullScreen
+        <ReviewFormMod
             open={open}
-            onClose={() => setOpen(false)}
-            TransitionComponent={Transition}
-        >
-            <ReviewHeader
-                setOpen={setOpen}
-                post={post}
-                edit={edit}
-                isEdit={isEdit}
-                product={product}
-            />
-            <Card className={classes.card}>
-                <Grid container justify="center" wrap="nowrap">
-                    <CardMedia
-                        image={`/product_img/${product.image_name}`}
-                        className={classes.img}
-                    />
-                    <Grid
-                        container
-                        direction="column"
-                        justify="center"
-                        alignItems="center"
-                    >
-                        <SlideRatings
-                            rating={rating}
-                            setRating={setRating}
-                            className={{ marginLeft: '20px', fontSize: '16px' }}
-                        />
-                        <FormControl>
-                            <ResultForm
-                                result={result}
-                                setResult={setResult}
-                                className={{ width: '180px' }}
-                            />
-                            <Calender
-                                date={joined_at}
-                                setDate={setJoined_at}
-                                className={{ width: '180px' }}
-                            />
-                        </FormControl>
-                    </Grid>
-                </Grid>
-                <Box className={classes.box}>
-                    <Grid container alignItems="center" wrap="nowrap">
-                        <Checkbox />
-                        <Typography className={classes.alert}>
-                            ネタバレが含まれる場合"必ず"チェックしてください
-                        </Typography>
-                    </Grid>
-                    <TextField
-                        multiline
-                        onChange={ev => setContents(ev.currentTarget.value)}
-                        value={contents}
-                        fullWidth
-                        variant="outlined"
-                        rows={12}
-                        placeholder="レビューを書かなくても投稿できます"
-                        size="small"
-                    />
-                </Box>
-            </Card>
-        </Dialog>
+            setOpen={setOpen}
+            rating={rating}
+            setRating={setRating}
+            result={result}
+            setResult={setResult}
+            joined_at={joined_at}
+            setJoined_at={setJoined_at}
+            contents={contents}
+            setContents={setContents}
+            post={post}
+            edit={edit}
+            isEdit={isEdit}
+            product={product}
+        />
     )
 }
