@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Grid } from '@material-ui/core'
 
-import { User } from '../../@types'
-import { SuccessRateByCategory as CategoryStatics } from '../molecules/SuccessRateByCategory'
+import { User } from '../../../@types'
+import { SuccessRateByCategory as CategoryStatics } from './SuccessRateByCategory'
 
 interface Props {
     // user: User

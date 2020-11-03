@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, CardMedia, Grid, Typography, Button } from '@material-ui/core'
 
-import { RootState } from '../../stores/index'
-import { User } from '../../@types'
-import { UserCounters } from '../molecules/UserCounters'
+import { RootState } from '../../../stores/index'
+import { User } from '../../../@types'
+import { UserCounters } from './UserCounters'
 
 interface Props {
     user: User

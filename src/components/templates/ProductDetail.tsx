@@ -4,7 +4,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { ProductDetail as ProductDetailInterface } from '../../@types'
 import { ProductContents } from '../organisms/ProductContents/index'
 import { ProductReviews } from '../organisms/ProductReviews'
-import { TempSpace } from '../organisms/TempSpace'
+import { TempSpace } from '../molecules/TempSpace'
 
 interface Props {
     product: ProductDetailInterface

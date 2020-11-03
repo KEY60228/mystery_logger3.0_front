@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Grid } from '@material-ui/core'
 
-import { Product } from '../../@types'
-import { ProductCard } from '../molecules/ProductCard/index'
+import { Product } from '../../../@types'
+import { ProductCard } from '../../molecules/ProductCard/index'
 
 interface Props {
     products: Product[] | null
