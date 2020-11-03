@@ -53,6 +53,7 @@ export const ProductDetail: FC = () => {
     }
 
     const edit = (review: ReviewDetail) => {
+        if (!review) return false
         dispatch(setFocusedReview(review))
         setRating(review.rating)
         setResult(review.result)

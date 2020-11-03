@@ -11,27 +11,30 @@ import { setFocusedReview } from '../stores/review'
 export const Timeline: FC = () => {
     const dispatch = useDispatch()
 
-    const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
+    const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
+
     const postStatus = useSelector(
         (state: RootState) => state.review.postStatus,
     )
     const user = useSelector((state: RootState) => state.auth.user)
     const review = useSelector((state: RootState) => state.review.focusedReview)
 
-    const [open, setOpen] = useState<boolean>(false)
-    const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
     const [contents, setContents] = useState<string | null>('')
 
+    // 投稿フォームの開閉
+    const [open, setOpen] = useState<boolean>(false)
+
     const getReviews = async () => {
-        dispatch(asyncGetTimeline(user?.id, setReviews))
+        if (!user) return false
+        dispatch(asyncGetTimeline(user.id, setReviews))
     }
 
     const edit = (review: ReviewDetail) => {
-        dispatch(setFocusedReview(review))
         if (!review) return false
+        dispatch(setFocusedReview(review))
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at)
@@ -56,6 +59,10 @@ export const Timeline: FC = () => {
 
     useEffect(() => {
         getReviews()
+
+        return () => {
+            dispatch(setFocusedReview(null))
+        }
     }, [])
 
     useEffect(() => {

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '../stores/index'
+import { setFocusedReview } from '../stores/review'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 import { asyncGetReview } from '../ajax/review'
 
@@ -21,6 +22,10 @@ export const ReviewDetail: FC = () => {
 
     useEffect(() => {
         getReview()
+
+        return () => {
+            dispatch(setFocusedReview(null))
+        }
     }, [])
 
     return (

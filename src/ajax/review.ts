@@ -19,7 +19,7 @@ axios.interceptors.response.use(
 )
 
 export const asyncGetTimeline = (
-    user_id: number | undefined, // 仮！！！
+    user_id: number,
     setReviews: (value: ReviewDetail[] | null) => void,
 ) => {
     return async (dispatch: any) => {
