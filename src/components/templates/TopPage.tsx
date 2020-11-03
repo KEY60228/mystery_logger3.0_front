@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core'
 
 import { Product } from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
-import { LinedProducts } from '../organisms/LinedProducts'
+import { LinedProducts } from '../organisms/LinedProducts/index'
 
 interface Props {
     products: Product[]
@@ -75,16 +75,9 @@ export const TopPage: FC<Props> = ({ products }) => {
     return (
         <>
             <TempSpace text="Banner Space" />
-            <Typography className={classes.subtitle}>
-                投稿数の多い作品
-            </Typography>
-            <LinedProducts products={sortProductsByReviewsCount(products)} />
-            <Typography className={classes.subtitle}>評価の高い作品</Typography>
-            <LinedProducts products={sortProductsByAvgRatings(products)} />
-            <Typography className={classes.subtitle}>
-                成功率の高い作品
-            </Typography>
-            <LinedProducts products={sortProductsBySuccessRates(products)} />
+            <LinedProducts products={sortProductsByReviewsCount(products)} subtitle='投稿数の多い作品' />
+            <LinedProducts products={sortProductsByAvgRatings(products)} subtitle='評価の高い作品' />
+            <LinedProducts products={sortProductsBySuccessRates(products)} subtitle='成功率の高い作品' />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}
