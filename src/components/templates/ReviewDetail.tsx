@@ -27,7 +27,6 @@ export const ReviewDetail: FC<Props> = ({ review }) => {
                 review={review}
                 reviewerProfile
                 productTitle
-                className={{ margin: '8px' }}
                 // 仮
                 setOpen={() => console.log()}
                 setRating={() => console.log()}

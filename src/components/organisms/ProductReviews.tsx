@@ -55,7 +55,6 @@ export const ProductReviews: FC<Props> = ({
                         setJoined_at={setJoined_at}
                         setContents={setContents}
                         setIsEdit={setIsEdit}
-                        className={{margin: '8px'}}
                     />
                 ))
             }

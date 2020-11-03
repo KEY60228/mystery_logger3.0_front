@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, CardActionArea, CardMedia } from '@material-ui/core'
 
-import { Product } from '../../@types'
-import { ProductCounters } from '../molecules/ProductCounters'
+import { Product } from '../../../@types'
+import { ProductCounters } from './ProductCounters'
 
 interface Props {
     product: Product

@@ -4,9 +4,9 @@ import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import { useDispatch } from 'react-redux'
-import { setFocusedReview } from '../../stores/review'
+import { setFocusedReview } from '../../../stores/review'
 
-import { Review, User, Product } from '../../@types'
+import { Review, User, Product } from '../../../@types'
 
 interface ReviewDetail extends Review {
     user?: User

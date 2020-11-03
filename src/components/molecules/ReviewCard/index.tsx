@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card } from '@material-ui/core'
 
-import { Review, User, Product } from '../../@types'
+import { Review, User, Product } from '../../../@types'
 import { ReviewerProfile } from './ReviewerProfile'
 import { ReviewContents } from './ReviewContents'
 
@@ -34,7 +34,7 @@ interface ClassProps {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: (className: ClassProps) => ({
-            margin: className.margin,
+            margin: className.margin || '8px',
             padding: '8px',
         }),
     }),

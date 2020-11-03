@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
@@ -11,8 +11,8 @@ import {
     Button,
 } from '@material-ui/core'
 
-import { Review, User, Product } from '../../@types'
-import { RootState } from '../../stores/index'
+import { Review, User, Product } from '../../../@types'
+import { RootState } from '../../../stores/index'
 import { ReviewerMenu } from './ReviewerMenu'
 
 interface ReviewDetail extends Review {

@@ -4,8 +4,8 @@ import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
 import { UserDetail, ReviewDetail, ReviewWithProduct } from '../../@types'
 import { ListedProducts } from './ListedProducts'
-import { ReviewCard } from '../molecules/ReviewCard'
-import { ProductCard } from './ProductCard'
+import { ReviewCard } from '../molecules/ReviewCard/index'
+import { ProductCard } from '../molecules/ProductCard/index'
 
 interface Props {
     user: UserDetail
