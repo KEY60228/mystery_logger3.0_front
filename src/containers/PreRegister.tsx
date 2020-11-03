@@ -11,7 +11,7 @@ export const PreRegister: FC = () => {
     const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
 
     const [email, setEmail] = useState<string>('')
-    const [open, setOpen] = useState<boolean>(false)
+    const [open, setOpen] = useState<boolean>(false) // templatesに持たせる？
 
     const preRegister = () => {
         dispatch(asyncPreRegister(email))

@@ -18,12 +18,7 @@ interface Props {
     productTitle?: boolean
     productCard?: boolean
     shorten?: boolean
-    setOpen: (value: boolean) => void
-    setRating: (value: number) => void
-    setResult: (value: number) => void
-    setJoined_at: (value: string | null) => void
-    setContents: (value: string | null) => void
-    setIsEdit: (value: boolean) => void
+    edit: (review: ReviewDetail) => void
     className?: ClassProps
 }
 
@@ -47,12 +42,7 @@ export const ReviewCard: FC<Props> = ({
     productTitle,
     productCard,
     shorten,
-    setOpen,
-    setRating,
-    setResult,
-    setJoined_at,
-    setContents,
-    setIsEdit,
+    edit,
     className,
 }) => {
     const classes = useStyles(className)
@@ -60,15 +50,7 @@ export const ReviewCard: FC<Props> = ({
     return (
         <Card className={classes.root}>
             {reviewerProfile && review.user && (
-                <ReviewerProfile
-                    review={review}
-                    setOpen={setOpen}
-                    setRating={setRating}
-                    setResult={setResult}
-                    setJoined_at={setJoined_at}
-                    setContents={setContents}
-                    setIsEdit={setIsEdit}
-                />
+                <ReviewerProfile review={review} edit={edit} />
             )}
             <ReviewContents
                 review={review}

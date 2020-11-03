@@ -57,11 +57,9 @@ export const ProductCounters: FC<Props> = ({ product, className }) => {
             >
                 <EqualizerIcon color="primary" fontSize="small" />
                 <Typography variant="caption" className={classes.text}>
-                    {
-                        product.success_rate
-                            ? `${(product.success_rate * 100).toFixed(1)}%`
-                            : '-'
-                    }
+                    {product.success_rate
+                        ? `${(product.success_rate * 100).toFixed(1)}%`
+                        : '-'}
                 </Typography>
             </Grid>
             <Grid

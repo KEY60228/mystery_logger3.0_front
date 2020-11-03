@@ -15,7 +15,7 @@ interface ClassProps {
     width?: string
 }
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             margin: '8px',
@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: '24px',
         },
         button: {
-            margin: '24px'
-        }
-    })
+            margin: '24px',
+        },
+    }),
 )
 
 export const PreRegisterForm: FC<Props> = ({
@@ -57,11 +57,7 @@ export const PreRegisterForm: FC<Props> = ({
                     justify="center"
                     alignItems="center"
                 >
-                    <Form
-                        label='Email'
-                        value={email}
-                        setValue={setEmail}
-                    />
+                    <Form label="Email" value={email} setValue={setEmail} />
                     <Button
                         variant="contained"
                         color="primary"

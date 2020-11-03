@@ -10,6 +10,7 @@ import { ProductProfile } from './ProductProfile'
 interface Props {
     product: ProductDetail
     setModalOpen: (value: boolean) => void
+    setIsNew: (value: boolean) => void
     className?: ClassProps
 }
 
@@ -33,13 +34,14 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         button: {
             margin: '8px',
-        }
+        },
     }),
 )
 
 export const ProductContents: FC<Props> = ({
     product,
     setModalOpen,
+    setIsNew,
     className,
 }) => {
     const classes = useStyles(className)
@@ -67,6 +69,7 @@ export const ProductContents: FC<Props> = ({
                     <Buttons
                         product={product}
                         setModalOpen={setModalOpen}
+                        setIsNew={setIsNew}
                         wanna={wanna}
                         setWanna={setWanna}
                     />

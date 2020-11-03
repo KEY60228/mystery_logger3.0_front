@@ -13,9 +13,7 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
     }),
 )
 

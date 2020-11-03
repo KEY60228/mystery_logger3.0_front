@@ -30,9 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: '24px',
         },
         button: {
-            margin: '24px'
-        }
-    })
+            margin: '24px',
+        },
+    }),
 )
 
 export const LoginForm: FC<Props> = ({
@@ -62,11 +62,7 @@ export const LoginForm: FC<Props> = ({
                     justify="center"
                     alignItems="center"
                 >
-                    <Form
-                        label='Email'
-                        value={email}
-                        setValue={setEmail}
-                    />
+                    <Form label="Email" value={email} setValue={setEmail} />
                     <PasswordForm
                         password={password}
                         setPassword={setPassword}

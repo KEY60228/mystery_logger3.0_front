@@ -64,8 +64,8 @@ export const asyncPostReview = (
     result: number,
     joined_at: string | null,
     contents: string | null,
-    user_id: number | undefined, // 仮！！
-    product_id: number | undefined, // 仮！！
+    user_id: number,
+    product_id: number,
 ) => {
     return async (dispatch: any) => {
         dispatch(setApiStatus(null))
@@ -98,9 +98,9 @@ export const asyncUpdateReview = (
     result: number,
     joined_at: string | null,
     contents: string | null,
-    user_id: number | undefined, // 仮！！
-    product_id: number | undefined, // 仮！！
-    review_id: number | undefined, // 仮！！
+    user_id: number,
+    product_id: number,
+    review_id: number,
 ) => {
     return async (dispatch: any) => {
         dispatch(setApiStatus(null))

@@ -9,34 +9,39 @@ import { ProductDetail } from '../../../@types'
 interface Props {
     product: ProductDetail
     setModalOpen: (value: boolean) => void
+    setIsNew: (value: boolean) => void
     wanna: boolean
     setWanna: (value: boolean) => void
 }
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         button: {
-            margin: '8px'
-        }
-    })
+            margin: '8px',
+        },
+    }),
 )
 
 export const Buttons: FC<Props> = ({
-    product, setModalOpen, wanna, setWanna
+    product,
+    setModalOpen,
+    setIsNew,
+    wanna,
+    setWanna,
 }) => {
     const classes = useStyles()
-    
+
+    const onClick = () => {
+        setIsNew(true)
+        setModalOpen(true)
+    }
+
     return (
-        <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-        >
+        <Grid container direction="row" justify="center" alignItems="center">
             <Button
                 variant="contained"
                 color="primary"
-                onClick={() => setModalOpen(true)}
+                onClick={onClick}
                 className={classes.button}
             >
                 <Grid
@@ -64,9 +69,7 @@ export const Buttons: FC<Props> = ({
                     alignItems="center"
                 >
                     <QueueIcon />
-                    <Typography variant="caption">
-                        {800 /* 仮 */} 
-                    </Typography>
+                    <Typography variant="caption">{800 /* 仮 */}</Typography>
                 </Grid>
             </Button>
         </Grid>

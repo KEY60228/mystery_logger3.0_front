@@ -103,12 +103,7 @@ export const UserTabs: FC<Props> = ({ user, className }) => {
                                 productTitle
                                 productCard
                                 // 仮
-                                setOpen={() => console.log()}
-                                setRating={() => console.log()}
-                                setResult={() => console.log()}
-                                setJoined_at={() => console.log()}
-                                setContents={() => console.log()}
-                                setIsEdit={() => console.log()}
+                                edit={() => console.log()}
                             />
                         ))}
                     </Box>

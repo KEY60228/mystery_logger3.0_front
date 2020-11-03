@@ -75,9 +75,18 @@ export const TopPage: FC<Props> = ({ products }) => {
     return (
         <>
             <TempSpace text="Banner Space" />
-            <LinedProducts products={sortProductsByReviewsCount(products)} subtitle='投稿数の多い作品' />
-            <LinedProducts products={sortProductsByAvgRatings(products)} subtitle='評価の高い作品' />
-            <LinedProducts products={sortProductsBySuccessRates(products)} subtitle='成功率の高い作品' />
+            <LinedProducts
+                products={sortProductsByReviewsCount(products)}
+                subtitle="投稿数の多い作品"
+            />
+            <LinedProducts
+                products={sortProductsByAvgRatings(products)}
+                subtitle="評価の高い作品"
+            />
+            <LinedProducts
+                products={sortProductsBySuccessRates(products)}
+                subtitle="成功率の高い作品"
+            />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

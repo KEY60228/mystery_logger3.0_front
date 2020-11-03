@@ -33,8 +33,8 @@ interface Props {
     setContents: (value: string | null) => void
     product: Product
     post?: () => void
-    edit: () => void
-    isEdit: boolean
+    update: () => void
+    isNew: boolean
     className?: ClassProps
 }
 
@@ -87,8 +87,8 @@ export const ReviewForm: FC<Props> = ({
     contents,
     setContents,
     post,
-    edit,
-    isEdit,
+    update,
+    isNew,
     product,
     className,
 }) => {
@@ -104,8 +104,8 @@ export const ReviewForm: FC<Props> = ({
             <ReviewHeader
                 setOpen={setOpen}
                 post={post}
-                edit={edit}
-                isEdit={isEdit}
+                update={update}
+                isNew={isNew}
                 product={product}
             />
             <Card className={classes.card}>

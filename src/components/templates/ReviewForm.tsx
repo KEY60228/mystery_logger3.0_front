@@ -17,15 +17,13 @@ interface Props {
     setContents: (value: string | null) => void
     product: Product
     post?: () => void
-    edit: () => void
-    isEdit: boolean
+    update: () => void
+    isNew: boolean
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
     }),
 )
 
@@ -41,8 +39,8 @@ export const ReviewForm: FC<Props> = ({
     contents,
     setContents,
     post,
-    edit,
-    isEdit,
+    update,
+    isNew,
     product,
 }) => {
     const classes = useStyles()
@@ -60,8 +58,8 @@ export const ReviewForm: FC<Props> = ({
             contents={contents}
             setContents={setContents}
             post={post}
-            edit={edit}
-            isEdit={isEdit}
+            update={update}
+            isNew={isNew}
             product={product}
         />
     )

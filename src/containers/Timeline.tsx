@@ -6,6 +6,7 @@ import { ReviewDetail } from '../@types'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 import { ReviewForm } from '../components/templates/ReviewForm'
 import { asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
+import { setFocusedReview } from '../stores/review'
 
 export const Timeline: FC = () => {
     const dispatch = useDispatch()
@@ -23,21 +24,32 @@ export const Timeline: FC = () => {
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
     const [contents, setContents] = useState<string | null>('')
-    const [isEdit, setIsEdit] = useState<boolean>(false)
 
     const getReviews = async () => {
         dispatch(asyncGetTimeline(user?.id, setReviews))
     }
-    const edit = () => {
+
+    const edit = (review: ReviewDetail) => {
+        dispatch(setFocusedReview(review))
+        if (!review) return false
+        setRating(review.rating)
+        setResult(review.result)
+        setJoined_at(review.joined_at)
+        setContents(review.contents)
+        setOpen(true)
+    }
+
+    const update = () => {
+        if (!user || !review) return false
         dispatch(
             asyncUpdateReview(
                 rating,
                 result,
                 joined_at,
                 contents,
-                user?.id,
-                review?.product.id,
-                review?.id,
+                user.id,
+                review.product.id,
+                review.id,
             ),
         )
     }
@@ -61,15 +73,7 @@ export const Timeline: FC = () => {
         <>
             {reviews && (
                 <>
-                    <TimelineTemp
-                        reviews={reviews}
-                        setOpen={setOpen}
-                        setRating={setRating}
-                        setResult={setResult}
-                        setJoined_at={setJoined_at}
-                        setContents={setContents}
-                        setIsEdit={setIsEdit}
-                    />
+                    <TimelineTemp reviews={reviews} edit={edit} />
                     {review && (
                         <ReviewForm
                             open={open}
@@ -82,8 +86,8 @@ export const Timeline: FC = () => {
                             setJoined_at={setJoined_at}
                             contents={contents}
                             setContents={setContents}
-                            edit={edit}
-                            isEdit={isEdit}
+                            update={update}
+                            isNew={false}
                             product={review.product}
                         />
                     )}

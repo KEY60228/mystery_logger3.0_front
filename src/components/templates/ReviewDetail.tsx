@@ -28,12 +28,7 @@ export const ReviewDetail: FC<Props> = ({ review }) => {
                 reviewerProfile
                 productTitle
                 // 仮
-                setOpen={() => console.log()}
-                setRating={() => console.log()}
-                setResult={() => console.log()}
-                setJoined_at={() => console.log()}
-                setContents={() => console.log()}
-                setIsEdit={() => console.log()}
+                edit={review => console.log()}
             />
         </>
     )

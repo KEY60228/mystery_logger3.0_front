@@ -6,13 +6,7 @@ import { ReviewCard } from '../molecules/ReviewCard'
 
 interface Props {
     reviews: ReviewDetail[]
-    setOpen: (value: boolean) => void
-    setRating: (value: number) => void
-    setResult: (value: number) => void
-    setJoined_at: (value: string | null) => void
-    setContents: (value: string | null) => void
-    setIsEdit: (value: boolean) => void
-    setReview?: (value: ReviewDetail) => void
+    edit: (review: ReviewDetail) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,15 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const Timeline: FC<Props> = ({
-    reviews,
-    setOpen,
-    setRating,
-    setResult,
-    setJoined_at,
-    setContents,
-    setIsEdit,
-}) => {
+export const Timeline: FC<Props> = ({ reviews, edit }) => {
     const classes = useStyles()
 
     return (
@@ -42,12 +28,7 @@ export const Timeline: FC<Props> = ({
                     cardActionArea
                     productTitle
                     productCard
-                    setOpen={setOpen}
-                    setRating={setRating}
-                    setResult={setResult}
-                    setJoined_at={setJoined_at}
-                    setContents={setContents}
-                    setIsEdit={setIsEdit}
+                    edit={edit}
                     className={{ margin: '8px' }}
                 />
             ))}

@@ -17,9 +17,7 @@ interface ClassProps {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         subtitle: {
             width: '100%',
             backgroundColor: 'gainsboro',
@@ -32,9 +30,7 @@ export const LinedProducts: FC<Props> = ({ products, subtitle, className }) => {
 
     return (
         <>
-            <Typography className={classes.subtitle}>
-                {subtitle}
-            </Typography>
+            <Typography className={classes.subtitle}>{subtitle}</Typography>
             <Products products={products} />
         </>
     )

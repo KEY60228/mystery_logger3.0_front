@@ -2,17 +2,12 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Typography } from '@material-ui/core'
 
-import { ProductDetail, ReviewWithUser } from '../../@types'
+import { ProductDetail, ReviewDetail, ReviewWithUser } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
 
 interface Props {
     product: ProductDetail
-    setOpen: (value: boolean) => void
-    setRating: (value: number) => void
-    setResult: (value: number) => void
-    setJoined_at: (value: string | null) => void
-    setContents: (value: string | null) => void
-    setIsEdit: (value: boolean) => void
+    edit: (review: ReviewDetail) => void
     className?: ClassProps
 }
 
@@ -28,16 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductReviews: FC<Props> = ({
-    product,
-    setOpen,
-    setRating,
-    setResult,
-    setJoined_at,
-    setContents,
-    setIsEdit,
-    className,
-}) => {
+export const ProductReviews: FC<Props> = ({ product, edit, className }) => {
     const classes = useStyles(className)
 
     return (
@@ -49,20 +35,14 @@ export const ProductReviews: FC<Props> = ({
                         review={review}
                         reviewerProfile
                         cardActionArea
-                        setOpen={setOpen}
-                        setRating={setRating}
-                        setResult={setResult}
-                        setJoined_at={setJoined_at}
-                        setContents={setContents}
-                        setIsEdit={setIsEdit}
+                        edit={edit}
                     />
-                ))
-            }
-            {!product.reviews &&
+                ))}
+            {!product.reviews && (
                 <Card className={classes.root}>
                     <Typography>まだ投稿はありません</Typography>
                 </Card>
-            }
+            )}
         </>
     )
 }

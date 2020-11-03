@@ -1,6 +1,11 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { FormControl, InputLabel, Input, FormHelperText } from '@material-ui/core'
+import {
+    FormControl,
+    InputLabel,
+    Input,
+    FormHelperText,
+} from '@material-ui/core'
 
 interface Props {
     label: string
@@ -23,16 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const Form: FC<Props> = ({
-    label, value, setValue, className
-}) => {
+export const Form: FC<Props> = ({ label, value, setValue, className }) => {
     const classes = useStyles(className)
-    
+
     return (
         <FormControl className={classes.root}>
-            <InputLabel htmlFor={label}>
-                { label }
-            </InputLabel>
+            <InputLabel htmlFor={label}>{label}</InputLabel>
             <Input
                 id={label}
                 aria-describedby={`${label}-helper`}

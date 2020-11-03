@@ -2,21 +2,19 @@ import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
+import { ReviewDetail } from '../@types'
+import { RootState } from '../stores/index'
+import { setFocusedProduct } from '../stores/product'
+import { setFocusedReview } from '../stores/review'
 import { asyncGetProduct } from '../ajax/product'
 import { asyncPostReview, asyncUpdateReview } from '../ajax/review'
-import { RootState } from '../stores/index'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 import { ReviewForm } from '../components/templates/ReviewForm'
 
 export const ProductDetail: FC = () => {
     const dispatch = useDispatch()
+    const { id } = useParams<{ id: string }>()
 
-    interface Params {
-        id: string
-    }
-    const { id } = useParams<Params>()
-
-    const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
     const postStatus = useSelector(
         (state: RootState) => state.review.postStatus,
     )
@@ -34,41 +32,57 @@ export const ProductDetail: FC = () => {
     // 投稿フォームの開閉
     const [open, setOpen] = useState<boolean>(false)
     // 新規投稿 or 編集
-    const [isEdit, setIsEdit] = useState<boolean>(false)
+    const [isNew, setIsNew] = useState<boolean>(false)
 
     const getProduct = () => {
         dispatch(asyncGetProduct(id))
     }
 
     const post = () => {
+        if (!user || !product) return false
         dispatch(
             asyncPostReview(
                 rating,
                 result,
                 joined_at,
                 contents,
-                user?.id,
-                product?.id,
+                user.id,
+                product.id,
             ),
         )
     }
 
-    const edit = () => {
+    const edit = (review: ReviewDetail) => {
+        dispatch(setFocusedReview(review))
+        setRating(review.rating)
+        setResult(review.result)
+        setJoined_at(review.joined_at)
+        setContents(review.contents)
+        setOpen(true)
+    }
+
+    const update = () => {
+        if (!user || !product || !review) return false
         dispatch(
             asyncUpdateReview(
                 rating,
                 result,
                 joined_at,
                 contents,
-                user?.id,
-                product?.id,
-                review?.id,
+                user.id,
+                product.id,
+                review.id,
             ),
         )
     }
 
     useEffect(() => {
         getProduct()
+
+        return () => {
+            dispatch(setFocusedProduct(null))
+            dispatch(setFocusedReview(null))
+        }
     }, [])
 
     useEffect(() => {
@@ -79,7 +93,7 @@ export const ProductDetail: FC = () => {
             setResult(0)
             setJoined_at('')
             setContents('')
-            setIsEdit(false)
+            setIsNew(false)
         }
     }, [postStatus])
 
@@ -90,11 +104,8 @@ export const ProductDetail: FC = () => {
                     <ProductDetailTemp
                         product={product}
                         setOpen={setOpen}
-                        setRating={setRating}
-                        setResult={setResult}
-                        setJoined_at={setJoined_at}
-                        setContents={setContents}
-                        setIsEdit={setIsEdit}
+                        setIsNew={setIsNew}
+                        edit={edit}
                     />
                     <ReviewForm
                         open={open}
@@ -108,8 +119,8 @@ export const ProductDetail: FC = () => {
                         contents={contents}
                         setContents={setContents}
                         post={post}
-                        edit={edit}
-                        isEdit={isEdit}
+                        update={update}
+                        isNew={isNew}
                         product={product}
                     />
                 </>

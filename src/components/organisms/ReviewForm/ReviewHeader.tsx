@@ -15,8 +15,8 @@ import { Product } from '../../../@types'
 interface Props {
     setOpen: (value: boolean) => void
     post?: () => void
-    edit: () => void
-    isEdit: boolean
+    update: () => void
+    isNew: boolean
     product: Product
     className?: ClassProps
 }
@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ReviewHeader: FC<Props> = ({
     setOpen,
     post,
-    edit,
-    isEdit,
+    update,
+    isNew,
     product,
     className,
 }) => {
@@ -70,13 +70,13 @@ export const ReviewHeader: FC<Props> = ({
                             {product.name}
                         </Typography>
                     </Grid>
-                    {!isEdit && (
+                    {isNew && (
                         <Button color="inherit" onClick={post}>
                             投稿
                         </Button>
                     )}
-                    {isEdit && (
-                        <Button color="inherit" onClick={edit}>
+                    {!isNew && (
+                        <Button color="inherit" onClick={update}>
                             更新
                         </Button>
                     )}

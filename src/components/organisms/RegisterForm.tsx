@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: '24px',
         },
         button: {
-            margin: '24px'
-        }
-    })
+            margin: '24px',
+        },
+    }),
 )
 
 export const RegisterForm: FC<Props> = ({
@@ -50,7 +50,6 @@ export const RegisterForm: FC<Props> = ({
     const classes = useStyles(className)
 
     return (
-
         <Card className={classes.root}>
             <Grid
                 container
@@ -69,15 +68,11 @@ export const RegisterForm: FC<Props> = ({
                         alignItems="center"
                     >
                         <Form
-                            label='Account ID'
+                            label="Account ID"
                             value={accountId}
                             setValue={setAccountId}
                         />
-                        <Form
-                            label='Name'
-                            value={name}
-                            setValue={setName}
-                        />
+                        <Form label="Name" value={name} setValue={setName} />
                         <PasswordForm
                             password={password}
                             setPassword={setPassword}
