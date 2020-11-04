@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface ErrorStore {
-    apiStatus: boolean|null
+    apiStatus: boolean | null
 }
 
 // Stateの初期状態

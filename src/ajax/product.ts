@@ -15,20 +15,22 @@ axios.defaults.baseURL = 'https://localhost:1443'
 // エラーレスポンスが返って来た場合、レスポンスオブジェクトを返す
 axios.interceptors.response.use(
     response => response,
-    error => error.response || error
+    error => error.response || error,
 )
 
-export const asyncGetProducts = (setProducts: (value: Product[]|null) => void) => {
-    return async(dispatch: any) => {
+export const asyncGetProducts = (
+    setProducts: (value: Product[] | null) => void,
+) => {
+    return async (dispatch: any) => {
         dispatch(setApiStatus(null))
 
         const response = await axios.get('https://localhost:1443/v1/products')
-    
+
         if (response.status === 200) {
             setProducts(response.data)
             dispatch(setApiStatus(true))
         }
-        
+
         if (response.status === 422) {
             dispatch(setApiStatus(false))
         }
@@ -36,12 +38,10 @@ export const asyncGetProducts = (setProducts: (value: Product[]|null) => void) =
 }
 
 export const asyncGetProduct = (id: string) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setApiStatus(null))
 
-        const response = await axios.get(
-            `/v1/products/${id}`
-        )
+        const response = await axios.get(`/v1/products/${id}`)
 
         if (response.status === 200) {
             dispatch(setFocusedProduct(response.data))

@@ -15,23 +15,23 @@ axios.defaults.baseURL = 'https://localhost:1443'
 // エラーレスポンスが返って来た場合、レスポンスオブジェクトを返す
 axios.interceptors.response.use(
     response => response,
-    error => error.response || error
+    error => error.response || error,
 )
 
 // 仮登録処理
 export const asyncPreRegister = (email: string) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setApiStatus(null))
 
         const response = await axios.post(
             'https://localhost:1443/v1/preregister',
-            {email: email}
+            { email: email },
         )
 
         if (response.status === 201) {
             dispatch(setApiStatus(true))
         }
-        
+
         if (response.status === 422) {
             dispatch(setApiStatus(false))
         }
@@ -42,16 +42,15 @@ export const asyncPreRegister = (email: string) => {
 export const asyncVerify = (
     query: queryString.ParsedQuery<string>,
     setPreRegisterId: (value: number) => void,
-    setEmail: (value: string) => void
+    setEmail: (value: string) => void,
 ) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setApiStatus(null))
 
-        const response = await axios.post(
-            '/v1/register/verify',
-            { token: query.token }
-        )
-        
+        const response = await axios.post('/v1/register/verify', {
+            token: query.token,
+        })
+
         if (response.status === 200) {
             setPreRegisterId(response.data.pre_register_id)
             setEmail(response.data.email)
@@ -70,24 +69,20 @@ export const asyncRegister = (
     email: string,
     name: string,
     password: string,
-    passwordConfirmation: string,
-    preRegisterId: number
+    preRegisterId: number,
 ) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setApiStatus(null))
 
-        const response = await axios.post(
-            '/v1/register',
-            {
-                'account_id': accountId,
-                'email': email,
-                'name': name,
-                'password': password,
-                'password_confirmation': passwordConfirmation,
-                'pre_register_id': preRegisterId
-            }
-        )
-            
+        const response = await axios.post('/v1/register', {
+            account_id: accountId,
+            email: email,
+            name: name,
+            password: password,
+            password_confirmation: password,
+            pre_register_id: preRegisterId,
+        })
+
         if (response.status === 201) {
             dispatch(setUser(response.data))
             dispatch(setApiStatus(true))
@@ -95,25 +90,25 @@ export const asyncRegister = (
 
         if (response.status === 422) {
             dispatch(setApiStatus(false))
-        }            
+        }
     }
 }
 
 // ログイン処理
 export const asyncLogin = (email: string, password: string) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setApiStatus(null))
-        
-        const response = await axios.post(
-            '/v1/login',
-            { 'email': email, 'password': password }
-        )
+
+        const response = await axios.post('/v1/login', {
+            email: email,
+            password: password,
+        })
 
         if (response.status === 200) {
             dispatch(setUser(response.data))
             dispatch(setApiStatus(true))
-        } 
-        
+        }
+
         if (response.status === 422) {
             dispatch(setApiStatus(false))
         }

@@ -1,22 +1,22 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
-    "types":["node"],
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable"
-    ],
-    "allowJs": true, // jsコンパイル用
-    "checkJs": true,  // js簡易型チェック
-    "sourceMap": true,
-    "inlineSources": true,
-    "outDir": "./dist/",
-    "noImplicitAny": true,
-    "jsx": "react",
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "strictNullChecks": true
-  }
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "types":["node"],
+        "lib": [
+            "esnext",
+            "dom",
+            "dom.iterable"
+        ],
+        "allowJs": true, // jsコンパイル用
+        "checkJs": true,  // js簡易型チェック
+        "sourceMap": true,
+        "inlineSources": true,
+        "outDir": "./dist/",
+        "noImplicitAny": true,
+        "jsx": "react",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "strictNullChecks": true
+    }
 }

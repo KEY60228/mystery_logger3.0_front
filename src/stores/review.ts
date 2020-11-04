@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 import { ReviewDetail } from '../@types'
 
 export interface ReviewStore {
-    focusedReview: ReviewDetail|null
-    postStatus: boolean|null
+    focusedReview: ReviewDetail | null
+    postStatus: boolean | null
 }
 
 // Stateの初期状態
@@ -22,8 +22,8 @@ const slice = createSlice({
             return Object.assign({}, state, { focusedReview: action.payload })
         },
         setPostStatus: (state, action) => {
-            return Object.assign({}, state, { postStatus: action.payload})
-        }
+            return Object.assign({}, state, { postStatus: action.payload })
+        },
     },
 })
 
