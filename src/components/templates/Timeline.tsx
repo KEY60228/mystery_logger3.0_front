@@ -1,12 +1,14 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
-import { ReviewDetail } from '../../@types'
+import { ReviewDetail, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
 
 interface Props {
     reviews: ReviewDetail[]
     edit: (review: ReviewDetail) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const Timeline: FC<Props> = ({ reviews, edit }) => {
+export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow }) => {
     const classes = useStyles()
 
     return (
@@ -29,6 +31,8 @@ export const Timeline: FC<Props> = ({ reviews, edit }) => {
                     productTitle
                     productCard
                     edit={edit}
+                    follow={follow}
+                    unfollow={unfollow}
                     className={{ margin: '8px' }}
                 />
             ))}

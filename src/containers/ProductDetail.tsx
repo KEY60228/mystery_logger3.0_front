@@ -2,12 +2,14 @@ import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { ReviewDetail } from '../@types'
+import { ReviewDetail, User } from '../@types'
 import { RootState } from '../stores/index'
 import { setFocusedProduct } from '../stores/product'
 import { setFocusedReview } from '../stores/review'
 import { asyncGetProduct } from '../ajax/product'
 import { asyncPostReview, asyncUpdateReview } from '../ajax/review'
+import { asyncFollow, asyncUnFollow } from '../ajax/user'
+import { asyncGetCurrentUser } from '../ajax/auth'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 import { ReviewForm } from '../components/templates/ReviewForm'
 
@@ -22,7 +24,8 @@ export const ProductDetail: FC = () => {
         (state: RootState) => state.product.focusedProduct,
     )
     const review = useSelector((state: RootState) => state.review.focusedReview)
-    const user = useSelector((state: RootState) => state.auth.user)
+    const currentUser = useSelector((state: RootState) => state.auth.user)
+    const followStatus = useSelector((state: RootState) => state.user.followStatus)
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -39,14 +42,14 @@ export const ProductDetail: FC = () => {
     }
 
     const post = () => {
-        if (!user || !product) return false
+        if (!currentUser || !product) return false
         dispatch(
             asyncPostReview(
                 rating,
                 result,
                 joined_at,
                 contents,
-                user.id,
+                currentUser.id,
                 product.id,
             ),
         )
@@ -63,18 +66,28 @@ export const ProductDetail: FC = () => {
     }
 
     const update = () => {
-        if (!user || !product || !review) return false
+        if (!currentUser || !product || !review) return false
         dispatch(
             asyncUpdateReview(
                 rating,
                 result,
                 joined_at,
                 contents,
-                user.id,
+                currentUser.id,
                 product.id,
                 review.id,
             ),
         )
+    }
+
+    const follow = (user: User) => {
+        if (!currentUser || !user) return false
+        dispatch(asyncFollow(currentUser.id, user.id))
+    }
+    
+    const unfollow = (user: User) => {
+        if(!currentUser || !user) return false
+        dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
     useEffect(() => {
@@ -98,6 +111,12 @@ export const ProductDetail: FC = () => {
         }
     }, [postStatus])
 
+    useEffect(() => {
+        if (followStatus) {
+            dispatch(asyncGetCurrentUser())
+        }
+    }, [followStatus])
+
     return (
         <>
             {product && (
@@ -107,6 +126,8 @@ export const ProductDetail: FC = () => {
                         setOpen={setOpen}
                         setIsNew={setIsNew}
                         edit={edit}
+                        follow={follow}
+                        unfollow={unfollow}
                     />
                     <ReviewForm
                         open={open}

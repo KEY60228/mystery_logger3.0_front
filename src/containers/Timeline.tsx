@@ -2,10 +2,12 @@ import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '../stores/index'
-import { ReviewDetail } from '../@types'
+import { ReviewDetail, User } from '../@types'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 import { ReviewForm } from '../components/templates/ReviewForm'
 import { asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
+import { asyncFollow, asyncUnFollow } from '../ajax/user'
+import { asyncGetCurrentUser } from '../ajax/auth'
 import { setFocusedReview } from '../stores/review'
 
 export const Timeline: FC = () => {
@@ -16,8 +18,9 @@ export const Timeline: FC = () => {
     const postStatus = useSelector(
         (state: RootState) => state.review.postStatus,
     )
-    const user = useSelector((state: RootState) => state.auth.user)
+    const currentUser = useSelector((state: RootState) => state.auth.user)
     const review = useSelector((state: RootState) => state.review.focusedReview)
+    const followStatus = useSelector((state: RootState) => state.user.followStatus)
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -28,8 +31,8 @@ export const Timeline: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const getReviews = async () => {
-        if (!user) return false
-        dispatch(asyncGetTimeline(user.id, setReviews))
+        if (!currentUser) return false
+        dispatch(asyncGetTimeline(currentUser.id, setReviews))
     }
 
     const edit = (review: ReviewDetail) => {
@@ -43,18 +46,28 @@ export const Timeline: FC = () => {
     }
 
     const update = () => {
-        if (!user || !review) return false
+        if (!currentUser || !review) return false
         dispatch(
             asyncUpdateReview(
                 rating,
                 result,
                 joined_at,
                 contents,
-                user.id,
+                currentUser.id,
                 review.product.id,
                 review.id,
             ),
         )
+    }
+
+    const follow = (user: User) => {
+        if (!currentUser || !user) return false
+        dispatch(asyncFollow(currentUser.id, user.id))
+    }
+    
+    const unfollow = (user: User) => {
+        if(!currentUser || !user) return false
+        dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
     useEffect(() => {
@@ -76,11 +89,17 @@ export const Timeline: FC = () => {
         }
     }, [postStatus])
 
+    useEffect(() => {
+        if (followStatus) {
+            dispatch(asyncGetCurrentUser())
+        }
+    }, [followStatus])
+
     return (
         <>
             {reviews && (
                 <>
-                    <TimelineTemp reviews={reviews} edit={edit} />
+                    <TimelineTemp reviews={reviews} edit={edit} follow={follow} unfollow={unfollow} />
                     {review && (
                         <ReviewForm
                             open={open}

@@ -6,10 +6,12 @@ import { Card, CardMedia, Grid, Typography, Button } from '@material-ui/core'
 import { RootState } from '../../../stores/index'
 import { User } from '../../../@types'
 import { UserCounters } from './UserCounters'
+import { FollowButton } from '../../molecules/FollowButton'
 
 interface Props {
     user: User
-    follow: () => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
     className?: ClassProps
 }
 
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserProfile: FC<Props> = ({ user, follow, className }) => {
+export const UserProfile: FC<Props> = ({ user, follow, unfollow, className }) => {
     const classes = useStyles(className)
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -83,15 +85,13 @@ export const UserProfile: FC<Props> = ({ user, follow, className }) => {
                 {user.account_id === currentUser?.account_id && (
                     <Button>設定</Button>
                 )}
-                {user.account_id !== currentUser?.account_id && (
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={follow}
-                        className={classes.button}
-                    >
-                        フォローする
-                    </Button>
+                {(currentUser && user.account_id !== currentUser?.account_id) && (
+                    <FollowButton
+                        currentUser={currentUser}
+                        user={user}
+                        follow={follow}
+                        unfollow={unfollow}
+                    />
                 )}
             </Grid>
             <Typography variant="body1" className={classes.profile}>
