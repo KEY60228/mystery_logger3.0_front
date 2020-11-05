@@ -7,6 +7,7 @@ import { UserDetail as UserDetailInterface, User } from '../@types'
 import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import { asyncGetUser, asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
+import { setFollowStatus } from '../stores/user'
 
 export const UserDetail: FC = () => {
     const dispatch = useDispatch()
@@ -39,6 +40,7 @@ export const UserDetail: FC = () => {
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
+            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
 

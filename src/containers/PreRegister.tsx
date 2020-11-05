@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../stores/index'
 import { asyncPreRegister } from '../ajax/auth'
 import { PreRegister as PreRegisterTemp } from '../components/templates/PreRegister'
+import { setApiStatus } from '../stores/error'
 
 export const PreRegister: FC = () => {
     const dispatch = useDispatch()
 
-    const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
+    const preRegisterStatus = useSelector((state: RootState) => state.auth.preRegisterStatus)
 
     const [email, setEmail] = useState<string>('')
     const [open, setOpen] = useState<boolean>(false) // templatesに持たせる？
@@ -18,10 +19,11 @@ export const PreRegister: FC = () => {
     }
 
     useEffect(() => {
-        if (apiStatus) {
+        if (preRegisterStatus) {
             setOpen(true)
+            dispatch(setApiStatus(null))
         }
-    }, [apiStatus])
+    }, [preRegisterStatus])
 
     return (
         <PreRegisterTemp

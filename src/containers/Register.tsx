@@ -7,6 +7,7 @@ import { RootState } from '../stores/index'
 import { asyncRegister, asyncVerify } from '../ajax/auth'
 import { Register as RegisterTemp } from '../components/templates/Register'
 import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
+import { setApiStatus } from '../stores/error'
 
 export const Register: FC = () => {
     const history = useHistory()
@@ -37,6 +38,7 @@ export const Register: FC = () => {
     useEffect(() => {
         if (user) {
             history.push(`/users/${user.account_id}`)
+            dispatch(setApiStatus(null))
         }
     }, [apiStatus])
 

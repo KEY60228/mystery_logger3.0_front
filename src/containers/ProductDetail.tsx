@@ -5,13 +5,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { ReviewDetail, User } from '../@types'
 import { RootState } from '../stores/index'
 import { setFocusedProduct } from '../stores/product'
-import { setFocusedReview } from '../stores/review'
+import { setFocusedReview, setPostStatus } from '../stores/review'
 import { asyncGetProduct } from '../ajax/product'
 import { asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 import { ReviewForm } from '../components/templates/ReviewForm'
+import { setFollowStatus } from '../stores/user'
 
 export const ProductDetail: FC = () => {
     const dispatch = useDispatch()
@@ -108,12 +109,14 @@ export const ProductDetail: FC = () => {
             setJoined_at('')
             setContents('')
             setIsNew(false)
+            dispatch(setPostStatus(null))
         }
     }, [postStatus])
 
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
+            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
 

@@ -8,7 +8,8 @@ import { ReviewForm } from '../components/templates/ReviewForm'
 import { asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { setFocusedReview } from '../stores/review'
+import { setFocusedReview, setPostStatus } from '../stores/review'
+import { setFollowStatus } from '../stores/user'
 
 export const Timeline: FC = () => {
     const dispatch = useDispatch()
@@ -86,12 +87,14 @@ export const Timeline: FC = () => {
             setResult(0)
             setJoined_at('')
             setContents('')
+            dispatch(setPostStatus(null))
         }
     }, [postStatus])
 
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
+            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
 

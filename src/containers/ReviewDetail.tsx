@@ -9,6 +9,7 @@ import { ReviewDetail as ReviewDetailTemp } from '../components/templates/Review
 import { asyncGetReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
+import { setFollowStatus } from '../stores/user'
 
 export const ReviewDetail: FC = () => {
     interface Params {
@@ -46,6 +47,7 @@ export const ReviewDetail: FC = () => {
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
+            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
 

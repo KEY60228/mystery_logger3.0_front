@@ -3,11 +3,13 @@ import { User } from '../@types'
 
 export interface AuthStore {
     user: User | null
+    preRegisterStatus: boolean | null
 }
 
 // Stateの初期状態
 const initialState: AuthStore = {
     user: null,
+    preRegisterStatus: null,
 }
 
 // Sliceを生成する
@@ -19,6 +21,9 @@ const slice = createSlice({
         setUser: (state, action) => {
             return Object.assign({}, state, { user: action.payload })
         },
+        setPreRegisterStatus: (state, action) => {
+            return Object.assign({}, state, { preRegisterStatus: action.payload})
+        }
     },
 })
 
@@ -26,4 +31,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setUser } = slice.actions
+export const { setUser, setPreRegisterStatus } = slice.actions
