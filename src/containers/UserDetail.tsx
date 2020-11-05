@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../stores/index'
 import { UserDetail as UserDetailInterface } from '../@types'
 import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
-import { asyncGetUser, asyncFollow } from '../ajax/user'
+import { asyncGetUser, asyncFollow, asyncUnFollow } from '../ajax/user'
 
 export const UserDetail: FC = () => {
     const dispatch = useDispatch()
@@ -22,7 +22,12 @@ export const UserDetail: FC = () => {
 
     const follow = () => {
         if (!currentUser || !user) return false
-        asyncFollow(currentUser.id, user.id)
+        dispatch(asyncFollow(currentUser.id, user.id))
+    }
+    
+    const unfollow = () => {
+        if(!currentUser || !user) return false
+        dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
     useEffect(() => {
@@ -31,7 +36,7 @@ export const UserDetail: FC = () => {
 
     return (
         <>
-            {user && <UserDetailTemp user={user} follow={follow} />}
+            {user && <UserDetailTemp user={user} follow={follow} unfollow={unfollow} />}
             {!user && <div>loading</div>}
         </>
     )

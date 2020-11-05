@@ -28,7 +28,9 @@ export interface User {
     created_at: string
     updated_at: string | null
     reviews_count: number
+    follows_id: number[]
     follows_count: number
+    followers_id: number[]
     followers_count: number
     success_rate: number | null
     wannaProducts_count: number

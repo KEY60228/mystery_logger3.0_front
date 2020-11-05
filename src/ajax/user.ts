@@ -58,3 +58,27 @@ export const asyncFollow = (
         }
     }
 }
+
+export const asyncUnFollow = (
+    following_id: number,
+    followed_id: number,
+) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+
+        const response = await axios.delete('/v1/unfollow', {
+            params: {
+                following_id: following_id,
+                followed_id: followed_id,
+            }
+        })
+
+        if (response.status === 200) {
+            dispatch(setApiStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setApiStatus(false))
+        }
+    }
+}

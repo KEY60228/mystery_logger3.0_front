@@ -10,16 +10,17 @@ import { TempSpace } from '../molecules/TempSpace'
 interface Props {
     user: UserDetailInterface
     follow: () => void
+    unfollow: () => void
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}))
 
-export const UserDetail: FC<Props> = ({ user, follow }) => {
+export const UserDetail: FC<Props> = ({ user, follow, unfollow }) => {
     const classes = useStyles()
 
     return (
         <>
-            <UserProfile user={user} follow={follow} />
+            <UserProfile user={user} follow={follow} unfollow={unfollow} />
             <UserStatics />
             <UserTabs user={user} />
             <TempSpace
