@@ -114,3 +114,23 @@ export const asyncLogin = (email: string, password: string) => {
         }
     }
 }
+
+// クッキーログイン & ユーザー情報更新
+export const asyncGetCurrentUser = () => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+
+        const response = await axios.get(
+            '/v1/currentuser'
+        )
+
+        if (response.status === 200) {
+            dispatch(setUser(response.data))
+            dispatch(setApiStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setApiStatus(false))
+        }
+    }  
+}

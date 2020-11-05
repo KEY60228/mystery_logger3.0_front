@@ -4,12 +4,14 @@ import { AuthStore } from './auth'
 import { ErrorStore } from './error'
 import { ProductStore } from './product'
 import { ReviewStore } from './review'
+import { UserStore } from './user'
 
 // それぞれ slice.reducer を default export している前提
 import authReducer from './auth'
 import errorReducer from './error'
 import productReducer from './product'
 import reviewReducer from './review'
+import userReducer from './user'
 // import messageReducer from './message'
 
 const reducer = combineReducers({
@@ -17,6 +19,7 @@ const reducer = combineReducers({
     error: errorReducer,
     product: productReducer,
     review: reviewReducer,
+    user: userReducer,
     // message: messageReducer,
 })
 
@@ -30,4 +33,5 @@ export interface RootState {
     error: ErrorStore
     product: ProductStore
     review: ReviewStore
+    user: UserStore
 }

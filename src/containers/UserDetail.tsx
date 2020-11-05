@@ -6,6 +6,7 @@ import { RootState } from '../stores/index'
 import { UserDetail as UserDetailInterface } from '../@types'
 import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import { asyncGetUser, asyncFollow, asyncUnFollow } from '../ajax/user'
+import { asyncGetCurrentUser } from '../ajax/auth'
 
 export const UserDetail: FC = () => {
     const dispatch = useDispatch()
@@ -15,6 +16,7 @@ export const UserDetail: FC = () => {
     const [user, setUser] = useState<UserDetailInterface | null>(null)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
+    const followStatus = useSelector((state: RootState) => state.user.followStatus)
 
     const getUser = () => {
         dispatch(asyncGetUser(account_id, setUser))
@@ -33,6 +35,12 @@ export const UserDetail: FC = () => {
     useEffect(() => {
         getUser()
     }, [])
+
+    useEffect(() => {
+        if (followStatus) {
+            dispatch(asyncGetCurrentUser())
+        }
+    }, [followStatus])
 
     return (
         <>
