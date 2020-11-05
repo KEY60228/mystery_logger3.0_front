@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
-import { User, UserDetail } from '../../@types'
+import { User } from '../../@types'
 
 interface Props {
     currentUser: User
     user: User
-    follow: () => void
-    unfollow: () => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
     className?: ClassProps
 }
 
@@ -34,7 +34,7 @@ export const FollowButton: FC<Props> = ({
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={unfollow}
+                    onClick={() => unfollow(user)}
                 >
                     フォロー解除
                 </Button>
@@ -43,7 +43,7 @@ export const FollowButton: FC<Props> = ({
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={follow}
+                    onClick={() => follow(user)}
                 >
                     フォロー
                 </Button>

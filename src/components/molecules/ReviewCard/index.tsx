@@ -19,6 +19,8 @@ interface Props {
     productCard?: boolean
     shorten?: boolean
     edit: (review: ReviewDetail) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
     className?: ClassProps
 }
 
@@ -43,6 +45,8 @@ export const ReviewCard: FC<Props> = ({
     productCard,
     shorten,
     edit,
+    follow,
+    unfollow,
     className,
 }) => {
     const classes = useStyles(className)
@@ -50,7 +54,7 @@ export const ReviewCard: FC<Props> = ({
     return (
         <Card className={classes.root}>
             {reviewerProfile && review.user && (
-                <ReviewerProfile review={review} edit={edit} />
+                <ReviewerProfile review={review} edit={edit} follow={follow} unfollow={unfollow} />
             )}
             <ReviewContents
                 review={review}

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '../stores/index'
-import { UserDetail as UserDetailInterface } from '../@types'
+import { UserDetail as UserDetailInterface, User } from '../@types'
 import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import { asyncGetUser, asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
@@ -22,12 +22,12 @@ export const UserDetail: FC = () => {
         dispatch(asyncGetUser(account_id, setUser))
     }
 
-    const follow = () => {
+    const follow = (user: User) => {
         if (!currentUser || !user) return false
         dispatch(asyncFollow(currentUser.id, user.id))
     }
     
-    const unfollow = () => {
+    const unfollow = (user: User) => {
         if(!currentUser || !user) return false
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }

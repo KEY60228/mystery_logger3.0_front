@@ -4,6 +4,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import {
     ProductDetail as ProductDetailInterface,
     ReviewDetail,
+    User,
 } from '../../@types'
 import { ProductContents } from '../organisms/ProductContents/index'
 import { ProductReviews } from '../organisms/ProductReviews'
@@ -14,6 +15,8 @@ interface Props {
     setOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
     edit: (review: ReviewDetail) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,6 +30,8 @@ export const ProductDetail: FC<Props> = ({
     setOpen,
     setIsNew,
     edit,
+    follow,
+    unfollow,
 }) => {
     const classes = useStyles()
 
@@ -37,7 +42,7 @@ export const ProductDetail: FC<Props> = ({
                 setModalOpen={setOpen}
                 setIsNew={setIsNew}
             />
-            <ProductReviews product={product} edit={edit} />
+            <ProductReviews product={product} edit={edit} follow={follow} unfollow={unfollow} />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

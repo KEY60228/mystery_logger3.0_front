@@ -2,13 +2,15 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
-import { UserDetail, ReviewDetail, ReviewWithProduct } from '../../../@types'
+import { UserDetail, ReviewDetail, ReviewWithProduct, User } from '../../../@types'
 import { ListedProducts } from './ListedProducts'
 import { ReviewCard } from '../../molecules/ReviewCard/index'
 import { ProductCard } from '../../molecules/ProductCard/index'
 
 interface Props {
     user: UserDetail
+    follow: (user: User) => void
+    unfollow: (user: User) => void
     className?: ClassProps
 }
 
@@ -44,7 +46,7 @@ const TabPanel: FC<TabPanelProps> = ({ children, index, value }) => {
     )
 }
 
-export const UserTabs: FC<Props> = ({ user, className }) => {
+export const UserTabs: FC<Props> = ({ user, follow, unfollow, className }) => {
     const classes = useStyles(className)
     const [value, setValue] = useState<number>(0)
 
@@ -102,6 +104,8 @@ export const UserTabs: FC<Props> = ({ user, className }) => {
                                 cardActionArea
                                 productTitle
                                 productCard
+                                follow={follow}
+                                unfollow={unfollow}
                                 // 仮
                                 edit={() => console.log()}
                             />

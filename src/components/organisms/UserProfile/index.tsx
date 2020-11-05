@@ -10,8 +10,8 @@ import { FollowButton } from '../../molecules/FollowButton'
 
 interface Props {
     user: User
-    follow: () => void
-    unfollow: () => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
     className?: ClassProps
 }
 

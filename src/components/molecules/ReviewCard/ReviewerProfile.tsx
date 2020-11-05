@@ -8,12 +8,12 @@ import {
     CardMedia,
     CardActionArea,
     Typography,
-    Button,
 } from '@material-ui/core'
 
 import { Review, User, Product } from '../../../@types'
 import { RootState } from '../../../stores/index'
 import { ReviewerMenu } from './ReviewerMenu'
+import { FollowButton } from '../FollowButton'
 
 interface ReviewDetail extends Review {
     user?: User
@@ -23,6 +23,8 @@ interface ReviewDetail extends Review {
 interface Props {
     review: ReviewDetail
     edit: (review: ReviewDetail) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
     className?: ClassProps
 }
 
@@ -62,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewerProfile: FC<Props> = ({ review, edit, className }) => {
+export const ReviewerProfile: FC<Props> = ({ review, edit, follow, unfollow, className }) => {
     const classes = useStyles(className)
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -98,10 +100,13 @@ export const ReviewerProfile: FC<Props> = ({ review, edit, className }) => {
                     </Typography>
                 </Grid>
             </Box>
-            {currentUser && review.user?.account_id !== currentUser.account_id && (
-                <Button variant="contained" color="primary">
-                    <Typography variant="button">フォロー</Typography>
-                </Button>
+            {(currentUser && review.user && review.user.account_id !== currentUser.account_id) && (
+                <FollowButton
+                    currentUser={currentUser}
+                    user={review.user}
+                    follow={follow}
+                    unfollow={unfollow}
+                />
             )}
             {currentUser &&
                 review.user?.account_id === currentUser.account_id && (
