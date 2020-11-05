@@ -6,8 +6,8 @@ import { setFocusedProduct } from '../stores/product'
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
-// // Cookieの送信を許可する
-// axios.defaults.withCredentials = true
+// Cookieの送信を許可する
+axios.defaults.withCredentials = true
 
 // デフォルトURLの設定
 axios.defaults.baseURL = 'https://localhost:1443'
