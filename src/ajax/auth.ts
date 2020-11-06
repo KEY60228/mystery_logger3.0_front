@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { setUser } from '../stores/auth'
+import { setPreRegisterStatus, setUser } from '../stores/auth'
 import { setApiStatus } from '../stores/error'
 import queryString from 'query-string'
 
@@ -22,17 +22,20 @@ axios.interceptors.response.use(
 export const asyncPreRegister = (email: string) => {
     return async (dispatch: any) => {
         dispatch(setApiStatus(null))
-
+        dispatch(setPreRegisterStatus(null))
+        
         const response = await axios.post(
             'https://localhost:1443/v1/preregister',
             { email: email },
         )
-
+            
         if (response.status === 201) {
+            dispatch(setPreRegisterStatus(true))
             dispatch(setApiStatus(true))
         }
-
+        
         if (response.status === 422) {
+            dispatch(setPreRegisterStatus(false))
             dispatch(setApiStatus(false))
         }
     }
