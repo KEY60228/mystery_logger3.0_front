@@ -65,7 +65,7 @@ export const UserCounters: FC<Props> = ({ user, className }) => {
                 alignItems="center"
             >
                 <Typography variant="body1" className={classes.text}>
-                    {user.success_rate ? `${user.success_rate * 100}%` : '-'}
+                    {user.success_rate ? `${(user.success_rate * 100).toFixed(1)}%` : '-'}
                 </Typography>
                 <Typography variant="subtitle1" className={classes.subtitle}>
                     成功率
