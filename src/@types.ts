@@ -32,6 +32,8 @@ export interface User {
     follows_count: number
     followers_id: number[]
     followers_count: number
+    done_id: number[]
+    wanna_id: number[]
     success_rate: number | null
     wannaProducts_count: number
     likeReviews_count: number

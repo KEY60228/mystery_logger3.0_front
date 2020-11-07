@@ -3,11 +3,13 @@ import { ProductDetail } from '../@types'
 
 export interface ProductStore {
     focusedProduct: ProductDetail | null
+    wannaStatus: boolean | null
 }
 
 // Stateの初期状態
 const initialState: ProductStore = {
     focusedProduct: null,
+    wannaStatus: null,
 }
 
 // Sliceを生成する
@@ -19,6 +21,9 @@ const slice = createSlice({
         setFocusedProduct: (state, action) => {
             return Object.assign({}, state, { focusedProduct: action.payload })
         },
+        setWannaStatus: (state, action) => {
+            return Object.assign({}, state, { wannaStatus: action.payload })
+        }
     },
 })
 
@@ -26,4 +31,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setFocusedProduct } = slice.actions
+export const { setFocusedProduct, setWannaStatus } = slice.actions
