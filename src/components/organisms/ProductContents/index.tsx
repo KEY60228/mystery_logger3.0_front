@@ -1,16 +1,18 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Typography } from '@material-ui/core'
 
-import { ProductDetail } from '../../../@types'
+import { Product, ProductDetail, User } from '../../../@types'
 import { Ratings } from '../../molecules/Ratings'
 import { Buttons } from './Buttons'
 import { ProductProfile } from './ProductProfile'
 
 interface Props {
     product: ProductDetail
+    currentUser: User | null
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
+    wanna: (product: Product) => void
     className?: ClassProps
 }
 
@@ -40,13 +42,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const ProductContents: FC<Props> = ({
     product,
+    currentUser,
     setModalOpen,
     setIsNew,
+    wanna,
     className,
 }) => {
     const classes = useStyles(className)
-    // 仮
-    const [wanna, setWanna] = useState<boolean>(false)
 
     return (
         <Card className={classes.root}>
@@ -68,10 +70,10 @@ export const ProductContents: FC<Props> = ({
                     />
                     <Buttons
                         product={product}
+                        currentUser={currentUser}
                         setModalOpen={setModalOpen}
                         setIsNew={setIsNew}
                         wanna={wanna}
-                        setWanna={setWanna}
                     />
                 </Grid>
                 <ProductProfile product={product} />

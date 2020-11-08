@@ -2,11 +2,11 @@ import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { ReviewDetail, User } from '../@types'
+import { Product, ReviewDetail, User } from '../@types'
 import { RootState } from '../stores/index'
-import { setFocusedProduct } from '../stores/product'
+import { setFocusedProduct, setWannaStatus } from '../stores/product'
 import { setFocusedReview, setPostStatus } from '../stores/review'
-import { asyncGetProduct } from '../ajax/product'
+import { asyncGetProduct, asyncWanna } from '../ajax/product'
 import { asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
@@ -27,6 +27,7 @@ export const ProductDetail: FC = () => {
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
+    const wannaStatus = useSelector((state: RootState) => state.product.wannaStatus)
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -91,6 +92,11 @@ export const ProductDetail: FC = () => {
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
+    const wanna = (product: Product) => {
+        if (!currentUser || !product) return false
+        dispatch(asyncWanna(currentUser.id, product.id))
+    }
+
     useEffect(() => {
         getProduct()
 
@@ -120,17 +126,26 @@ export const ProductDetail: FC = () => {
         }
     }, [followStatus])
 
+    useEffect(() => {
+        if (wannaStatus) {
+            dispatch(asyncGetCurrentUser())
+            dispatch(setWannaStatus(null))
+        }
+    }, [wannaStatus])
+
     return (
         <>
             {product && (
                 <>
                     <ProductDetailTemp
                         product={product}
+                        currentUser={currentUser}
                         setOpen={setOpen}
                         setIsNew={setIsNew}
                         edit={edit}
                         follow={follow}
                         unfollow={unfollow}
+                        wanna={wanna}
                     />
                     <ReviewForm
                         open={open}

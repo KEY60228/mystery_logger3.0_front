@@ -4,14 +4,14 @@ import { Grid, Button, Typography } from '@material-ui/core'
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import QueueIcon from '@material-ui/icons/Queue'
 
-import { ProductDetail } from '../../../@types'
+import { Product, ProductDetail, User } from '../../../@types'
 
 interface Props {
     product: ProductDetail
+    currentUser: User | null
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
-    wanna: boolean
-    setWanna: (value: boolean) => void
+    wanna: (product: Product) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -24,54 +24,96 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Buttons: FC<Props> = ({
     product,
+    currentUser,
     setModalOpen,
     setIsNew,
     wanna,
-    setWanna,
 }) => {
     const classes = useStyles()
 
-    const onClick = () => {
+    const onClickDone = () => {
         setIsNew(true)
         setModalOpen(true)
     }
 
     return (
         <Grid container direction="row" justify="center" alignItems="center">
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={onClick}
-                className={classes.button}
-            >
-                <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
+            { (!currentUser || !currentUser.done_id.includes(product.id)) &&
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={onClickDone}
+                    className={classes.button}
                 >
-                    <DirectionsRunIcon />
-                    <Typography variant="caption">
-                        {product.reviews_count}
-                    </Typography>
-                </Grid>
-            </Button>
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={() => setWanna(!wanna)}
-                className={classes.button}
-            >
-                <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <DirectionsRunIcon />
+                        <Typography variant="caption">
+                            {product.reviews_count}
+                        </Typography>
+                    </Grid>
+                </Button>
+            }
+            { (currentUser && currentUser.done_id.includes(product.id)) &&
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={onClickDone} // 仮
+                    className={classes.button}
                 >
-                    <QueueIcon />
-                    <Typography variant="caption">{800 /* 仮 */}</Typography>
-                </Grid>
-            </Button>
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <DirectionsRunIcon />
+                        <Typography variant="caption">
+                            {product.reviews_count}
+                        </Typography>
+                    </Grid>
+                </Button>
+            }
+            { (!currentUser || !currentUser.wanna_id.includes(product.id)) &&
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => wanna(product)}
+                    className={classes.button}
+                >
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <QueueIcon />
+                        <Typography variant="caption">{800 /* 仮 */}</Typography>
+                    </Grid>
+                </Button>
+            }
+            { (currentUser && currentUser.wanna_id.includes(product.id)) &&
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => wanna(product)} // 仮
+                    className={classes.button}
+                >
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <QueueIcon />
+                        <Typography variant="caption">{800 /* 仮 */}</Typography>
+                    </Grid>
+                </Button>
+            }
         </Grid>
     )
 }
