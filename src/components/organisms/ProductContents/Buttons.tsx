@@ -12,6 +12,7 @@ interface Props {
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
     wanna: (product: Product) => void
+    unwanna: (product: Product) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,6 +29,7 @@ export const Buttons: FC<Props> = ({
     setModalOpen,
     setIsNew,
     wanna,
+    unwanna,
 }) => {
     const classes = useStyles()
 
@@ -100,7 +102,7 @@ export const Buttons: FC<Props> = ({
                 <Button
                     variant="outlined"
                     color="primary"
-                    onClick={() => wanna(product)} // 仮
+                    onClick={() => unwanna(product)}
                     className={classes.button}
                 >
                     <Grid

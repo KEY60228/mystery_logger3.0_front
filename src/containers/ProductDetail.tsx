@@ -6,7 +6,7 @@ import { Product, ReviewDetail, User } from '../@types'
 import { RootState } from '../stores/index'
 import { setFocusedProduct, setWannaStatus } from '../stores/product'
 import { setFocusedReview, setPostStatus } from '../stores/review'
-import { asyncGetProduct, asyncWanna } from '../ajax/product'
+import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
 import { asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
@@ -97,6 +97,11 @@ export const ProductDetail: FC = () => {
         dispatch(asyncWanna(currentUser.id, product.id))
     }
 
+    const unwanna = (product: Product) => {
+        if (!currentUser || !product) return false
+        dispatch(asyncUnwanna(currentUser.id, product.id))
+    }
+
     useEffect(() => {
         getProduct()
 
@@ -146,6 +151,7 @@ export const ProductDetail: FC = () => {
                         follow={follow}
                         unfollow={unfollow}
                         wanna={wanna}
+                        unwanna={unwanna}
                     />
                     <ReviewForm
                         open={open}

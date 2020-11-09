@@ -10,7 +10,6 @@ import {
 import { ProductContents } from '../organisms/ProductContents/index'
 import { ProductReviews } from '../organisms/ProductReviews'
 import { TempSpace } from '../molecules/TempSpace'
-import { current } from '@reduxjs/toolkit'
 
 interface Props {
     product: ProductDetailInterface
@@ -21,6 +20,7 @@ interface Props {
     follow: (user: User) => void
     unfollow: (user: User) => void
     wanna: (product: Product) => void
+    unwanna: (product: Product) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,6 +38,7 @@ export const ProductDetail: FC<Props> = ({
     follow,
     unfollow,
     wanna,
+    unwanna,
 }) => {
     const classes = useStyles()
 
@@ -49,6 +50,7 @@ export const ProductDetail: FC<Props> = ({
                 setModalOpen={setOpen}
                 setIsNew={setIsNew}
                 wanna={wanna}
+                unwanna={unwanna}
             />
             <ProductReviews product={product} edit={edit} follow={follow} unfollow={unfollow} />
             <TempSpace

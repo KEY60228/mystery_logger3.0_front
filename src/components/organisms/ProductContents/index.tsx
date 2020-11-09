@@ -13,6 +13,7 @@ interface Props {
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
     wanna: (product: Product) => void
+    unwanna: (product: Product) => void
     className?: ClassProps
 }
 
@@ -46,6 +47,7 @@ export const ProductContents: FC<Props> = ({
     setModalOpen,
     setIsNew,
     wanna,
+    unwanna,
     className,
 }) => {
     const classes = useStyles(className)
@@ -74,6 +76,7 @@ export const ProductContents: FC<Props> = ({
                         setModalOpen={setModalOpen}
                         setIsNew={setIsNew}
                         wanna={wanna}
+                        unwanna={unwanna}
                     />
                 </Grid>
                 <ProductProfile product={product} />
