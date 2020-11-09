@@ -78,3 +78,28 @@ export const asyncWanna = (user_id: number, product_id: number) => {
         }
     }
 }
+
+export const asyncUnwanna = (user_id: number, product_id: number) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+        dispatch(setWannaStatus(null))
+
+        const response = await axios.delete(
+            '/v1/wanna',
+            { params: {
+                user_id: user_id,
+                product_id: product_id,
+            }}
+        )
+
+        if (response.status === 204) {
+            dispatch(setWannaStatus(true))
+            dispatch(setApiStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setWannaStatus(false))
+            dispatch(setApiStatus(false))
+        }
+    }
+}
