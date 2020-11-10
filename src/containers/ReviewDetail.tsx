@@ -10,6 +10,7 @@ import { asyncGetReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { setFollowStatus } from '../stores/user'
+import { setFocusedProduct } from '../stores/product'
 
 export const ReviewDetail: FC = () => {
     interface Params {
@@ -41,6 +42,7 @@ export const ReviewDetail: FC = () => {
 
         return () => {
             dispatch(setFocusedReview(null))
+            dispatch(setFocusedProduct(null))
         }
     }, [])
 

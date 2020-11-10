@@ -10,6 +10,7 @@ import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { setFocusedReview, setPostStatus } from '../stores/review'
 import { setFollowStatus } from '../stores/user'
+import { setFocusedProduct } from '../stores/product'
 
 export const Timeline: FC = () => {
     const dispatch = useDispatch()
@@ -76,6 +77,7 @@ export const Timeline: FC = () => {
 
         return () => {
             dispatch(setFocusedReview(null))
+            dispatch(setFocusedProduct(null))
         }
     }, [])
 

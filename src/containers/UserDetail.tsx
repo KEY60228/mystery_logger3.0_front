@@ -8,6 +8,8 @@ import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail
 import { asyncGetUser, asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { setFollowStatus } from '../stores/user'
+import { setFocusedProduct } from '../stores/product'
+import { setFocusedReview } from '../stores/review'
 
 export const UserDetail: FC = () => {
     const dispatch = useDispatch()
@@ -35,6 +37,11 @@ export const UserDetail: FC = () => {
 
     useEffect(() => {
         getUser()
+        
+        return () => {
+            dispatch(setFocusedProduct(null))
+            dispatch(setFocusedReview(null))
+        }
     }, [])
 
     useEffect(() => {
