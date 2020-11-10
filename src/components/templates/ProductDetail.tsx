@@ -49,6 +49,7 @@ export const ProductDetail: FC<Props> = ({
                 currentUser={currentUser}
                 setModalOpen={setOpen}
                 setIsNew={setIsNew}
+                edit={edit}
                 wanna={wanna}
                 unwanna={unwanna}
             />

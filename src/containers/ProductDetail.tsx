@@ -36,6 +36,10 @@ export const ProductDetail: FC = () => {
 
     // 投稿フォームの開閉
     const [open, setOpen] = useState<boolean>(false)
+    const setModalOpen = (value: boolean) => {
+        if (!value) dispatch(setFocusedReview(null))
+        setOpen(value)
+    }
     // 新規投稿 or 編集
     const [isNew, setIsNew] = useState<boolean>(false)
 
@@ -64,7 +68,7 @@ export const ProductDetail: FC = () => {
         setResult(review.result)
         setJoined_at(review.joined_at)
         setContents(review.contents)
-        setOpen(true)
+        setModalOpen(true)
     }
 
     const update = () => {
@@ -106,15 +110,15 @@ export const ProductDetail: FC = () => {
         getProduct()
 
         return () => {
-            dispatch(setFocusedProduct(null))
             dispatch(setFocusedReview(null))
+            dispatch(setFocusedProduct(null))
         }
     }, [])
 
     useEffect(() => {
         if (postStatus) {
             getProduct()
-            setOpen(false)
+            setModalOpen(false)
             setRating(0)
             setResult(0)
             setJoined_at('')
@@ -145,7 +149,7 @@ export const ProductDetail: FC = () => {
                     <ProductDetailTemp
                         product={product}
                         currentUser={currentUser}
-                        setOpen={setOpen}
+                        setOpen={setModalOpen}
                         setIsNew={setIsNew}
                         edit={edit}
                         follow={follow}
@@ -155,7 +159,7 @@ export const ProductDetail: FC = () => {
                     />
                     <ReviewForm
                         open={open}
-                        setOpen={setOpen}
+                        setOpen={setModalOpen}
                         rating={rating}
                         setRating={setRating}
                         result={result}

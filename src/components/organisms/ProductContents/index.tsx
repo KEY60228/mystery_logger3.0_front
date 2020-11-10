@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Typography } from '@material-ui/core'
 
-import { Product, ProductDetail, User } from '../../../@types'
+import { Product, ProductDetail, Review, User } from '../../../@types'
 import { Ratings } from '../../molecules/Ratings'
 import { Buttons } from './Buttons'
 import { ProductProfile } from './ProductProfile'
@@ -12,6 +12,7 @@ interface Props {
     currentUser: User | null
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
+    edit: (review: Review) => void
     wanna: (product: Product) => void
     unwanna: (product: Product) => void
     className?: ClassProps
@@ -46,6 +47,7 @@ export const ProductContents: FC<Props> = ({
     currentUser,
     setModalOpen,
     setIsNew,
+    edit,
     wanna,
     unwanna,
     className,
@@ -75,6 +77,7 @@ export const ProductContents: FC<Props> = ({
                         currentUser={currentUser}
                         setModalOpen={setModalOpen}
                         setIsNew={setIsNew}
+                        edit={edit}
                         wanna={wanna}
                         unwanna={unwanna}
                     />
