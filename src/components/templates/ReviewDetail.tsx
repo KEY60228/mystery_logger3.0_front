@@ -7,6 +7,7 @@ import { ProductCardInReviewDetail } from '../organisms/ProductCardInReviewDetai
 
 interface Props {
     review: ReviewDetailInterface
+    edit: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
 }
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewDetail: FC<Props> = ({ review, follow, unfollow }) => {
+export const ReviewDetail: FC<Props> = ({ review, edit, follow, unfollow }) => {
     const classes = useStyles()
 
     return (
@@ -29,10 +30,9 @@ export const ReviewDetail: FC<Props> = ({ review, follow, unfollow }) => {
                 review={review}
                 reviewerProfile
                 productTitle
+                edit={edit}
                 follow={follow}
                 unfollow={unfollow}
-                // 仮
-                edit={review => console.log()}
             />
         </>
     )

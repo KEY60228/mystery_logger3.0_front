@@ -36,6 +36,7 @@ export const Buttons: FC<Props> = ({
     const classes = useStyles()
 
     const onClickDone = () => {
+        if (!currentUser) return false
         setIsNew(true)
         setModalOpen(true)
     }
