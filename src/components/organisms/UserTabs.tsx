@@ -2,10 +2,9 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
-import { UserDetail, ReviewDetail, ReviewWithProduct, User } from '../../../@types'
-import { ListedProducts } from './ListedProducts'
-import { ReviewCard } from '../../molecules/ReviewCard/index'
-import { ProductCard } from '../../molecules/ProductCard/index'
+import { UserDetail, ReviewDetail, ReviewWithProduct, User, WannaWithProduct } from '../../@types'
+import { ReviewCard } from '../molecules/ReviewCard/index'
+import { ProductCard } from '../molecules/ProductCard/index'
 
 interface Props {
     user: UserDetail
@@ -60,7 +59,7 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                 >
                     <Tab label={`行った公演 ${user.reviews_count || 0}`} />
                     <Tab
-                        label={`行きたい公演 ${user.wannaProducts_count || 0}`}
+                        label={`行きたい公演 ${user.wannas_count || 0}`}
                     />
                     <Tab
                         label={`LIKEした投稿 ${user.likeReviews_count || 0}`}
@@ -68,7 +67,7 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                 </Tabs>
             </Grid>
             <TabPanel value={value} index={0}>
-                {user.reviews && (
+                {(user.reviews_count !== 0 && user.reviews) && (
                     <Grid
                         container
                         justify="space-between"
@@ -82,15 +81,26 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                         ))}
                     </Grid>
                 )}
-                {!user.reviews && (
+                {user.reviews_count === 0 && (
                     <Typography>まだ行った公演はありません</Typography>
                 )}
             </TabPanel>
             <TabPanel value={value} index={1}>
-                {user.wannaProducts && (
-                    <ListedProducts products={user.wannaProducts} />
-                )}
-                {!user.wannaProducts && (
+                {(user.wannas_count !== 0 && user.wannas) &&
+                    <Grid
+                        container
+                        justify="space-between"
+                        className={classes.list}
+                    >
+                        {user.wannas.map((wanna: WannaWithProduct) => (
+                            <ProductCard
+                                key={wanna.product.id}
+                                product={wanna.product}
+                            />
+                        ))}
+                    </Grid>
+                }
+                {user.wannas_count === 0 && (
                     <Typography>まだ行きたい公演はありません</Typography>
                 )}
             </TabPanel>

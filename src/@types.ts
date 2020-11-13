@@ -35,7 +35,7 @@ export interface User {
     done_id: number[]
     wanna_id: number[]
     success_rate: number | null
-    wannaProducts_count: number
+    wannas_count: number
     likeReviews_count: number
 }
 
@@ -91,6 +91,14 @@ export interface Category {
     updated_at: string | null
 }
 
+export interface Wanna {
+    id: number
+    user_id: number
+    product_id: number
+    created_at: string
+    updated_at: string | null
+}
+
 // extends model
 export interface ProductDetailWithoutReviews extends Product {
     performances: PerformanceWithVenue[]
@@ -113,8 +121,7 @@ export interface UserDetail extends User {
     reviews: ReviewWithProduct[] | null
     follows: User[] | null
     followers: User[] | null
-    joinedProducts: Product[] | null
-    wannaProducts: Product[] | null
+    wannas: WannaWithProduct[] | null
     likeReviews: ReviewDetail[] | null
 }
 
@@ -135,5 +142,9 @@ export interface VenueDetail extends Venue {
 }
 
 export interface PerformanceWithProduct extends Performance {
+    product: Product
+}
+
+export interface WannaWithProduct extends Wanna {
     product: Product
 }

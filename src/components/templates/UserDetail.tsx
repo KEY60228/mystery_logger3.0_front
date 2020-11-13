@@ -4,7 +4,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { UserDetail as UserDetailInterface, User } from '../../@types'
 import { UserProfile } from '../organisms/UserProfile/index'
 import { UserStatics } from '../organisms/UserStatics/index'
-import { UserTabs } from '../organisms/UserTabs/index'
+import { UserTabs } from '../organisms/UserTabs'
 import { TempSpace } from '../molecules/TempSpace'
 
 interface Props {
