@@ -13,6 +13,8 @@ interface ReviewDetail extends Review {
 interface Props {
     review: ReviewDetail
     edit: (review: ReviewDetail) => void
+    setReview?: (review: ReviewDetail) => void
+    setConfirmOpen: (value: boolean) => void
     className?: ClassProps
 }
 
@@ -26,11 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewerMenu: FC<Props> = ({ review, edit, className }) => {
+export const ReviewerMenu: FC<Props> = ({ review, edit, setReview, setConfirmOpen, className }) => {
     const classes = useStyles(className)
     const [menu, setMenu] = useState<null | HTMLElement>(null)
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (setReview !== undefined) setReview(review)
         setMenu(event.currentTarget)
     }
 
@@ -40,6 +43,7 @@ export const ReviewerMenu: FC<Props> = ({ review, edit, className }) => {
     }
 
     const deleteReview = () => {
+        setConfirmOpen(true)
         setMenu(null)
     }
 

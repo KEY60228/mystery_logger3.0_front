@@ -5,7 +5,7 @@ import { RootState } from '../stores/index'
 import { ReviewDetail, User } from '../@types'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 import { ReviewForm } from '../components/templates/ReviewForm'
-import { asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { setFocusedReview, setPostStatus } from '../stores/review'
@@ -62,6 +62,15 @@ export const Timeline: FC = () => {
         )
     }
 
+    const setReview = (review: ReviewDetail) => {
+        dispatch(setFocusedReview(review))
+    }
+
+    const deleteReview = () => {
+        if (!review) return false
+        dispatch(asyncDeleteReview(review.id))
+    }
+
     const follow = (user: User) => {
         if (!currentUser || !user) return false
         dispatch(asyncFollow(currentUser.id, user.id))
@@ -104,7 +113,7 @@ export const Timeline: FC = () => {
         <>
             {reviews && (
                 <>
-                    <TimelineTemp reviews={reviews} edit={edit} follow={follow} unfollow={unfollow} />
+                    <TimelineTemp reviews={reviews} edit={edit} follow={follow} unfollow={unfollow} setReview={setReview} deleteReview={deleteReview} />
                     {review && (
                         <ReviewForm
                             open={open}

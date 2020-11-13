@@ -1,14 +1,17 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { ReviewDetail, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
+import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 
 interface Props {
     reviews: ReviewDetail[]
     edit: (review: ReviewDetail) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
+    setReview: (review: ReviewDetail) => void
+    deleteReview: () => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -17,8 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow }) => {
+export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow, setReview, deleteReview }) => {
     const classes = useStyles()
+
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
     return (
         <>
@@ -31,11 +36,18 @@ export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow }) => {
                     productTitle
                     productCard
                     edit={edit}
+                    setReview={setReview}
                     follow={follow}
                     unfollow={unfollow}
+                    setConfirmOpen={setConfirmOpen}
                     className={{ margin: '8px' }}
                 />
-            ))}
+                ))}
+            <ConfirmDeleteReview
+                deleteReview={deleteReview}
+                confirmOpen={confirmOpen}
+                setConfirmOpen={setConfirmOpen}
+            />
         </>
     )
 }

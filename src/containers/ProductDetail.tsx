@@ -7,7 +7,7 @@ import { RootState } from '../stores/index'
 import { setFocusedProduct, setWannaStatus } from '../stores/product'
 import { setFocusedReview, setPostStatus } from '../stores/review'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
-import { asyncPostReview, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
@@ -61,8 +61,11 @@ export const ProductDetail: FC = () => {
         )
     }
 
+    const setReview = (review: ReviewDetail) => {
+        dispatch(setFocusedReview(review))
+    }
+
     const edit = (review: ReviewDetail) => {
-        if (!review) return false
         dispatch(setFocusedReview(review))
         setRating(review.rating)
         setResult(review.result)
@@ -84,6 +87,11 @@ export const ProductDetail: FC = () => {
                 review.id,
             ),
         )
+    }
+
+    const deleteReview = () => {
+        if (!review) return false
+        dispatch(asyncDeleteReview(review.id))
     }
 
     const follow = (user: User) => {
@@ -118,6 +126,7 @@ export const ProductDetail: FC = () => {
     useEffect(() => {
         if (postStatus) {
             getProduct()
+            dispatch(asyncGetCurrentUser())
             setModalOpen(false)
             setRating(0)
             setResult(0)
@@ -149,9 +158,12 @@ export const ProductDetail: FC = () => {
                     <ProductDetailTemp
                         product={product}
                         currentUser={currentUser}
+                        review={review}
                         setOpen={setModalOpen}
                         setIsNew={setIsNew}
+                        setReview={setReview}
                         edit={edit}
+                        deleteReview={deleteReview}
                         follow={follow}
                         unfollow={unfollow}
                         wanna={wanna}

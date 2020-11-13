@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { UserDetail as UserDetailInterface, User } from '../../@types'
@@ -18,11 +18,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({}))
 export const UserDetail: FC<Props> = ({ user, follow, unfollow }) => {
     const classes = useStyles()
 
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false) // 仮
+
     return (
         <>
             <UserProfile user={user} follow={follow} unfollow={unfollow} />
             <UserStatics />
-            <UserTabs user={user} follow={follow} unfollow={unfollow} />
+            <UserTabs user={user} follow={follow} unfollow={unfollow} setConfirmOpen={setConfirmOpen} />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

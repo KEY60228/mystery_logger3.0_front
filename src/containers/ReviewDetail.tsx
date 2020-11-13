@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { User } from '../@types'
+import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
 import { RootState } from '../stores/index'
 import { setFocusedReview } from '../stores/review'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
-import { asyncGetReview, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncGetReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { setFollowStatus } from '../stores/user'
@@ -19,17 +19,30 @@ export const ReviewDetail: FC = () => {
     }
     const { id } = useParams<Params>()
     const dispatch = useDispatch()
-
-    const [open, setOpen] = useState<boolean>(false);
-    const [rating, setRating] = useState<number>(0)
-    const [result, setResult] = useState<number>(0)
-    const [joined_at, setJoined_at] = useState<string | null>('')
-    const [contents, setContents] = useState<string | null>('')
+    const history = useHistory()
 
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
+    const postStatus = useSelector((state: RootState) => state.review.postStatus)
 
+    const [rating, setRating] = useState<number>(0)
+    const [result, setResult] = useState<number>(0)
+    const [joined_at, setJoined_at] = useState<string | null>(null)
+    const [contents, setContents] = useState<string | null>(null)
+
+    const [open, setOpen] = useState<boolean>(false)
+    const setModalOpen = (value: boolean) => {
+        if (value) {
+            if (!review) return false
+            setRating(review.rating)
+            setResult(review.result)
+            setJoined_at(review.joined_at)
+            setContents(review.contents)
+        }
+        setOpen(value)
+    }
+    
     const getReview = () => {
         dispatch(asyncGetReview(id))
     }
@@ -45,7 +58,7 @@ export const ReviewDetail: FC = () => {
     }
 
     const edit = () => {
-        setOpen(true)
+        setModalOpen(true)
     }
 
     const update = () => {
@@ -61,6 +74,11 @@ export const ReviewDetail: FC = () => {
                 review.id,
             ),
         )
+    }
+
+    const deleteReview = () => {
+        if (!review) return false
+        dispatch(asyncDeleteReview(review.id))
     }
 
     useEffect(() => {
@@ -79,21 +97,27 @@ export const ReviewDetail: FC = () => {
         }
     }, [followStatus])
 
+    useEffect(() => {
+        if (postStatus) {
+            history.push(`/products/${review?.product_id}`)
+        }
+    }, [postStatus])
+
     return (
         <>
             {review && 
                 <>
-                    <ReviewDetailTemp review={review} edit={edit} follow={follow} unfollow={unfollow} />
+                    <ReviewDetailTemp review={review} edit={edit} follow={follow} unfollow={unfollow} deleteReview={deleteReview} />
                     <ReviewForm
                         open={open}
-                        setOpen={setOpen}
-                        rating={review.rating}
+                        setOpen={setModalOpen}
+                        rating={rating}
                         setRating={setRating}
-                        result={review.result}
+                        result={result}
                         setResult={setResult}
-                        joined_at={review.joined_at}
+                        joined_at={joined_at}
                         setJoined_at={setJoined_at}
-                        contents={review.contents}
+                        contents={contents}
                         setContents={setContents}
                         update={update}
                         isNew={false}

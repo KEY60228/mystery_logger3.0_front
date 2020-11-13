@@ -127,3 +127,26 @@ export const asyncUpdateReview = (
         }
     }
 }
+
+export const asyncDeleteReview = (
+    review_id: number
+) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+        dispatch(setPostStatus(null))
+        
+        const response = await axios.delete(
+            `/v1/reviews/${review_id}`
+        )
+
+        if (response.status === 204) {
+            dispatch(setPostStatus(true))
+            dispatch(setApiStatus(true))
+        }
+        
+        if (response.status === 422) {
+            dispatch(setPostStatus(false))
+            dispatch(setApiStatus(false))
+        }
+    }
+}

@@ -11,6 +11,7 @@ interface Props {
     user: UserDetail
     follow: (user: User) => void
     unfollow: (user: User) => void
+    setConfirmOpen: (value: boolean) => void
     className?: ClassProps
 }
 
@@ -46,7 +47,7 @@ const TabPanel: FC<TabPanelProps> = ({ children, index, value }) => {
     )
 }
 
-export const UserTabs: FC<Props> = ({ user, follow, unfollow, className }) => {
+export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, className }) => {
     const classes = useStyles(className)
     const [value, setValue] = useState<number>(0)
 
@@ -106,8 +107,10 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, className }) => {
                                 productCard
                                 follow={follow}
                                 unfollow={unfollow}
+                                setConfirmOpen={setConfirmOpen}
                                 // 仮
                                 edit={() => console.log()}
+                                setReview={() => console.log()}
                             />
                         ))}
                     </Box>
