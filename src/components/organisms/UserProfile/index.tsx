@@ -12,6 +12,7 @@ interface Props {
     user: User
     follow: (user: User) => void
     unfollow: (user: User) => void
+    setOpen: (value: boolean) => void
     className?: ClassProps
 }
 
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
             border: '1px solid grey',
             borderRadius: '50%',
             margin: '8px',
+            backgroundSize: 'contain',
         },
         userName: {
             fontSize: '16px',
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserProfile: FC<Props> = ({ user, follow, unfollow, className }) => {
+export const UserProfile: FC<Props> = ({ user, follow, unfollow, setOpen, className }) => {
     const classes = useStyles(className)
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -83,7 +85,7 @@ export const UserProfile: FC<Props> = ({ user, follow, unfollow, className }) =>
                     </Typography>
                 </Grid>
                 {user.account_id === currentUser?.account_id && (
-                    <Button>設定</Button>
+                    <Button onClick={() => setOpen(true)}>設定</Button>
                 )}
                 {(currentUser && user.account_id !== currentUser?.account_id) && (
                     <FollowButton

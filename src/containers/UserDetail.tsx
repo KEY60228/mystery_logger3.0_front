@@ -10,6 +10,7 @@ import { asyncGetCurrentUser } from '../ajax/auth'
 import { setFollowStatus } from '../stores/user'
 import { setFocusedProduct } from '../stores/product'
 import { setFocusedReview } from '../stores/review'
+import { UserForm } from '../components/templates/UserForm'
 
 export const UserDetail: FC = () => {
     const dispatch = useDispatch()
@@ -17,12 +18,17 @@ export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
 
     const [user, setUser] = useState<UserDetailInterface | null>(null)
+    const [open, setOpen] = useState<boolean>(false)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
 
     const getUser = () => {
         dispatch(asyncGetUser(account_id, setUser))
+    }
+
+    const update = () => {
+        return false // 仮
     }
 
     const follow = (user: User) => {
@@ -53,7 +59,12 @@ export const UserDetail: FC = () => {
 
     return (
         <>
-            {user && <UserDetailTemp user={user} follow={follow} unfollow={unfollow} />}
+            { user && 
+                <>
+                    <UserDetailTemp user={user} follow={follow} unfollow={unfollow} setOpen={setOpen} />
+                    <UserForm user={user} update={update} open={open} setOpen={setOpen} />
+                </>
+            }
             {!user && <div>loading</div>}
         </>
     )

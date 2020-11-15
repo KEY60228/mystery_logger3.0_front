@@ -11,18 +11,19 @@ interface Props {
     user: UserDetailInterface
     follow: (user: User) => void
     unfollow: (user: User) => void
+    setOpen: (value: boolean) => void
 }
 
 const useStyles = makeStyles((theme: Theme) => createStyles({}))
 
-export const UserDetail: FC<Props> = ({ user, follow, unfollow }) => {
+export const UserDetail: FC<Props> = ({ user, follow, unfollow, setOpen }) => {
     const classes = useStyles()
 
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false) // 仮
 
     return (
         <>
-            <UserProfile user={user} follow={follow} unfollow={unfollow} />
+            <UserProfile user={user} follow={follow} unfollow={unfollow} setOpen={setOpen} />
             <UserStatics />
             <UserTabs user={user} follow={follow} unfollow={unfollow} setConfirmOpen={setConfirmOpen} />
             <TempSpace
