@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export interface UserStore {
     followStatus: boolean | null
+    updateUserStatus: boolean | null
 }
 
 // Stateの初期状態
 const initialState: UserStore = {
-    followStatus: null
+    followStatus: null,
+    updateUserStatus: null,
 }
 
 // Sliceを生成する
@@ -18,6 +20,9 @@ const slice = createSlice({
         setFollowStatus: (state, action) => {
             return Object.assign({}, state, { followStatus: action.payload })
         },
+        setUpdateUserStatus: (state, action) => {
+            return Object.assign({}, state, { updateUserStatus: action.payload })
+        },
     },
 })
 
@@ -25,4 +30,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setFollowStatus } = slice.actions
+export const { setFollowStatus, setUpdateUserStatus} = slice.actions

@@ -6,9 +6,15 @@ import { UserForm as UserFormMod } from '../organisms/UserForm/index'
 
 interface Props {
     user: UserDetail
-    update: () => void
+    update: (id: number) => void
     open: boolean
     setOpen: (value: boolean) => void
+    name: string
+    setName: (value: string) => void
+    accountId: string
+    setAccountId: (value: string) => void
+    profile: string
+    setProfile: (value: string) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -20,11 +26,22 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const UserForm: FC<Props> = ({
-    user, update, open, setOpen
+    user, update, open, setOpen, name, setName, accountId, setAccountId, profile, setProfile
 }) => {
     const classes = useStyles()
 
     return (
-        <UserFormMod user={user} update={update} open={open} setOpen={setOpen} />
+        <UserFormMod
+            user={user}
+            update={update}
+            open={open}
+            setOpen={setOpen}
+            name={name}
+            setName={setName}
+            accountId={accountId}
+            setAccountId={setAccountId}
+            profile={profile}
+            setProfile={setProfile}
+        />
     )
 }

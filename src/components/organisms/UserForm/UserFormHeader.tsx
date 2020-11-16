@@ -14,7 +14,7 @@ import { UserDetail } from '../../../@types'
 
 interface Props {
     user: UserDetail
-    update: () => void
+    update: (id: number) => void
     setOpen: (value: boolean) => void
     className?: ClassProps
 }
@@ -53,7 +53,7 @@ export const UserFormHeader: FC<Props> = ({
                         <CloseIcon />
                     </IconButton>
                     <Typography variant="h6">ユーザー情報編集</Typography>
-                    <Button color="inherit" onClick={update}>
+                    <Button color="inherit" onClick={() => update(user.id)}>
                         更新
                     </Button>
                 </Grid>

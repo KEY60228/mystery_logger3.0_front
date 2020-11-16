@@ -17,9 +17,15 @@ import { UserFormHeader } from './UserFormHeader'
 
 interface Props {
     user: UserDetail
-    update: () => void
+    update: (id: number) => void
     open: boolean
     setOpen: (value: boolean) => void
+    name: string
+    setName: (value: string) => void
+    accountId: string
+    setAccountId: (value: string) => void
+    profile: string
+    setProfile: (value: string) => void
     className?: ClassProps
 }
 
@@ -61,14 +67,17 @@ export const UserForm: FC<Props> = ({
     update,
     open,
     setOpen,
+    name,
+    setName,
+    accountId,
+    setAccountId,
+    profile,
+    setProfile,
     className,
 }) => {
     const classes = useStyles(className)
 
     const [preview, setPreview] = useState<any>(null)
-    const [name, setName] = useState<string>(user.name)
-    const [accountId, setAccountId] = useState<string>(user.account_id)
-    const [profile, setProfile] = useState<string>(user.profile)
 
     const onFileChange = (ev: any) => {
         // 何も選択されていない場合

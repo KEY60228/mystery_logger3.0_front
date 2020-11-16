@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { setApiStatus } from '../stores/error'
 import { UserDetail } from '../@types'
-import { setFollowStatus } from '../stores/user'
+import { setFollowStatus, setUpdateUserStatus } from '../stores/user'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -85,6 +85,37 @@ export const asyncUnFollow = (
         
         if (response.status === 422) {
             dispatch(setFollowStatus(false))
+            dispatch(setApiStatus(false))
+        }
+    }
+}
+
+export const asyncUpdateUser = (
+    id: number,
+    name: string, 
+    account_id: string,
+    profile: string,
+) => {
+    return async(dispatch: any) => {
+        dispatch(setApiStatus(null))
+        dispatch(setUpdateUserStatus(null))
+
+        const response = await axios.put(
+            `/v1/users/${id}`,
+            {
+                name: name,
+                account_id: account_id,
+                profile: profile,
+            }
+        )
+
+        if (response.status === 200) {
+            dispatch(setUpdateUserStatus(true))
+            dispatch(setApiStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setUpdateUserStatus(false))
             dispatch(setApiStatus(false))
         }
     }
