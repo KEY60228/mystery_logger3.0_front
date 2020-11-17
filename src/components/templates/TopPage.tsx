@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core'
 
 import { Product } from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
-import { LinedProducts } from '../organisms/LinedProducts/index'
+import { LinedProducts } from '../organisms/TopPage/LinedProducts/index'
 
 interface Props {
     products: Product[]

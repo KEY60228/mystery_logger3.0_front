@@ -11,8 +11,8 @@ import {
 } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import { ProductDetailWithoutReviews, PerformanceWithVenue } from '../../@types'
-import { Ratings } from '../molecules/Ratings'
+import { ProductDetailWithoutReviews, PerformanceWithVenue } from '../../../@types'
+import { Ratings } from '../../molecules/Ratings'
 
 interface Props {
     product: ProductDetailWithoutReviews

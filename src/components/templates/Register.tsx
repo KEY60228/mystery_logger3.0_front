@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
-import { RegisterForm } from '../organisms/RegisterForm'
+import { RegisterForm } from '../organisms/Register/RegisterForm'
 
 interface Props {
     accountId: string

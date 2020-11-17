@@ -2,9 +2,9 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
-import { UserDetail, ReviewDetail, ReviewWithProduct, User, WannaWithProduct } from '../../@types'
-import { ReviewCard } from '../molecules/ReviewCard/index'
-import { ProductCard } from '../molecules/ProductCard/index'
+import { UserDetail, ReviewDetail, ReviewWithProduct, User, WannaWithProduct } from '../../../@types'
+import { ReviewCard } from '../../molecules/ReviewCard/index'
+import { ProductCard } from '../../molecules/ProductCard/index'
 
 interface Props {
     user: UserDetail

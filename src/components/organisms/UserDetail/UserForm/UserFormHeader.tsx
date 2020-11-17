@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
-import { UserDetail } from '../../../@types'
+import { UserDetail } from '../../../../@types'
 
 interface Props {
     user: UserDetail

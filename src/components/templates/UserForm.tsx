@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { UserDetail } from '../../@types'
-import { UserForm as UserFormMod } from '../organisms/UserForm/index'
+import { UserForm as UserFormMod } from '../organisms/UserDetail/UserForm/index'
 
 interface Props {
     user: UserDetail

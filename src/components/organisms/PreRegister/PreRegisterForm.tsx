@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Grid, Typography, Button } from '@material-ui/core'
 
-import { Form } from '../molecules/Form'
+import { Form } from '../../molecules/Form'
 
 interface Props {
     email: string

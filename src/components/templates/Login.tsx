@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
-import { LoginForm } from '../organisms/LoginForm'
+import { LoginForm } from '../organisms/Login/LoginForm'
 
 interface Props {
     email: string

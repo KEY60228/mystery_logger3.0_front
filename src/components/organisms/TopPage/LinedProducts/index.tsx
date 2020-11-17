@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
 
-import { Product } from '../../../@types'
+import { Product } from '../../../../@types'
 import { Products } from './Products'
 
 interface Props {

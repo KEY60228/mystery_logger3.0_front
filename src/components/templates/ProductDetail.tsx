@@ -7,8 +7,8 @@ import {
     ReviewDetail,
     User,
 } from '../../@types'
-import { ProductContents } from '../organisms/ProductContents/index'
-import { ProductReviews } from '../organisms/ProductReviews'
+import { ProductContents } from '../organisms/ProductDetail/ProductContents/index'
+import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
 import { TempSpace } from '../molecules/TempSpace'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 

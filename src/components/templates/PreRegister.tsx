@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Paper, Grid, Typography } from '@material-ui/core'
 
-import { PreRegisterForm } from '../organisms/PreRegisterForm'
+import { PreRegisterForm } from '../organisms/PreRegister/PreRegisterForm'
 import { PreRegisterModal } from '../organisms/PreRegisterModal'
 
 interface Props {

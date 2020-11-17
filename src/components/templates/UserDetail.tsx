@@ -2,9 +2,9 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { UserDetail as UserDetailInterface, User } from '../../@types'
-import { UserProfile } from '../organisms/UserProfile/index'
-import { UserStatics } from '../organisms/UserStatics/index'
-import { UserTabs } from '../organisms/UserTabs'
+import { UserProfile } from '../organisms/UserDetail/UserProfile/index'
+import { UserStatics } from '../organisms/UserDetail/UserStatics/index'
+import { UserTabs } from '../organisms/UserDetail/UserTabs'
 import { TempSpace } from '../molecules/TempSpace'
 
 interface Props {
