@@ -6,24 +6,19 @@ import { asyncDeleteReview, asyncGetTimeline, asyncUpdateReview } from '../ajax/
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
-import { setFollowStatus } from '../stores/user'
-import { setFocusedProduct } from '../stores/product'
-import { setFocusedReview, setPostStatus } from '../stores/review'
+import { setFocusedReview } from '../stores/review'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 import { ReviewForm } from '../components/templates/ReviewForm'
 
 export const Timeline: FC = () => {
     const dispatch = useDispatch()
 
-    const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
-
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const review = useSelector((state: RootState) => state.review.focusedReview)
+    const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
-
+    const postStatus = useSelector((state: RootState) => state.review.postStatus)
+    
+    const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
@@ -33,13 +28,13 @@ export const Timeline: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const getReviews = async () => {
-        if (!currentUser) return false
+        if (!currentUser) return false // 仮
         dispatch(asyncGetTimeline(currentUser.id, setReviews))
     }
 
-    const edit = (review: ReviewDetail) => {
-        if (!review) return false
-        dispatch(setFocusedReview(review))
+    const edit = (review: ReviewDetail) => { // reviewはorganisms/moleculesからreduxストアに格納させる
+        if (!review) return false // 仮
+        dispatch(setFocusedReview(review)) // reviewはorganisms/moleculesからreduxストアに格納させる
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at)
@@ -48,7 +43,7 @@ export const Timeline: FC = () => {
     }
 
     const update = () => {
-        if (!currentUser || !review) return false
+        if (!currentUser || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
                 rating,
@@ -62,22 +57,22 @@ export const Timeline: FC = () => {
         )
     }
 
-    const setReview = (review: ReviewDetail) => {
+    const setReview = (review: ReviewDetail) => { // organisms/moleculesからreduxストアに格納させるため、削除
         dispatch(setFocusedReview(review))
     }
 
     const deleteReview = () => {
-        if (!review) return false
+        if (!review) return false // 仮
         dispatch(asyncDeleteReview(review.id))
     }
 
     const follow = (user: User) => {
-        if (!currentUser || !user) return false
+        if (!currentUser || !user) return false // 仮
         dispatch(asyncFollow(currentUser.id, user.id))
     }
     
     const unfollow = (user: User) => {
-        if(!currentUser || !user) return false
+        if(!currentUser || !user) return false // 仮
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
@@ -86,7 +81,6 @@ export const Timeline: FC = () => {
 
         return () => {
             dispatch(setFocusedReview(null))
-            dispatch(setFocusedProduct(null))
         }
     }, [])
 
@@ -98,14 +92,12 @@ export const Timeline: FC = () => {
             setResult(0)
             setJoined_at('')
             setContents('')
-            dispatch(setPostStatus(null))
         }
     }, [postStatus])
 
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
-            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
 

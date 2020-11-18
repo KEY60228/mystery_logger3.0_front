@@ -23,9 +23,7 @@ export const asyncGetTimeline = (
     setReviews: (value: ReviewDetail[] | null) => void,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
-
-        const response = await axios.get('https://localhost:1443/v1/reviews', {
+        const response = await axios.get('/v1/reviews', {
             params: {
                 user_id: user_id, // 仮
             },
@@ -33,11 +31,10 @@ export const asyncGetTimeline = (
 
         if (response.status === 200) {
             setReviews(response.data)
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラーハンドリング
         }
     }
 }
