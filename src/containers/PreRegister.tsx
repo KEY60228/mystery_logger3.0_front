@@ -19,9 +19,14 @@ export const PreRegister: FC = () => {
     }
 
     useEffect(() => {
+        return () => {
+            dispatch(setPreRegisterStatus(null))
+        }
+    }, [])
+
+    useEffect(() => {
         if (preRegisterStatus) {
             setOpen(true)
-            dispatch(setPreRegisterStatus(null))
         }
     }, [preRegisterStatus])
 

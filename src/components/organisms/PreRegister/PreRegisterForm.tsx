@@ -8,11 +8,6 @@ interface Props {
     email: string
     setEmail: (value: string) => void
     preRegister: () => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,9 +31,8 @@ export const PreRegisterForm: FC<Props> = ({
     email,
     setEmail,
     preRegister,
-    className,
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     return (
         <Card className={classes.root}>

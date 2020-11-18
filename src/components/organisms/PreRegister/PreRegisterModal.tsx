@@ -6,11 +6,6 @@ interface Props {
     open: boolean
     setOpen: (value: boolean) => void
     setEmail: (value: string) => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -39,9 +34,8 @@ export const PreRegisterModal: FC<Props> = ({
     open,
     setOpen,
     setEmail,
-    className,
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     const handleClose = () => {
         setEmail('')

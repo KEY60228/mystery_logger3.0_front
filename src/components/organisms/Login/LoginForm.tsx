@@ -11,11 +11,6 @@ interface Props {
     password: string
     setPassword: (value: string) => void
     login: () => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -41,9 +36,8 @@ export const LoginForm: FC<Props> = ({
     password,
     setPassword,
     login,
-    className,
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     return (
         <Card className={classes.root}>

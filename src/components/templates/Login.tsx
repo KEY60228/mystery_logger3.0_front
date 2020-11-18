@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { LoginForm } from '../organisms/Login/LoginForm'
 
@@ -11,12 +10,6 @@ interface Props {
     login: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {},
-    }),
-)
-
 export const Login: FC<Props> = ({
     email,
     setEmail,
@@ -24,8 +17,6 @@ export const Login: FC<Props> = ({
     setPassword,
     login,
 }) => {
-    const classes = useStyles()
-
     return (
         <LoginForm
             email={email}

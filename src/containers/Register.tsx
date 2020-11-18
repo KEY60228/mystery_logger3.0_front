@@ -5,7 +5,7 @@ import queryString from 'query-string'
 
 import { asyncRegister, asyncVerify } from '../ajax/auth'
 import { RootState } from '../stores/index'
-import { setApiStatus } from '../stores/error'
+import { setRegisterStatus } from '../stores/auth'
 import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
 import { Register as RegisterTemp } from '../components/templates/Register'
 
@@ -14,8 +14,8 @@ export const Register: FC = () => {
     const dispatch = useDispatch()
     const query = queryString.parse(useLocation().search)
 
-    const user = useSelector((state: RootState) => state.auth.user)
-    const apiStatus = useSelector((state: RootState) => state.error.apiStatus)
+    const currentUser = useSelector((state: RootState) => state.auth.user)
+    const registerStatus = useSelector((state: RootState) => state.auth.registerStatus)
 
     const [accountId, setAccountId] = useState<string>('')
     const [name, setName] = useState<string>('')
@@ -33,18 +33,21 @@ export const Register: FC = () => {
 
     useEffect(() => {
         verify()
+
+        return () => {
+            dispatch(setRegisterStatus(null))
+        }
     }, [])
 
     useEffect(() => {
-        if (user) {
-            history.push(`/users/${user.account_id}`)
-            dispatch(setApiStatus(null))
+        if (currentUser) {
+            history.push(`/users/${currentUser.account_id}`)
         }
-    }, [apiStatus])
+    }, [currentUser])
 
     return (
         <>
-            {apiStatus === true && (
+            {registerStatus === true && (
                 <RegisterTemp
                     accountId={accountId}
                     setAccountId={setAccountId}
@@ -55,8 +58,8 @@ export const Register: FC = () => {
                     register={register}
                 />
             )}
-            {apiStatus === false && <FailVerifyTemp />}
-            {apiStatus === null && <div>loading</div>}
+            {registerStatus === false && <FailVerifyTemp />}
+            {registerStatus === null && <div>loading</div>}
         </>
     )
 }
