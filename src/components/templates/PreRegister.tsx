@@ -1,9 +1,8 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Paper, Grid, Typography } from '@material-ui/core'
 
 import { PreRegisterForm } from '../organisms/PreRegister/PreRegisterForm'
-import { PreRegisterModal } from '../organisms/PreRegisterModal'
+import { PreRegisterModal } from '../organisms/PreRegister/PreRegisterModal'
 
 interface Props {
     email: string

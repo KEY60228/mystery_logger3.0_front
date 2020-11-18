@@ -12,6 +12,7 @@ import {
     InputLabel,
 } from '@material-ui/core'
 import { TransitionProps } from '@material-ui/core/transitions'
+
 import { UserDetail } from '../../../../@types'
 import { UserFormHeader } from './UserFormHeader'
 

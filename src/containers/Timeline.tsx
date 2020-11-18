@@ -1,16 +1,16 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { RootState } from '../stores/index'
 import { ReviewDetail, User } from '../@types'
-import { Timeline as TimelineTemp } from '../components/templates/Timeline'
-import { ReviewForm } from '../components/templates/ReviewForm'
 import { asyncDeleteReview, asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { setFocusedReview, setPostStatus } from '../stores/review'
+import { RootState } from '../stores/index'
 import { setFollowStatus } from '../stores/user'
 import { setFocusedProduct } from '../stores/product'
+import { setFocusedReview, setPostStatus } from '../stores/review'
+import { Timeline as TimelineTemp } from '../components/templates/Timeline'
+import { ReviewForm } from '../components/templates/ReviewForm'
 
 export const Timeline: FC = () => {
     const dispatch = useDispatch()

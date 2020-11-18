@@ -7,10 +7,10 @@ import {
     ReviewDetail,
     User,
 } from '../../@types'
-import { ProductContents } from '../organisms/ProductDetail/ProductContents/index'
-import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
 import { TempSpace } from '../molecules/TempSpace'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
+import { ProductContents } from '../organisms/ProductDetail/ProductContents/index'
+import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
 
 interface Props {
     product: ProductDetailInterface

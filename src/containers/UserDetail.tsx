@@ -30,7 +30,7 @@ export const UserDetail: FC = () => {
         if (!user) return false
         setName(user.name)
         setAccountId(user.account_id)
-        setProfile(user.profile)
+        setProfile(user.profile || '')
         setOpen(value)
     }
 

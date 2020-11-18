@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
 
-import { User } from '../../../@types'
+import { User } from '../../../../@types'
 
 interface Props {
     user: User

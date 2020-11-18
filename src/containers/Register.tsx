@@ -3,11 +3,11 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import queryString from 'query-string'
 
-import { RootState } from '../stores/index'
 import { asyncRegister, asyncVerify } from '../ajax/auth'
-import { Register as RegisterTemp } from '../components/templates/Register'
-import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
+import { RootState } from '../stores/index'
 import { setApiStatus } from '../stores/error'
+import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
+import { Register as RegisterTemp } from '../components/templates/Register'
 
 export const Register: FC = () => {
     const history = useHistory()

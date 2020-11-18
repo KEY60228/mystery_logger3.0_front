@@ -3,16 +3,16 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { Product, ReviewDetail, User } from '../@types'
-import { RootState } from '../stores/index'
-import { setFocusedProduct, setWannaStatus } from '../stores/product'
-import { setFocusedReview, setPostStatus } from '../stores/review'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
 import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
+import { RootState } from '../stores/index'
+import { setFocusedProduct, setWannaStatus } from '../stores/product'
+import { setFocusedReview, setPostStatus } from '../stores/review'
+import { setFollowStatus } from '../stores/user'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 import { ReviewForm } from '../components/templates/ReviewForm'
-import { setFollowStatus } from '../stores/user'
 
 export const ProductDetail: FC = () => {
     const dispatch = useDispatch()
