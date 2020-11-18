@@ -1,26 +1,14 @@
 import React, { FC } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { Product } from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
-import { LinedProducts } from '../organisms/TopPage/LinedProducts/index'
+import { LinedProducts } from '../organisms/TopPage/LinedProducts'
 
 interface Props {
     products: Product[]
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        subtitle: {
-            width: '100%',
-            backgroundColor: 'gainsboro',
-        },
-    }),
-)
-
 export const TopPage: FC<Props> = ({ products }) => {
-    const classes = useStyles()
-
     // 名前でソート
     const sortProductsByName = (products: Product[]) => {
         return products

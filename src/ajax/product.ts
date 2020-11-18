@@ -22,17 +22,14 @@ export const asyncGetProducts = (
     setProducts: (value: Product[] | null) => void,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
-
-        const response = await axios.get('https://localhost:1443/v1/products')
+        const response = await axios.get('/v1/products')
 
         if (response.status === 200) {
             setProducts(response.data)
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラー処理
         }
     }
 }
