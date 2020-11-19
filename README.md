@@ -36,6 +36,8 @@ src/
 ### templates/
 
 - ページ単位
+- あくまでorganismsを統括する役割に徹する
+- useStyles不要
 - 認証失敗ページや404ページはtemplates/
 - modal等はフルスクリーンでもtemplates/以下
 - modalのopen/setOpen等、見た目に関係するstateはuseStateで所有可能
@@ -44,11 +46,20 @@ src/
 
 - 再利用しないコンポーネント
 - Reduxストアにアクセス可能
+- スタイルは自身でもつ。propsにclassNameは不要
 - modalのopen/setOpen等、見た目に関係するstateはuseStateで所有可能
 - 少し気持ち悪いけどHeader, BottomNavはここに
 
 ### molecules/
 
 - 再利用するコンポーネント
+- Reduxストアにアクセス可能
 - modalのopen/setOpen等、見た目に関係するstateはuseStateで所有可能
 
+### その他
+
+- templates/ではuseStyles使わない
+- ログインしているユーザーはcurrentUserで統一
+- apiStatusは使わない。各statusを使う
+- フォームはとりあえずRedux使わない。containerでuseStateする
+- とりあえず今はレスポンシブデザインは考えない
