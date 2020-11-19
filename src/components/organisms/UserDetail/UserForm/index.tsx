@@ -18,7 +18,7 @@ import { UserFormHeader } from './UserFormHeader'
 
 interface Props {
     user: UserDetail
-    update: (id: number) => void
+    update: () => void
     open: boolean
     setOpen: (value: boolean) => void
     name: string

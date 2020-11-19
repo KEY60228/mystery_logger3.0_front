@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { UserDetail as UserDetailInterface, User } from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
@@ -11,19 +10,15 @@ interface Props {
     user: UserDetailInterface
     follow: (user: User) => void
     unfollow: (user: User) => void
-    setOpen: (value: boolean) => void
+    edit: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) => createStyles({}))
-
-export const UserDetail: FC<Props> = ({ user, follow, unfollow, setOpen }) => {
-    const classes = useStyles()
-
+export const UserDetail: FC<Props> = ({ user, follow, unfollow, edit }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false) // 仮
 
     return (
         <>
-            <UserProfile user={user} follow={follow} unfollow={unfollow} setOpen={setOpen} />
+            <UserProfile user={user} follow={follow} unfollow={unfollow} edit={edit} />
             <UserStatics />
             <UserTabs user={user} follow={follow} unfollow={unfollow} setConfirmOpen={setConfirmOpen} />
             <TempSpace

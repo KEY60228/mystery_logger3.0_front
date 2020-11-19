@@ -7,72 +7,65 @@ import { UserDetail as UserDetailInterface, User } from '../@types'
 import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import { asyncGetUser, asyncFollow, asyncUnFollow, asyncUpdateUser } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { setFollowStatus, setUpdateUserStatus } from '../stores/user'
-import { setFocusedProduct } from '../stores/product'
-import { setFocusedReview } from '../stores/review'
 import { UserForm } from '../components/templates/UserForm'
 
 export const UserDetail: FC = () => {
+    const { account_id } = useParams<{ account_id: string }>()
     const dispatch = useDispatch()
 
-    const { account_id } = useParams<{ account_id: string }>()
-    
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const updateUserStatus = useSelector((state: RootState) => state.user.updateUserStatus)
 
     const [user, setUser] = useState<UserDetailInterface | null>(null)
-    const [open, setOpen] = useState<boolean>(false)
+
     const [name, setName] = useState<string>('')
     const [accountId, setAccountId] = useState<string>('')
     const [profile, setProfile] = useState<string>('')
-    const setModalOpen = (value: boolean) => {
-        if (!user) return false
-        setName(user.name)
-        setAccountId(user.account_id)
-        setProfile(user.profile || '')
-        setOpen(value)
-    }
+
+    const [open, setOpen] = useState<boolean>(false)
 
     const getUser = () => {
         dispatch(asyncGetUser(account_id, setUser))
     }
 
-    const update = async(id: number) => {
-        dispatch(asyncUpdateUser(id, name, accountId, profile))
-        setModalOpen(false)
+    const edit = () => {
+        if (!user) return false // 仮
+        setName(user.name)
+        setAccountId(user.account_id)
+        setProfile(user.profile || '')
+        setOpen(true)
     }
 
-    const follow = (user: User) => {
-        if (!currentUser || !user) return false
+    const update = () => {
+        if (!user) return false // 仮
+        dispatch(asyncUpdateUser(user.id, name, accountId, profile))
+        setOpen(false)
+    }
+
+    const follow = () => {
+        if (!currentUser || !user) return false // 仮
         dispatch(asyncFollow(currentUser.id, user.id))
     }
     
-    const unfollow = (user: User) => {
-        if(!currentUser || !user) return false
+    const unfollow = () => {
+        if(!currentUser || !user) return false // 仮
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
     useEffect(() => {
         getUser()
-
-        return () => {
-            dispatch(setFocusedProduct(null))
-            dispatch(setFocusedReview(null))
-        }
     }, [])
 
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
-            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
     
     useEffect(() => {
         if (updateUserStatus) {
             getUser()
-            dispatch(setUpdateUserStatus(null))
         }
     }, [updateUserStatus])
 
@@ -80,12 +73,12 @@ export const UserDetail: FC = () => {
         <>
             { user && 
                 <>
-                    <UserDetailTemp user={user} follow={follow} unfollow={unfollow} setOpen={setModalOpen} />
+                    <UserDetailTemp user={user} follow={follow} unfollow={unfollow} edit={edit} />
                     <UserForm
                         user={user}
                         update={update}
                         open={open}
-                        setOpen={setModalOpen}
+                        setOpen={setOpen}
                         name={name}
                         setName={setName}
                         accountId={accountId}

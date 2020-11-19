@@ -6,12 +6,7 @@ import { User } from '../../../../@types'
 import { SuccessRateByCategory as CategoryStatics } from './SuccessRateByCategory'
 
 interface Props {
-    // user: User
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
+    user?: User // 仮
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,8 +17,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserStatics: FC<Props> = ({ className }) => {
-    const classes = useStyles(className)
+export const UserStatics: FC<Props> = () => {
+    const classes = useStyles()
 
     return (
         <Card className={classes.root}>

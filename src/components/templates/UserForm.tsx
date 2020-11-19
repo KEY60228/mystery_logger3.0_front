@@ -6,7 +6,7 @@ import { UserForm as UserFormMod } from '../organisms/UserDetail/UserForm/index'
 
 interface Props {
     user: UserDetail
-    update: (id: number) => void
+    update: () => void
     open: boolean
     setOpen: (value: boolean) => void
     name: string
