@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
@@ -14,17 +13,7 @@ interface Props {
     deleteReview: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            margin: '8px',
-        },
-    }),
-)
-
 export const ReviewDetail: FC<Props> = ({ review, edit, follow, unfollow, deleteReview }) => {
-    const classes = useStyles()
-
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
     return (

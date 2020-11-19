@@ -8,21 +8,16 @@ import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
 import { setFocusedReview } from '../stores/review'
-import { setFollowStatus } from '../stores/user'
-import { setFocusedProduct } from '../stores/product'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 import { ReviewForm } from '../components/templates/ReviewForm'
 
 export const ReviewDetail: FC = () => {
-    interface Params {
-        id: string
-    }
-    const { id } = useParams<Params>()
+    const { id } = useParams<{id: string}>()
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
+    const review = useSelector((state: RootState) => state.review.focusedReview)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const postStatus = useSelector((state: RootState) => state.review.postStatus)
 
@@ -32,37 +27,32 @@ export const ReviewDetail: FC = () => {
     const [contents, setContents] = useState<string | null>(null)
 
     const [open, setOpen] = useState<boolean>(false)
-    const setModalOpen = (value: boolean) => {
-        if (value) {
-            if (!review) return false
-            setRating(review.rating)
-            setResult(review.result)
-            setJoined_at(review.joined_at)
-            setContents(review.contents)
-        }
-        setOpen(value)
-    }
-    
+
     const getReview = () => {
         dispatch(asyncGetReview(id))
     }
 
-    const follow = (user: User) => {
+    const follow = (user: User) => { // 要確認
         if (!currentUser || !review?.user) return false
         dispatch(asyncFollow(currentUser.id, review.user.id))
     }
     
-    const unfollow = (user: User) => {
+    const unfollow = (user: User) => { // 要確認
         if(!currentUser || !review?.user) return false
         dispatch(asyncUnFollow(currentUser.id, review.user.id))
     }
 
     const edit = () => {
-        setModalOpen(true)
+        if (!review) return false // 仮
+        setRating(review.rating)
+        setResult(review.result)
+        setJoined_at(review.joined_at)
+        setContents(review.contents)
+        setOpen(true)
     }
 
     const update = () => {
-        if (!currentUser || !review) return false
+        if (!currentUser || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
                 rating,
@@ -86,14 +76,12 @@ export const ReviewDetail: FC = () => {
 
         return () => {
             dispatch(setFocusedReview(null))
-            dispatch(setFocusedProduct(null))
         }
     }, [])
 
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
-            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
 
@@ -110,7 +98,7 @@ export const ReviewDetail: FC = () => {
                     <ReviewDetailTemp review={review} edit={edit} follow={follow} unfollow={unfollow} deleteReview={deleteReview} />
                     <ReviewForm
                         open={open}
-                        setOpen={setModalOpen}
+                        setOpen={setOpen}
                         rating={rating}
                         setRating={setRating}
                         result={result}
