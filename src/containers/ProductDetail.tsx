@@ -8,9 +8,8 @@ import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../ajax/r
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
-import { setFocusedProduct, setWannaStatus } from '../stores/product'
+import { setFocusedProduct } from '../stores/product'
 import { setFocusedReview, setPostStatus } from '../stores/review'
-import { setFollowStatus } from '../stores/user'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 import { ReviewForm } from '../components/templates/ReviewForm'
 
@@ -18,14 +17,10 @@ export const ProductDetail: FC = () => {
     const dispatch = useDispatch()
     const { id } = useParams<{ id: string }>()
 
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
-    const product = useSelector(
-        (state: RootState) => state.product.focusedProduct,
-    )
+    const product = useSelector((state: RootState) => state.product.focusedProduct)
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
+    const postStatus = useSelector((state: RootState) => state.review.postStatus)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const wannaStatus = useSelector((state: RootState) => state.product.wannaStatus)
 
@@ -40,6 +35,7 @@ export const ProductDetail: FC = () => {
         if (!value) dispatch(setFocusedReview(null))
         setOpen(value)
     }
+    
     // 新規投稿 or 編集
     const [isNew, setIsNew] = useState<boolean>(false)
 
@@ -61,12 +57,11 @@ export const ProductDetail: FC = () => {
         )
     }
 
-    const setReview = (review: ReviewDetail) => {
+    const setReview = (review: ReviewDetail) => { // 仮 organisms/moleculesからセットさせる
         dispatch(setFocusedReview(review))
     }
 
     const edit = (review: ReviewDetail) => {
-        dispatch(setFocusedReview(review))
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at)
@@ -140,14 +135,12 @@ export const ProductDetail: FC = () => {
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
-            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
 
     useEffect(() => {
         if (wannaStatus) {
             dispatch(asyncGetCurrentUser())
-            dispatch(setWannaStatus(null))
         }
     }, [wannaStatus])
 

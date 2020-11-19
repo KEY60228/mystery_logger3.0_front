@@ -6,11 +6,6 @@ import { ProductDetail, PerformanceWithVenue } from '../../../../@types'
 
 interface Props {
     product: ProductDetail
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,8 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductProfile: FC<Props> = ({ product, className }) => {
-    const classes = useStyles(className)
+export const ProductProfile: FC<Props> = ({ product }) => {
+    const classes = useStyles()
 
     const getParty = (min: number, max: number) => {
         if (min === null && max === null) {

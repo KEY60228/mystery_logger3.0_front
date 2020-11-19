@@ -15,11 +15,6 @@ interface Props {
     edit: (review: Review) => void
     wanna: (product: Product) => void
     unwanna: (product: Product) => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,9 +45,8 @@ export const ProductContents: FC<Props> = ({
     edit,
     wanna,
     unwanna,
-    className,
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     return (
         <Card className={classes.root}>

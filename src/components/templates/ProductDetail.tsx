@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import {
     Product,
@@ -27,12 +26,6 @@ interface Props {
     unwanna: (product: Product) => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {},
-    }),
-)
-
 export const ProductDetail: FC<Props> = ({
     product,
     currentUser,
@@ -47,8 +40,6 @@ export const ProductDetail: FC<Props> = ({
     wanna,
     unwanna,
 }) => {
-    const classes = useStyles()
-
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
     return (

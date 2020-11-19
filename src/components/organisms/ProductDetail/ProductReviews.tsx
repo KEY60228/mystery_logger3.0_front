@@ -12,11 +12,6 @@ interface Props {
     setConfirmOpen: (value: boolean) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductReviews: FC<Props> = ({ product, edit, setReview, setConfirmOpen, follow, unfollow, className }) => {
-    const classes = useStyles(className)
+export const ProductReviews: FC<Props> = ({ product, edit, setReview, setConfirmOpen, follow, unfollow }) => {
+    const classes = useStyles()
 
     return (
         <>
