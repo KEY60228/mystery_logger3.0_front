@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { ReviewDetail } from '../@types'
-import { setApiStatus } from '../stores/error'
 import { setFocusedReview, setPostStatus } from '../stores/review'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -41,17 +40,14 @@ export const asyncGetTimeline = (
 
 export const asyncGetReview = (id: string) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
-
         const response = await axios.get(`/v1/reviews/${id}`)
 
         if (response.status === 200) {
             dispatch(setFocusedReview(response.data))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラーハンドリング
         }
     }
 }
@@ -65,7 +61,6 @@ export const asyncPostReview = (
     product_id: number,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setPostStatus(null))
 
         const response = await axios.post('/v1/reviews', {
@@ -80,12 +75,10 @@ export const asyncPostReview = (
 
         if (response.status === 201) {
             dispatch(setPostStatus(true))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
             dispatch(setPostStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }
@@ -100,7 +93,6 @@ export const asyncUpdateReview = (
     review_id: number,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setPostStatus(null))
 
         const response = await axios.put(`/v1/reviews/${review_id}`, {
@@ -115,12 +107,10 @@ export const asyncUpdateReview = (
 
         if (response.status === 200) {
             dispatch(setPostStatus(true))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
             dispatch(setPostStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }
@@ -129,7 +119,6 @@ export const asyncDeleteReview = (
     review_id: number
 ) => {
     return async(dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setPostStatus(null))
         
         const response = await axios.delete(
@@ -138,12 +127,10 @@ export const asyncDeleteReview = (
 
         if (response.status === 204) {
             dispatch(setPostStatus(true))
-            dispatch(setApiStatus(true))
         }
         
         if (response.status === 422) {
             dispatch(setPostStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }
