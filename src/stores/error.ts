@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface ErrorStore {
-    apiStatus: boolean | null
+    apiStatus: boolean | null // 仮
 }
 
 // Stateの初期状態
 const initialState: ErrorStore = {
-    apiStatus: null,
+    apiStatus: null, // 仮
 }
 
 // Sliceを生成する
