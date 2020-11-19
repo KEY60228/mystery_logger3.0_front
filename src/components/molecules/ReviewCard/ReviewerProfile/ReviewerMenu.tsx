@@ -4,8 +4,8 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
-import { Review, User, Product } from '../../../@types'
-import { setFocusedReview } from '../../../stores/review'
+import { Review, User, Product } from '../../../../@types'
+import { setFocusedReview } from '../../../../stores/review'
 
 interface ReviewDetail extends Review {
     user?: User

@@ -2,8 +2,8 @@ import React, { FC, useState } from 'react'
 
 import { UserDetail as UserDetailInterface, User } from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
-import { UserProfile } from '../organisms/UserDetail/UserProfile/index'
-import { UserStatics } from '../organisms/UserDetail/UserStatics/index'
+import { UserProfile } from '../organisms/UserDetail/UserProfile/'
+import { UserStatics } from '../organisms/UserDetail/UserStatics/'
 import { UserTabs } from '../organisms/UserDetail/UserTabs'
 
 interface Props {

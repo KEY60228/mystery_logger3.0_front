@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card } from '@material-ui/core'
 
 import { Review, User, Product } from '../../../@types'
-import { ReviewerProfile } from './ReviewerProfile'
+import { ReviewerProfile } from './ReviewerProfile/'
 import { ReviewContents } from './ReviewContents'
 
 interface ReviewDetail extends Review {

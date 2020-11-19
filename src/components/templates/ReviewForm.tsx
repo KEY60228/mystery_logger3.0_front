@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { Product } from '../../@types'
-import { ReviewForm as ReviewFormMod } from '../molecules/ReviewForm/index'
+import { ReviewForm as ReviewFormMod } from '../molecules/ReviewForm/'
 
 interface Props {
     open: boolean

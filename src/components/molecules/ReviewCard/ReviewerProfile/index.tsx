@@ -10,10 +10,10 @@ import {
     Typography,
 } from '@material-ui/core'
 
-import { Review, User, Product } from '../../../@types'
-import { RootState } from '../../../stores/index'
+import { Review, User, Product } from '../../../../@types'
+import { RootState } from '../../../../stores/index'
 import { ReviewerMenu } from './ReviewerMenu'
-import { FollowButton } from '../FollowButton'
+import { FollowButton } from '../../FollowButton'
 
 interface ReviewDetail extends Review {
     user?: User

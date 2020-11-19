@@ -8,7 +8,7 @@ import {
 } from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
-import { ProductContents } from '../organisms/ProductDetail/ProductContents/index'
+import { ProductContents } from '../organisms/ProductDetail/ProductContents/'
 import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
 
 interface Props {
