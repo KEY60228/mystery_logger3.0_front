@@ -120,7 +120,6 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                                 setConfirmOpen={setConfirmOpen}
                                 // 仮
                                 edit={() => console.log()}
-                                setReview={() => console.log()}
                             />
                         ))}
                     </Box>

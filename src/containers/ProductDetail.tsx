@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { Product, ReviewDetail, User } from '../@types'
+import { Product, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
 import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
@@ -44,7 +44,7 @@ export const ProductDetail: FC = () => {
     }
 
     const post = () => {
-        if (!currentUser || !product) return false
+        if (!currentUser || !product) return false // 仮
         dispatch(
             asyncPostReview(
                 rating,
@@ -57,11 +57,8 @@ export const ProductDetail: FC = () => {
         )
     }
 
-    const setReview = (review: ReviewDetail) => { // 仮 organisms/moleculesからセットさせる
-        dispatch(setFocusedReview(review))
-    }
-
-    const edit = (review: ReviewDetail) => {
+    const edit = () => {
+        if (!review) return false // 仮
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at)
@@ -70,7 +67,7 @@ export const ProductDetail: FC = () => {
     }
 
     const update = () => {
-        if (!currentUser || !product || !review) return false
+        if (!currentUser || !product || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
                 rating,
@@ -85,27 +82,27 @@ export const ProductDetail: FC = () => {
     }
 
     const deleteReview = () => {
-        if (!review) return false
+        if (!review) return false // 仮
         dispatch(asyncDeleteReview(review.id))
     }
 
     const follow = (user: User) => {
-        if (!currentUser || !user) return false
+        if (!currentUser || !user) return false // 仮
         dispatch(asyncFollow(currentUser.id, user.id))
     }
     
     const unfollow = (user: User) => {
-        if(!currentUser || !user) return false
+        if(!currentUser || !user) return false // 仮
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
     const wanna = (product: Product) => {
-        if (!currentUser || !product) return false
+        if (!currentUser || !product) return false // 仮
         dispatch(asyncWanna(currentUser.id, product.id))
     }
 
     const unwanna = (product: Product) => {
-        if (!currentUser || !product) return false
+        if (!currentUser || !product) return false // 仮
         dispatch(asyncUnwanna(currentUser.id, product.id))
     }
 
@@ -154,7 +151,6 @@ export const ProductDetail: FC = () => {
                         review={review}
                         setOpen={setModalOpen}
                         setIsNew={setIsNew}
-                        setReview={setReview}
                         edit={edit}
                         deleteReview={deleteReview}
                         follow={follow}

@@ -17,8 +17,7 @@ interface Props {
     review: ReviewDetail | null
     setOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
-    setReview: (review: ReviewDetail) => void
-    edit: (review: ReviewDetail) => void
+    edit: () => void
     deleteReview: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
@@ -32,7 +31,6 @@ export const ProductDetail: FC<Props> = ({
     review,
     setOpen,
     setIsNew,
-    setReview,
     edit,
     deleteReview,
     follow,
@@ -53,7 +51,7 @@ export const ProductDetail: FC<Props> = ({
                 wanna={wanna}
                 unwanna={unwanna}
             />
-            <ProductReviews product={product} edit={edit} setReview={setReview} setConfirmOpen={setConfirmOpen} follow={follow} unfollow={unfollow} />
+            <ProductReviews product={product} edit={edit} setConfirmOpen={setConfirmOpen} follow={follow} unfollow={unfollow} />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

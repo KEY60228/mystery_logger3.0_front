@@ -32,9 +32,8 @@ export const Timeline: FC = () => {
         dispatch(asyncGetTimeline(currentUser.id, setReviews))
     }
 
-    const edit = (review: ReviewDetail) => { // reviewはorganisms/moleculesからreduxストアに格納させる
+    const edit = () => {
         if (!review) return false // 仮
-        dispatch(setFocusedReview(review)) // reviewはorganisms/moleculesからreduxストアに格納させる
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at)
@@ -55,10 +54,6 @@ export const Timeline: FC = () => {
                 review.id,
             ),
         )
-    }
-
-    const setReview = (review: ReviewDetail) => { // organisms/moleculesからreduxストアに格納させるため、削除
-        dispatch(setFocusedReview(review))
     }
 
     const deleteReview = () => {
@@ -105,7 +100,7 @@ export const Timeline: FC = () => {
         <>
             {reviews && (
                 <>
-                    <TimelineTemp reviews={reviews} edit={edit} follow={follow} unfollow={unfollow} setReview={setReview} deleteReview={deleteReview} />
+                    <TimelineTemp reviews={reviews} edit={edit} follow={follow} unfollow={unfollow} deleteReview={deleteReview} />
                     {review && (
                         <ReviewForm
                             open={open}

@@ -6,14 +6,13 @@ import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 
 interface Props {
     reviews: ReviewDetail[]
-    edit: (review: ReviewDetail) => void
+    edit: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
-    setReview: (review: ReviewDetail) => void
     deleteReview: () => void
 }
 
-export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow, setReview, deleteReview }) => {
+export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow, deleteReview }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
     return (
@@ -27,7 +26,6 @@ export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow, setReview
                     productTitle
                     productCard
                     edit={edit}
-                    setReview={setReview}
                     follow={follow}
                     unfollow={unfollow}
                     setConfirmOpen={setConfirmOpen}

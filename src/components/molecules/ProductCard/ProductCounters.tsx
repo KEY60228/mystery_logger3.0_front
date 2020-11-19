@@ -14,6 +14,7 @@ interface Props {
 
 interface ClassProps {
     width?: string
+    fontSize?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
             width: className.width,
         }),
         text: (className: ClassProps) => ({
-            fontSize: '10px',
+            fontSize: className.fontSize || '10px',
         }),
     }),
 )

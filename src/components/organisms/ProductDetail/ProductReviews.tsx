@@ -7,8 +7,7 @@ import { ReviewCard } from '../../molecules/ReviewCard'
 
 interface Props {
     product: ProductDetail
-    edit: (review: ReviewDetail) => void
-    setReview: (review: ReviewDetail) => void
+    edit: () => void
     setConfirmOpen: (value: boolean) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductReviews: FC<Props> = ({ product, edit, setReview, setConfirmOpen, follow, unfollow }) => {
+export const ProductReviews: FC<Props> = ({ product, edit, setConfirmOpen, follow, unfollow }) => {
     const classes = useStyles()
 
     return (
@@ -35,7 +34,6 @@ export const ProductReviews: FC<Props> = ({ product, edit, setReview, setConfirm
                         reviewerProfile
                         cardActionArea
                         edit={edit}
-                        setReview={setReview}
                         setConfirmOpen={setConfirmOpen}
                         follow={follow}
                         unfollow={unfollow}

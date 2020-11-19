@@ -22,8 +22,7 @@ interface ReviewDetail extends Review {
 
 interface Props {
     review: ReviewDetail
-    edit: (review: ReviewDetail) => void
-    setReview?: (review: ReviewDetail) => void
+    edit: () => void
     setConfirmOpen: (value: boolean) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
@@ -66,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewerProfile: FC<Props> = ({ review, edit, setReview, setConfirmOpen, follow, unfollow, className }) => {
+export const ReviewerProfile: FC<Props> = ({ review, edit, setConfirmOpen, follow, unfollow, className }) => {
     const classes = useStyles(className)
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -112,7 +111,7 @@ export const ReviewerProfile: FC<Props> = ({ review, edit, setReview, setConfirm
             )}
             {currentUser &&
                 review.user?.account_id === currentUser.account_id && (
-                    <ReviewerMenu review={review} edit={edit} setReview={setReview} setConfirmOpen={setConfirmOpen} />
+                    <ReviewerMenu review={review} edit={edit} setConfirmOpen={setConfirmOpen} />
                 )}
         </Grid>
     )
