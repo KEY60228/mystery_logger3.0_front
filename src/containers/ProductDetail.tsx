@@ -11,7 +11,6 @@ import { RootState } from '../stores/index'
 import { setFocusedProduct } from '../stores/product'
 import { setFocusedReview, setPostStatus } from '../stores/review'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
-import { ReviewForm } from '../components/templates/ReviewForm'
 
 export const ProductDetail: FC = () => {
     const dispatch = useDispatch()
@@ -146,19 +145,11 @@ export const ProductDetail: FC = () => {
             {product && (
                 <>
                     <ProductDetailTemp
-                        product={product}
                         currentUser={currentUser}
+                        product={product}
                         review={review}
-                        setOpen={setModalOpen}
+                        isNew={isNew}
                         setIsNew={setIsNew}
-                        edit={edit}
-                        deleteReview={deleteReview}
-                        follow={follow}
-                        unfollow={unfollow}
-                        wanna={wanna}
-                        unwanna={unwanna}
-                    />
-                    <ReviewForm
                         open={open}
                         setOpen={setModalOpen}
                         rating={rating}
@@ -169,10 +160,14 @@ export const ProductDetail: FC = () => {
                         setJoined_at={setJoined_at}
                         contents={contents}
                         setContents={setContents}
+                        edit={edit}
                         post={post}
                         update={update}
-                        isNew={isNew}
-                        product={product}
+                        deleteReview={deleteReview}
+                        follow={follow}
+                        unfollow={unfollow}
+                        wanna={wanna}
+                        unwanna={unwanna}
                     />
                 </>
             )}
