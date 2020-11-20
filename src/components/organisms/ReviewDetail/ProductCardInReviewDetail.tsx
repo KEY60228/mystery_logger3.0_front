@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: '80px',
             height: '120px',
             backgroundSize: 'contain',
+            margin: '8px',
         },
         profile: {
             margin: '8px',

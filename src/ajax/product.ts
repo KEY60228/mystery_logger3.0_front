@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { Product } from '../@types'
-import { setApiStatus } from '../stores/error'
+import { ProductDetail } from '../@types'
 import { setFocusedProduct, setWannaStatus } from '../stores/product'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -19,7 +18,7 @@ axios.interceptors.response.use(
 )
 
 export const asyncGetProducts = (
-    setProducts: (value: Product[] | null) => void,
+    setProducts: (value: ProductDetail[] | null) => void,
 ) => {
     return async (dispatch: any) => {
         const response = await axios.get('/v1/products')

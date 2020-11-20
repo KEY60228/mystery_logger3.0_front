@@ -1,14 +1,14 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { Product } from '../@types'
+import { ProductDetail } from '../@types'
 import { asyncGetProducts } from '../ajax/product'
 import { TopPage as TPTemp } from '../components/templates/TopPage'
 
 export const TopPage: FC = () => {
     const dispatch = useDispatch()
 
-    const [products, setProducts] = useState<Product[] | null>(null)
+    const [products, setProducts] = useState<ProductDetail[] | null>(null)
 
     const getProducts = () => {
         dispatch(asyncGetProducts(setProducts))
