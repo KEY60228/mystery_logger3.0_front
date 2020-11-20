@@ -5,7 +5,7 @@ import { TempSpace } from '../molecules/TempSpace'
 import { UserProfile } from '../organisms/UserDetail/UserProfile/'
 import { UserStatics } from '../organisms/UserDetail/UserStatics/'
 import { UserTabs } from '../organisms/UserDetail/UserTabs'
-import { UserForm } from './UserForm'
+import { UserForm } from '../organisms/UserDetail/UserForm/'
 
 interface Props {
     user: UserDetailInterface
