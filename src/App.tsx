@@ -13,6 +13,7 @@ import { UserDetail } from './containers/UserDetail'
 import { ProductDetail } from './containers/ProductDetail'
 import { ReviewDetail } from './containers/ReviewDetail'
 import { Timeline } from './containers/Timeline'
+import { Search } from './containers/Search'
 import { asyncGetCurrentUser } from './ajax/auth'
 
 const App: FC = () => {
@@ -39,6 +40,7 @@ const App: FC = () => {
                     <Route path="/products/:id" children={<ProductDetail />} />
                     <Route path="/reviews/:id" children={<ReviewDetail />} />
                     <Route path="/timeline" children={<Timeline />} />
+                    <Route path="/search" children={<Search />} />
                 </Switch>
                 <BottomNav />
             </BrowserRouter>
