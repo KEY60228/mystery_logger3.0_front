@@ -9,7 +9,6 @@ import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
 import { setFocusedReview } from '../stores/review'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
-import { ReviewForm } from '../components/templates/ReviewForm'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{id: string}>()
@@ -94,24 +93,24 @@ export const ReviewDetail: FC = () => {
     return (
         <>
             {review && 
-                <>
-                    <ReviewDetailTemp review={review} edit={edit} follow={follow} unfollow={unfollow} deleteReview={deleteReview} />
-                    <ReviewForm
-                        open={open}
-                        setOpen={setOpen}
-                        rating={rating}
-                        setRating={setRating}
-                        result={result}
-                        setResult={setResult}
-                        joined_at={joined_at}
-                        setJoined_at={setJoined_at}
-                        contents={contents}
-                        setContents={setContents}
-                        update={update}
-                        isNew={false}
-                        product={review.product}
-                    />
-                </>
+                <ReviewDetailTemp
+                    review={review}
+                    open={open}
+                    setOpen={setOpen}
+                    rating={rating}
+                    setRating={setRating}
+                    result={result}
+                    setResult={setResult}
+                    joined_at={joined_at}
+                    setJoined_at={setJoined_at}
+                    contents={contents}
+                    setContents={setContents}
+                    edit={edit}
+                    update={update}
+                    follow={follow}
+                    unfollow={unfollow}
+                    deleteReview={deleteReview}
+                />
             }
             {!review && <div>loading</div>}
         </>
