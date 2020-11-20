@@ -3,11 +3,10 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '../stores/index'
-import { UserDetail as UserDetailInterface, User } from '../@types'
+import { UserDetail as UserDetailInterface } from '../@types'
 import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import { asyncGetUser, asyncFollow, asyncUnFollow, asyncUpdateUser } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { UserForm } from '../components/templates/UserForm'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
@@ -73,10 +72,8 @@ export const UserDetail: FC = () => {
         <>
             { user && 
                 <>
-                    <UserDetailTemp user={user} follow={follow} unfollow={unfollow} edit={edit} />
-                    <UserForm
+                    <UserDetailTemp
                         user={user}
-                        update={update}
                         open={open}
                         setOpen={setOpen}
                         name={name}
@@ -85,6 +82,10 @@ export const UserDetail: FC = () => {
                         setAccountId={setAccountId}
                         profile={profile}
                         setProfile={setProfile}
+                        follow={follow}
+                        unfollow={unfollow}
+                        edit={edit}
+                        update={update}
                     />
                 </>
             }
