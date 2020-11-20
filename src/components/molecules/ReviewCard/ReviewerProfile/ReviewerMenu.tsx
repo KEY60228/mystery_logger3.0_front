@@ -40,7 +40,7 @@ export const ReviewerMenu: FC<Props> = ({ review, edit, setConfirmOpen, classNam
     }
 
     const editReview = () => {
-        edit
+        edit()
         setMenu(null)
     }
 
