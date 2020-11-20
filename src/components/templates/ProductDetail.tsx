@@ -6,11 +6,11 @@ import {
     ReviewDetail,
     User,
 } from '../../@types'
-import { TempSpace } from '../molecules/TempSpace'
-import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ProductContents } from '../organisms/ProductDetail/ProductContents/'
 import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
-import { ReviewForm } from './ReviewForm'
+import { TempSpace } from '../molecules/TempSpace'
+import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
+import { ReviewForm } from '../molecules/ReviewForm/'
 
 interface Props {
     currentUser: User | null

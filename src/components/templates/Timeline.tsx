@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react'
 import { ReviewDetail, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
-import { ReviewForm } from './ReviewForm'
+import { ReviewForm } from '../molecules/ReviewForm/'
 
 interface Props {
     reviews: ReviewDetail[]

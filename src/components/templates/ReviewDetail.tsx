@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../../@types'
+import { ProductCardInReviewDetail } from '../organisms/ReviewDetail/ProductCardInReviewDetail'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
-import { ProductCardInReviewDetail } from '../organisms/ReviewDetail/ProductCardInReviewDetail'
-import { ReviewForm } from './ReviewForm'
+import { ReviewForm } from '../molecules/ReviewForm/'
 
 interface Props {
     review: ReviewDetailInterface
