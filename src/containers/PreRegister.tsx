@@ -1,10 +1,10 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { RootState } from '../stores/index'
 import { asyncPreRegister } from '../ajax/auth'
-import { PreRegister as PreRegisterTemp } from '../components/templates/PreRegister'
+import { RootState } from '../stores/index'
 import { setPreRegisterStatus } from '../stores/auth'
+import { PreRegister as PreRegisterTemp } from '../components/templates/PreRegister'
 
 export const PreRegister: FC = () => {
     const dispatch = useDispatch()
@@ -12,16 +12,21 @@ export const PreRegister: FC = () => {
     const preRegisterStatus = useSelector((state: RootState) => state.auth.preRegisterStatus)
 
     const [email, setEmail] = useState<string>('')
-    const [open, setOpen] = useState<boolean>(false) // templatesに持たせる？
+    const [open, setOpen] = useState<boolean>(false)
 
     const preRegister = () => {
         dispatch(asyncPreRegister(email))
     }
 
     useEffect(() => {
+        return () => {
+            dispatch(setPreRegisterStatus(null))
+        }
+    }, [])
+
+    useEffect(() => {
         if (preRegisterStatus) {
             setOpen(true)
-            dispatch(setPreRegisterStatus(null))
         }
     }, [preRegisterStatus])
 

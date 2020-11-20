@@ -3,21 +3,16 @@ import { useSelector } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, CardMedia, Grid, Typography, Button } from '@material-ui/core'
 
-import { RootState } from '../../../stores/index'
-import { User } from '../../../@types'
+import { User } from '../../../../@types'
+import { RootState } from '../../../../stores/index'
+import { FollowButton } from '../../../molecules/FollowButton'
 import { UserCounters } from './UserCounters'
-import { FollowButton } from '../../molecules/FollowButton'
 
 interface Props {
     user: User
     follow: (user: User) => void
     unfollow: (user: User) => void
-    setOpen: (value: boolean) => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
+    edit: () => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -54,8 +49,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserProfile: FC<Props> = ({ user, follow, unfollow, setOpen, className }) => {
-    const classes = useStyles(className)
+export const UserProfile: FC<Props> = ({ user, follow, unfollow, edit }) => {
+    const classes = useStyles()
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
     return (
@@ -85,7 +80,7 @@ export const UserProfile: FC<Props> = ({ user, follow, unfollow, setOpen, classN
                     </Typography>
                 </Grid>
                 {user.account_id === currentUser?.account_id && (
-                    <Button onClick={() => setOpen(true)}>設定</Button>
+                    <Button onClick={edit}>設定</Button>
                 )}
                 {(currentUser && user.account_id !== currentUser?.account_id) && (
                     <FollowButton

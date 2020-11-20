@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Typography } from '@material-ui/core'
 
-import { Product, ProductDetail, Review, User } from '../../../@types'
-import { Ratings } from '../../molecules/Ratings'
+import { Product, ProductDetail, Review, User } from '../../../../@types'
+import { Ratings } from '../../../molecules/Ratings'
 import { Buttons } from './Buttons'
 import { ProductProfile } from './ProductProfile'
 
@@ -15,11 +15,6 @@ interface Props {
     edit: (review: Review) => void
     wanna: (product: Product) => void
     unwanna: (product: Product) => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,9 +45,8 @@ export const ProductContents: FC<Props> = ({
     edit,
     wanna,
     unwanna,
-    className,
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     return (
         <Card className={classes.root}>

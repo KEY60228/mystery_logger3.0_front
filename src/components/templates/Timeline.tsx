@@ -1,28 +1,49 @@
 import React, { FC, useState } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import { ReviewDetail, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
+import { ReviewForm } from '../molecules/ReviewForm/'
 
 interface Props {
     reviews: ReviewDetail[]
-    edit: (review: ReviewDetail) => void
+    review: ReviewDetail | null
+    open: boolean
+    setOpen: (value: boolean) => void
+    rating: number
+    setRating: (value: number) => void
+    result: number
+    setResult: (value: number) => void
+    joined_at: string | null
+    setJoined_at: (value: string | null) => void
+    contents: string | null
+    setContents: (value: string | null) => void
+    edit: () => void
+    update: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
-    setReview: (review: ReviewDetail) => void
     deleteReview: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {},
-    }),
-)
-
-export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow, setReview, deleteReview }) => {
-    const classes = useStyles()
-
+export const Timeline: FC<Props> = ({
+    reviews,
+    review,
+    open,
+    setOpen,
+    rating,
+    setRating,
+    result,
+    setResult,
+    joined_at,
+    setJoined_at,
+    contents,
+    setContents,
+    edit,
+    update,
+    follow,
+    unfollow,
+    deleteReview
+}) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
     return (
@@ -36,13 +57,29 @@ export const Timeline: FC<Props> = ({ reviews, edit, follow, unfollow, setReview
                     productTitle
                     productCard
                     edit={edit}
-                    setReview={setReview}
                     follow={follow}
                     unfollow={unfollow}
                     setConfirmOpen={setConfirmOpen}
                     className={{ margin: '8px' }}
                 />
-                ))}
+            ))}
+            { review &&
+                <ReviewForm
+                    open={open}
+                    setOpen={setOpen}
+                    rating={rating}
+                    setRating={setRating}
+                    result={result}
+                    setResult={setResult}
+                    joined_at={joined_at}
+                    setJoined_at={setJoined_at}
+                    contents={contents}
+                    setContents={setContents}
+                    update={update}
+                    isNew={false}
+                    product={review.product}
+                />
+            }
             <ConfirmDeleteReview
                 deleteReview={deleteReview}
                 confirmOpen={confirmOpen}

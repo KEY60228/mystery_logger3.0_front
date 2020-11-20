@@ -2,21 +2,15 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Typography } from '@material-ui/core'
 
-import { ProductDetail, ReviewDetail, ReviewWithUser, User } from '../../@types'
-import { ReviewCard } from '../molecules/ReviewCard'
+import { ProductDetail, ReviewDetail, ReviewWithUser, User } from '../../../@types'
+import { ReviewCard } from '../../molecules/ReviewCard'
 
 interface Props {
     product: ProductDetail
-    edit: (review: ReviewDetail) => void
-    setReview: (review: ReviewDetail) => void
+    edit: () => void
     setConfirmOpen: (value: boolean) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,8 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductReviews: FC<Props> = ({ product, edit, setReview, setConfirmOpen, follow, unfollow, className }) => {
-    const classes = useStyles(className)
+export const ProductReviews: FC<Props> = ({ product, edit, setConfirmOpen, follow, unfollow }) => {
+    const classes = useStyles()
 
     return (
         <>
@@ -40,7 +34,6 @@ export const ProductReviews: FC<Props> = ({ product, edit, setReview, setConfirm
                         reviewerProfile
                         cardActionArea
                         edit={edit}
-                        setReview={setReview}
                         setConfirmOpen={setConfirmOpen}
                         follow={follow}
                         unfollow={unfollow}

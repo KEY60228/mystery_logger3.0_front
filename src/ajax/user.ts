@@ -23,17 +23,14 @@ export const asyncGetUser = (
     setUser: (value: UserDetail) => void,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
-
         const response = await axios.get(`/v1/users/${account_id}`)
 
         if (response.status === 200) {
             setUser(response.data)
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラーハンドリング
         }
     }
 }
@@ -43,7 +40,6 @@ export const asyncFollow = (
     followed_id: number,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setFollowStatus(null))
         
         const response = await axios.put('/v1/follow', {
@@ -53,12 +49,10 @@ export const asyncFollow = (
         
         if (response.status === 200) {
             dispatch(setFollowStatus(true))
-            dispatch(setApiStatus(true))
         }
         
         if (response.status === 422) {
             dispatch(setFollowStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }
@@ -68,7 +62,6 @@ export const asyncUnFollow = (
     followed_id: number,
 ) => {
     return async(dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setFollowStatus(null))
         
         const response = await axios.delete('/v1/unfollow', {
@@ -77,15 +70,13 @@ export const asyncUnFollow = (
                 followed_id: followed_id,
             }
         })
-        
+
         if (response.status === 204) {
             dispatch(setFollowStatus(true))
-            dispatch(setApiStatus(true))
         }
-        
+
         if (response.status === 422) {
             dispatch(setFollowStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }
@@ -97,7 +88,6 @@ export const asyncUpdateUser = (
     profile: string,
 ) => {
     return async(dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setUpdateUserStatus(null))
 
         const response = await axios.put(
@@ -111,12 +101,10 @@ export const asyncUpdateUser = (
 
         if (response.status === 200) {
             dispatch(setUpdateUserStatus(true))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
             dispatch(setUpdateUserStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }

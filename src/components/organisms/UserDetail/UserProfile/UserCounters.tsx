@@ -2,22 +2,17 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Grid, Typography } from '@material-ui/core'
 
-import { User } from '../../../@types'
+import { User } from '../../../../@types'
 
 interface Props {
     user: User
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: (className: ClassProps) => ({
-            width: className.width || '250px',
-        }),
+        root: {
+            width: '250px',
+        },
         subtitle: {
             fontSize: '12px',
         },
@@ -27,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserCounters: FC<Props> = ({ user, className }) => {
-    const classes = useStyles(className)
+export const UserCounters: FC<Props> = ({ user }) => {
+    const classes = useStyles()
 
     return (
         <Grid container direction="row" wrap="nowrap" className={classes.root}>

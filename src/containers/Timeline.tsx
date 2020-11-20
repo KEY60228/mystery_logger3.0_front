@@ -1,29 +1,23 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { RootState } from '../stores/index'
 import { ReviewDetail, User } from '../@types'
-import { Timeline as TimelineTemp } from '../components/templates/Timeline'
-import { ReviewForm } from '../components/templates/ReviewForm'
 import { asyncDeleteReview, asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { setFocusedReview, setPostStatus } from '../stores/review'
-import { setFollowStatus } from '../stores/user'
-import { setFocusedProduct } from '../stores/product'
+import { RootState } from '../stores/index'
+import { setFocusedReview } from '../stores/review'
+import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 
 export const Timeline: FC = () => {
     const dispatch = useDispatch()
 
-    const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
-
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const review = useSelector((state: RootState) => state.review.focusedReview)
+    const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
-
+    const postStatus = useSelector((state: RootState) => state.review.postStatus)
+    
+    const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
@@ -33,13 +27,12 @@ export const Timeline: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const getReviews = async () => {
-        if (!currentUser) return false
+        if (!currentUser) return false // 仮
         dispatch(asyncGetTimeline(currentUser.id, setReviews))
     }
 
-    const edit = (review: ReviewDetail) => {
-        if (!review) return false
-        dispatch(setFocusedReview(review))
+    const edit = () => {
+        if (!review) return false // 仮
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at)
@@ -48,7 +41,7 @@ export const Timeline: FC = () => {
     }
 
     const update = () => {
-        if (!currentUser || !review) return false
+        if (!currentUser || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
                 rating,
@@ -62,22 +55,18 @@ export const Timeline: FC = () => {
         )
     }
 
-    const setReview = (review: ReviewDetail) => {
-        dispatch(setFocusedReview(review))
-    }
-
     const deleteReview = () => {
-        if (!review) return false
+        if (!review) return false // 仮
         dispatch(asyncDeleteReview(review.id))
     }
 
     const follow = (user: User) => {
-        if (!currentUser || !user) return false
+        if (!currentUser || !user) return false // 仮
         dispatch(asyncFollow(currentUser.id, user.id))
     }
     
     const unfollow = (user: User) => {
-        if(!currentUser || !user) return false
+        if(!currentUser || !user) return false // 仮
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
@@ -86,7 +75,6 @@ export const Timeline: FC = () => {
 
         return () => {
             dispatch(setFocusedReview(null))
-            dispatch(setFocusedProduct(null))
         }
     }, [])
 
@@ -98,14 +86,12 @@ export const Timeline: FC = () => {
             setResult(0)
             setJoined_at('')
             setContents('')
-            dispatch(setPostStatus(null))
         }
     }, [postStatus])
 
     useEffect(() => {
         if (followStatus) {
             dispatch(asyncGetCurrentUser())
-            dispatch(setFollowStatus(null))
         }
     }, [followStatus])
 
@@ -113,24 +99,25 @@ export const Timeline: FC = () => {
         <>
             {reviews && (
                 <>
-                    <TimelineTemp reviews={reviews} edit={edit} follow={follow} unfollow={unfollow} setReview={setReview} deleteReview={deleteReview} />
-                    {review && (
-                        <ReviewForm
-                            open={open}
-                            setOpen={setOpen}
-                            rating={rating}
-                            setRating={setRating}
-                            result={result}
-                            setResult={setResult}
-                            joined_at={joined_at}
-                            setJoined_at={setJoined_at}
-                            contents={contents}
-                            setContents={setContents}
-                            update={update}
-                            isNew={false}
-                            product={review.product}
-                        />
-                    )}
+                    <TimelineTemp
+                        reviews={reviews}
+                        review={review}
+                        open={open}
+                        setOpen={setOpen}
+                        rating={rating}
+                        setRating={setRating}
+                        result={result}
+                        setResult={setResult}
+                        joined_at={joined_at}
+                        setJoined_at={setJoined_at}
+                        contents={contents}
+                        setContents={setContents}
+                        edit={edit}
+                        update={update}
+                        follow={follow}
+                        unfollow={unfollow}
+                        deleteReview={deleteReview}
+                    />
                 </>
             )}
             {!reviews && <div>loading</div>}

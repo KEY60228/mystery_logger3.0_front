@@ -10,11 +10,11 @@ import {
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 
-import { UserDetail } from '../../../@types'
+import { UserDetail } from '../../../../@types'
 
 interface Props {
     user: UserDetail
-    update: (id: number) => void
+    update: () => void
     setOpen: (value: boolean) => void
     className?: ClassProps
 }
@@ -53,7 +53,7 @@ export const UserFormHeader: FC<Props> = ({
                         <CloseIcon />
                     </IconButton>
                     <Typography variant="h6">ユーザー情報編集</Typography>
-                    <Button color="inherit" onClick={() => update(user.id)}>
+                    <Button color="inherit" onClick={update}>
                         更新
                     </Button>
                 </Grid>

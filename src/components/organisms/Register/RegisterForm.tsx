@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Grid, Typography, Button } from '@material-ui/core'
 
-import { Form } from '../molecules/Form'
-import { PasswordForm } from '../molecules/PasswordForm'
+import { Form } from '../../molecules/Form'
+import { PasswordForm } from '../../molecules/PasswordForm'
 
 interface Props {
     accountId: string
@@ -13,11 +13,6 @@ interface Props {
     password: string
     setPassword: (value: string) => void
     register: () => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,9 +40,8 @@ export const RegisterForm: FC<Props> = ({
     password,
     setPassword,
     register,
-    className,
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     return (
         <Card className={classes.root}>
@@ -76,7 +70,6 @@ export const RegisterForm: FC<Props> = ({
                         <PasswordForm
                             password={password}
                             setPassword={setPassword}
-                            className={{ width: '300px', margin: '12px auto' }}
                         />
                         <Button
                             variant="contained"

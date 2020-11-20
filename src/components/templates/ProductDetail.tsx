@@ -1,5 +1,4 @@
 import React, { FC, useState } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
 import {
     Product,
@@ -7,19 +6,31 @@ import {
     ReviewDetail,
     User,
 } from '../../@types'
-import { ProductContents } from '../organisms/ProductContents/index'
-import { ProductReviews } from '../organisms/ProductReviews'
+import { ProductContents } from '../organisms/ProductDetail/ProductContents/'
+import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
 import { TempSpace } from '../molecules/TempSpace'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
+import { ReviewForm } from '../molecules/ReviewForm/'
 
 interface Props {
-    product: ProductDetailInterface
     currentUser: User | null
+    product: ProductDetailInterface
     review: ReviewDetail | null
-    setOpen: (value: boolean) => void
+    isNew: boolean
     setIsNew: (value: boolean) => void
-    setReview: (review: ReviewDetail) => void
-    edit: (review: ReviewDetail) => void
+    open: boolean
+    setOpen: (value: boolean) => void
+    rating: number
+    setRating: (value: number) => void
+    result: number
+    setResult: (value: number) => void
+    joined_at: string | null
+    setJoined_at: (value: string | null) => void
+    contents: string | null
+    setContents: (value: string | null) => void
+    edit: () => void
+    post: () => void
+    update: () => void
     deleteReview: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
@@ -27,28 +38,31 @@ interface Props {
     unwanna: (product: Product) => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {},
-    }),
-)
-
 export const ProductDetail: FC<Props> = ({
-    product,
     currentUser,
+    product,
     review,
-    setOpen,
+    isNew,
     setIsNew,
-    setReview,
+    open,
+    setOpen,
+    rating,
+    setRating,
+    result,
+    setResult,
+    joined_at,
+    setJoined_at,
+    contents,
+    setContents,
     edit,
+    post,
+    update,
     deleteReview,
     follow,
     unfollow,
     wanna,
     unwanna,
 }) => {
-    const classes = useStyles()
-
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
     return (
@@ -62,10 +76,26 @@ export const ProductDetail: FC<Props> = ({
                 wanna={wanna}
                 unwanna={unwanna}
             />
-            <ProductReviews product={product} edit={edit} setReview={setReview} setConfirmOpen={setConfirmOpen} follow={follow} unfollow={unfollow} />
+            <ProductReviews product={product} edit={edit} setConfirmOpen={setConfirmOpen} follow={follow} unfollow={unfollow} />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}
+            />
+            <ReviewForm
+                open={open}
+                setOpen={setOpen}
+                rating={rating}
+                setRating={setRating}
+                result={result}
+                setResult={setResult}
+                joined_at={joined_at}
+                setJoined_at={setJoined_at}
+                contents={contents}
+                setContents={setContents}
+                post={post}
+                update={update}
+                isNew={isNew}
+                product={product}
             />
             <ConfirmDeleteReview
                 deleteReview={deleteReview}

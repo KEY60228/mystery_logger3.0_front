@@ -22,41 +22,34 @@ export const asyncGetProducts = (
     setProducts: (value: Product[] | null) => void,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
-
-        const response = await axios.get('https://localhost:1443/v1/products')
+        const response = await axios.get('/v1/products')
 
         if (response.status === 200) {
             setProducts(response.data)
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラー処理
         }
     }
 }
 
 export const asyncGetProduct = (id: string) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
-
         const response = await axios.get(`/v1/products/${id}`)
 
         if (response.status === 200) {
             dispatch(setFocusedProduct(response.data))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラーハンドリング
         }
     }
 }
 
 export const asyncWanna = (user_id: number, product_id: number) => {
     return async(dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setWannaStatus(null))
 
         const response = await axios.put(
@@ -69,19 +62,16 @@ export const asyncWanna = (user_id: number, product_id: number) => {
 
         if (response.status === 200) {
             dispatch(setWannaStatus(true))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
             dispatch(setWannaStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }
 
 export const asyncUnwanna = (user_id: number, product_id: number) => {
     return async(dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setWannaStatus(null))
 
         const response = await axios.delete(
@@ -94,12 +84,10 @@ export const asyncUnwanna = (user_id: number, product_id: number) => {
 
         if (response.status === 204) {
             dispatch(setWannaStatus(true))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
             dispatch(setWannaStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }

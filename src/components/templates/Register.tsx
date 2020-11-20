@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
-import { RegisterForm } from '../organisms/RegisterForm'
+import { RegisterForm } from '../organisms/Register/RegisterForm'
 
 interface Props {
     accountId: string
@@ -13,23 +12,6 @@ interface Props {
     register: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            height: '100%',
-        },
-        paper: {
-            margin: '12px',
-        },
-        subtitle: {
-            width: '100%',
-            textAlign: 'center',
-            borderBottom: '1px groove grey',
-            padding: '24px',
-        },
-    }),
-)
-
 export const Register: FC<Props> = ({
     accountId,
     setAccountId,
@@ -39,8 +21,6 @@ export const Register: FC<Props> = ({
     setPassword,
     register,
 }) => {
-    const classes = useStyles()
-
     return (
         <RegisterForm
             accountId={accountId}

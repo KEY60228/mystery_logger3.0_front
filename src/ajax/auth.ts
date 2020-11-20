@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { setPreRegisterStatus, setUser } from '../stores/auth'
-import { setApiStatus } from '../stores/error'
+import { setPreRegisterStatus, setRegisterStatus, setUser } from '../stores/auth'
 import queryString from 'query-string'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -21,7 +20,6 @@ axios.interceptors.response.use(
 // 仮登録処理
 export const asyncPreRegister = (email: string) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
         dispatch(setPreRegisterStatus(null))
         
         const response = await axios.post(
@@ -31,12 +29,10 @@ export const asyncPreRegister = (email: string) => {
             
         if (response.status === 201) {
             dispatch(setPreRegisterStatus(true))
-            dispatch(setApiStatus(true))
         }
         
         if (response.status === 422) {
             dispatch(setPreRegisterStatus(false))
-            dispatch(setApiStatus(false))
         }
     }
 }
@@ -48,7 +44,7 @@ export const asyncVerify = (
     setEmail: (value: string) => void,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
+        dispatch(setRegisterStatus(null))
 
         const response = await axios.post('/v1/register/verify', {
             token: query.token,
@@ -57,11 +53,11 @@ export const asyncVerify = (
         if (response.status === 200) {
             setPreRegisterId(response.data.pre_register_id)
             setEmail(response.data.email)
-            dispatch(setApiStatus(true))
+            dispatch(setRegisterStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            dispatch(setRegisterStatus(false))
         }
     }
 }
@@ -75,8 +71,6 @@ export const asyncRegister = (
     preRegisterId: number,
 ) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
-
         const response = await axios.post('/v1/register', {
             account_id: accountId,
             email: email,
@@ -88,11 +82,10 @@ export const asyncRegister = (
 
         if (response.status === 201) {
             dispatch(setUser(response.data))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラー処理
         }
     }
 }
@@ -100,8 +93,6 @@ export const asyncRegister = (
 // ログイン処理
 export const asyncLogin = (email: string, password: string) => {
     return async (dispatch: any) => {
-        dispatch(setApiStatus(null))
-
         const response = await axios.post('/v1/login', {
             email: email,
             password: password,
@@ -109,11 +100,10 @@ export const asyncLogin = (email: string, password: string) => {
 
         if (response.status === 200) {
             dispatch(setUser(response.data))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラー処理
         }
     }
 }
@@ -121,19 +111,16 @@ export const asyncLogin = (email: string, password: string) => {
 // クッキーログイン & ユーザー情報更新
 export const asyncGetCurrentUser = () => {
     return async(dispatch: any) => {
-        dispatch(setApiStatus(null))
-
         const response = await axios.get(
             '/v1/currentuser'
         )
 
         if (response.status === 200) {
             dispatch(setUser(response.data))
-            dispatch(setApiStatus(true))
         }
 
         if (response.status === 422) {
-            dispatch(setApiStatus(false))
+            // エラー処理
         }
     }  
 }

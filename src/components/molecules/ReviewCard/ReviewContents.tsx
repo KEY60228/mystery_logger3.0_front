@@ -6,7 +6,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { Review, Product } from '../../../@types'
 import { Ratings } from '../Ratings'
-import { ProductCard } from '../ProductCard/index'
+import { ProductCard } from '../ProductCard/'
 
 interface ReviewWithProduct extends Review {
     product?: Product

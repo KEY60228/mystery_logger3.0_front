@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Grid, Typography, Button } from '@material-ui/core'
 
-import { Form } from '../molecules/Form'
-import { PasswordForm } from '../molecules/PasswordForm'
+import { Form } from '../../molecules/Form'
+import { PasswordForm } from '../../molecules/PasswordForm'
 
 interface Props {
     email: string
@@ -11,11 +11,6 @@ interface Props {
     password: string
     setPassword: (value: string) => void
     login: () => void
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -41,9 +36,8 @@ export const LoginForm: FC<Props> = ({
     password,
     setPassword,
     login,
-    className,
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     return (
         <Card className={classes.root}>

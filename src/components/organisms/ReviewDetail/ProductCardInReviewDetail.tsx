@@ -11,16 +11,11 @@ import {
 } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import { ProductDetailWithoutReviews, PerformanceWithVenue } from '../../@types'
-import { Ratings } from '../molecules/Ratings'
+import { ProductDetailWithoutReviews, PerformanceWithVenue } from '../../../@types'
+import { Ratings } from '../../molecules/Ratings'
 
 interface Props {
     product: ProductDetailWithoutReviews
-    className?: ClassProps
-}
-
-interface ClassProps {
-    width?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -46,10 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ProductCardInReviewDetail: FC<Props> = ({
-    product,
-    className,
+    product
 }) => {
-    const classes = useStyles(className)
+    const classes = useStyles()
 
     return (
         <Card className={classes.root}>

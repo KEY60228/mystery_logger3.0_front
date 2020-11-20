@@ -4,7 +4,7 @@ import { Grid, Button, Typography } from '@material-ui/core'
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import QueueIcon from '@material-ui/icons/Queue'
 
-import { Product, ProductDetail, User, Review } from '../../../@types'
+import { Product, ProductDetail, User, Review } from '../../../../@types'
 
 interface Props {
     product: ProductDetail

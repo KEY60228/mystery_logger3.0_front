@@ -1,9 +1,11 @@
 import React, { FC, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
-import { Review, User, Product } from '../../../@types'
+import { Review, User, Product } from '../../../../@types'
+import { setFocusedReview } from '../../../../stores/review'
 
 interface ReviewDetail extends Review {
     user?: User
@@ -12,8 +14,7 @@ interface ReviewDetail extends Review {
 
 interface Props {
     review: ReviewDetail
-    edit: (review: ReviewDetail) => void
-    setReview?: (review: ReviewDetail) => void
+    edit: () => void
     setConfirmOpen: (value: boolean) => void
     className?: ClassProps
 }
@@ -28,17 +29,18 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewerMenu: FC<Props> = ({ review, edit, setReview, setConfirmOpen, className }) => {
+export const ReviewerMenu: FC<Props> = ({ review, edit, setConfirmOpen, className }) => {
     const classes = useStyles(className)
+    const dispatch = useDispatch()
     const [menu, setMenu] = useState<null | HTMLElement>(null)
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if (setReview !== undefined) setReview(review)
+        dispatch(setFocusedReview(review))
         setMenu(event.currentTarget)
     }
 
     const editReview = () => {
-        edit(review)
+        edit()
         setMenu(null)
     }
 
