@@ -8,7 +8,6 @@ import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
 import { setFocusedReview } from '../stores/review'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
-import { ReviewForm } from '../components/templates/ReviewForm'
 
 export const Timeline: FC = () => {
     const dispatch = useDispatch()
@@ -100,24 +99,25 @@ export const Timeline: FC = () => {
         <>
             {reviews && (
                 <>
-                    <TimelineTemp reviews={reviews} edit={edit} follow={follow} unfollow={unfollow} deleteReview={deleteReview} />
-                    {review && (
-                        <ReviewForm
-                            open={open}
-                            setOpen={setOpen}
-                            rating={rating}
-                            setRating={setRating}
-                            result={result}
-                            setResult={setResult}
-                            joined_at={joined_at}
-                            setJoined_at={setJoined_at}
-                            contents={contents}
-                            setContents={setContents}
-                            update={update}
-                            isNew={false}
-                            product={review.product}
-                        />
-                    )}
+                    <TimelineTemp
+                        reviews={reviews}
+                        review={review}
+                        open={open}
+                        setOpen={setOpen}
+                        rating={rating}
+                        setRating={setRating}
+                        result={result}
+                        setResult={setResult}
+                        joined_at={joined_at}
+                        setJoined_at={setJoined_at}
+                        contents={contents}
+                        setContents={setContents}
+                        edit={edit}
+                        update={update}
+                        follow={follow}
+                        unfollow={unfollow}
+                        deleteReview={deleteReview}
+                    />
                 </>
             )}
             {!reviews && <div>loading</div>}
