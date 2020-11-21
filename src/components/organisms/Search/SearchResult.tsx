@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Typography } from '@material-ui/core'
 
-import { ProductDetail } from '../../../../@types'
-import { ProductCardInReviewDetail } from '../../ReviewDetail/ProductCardInReviewDetail'
+import { ProductDetail } from '../../../@types'
+import { ProductCardInReviewDetail } from '../ReviewDetail/ProductCardInReviewDetail'
 
 interface Props {
     results: ProductDetail[]

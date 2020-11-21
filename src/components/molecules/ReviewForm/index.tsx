@@ -18,7 +18,7 @@ import { Product } from '../../../@types'
 import { Calender } from './Calender'
 import { SlideRatings } from './SlideRatings'
 import { ReviewHeader } from './ReviewHeader'
-import { ResultForm } from './ResultForm'
+import { SelectForm } from '../SelectForm'
 
 interface Props {
     open: boolean
@@ -94,6 +94,15 @@ export const ReviewForm: FC<Props> = ({
 }) => {
     const classes = useStyles(className)
 
+    const resultSelect: {
+        id: number
+        name: string
+    }[] = [
+        { id: 0, name: '脱出結果を選択'},
+        { id: 1, name: '成功！！' },
+        { id: 2, name: '失敗...' }
+    ]
+
     return (
         <Dialog
             fullScreen
@@ -126,10 +135,11 @@ export const ReviewForm: FC<Props> = ({
                             className={{ marginLeft: '20px', fontSize: '16px' }}
                         />
                         <FormControl>
-                            <ResultForm
-                                result={result}
-                                setResult={setResult}
-                                className={{ width: '180px' }}
+                            <SelectForm
+                                value={result}
+                                setValue={setResult}
+                                choices={resultSelect}
+                                className={{ width: '180px', margin: '0px'}}
                             />
                             <Calender
                                 date={joined_at}
