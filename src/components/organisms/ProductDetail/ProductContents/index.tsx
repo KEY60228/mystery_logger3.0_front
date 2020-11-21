@@ -12,7 +12,7 @@ interface Props {
     currentUser: User | null
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
-    edit: (review: Review) => void
+    edit: () => void
     wanna: (product: Product) => void
     unwanna: (product: Product) => void
 }

@@ -1,17 +1,19 @@
 import React, { FC } from 'react'
+import { useDispatch } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Grid, Button, Typography } from '@material-ui/core'
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import QueueIcon from '@material-ui/icons/Queue'
 
-import { Product, ProductDetail, User, Review } from '../../../../@types'
+import { Product, ProductDetail, User, ReviewDetail } from '../../../../@types'
+import { setFocusedReview } from '../../../../stores/review'
 
 interface Props {
     product: ProductDetail
     currentUser: User | null
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
-    edit: (review: Review) => void
+    edit: () => void
     wanna: (product: Product) => void
     unwanna: (product: Product) => void
 }
@@ -34,6 +36,7 @@ export const Buttons: FC<Props> = ({
     unwanna,
 }) => {
     const classes = useStyles()
+    const dispatch = useDispatch()
 
     const onClickDone = () => {
         if (!currentUser) return false
@@ -42,10 +45,8 @@ export const Buttons: FC<Props> = ({
     }
 
     const onClickEdit = () => {
-        const review = product.reviews?.find((review: Review) => currentUser?.done_id.includes(review.id))
-        if (!review) return false
-        edit(review)
-        setModalOpen(true)
+        if (!currentUser) return false // 仮
+        edit()
     }
 
     return (

@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { Product, User } from '../@types'
+import { Product, ReviewDetail, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
 import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
@@ -57,6 +57,7 @@ export const ProductDetail: FC = () => {
     }
 
     const edit = () => {
+        const review = product?.reviews?.find((review: ReviewDetail) => currentUser?.done_id.includes(review.product_id))
         if (!review) return false // 仮
         setRating(review.rating)
         setResult(review.result)
