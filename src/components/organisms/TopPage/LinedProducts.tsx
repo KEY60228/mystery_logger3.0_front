@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Typography, Box } from '@material-ui/core'
 
 import { Product } from '../../../@types'
-import { ProductCard } from '../../molecules/ProductCard/'
+import { ProductCardS } from '../../molecules/ProductCardS/'
 
 interface Props {
     products: Product[]
@@ -36,7 +36,7 @@ export const LinedProducts: FC<Props> = ({ products, subtitle }) => {
             <Box className={classes.outerBox}>
                 <Box className={classes.innerBox}>
                     {products.map((product: Product) => (
-                        <ProductCard
+                        <ProductCardS
                             key={product.id}
                             product={product}
                             className={{

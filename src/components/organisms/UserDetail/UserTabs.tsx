@@ -4,7 +4,7 @@ import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
 import { UserDetail, ReviewDetail, ReviewWithProduct, User, WannaWithProduct } from '../../../@types'
 import { ReviewCard } from '../../molecules/ReviewCard/'
-import { ProductCard } from '../../molecules/ProductCard/'
+import { ProductCardS } from '../../molecules/ProductCardS/'
 
 interface Props {
     user: UserDetail
@@ -74,7 +74,7 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                         className={classes.list}
                     >
                         {user.reviews.map((review: ReviewWithProduct) => (
-                            <ProductCard
+                            <ProductCardS
                                 key={review.product.id}
                                 product={review.product}
                             />
@@ -93,7 +93,7 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                         className={classes.list}
                     >
                         {user.wannas.map((wanna: WannaWithProduct) => (
-                            <ProductCard
+                            <ProductCardS
                                 key={wanna.product.id}
                                 product={wanna.product}
                             />

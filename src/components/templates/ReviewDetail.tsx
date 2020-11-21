@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../../@types'
-import { ProductCardInReviewDetail } from '../organisms/ReviewDetail/ProductCardInReviewDetail'
+import { ProductCardM } from '../molecules/ProductCardM/'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
@@ -47,7 +47,7 @@ export const ReviewDetail: FC<Props> = ({
 
     return (
         <>
-            <ProductCardInReviewDetail product={review.product} />
+            <ProductCardM product={review.product} />
             <ReviewCard
                 review={review}
                 reviewerProfile

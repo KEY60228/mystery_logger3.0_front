@@ -6,7 +6,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { Review, Product } from '../../../@types'
 import { Ratings } from '../Ratings'
-import { ProductCard } from '../ProductCard/'
+import { ProductCardS } from '../ProductCardS/'
 
 interface ReviewWithProduct extends Review {
     product?: Product
@@ -240,7 +240,7 @@ export const ReviewContents: FC<Props> = ({
                             </Typography>
                         </Box>
                     )}
-                    <ProductCard product={review.product} />
+                    <ProductCardS product={review.product} />
                 </Grid>
             )}
             <Grid container justify="flex-end">

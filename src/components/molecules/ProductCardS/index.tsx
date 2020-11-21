@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductCard: FC<Props> = ({ product, className }) => {
+export const ProductCardS: FC<Props> = ({ product, className }) => {
     const classes = useStyles(className)
 
     return (

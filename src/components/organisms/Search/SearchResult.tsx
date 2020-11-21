@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Typography } from '@material-ui/core'
 
 import { ProductDetail } from '../../../@types'
-import { ProductCardInReviewDetail } from '../ReviewDetail/ProductCardInReviewDetail'
+import { ProductCardM } from '../../molecules/ProductCardM/'
 
 interface Props {
     results: ProductDetail[]
@@ -28,7 +28,7 @@ export const SearchResult: FC<Props> = ({
     return (
         <>
             { results && results.map((product: ProductDetail) =>
-                <ProductCardInReviewDetail key={product.id} product={product} />
+                <ProductCardM key={product.id} product={product} />
             )}
             { !results.length &&
                 <Card className={classes.root}>

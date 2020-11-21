@@ -12,7 +12,7 @@ import {
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { ProductDetailWithoutReviews, PerformanceWithVenue } from '../../../@types'
-import { Ratings } from '../../molecules/Ratings'
+import { Ratings } from '../Ratings'
 
 interface Props {
     product: ProductDetailWithoutReviews
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductCardInReviewDetail: FC<Props> = ({
+export const ProductCardM: FC<Props> = ({
     product
 }) => {
     const classes = useStyles()
