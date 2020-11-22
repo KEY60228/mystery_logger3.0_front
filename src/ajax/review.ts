@@ -38,12 +38,15 @@ export const asyncGetTimeline = (
     }
 }
 
-export const asyncGetReview = (id: string) => {
+export const asyncGetReview = (
+    id: string,
+    setReview: (value: ReviewDetail | null) => void
+) => {
     return async (dispatch: any) => {
         const response = await axios.get(`/v1/reviews/${id}`)
 
         if (response.status === 200) {
-            dispatch(setFocusedReview(response.data))
+            setReview(response.data)
         }
 
         if (response.status === 422) {

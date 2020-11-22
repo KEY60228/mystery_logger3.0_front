@@ -2,12 +2,11 @@ import React, { FC, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { User } from '../@types'
+import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
 import { asyncDeleteReview, asyncGetReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
-import { setFocusedReview } from '../stores/review'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 
 export const ReviewDetail: FC = () => {
@@ -15,8 +14,9 @@ export const ReviewDetail: FC = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
+    const [review, setReview] = useState<ReviewDetailInterface | null>(null)
+
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const review = useSelector((state: RootState) => state.review.focusedReview)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const postStatus = useSelector((state: RootState) => state.review.postStatus)
 
@@ -28,7 +28,7 @@ export const ReviewDetail: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const getReview = () => {
-        dispatch(asyncGetReview(id))
+        dispatch(asyncGetReview(id, setReview))
     }
 
     const follow = (user: User) => { // 要確認
@@ -72,10 +72,6 @@ export const ReviewDetail: FC = () => {
 
     useEffect(() => {
         getReview()
-
-        return () => {
-            dispatch(setFocusedReview(null))
-        }
     }, [])
 
     useEffect(() => {
