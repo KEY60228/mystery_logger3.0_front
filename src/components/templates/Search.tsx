@@ -4,6 +4,7 @@ import { ProductDetail, Performance } from '../../@types';
 import { SearchBox } from '../organisms/Search/SearchBox'
 import { SearchResult } from '../organisms/Search/SearchResult'
 import { TempSpace } from '../molecules/TempSpace'
+import { SortBox } from '../organisms/Search/SortBox';
 
 interface Props {
     products: ProductDetail[]
@@ -78,6 +79,52 @@ export const Search: FC<Props> = ({
     })
     categories.unshift({id: 0, name: 'カテゴリーを選択'})
 
+    // レビュー数でソート
+    const sortProductsByReviewsCount = () => {
+        if (!results) return
+        setResults(results.sort((a, b) => {
+            return b.reviews_count - a.reviews_count
+        }).slice())
+    }
+    
+    // レートでソート
+    const sortProductsByAvgRatings = () => {
+        if (!results) return
+        setResults(results.sort((a, b) => {
+            const avgRatingA = a.avg_rating || 0
+            const avgRatingB = b.avg_rating || 0
+            return avgRatingB - avgRatingA
+        }).slice())
+    }
+    
+    // 成功率でソート (高い順)
+    const sortProductsBySuccessRatesDesc = () => {
+        if (!results) return
+        setResults(results.sort((a, b) => {
+            const successRateA = a.success_rate || 0
+            const successRateB = b.success_rate || 0
+            return successRateB - successRateA
+        }).slice())
+    }
+    
+    // 成功率でソート (低い順)
+    const sortProductsBySuccessRatesAsc = () => {
+        if (!results) return
+        setResults(results.sort((a, b) => {
+            const successRateA = a.success_rate || 0
+            const successRateB = b.success_rate || 0
+            return successRateA - successRateB 
+        }).slice())
+    }
+    
+    // wanna数でソート // wannas_count未実装
+    // const sortProductsByWannasCount = () => {
+        //     if (!results) return
+        //     setResults(results.sort((a, b) => {
+    //         return b.wannas_count - a.wannas_count
+    //     }))
+    // }
+
     useEffect(() => {
         setResults(products)
     }, [])
@@ -98,7 +145,15 @@ export const Search: FC<Props> = ({
                 venue={venue}
                 setVenue={setVenue}
             />
-            <SearchResult results={results} />
+            <SortBox
+                sortProductsByReviewsCount={sortProductsByReviewsCount}
+                sortProductsByAvgRatings={sortProductsByAvgRatings}
+                sortProductsBySuccessRatesDesc={sortProductsBySuccessRatesDesc}
+                sortProductsBySuccessRatesAsc={sortProductsBySuccessRatesAsc}
+            />
+            <SearchResult
+                results={results}
+            />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

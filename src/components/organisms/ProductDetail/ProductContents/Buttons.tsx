@@ -1,12 +1,10 @@
 import React, { FC } from 'react'
-import { useDispatch } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Grid, Button, Typography } from '@material-ui/core'
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import QueueIcon from '@material-ui/icons/Queue'
 
-import { Product, ProductDetail, User, ReviewDetail } from '../../../../@types'
-import { setFocusedReview } from '../../../../stores/review'
+import { Product, ProductDetail, User } from '../../../../@types'
 
 interface Props {
     product: ProductDetail
@@ -36,7 +34,6 @@ export const Buttons: FC<Props> = ({
     unwanna,
 }) => {
     const classes = useStyles()
-    const dispatch = useDispatch()
 
     const onClickDone = () => {
         if (!currentUser) return false

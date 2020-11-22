@@ -47,7 +47,7 @@ export const TopPage: FC<Props> = ({ products }) => {
             .slice(0, 6)
     }
 
-    // レビュー数でソート
+    // 成功率でソート (高い順)
     const sortProductsBySuccessRates = (products: Product[]) => {
         return products
             .sort((a, b) => {
