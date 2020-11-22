@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Typography } from '@material-ui/core'
 
-import { Product, ProductDetail, Review, User } from '../../../../@types'
+import { Product, ProductDetail, User } from '../../../../@types'
 import { Ratings } from '../../../molecules/Ratings'
 import { Buttons } from './Buttons'
 import { ProductProfile } from './ProductProfile'

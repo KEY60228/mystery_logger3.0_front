@@ -67,6 +67,7 @@ export const ProductDetail: FC = () => {
     }
 
     const update = () => {
+        const review = product?.reviews?.find((review: ReviewDetail) => currentUser?.done_id.includes(review.product_id))
         if (!currentUser || !product || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
