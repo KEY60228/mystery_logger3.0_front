@@ -1,12 +1,12 @@
-import React, { FC, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { FC, useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { BottomNavigation, BottomNavigationAction } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
 import HistoryIcon from '@material-ui/icons/History'
 import SearchIcon from '@material-ui/icons/Search'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople'
 import HowToRegIcon from '@material-ui/icons/HowToReg'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const BottomNav: FC = () => {
     const classes = useStyles()
-    const [value, setValue] = useState<number>(0)
+    const location = useLocation()
+    const [value, setValue] = useState<string>('')
 
     const isLogin = useSelector((state: RootState) => !!state.auth.user)
     const userName = useSelector((state: RootState) =>
@@ -36,6 +37,10 @@ export const BottomNav: FC = () => {
     const userId = useSelector((state: RootState) =>
         state.auth.user ? state.auth.user.account_id : '',
     )
+
+    useEffect(() => {
+        setValue(location.pathname)
+    }, [location.pathname])
 
     return (
         <BottomNavigation
@@ -48,6 +53,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={'/'}
+                    value='/'
                     label="Top"
                     icon={<HomeIcon />}
                 />
@@ -56,6 +62,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={'/timeline'}
+                    value='/timeline'
                     label="Timeline"
                     icon={<HistoryIcon />}
                 />
@@ -63,19 +70,22 @@ export const BottomNav: FC = () => {
             <BottomNavigationAction
                 component={Link}
                 to={'/search'}
+                value='/search'
                 label="Search"
                 icon={<SearchIcon />}
             />
             <BottomNavigationAction
                 component={Link}
-                to={'/trend'}
-                label="Trend"
-                icon={<TrendingUpIcon />}
+                to={'/accompany'}
+                value='/accompany'
+                label="Accompany"
+                icon={<EmojiPeopleIcon />}
             />
             {!isLogin && (
                 <BottomNavigationAction
                     component={Link}
                     to={'/preregister'}
+                    value='/preregister'
                     label="Sign up"
                     icon={<HowToRegIcon />}
                 />
@@ -84,6 +94,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={'/notifications'}
+                    value='/notifications'
                     label="Notifications"
                     icon={<NotificationsIcon />}
                 />
@@ -92,6 +103,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={`/login`}
+                    value='/login'
                     label="Login"
                     icon={<LockOpenIcon />}
                 />
@@ -100,6 +112,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={`/users/${userId}`}
+                    value={`/users/${userId}`}
                     label={`${userName}`}
                     icon={<PersonIcon />}
                 />
