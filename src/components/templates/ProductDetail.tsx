@@ -3,7 +3,6 @@ import React, { FC, useState } from 'react'
 import {
     Product,
     ProductDetail as ProductDetailInterface,
-    ReviewDetail,
     User,
 } from '../../@types'
 import { ProductContents } from '../organisms/ProductDetail/ProductContents/'
@@ -15,7 +14,6 @@ import { ReviewForm } from '../molecules/ReviewForm/'
 interface Props {
     currentUser: User | null
     product: ProductDetailInterface
-    review: ReviewDetail | null
     isNew: boolean
     setIsNew: (value: boolean) => void
     open: boolean
@@ -41,7 +39,6 @@ interface Props {
 export const ProductDetail: FC<Props> = ({
     currentUser,
     product,
-    review,
     isNew,
     setIsNew,
     open,
