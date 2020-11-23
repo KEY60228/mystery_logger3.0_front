@@ -7,6 +7,7 @@ interface Props {
     sortProductsByAvgRatings: () => void
     sortProductsBySuccessRatesDesc: () => void
     sortProductsBySuccessRatesAsc: () => void
+    sortProductsByWannasCount: () => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const SortBox: FC<Props> = ({
-    sortProductsByReviewsCount, sortProductsByAvgRatings, sortProductsBySuccessRatesDesc, sortProductsBySuccessRatesAsc,
+    sortProductsByReviewsCount, sortProductsByAvgRatings, sortProductsBySuccessRatesDesc, sortProductsBySuccessRatesAsc, sortProductsByWannasCount,
 }) => {
     const classes = useStyles()
     const [value, setValue] = useState<number>(0)
@@ -57,7 +58,7 @@ export const SortBox: FC<Props> = ({
         {
             id: 5,
             name: '行きたい人の多い順',
-            onClick: () => console.log()
+            onClick: sortProductsByWannasCount,
         },
     ]
 

@@ -117,13 +117,13 @@ export const Search: FC<Props> = ({
         }).slice())
     }
     
-    // wanna数でソート // wannas_count未実装
-    // const sortProductsByWannasCount = () => {
-        //     if (!results) return
-        //     setResults(results.sort((a, b) => {
-    //         return b.wannas_count - a.wannas_count
-    //     }))
-    // }
+    // wanna数でソート
+    const sortProductsByWannasCount = () => {
+            if (!results) return
+            setResults(results.sort((a, b) => {
+            return b.wannas_count - a.wannas_count
+        }).slice())
+    }
 
     useEffect(() => {
         setResults(products)
@@ -150,6 +150,7 @@ export const Search: FC<Props> = ({
                 sortProductsByAvgRatings={sortProductsByAvgRatings}
                 sortProductsBySuccessRatesDesc={sortProductsBySuccessRatesDesc}
                 sortProductsBySuccessRatesAsc={sortProductsBySuccessRatesAsc}
+                sortProductsByWannasCount={sortProductsByWannasCount}
             />
             <SearchResult
                 results={results}
