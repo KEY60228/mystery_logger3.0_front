@@ -36,7 +36,7 @@ export const Buttons: FC<Props> = ({
     const classes = useStyles()
 
     const onClickDone = () => {
-        if (!currentUser) return false
+        if (!currentUser) return false // 仮
         setIsNew(true)
         setModalOpen(true)
     }
@@ -102,7 +102,7 @@ export const Buttons: FC<Props> = ({
                         alignItems="center"
                     >
                         <QueueIcon />
-                        <Typography variant="caption">{800 /* 仮 */}</Typography>
+                        <Typography variant="caption">{product.wannas_count}</Typography>
                     </Grid>
                 </Button>
             }
@@ -120,7 +120,7 @@ export const Buttons: FC<Props> = ({
                         alignItems="center"
                     >
                         <QueueIcon />
-                        <Typography variant="caption">{800 /* 仮 */}</Typography>
+                        <Typography variant="caption">{product.wannas_count}</Typography>
                     </Grid>
                 </Button>
             }

@@ -10,6 +10,7 @@ export interface Product {
     avg_rating: number | null
     success_rate: number | null
     success_count: number
+    wannas_count: number
     organizer_id: number
     category_id: number
     category: Category

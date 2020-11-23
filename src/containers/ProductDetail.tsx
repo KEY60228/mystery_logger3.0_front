@@ -133,6 +133,7 @@ export const ProductDetail: FC = () => {
 
     useEffect(() => {
         if (wannaStatus) {
+            getProduct()
             dispatch(asyncGetCurrentUser())
         }
     }, [wannaStatus])
