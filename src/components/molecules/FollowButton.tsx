@@ -18,8 +18,8 @@ interface ClassProps {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            
-        }
+            whiteSpace: 'nowrap',
+        },
     })
 )
 
@@ -35,6 +35,7 @@ export const FollowButton: FC<Props> = ({
                     variant="contained"
                     color="primary"
                     onClick={() => unfollow(user)}
+                    className={classes.root}
                 >
                     フォロー解除
                 </Button>
@@ -44,6 +45,7 @@ export const FollowButton: FC<Props> = ({
                     variant="contained"
                     color="primary"
                     onClick={() => follow(user)}
+                    className={classes.root}
                 >
                     フォロー
                 </Button>
