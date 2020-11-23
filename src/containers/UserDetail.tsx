@@ -53,8 +53,9 @@ export const UserDetail: FC = () => {
     }
 
     useEffect(() => {
+        setUser(null)
         getUser()
-    }, [])
+    }, [account_id])
 
     useEffect(() => {
         if (followStatus) {

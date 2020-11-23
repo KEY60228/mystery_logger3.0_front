@@ -13,6 +13,8 @@ interface Props {
     follow: (user: User) => void
     unfollow: (user: User) => void
     edit: () => void
+    setFollowsOpen: (value: boolean) => void
+    setFollowerOpen: (value: boolean) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserProfile: FC<Props> = ({ user, follow, unfollow, edit }) => {
+export const UserProfile: FC<Props> = ({ user, follow, unfollow, edit, setFollowsOpen, setFollowerOpen }) => {
     const classes = useStyles()
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -60,7 +62,11 @@ export const UserProfile: FC<Props> = ({ user, follow, unfollow, edit }) => {
                     image={`/user_img/${user.image_name}`}
                     className={classes.media}
                 />
-                <UserCounters user={user} />
+                <UserCounters
+                    user={user}
+                    setFollowsOpen={setFollowsOpen}
+                    setFollowerOpen={setFollowerOpen}
+                />
             </Grid>
             <Grid
                 container

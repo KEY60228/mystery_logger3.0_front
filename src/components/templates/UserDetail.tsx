@@ -6,6 +6,7 @@ import { UserProfile } from '../organisms/UserDetail/UserProfile/'
 import { UserStatics } from '../organisms/UserDetail/UserStatics/'
 import { UserTabs } from '../organisms/UserDetail/UserTabs'
 import { UserForm } from '../organisms/UserDetail/UserForm/'
+import { FollowList } from '../organisms/UserDetail/FollowList/'
 
 interface Props {
     user: UserDetailInterface
@@ -38,11 +39,20 @@ export const UserDetail: FC<Props> = ({
     edit,
     update,
 }) => {
+    const [followsOpen, setFollowsOpen] = useState<boolean>(false)
+    const [followerOpen, setFollowerOpen] = useState<boolean>(false)
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false) // 仮
 
     return (
         <>
-            <UserProfile user={user} follow={follow} unfollow={unfollow} edit={edit} />
+            <UserProfile
+                user={user}
+                follow={follow}
+                unfollow={unfollow}
+                edit={edit}
+                setFollowsOpen={setFollowsOpen}
+                setFollowerOpen={setFollowerOpen}
+            />
             <UserStatics />
             <UserTabs user={user} follow={follow} unfollow={unfollow} setConfirmOpen={setConfirmOpen} />
             <TempSpace
@@ -60,6 +70,22 @@ export const UserDetail: FC<Props> = ({
                 setAccountId={setAccountId}
                 profile={profile}
                 setProfile={setProfile}
+            />
+            <FollowList
+                follows={user.follows}
+                label='フォローしている人'
+                open={followsOpen}
+                setOpen={setFollowsOpen}
+                follow={follow}
+                unfollow={unfollow}
+            />
+            <FollowList
+                follows={user.followers}
+                label='フォローされている人'
+                open={followerOpen}
+                setOpen={setFollowerOpen}
+                follow={follow}
+                unfollow={unfollow}
             />
         </>
     )

@@ -6,6 +6,8 @@ import { User } from '../../../../@types'
 
 interface Props {
     user: User
+    setFollowsOpen: (value: boolean) => void
+    setFollowerOpen: (value: boolean) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserCounters: FC<Props> = ({ user }) => {
+export const UserCounters: FC<Props> = ({ user, setFollowsOpen, setFollowerOpen }) => {
     const classes = useStyles()
 
     return (
@@ -32,6 +34,7 @@ export const UserCounters: FC<Props> = ({ user }) => {
                 direction="column"
                 justify="center"
                 alignItems="center"
+                onClick={() => setFollowsOpen(true)} // 仮
             >
                 <Typography variant="body1" className={classes.text}>
                     {user.follows_count || 0}
@@ -45,6 +48,7 @@ export const UserCounters: FC<Props> = ({ user }) => {
                 direction="column"
                 justify="center"
                 alignItems="center"
+                onClick={() => setFollowerOpen(true)} // 仮
             >
                 <Typography variant="body1" className={classes.text}>
                     {user.followers_count || 0}
