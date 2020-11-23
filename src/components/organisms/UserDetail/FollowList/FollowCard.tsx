@@ -60,10 +60,11 @@ export const FollowCard: FC<Props> = ({
     }
 
     return (
-        <Card onClick={onClick} className={classes.root}>
+        <Card className={classes.root}>
             <Grid container wrap='nowrap'>
                 <CardMedia
                     image={`/user_img/${followUser.image_name}`}
+                    onClick={onClick}
                     className={classes.media}
                 />
                 <Grid container direction="column">
@@ -73,7 +74,7 @@ export const FollowCard: FC<Props> = ({
                         alignItems="center"
                         wrap="nowrap"
                     >
-                        <Grid container direction='column' justify='center'>
+                        <Grid container direction='column' justify='center' onClick={onClick}>
                             <Typography
                                 variant="subtitle1"
                                 className={classes.userName}

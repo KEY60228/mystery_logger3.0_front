@@ -31,12 +31,12 @@ export const ReviewDetail: FC = () => {
         dispatch(asyncGetReview(id, setReview))
     }
 
-    const follow = (user: User) => { // 要確認
+    const follow = (user: User) => {
         if (!currentUser || !review?.user) return false
         dispatch(asyncFollow(currentUser.id, review.user.id))
     }
     
-    const unfollow = (user: User) => { // 要確認
+    const unfollow = (user: User) => {
         if(!currentUser || !review?.user) return false
         dispatch(asyncUnFollow(currentUser.id, review.user.id))
     }
