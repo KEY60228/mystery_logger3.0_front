@@ -4,6 +4,7 @@ import { ReviewDetail, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
+import { Card } from '@material-ui/core'
 
 interface Props {
     reviews: ReviewDetail[]
@@ -63,6 +64,11 @@ export const Timeline: FC<Props> = ({
                     className={{ margin: '8px' }}
                 />
             ))}
+            { !reviews.length &&
+                <Card>
+                    まだ投稿はありません
+                </Card>
+            }
             { review &&
                 <ReviewForm
                     open={open}
