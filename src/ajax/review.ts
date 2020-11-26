@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { ReviewDetail } from '../@types'
-import { setFocusedReview, setPostStatus } from '../stores/review'
+import { setPostStatus, setCommentStatus } from '../stores/review'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -134,6 +134,33 @@ export const asyncDeleteReview = (
         
         if (response.status === 422) {
             dispatch(setPostStatus(false))
+        }
+    }
+}
+
+export const asyncPostComment = (
+    user_id: number,
+    review_id: number,
+    contents: string,
+) => {
+    return async(dispatch: any) => {
+        dispatch(setCommentStatus(null))
+
+        const response = await axios.post(
+            '/v1/reviews/comments',
+            {
+                user_id: user_id,
+                review_id: review_id,
+                contents: contents,
+            }
+        )
+
+        if (response.status === 201) {
+            dispatch(setCommentStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setCommentStatus(false))
         }
     }
 }
