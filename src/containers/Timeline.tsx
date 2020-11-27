@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ReviewDetail, User } from '../@types'
-import { asyncDeleteReview, asyncGetTimeline, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncGetTimeline, asyncPostComment, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -16,12 +16,14 @@ export const Timeline: FC = () => {
     const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const postStatus = useSelector((state: RootState) => state.review.postStatus)
+    const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
     
     const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
     const [contents, setContents] = useState<string | null>('')
+    const [comment, setComment] = useState<string | null>('')
 
     // 投稿フォームの開閉
     const [open, setOpen] = useState<boolean>(false)
@@ -70,6 +72,11 @@ export const Timeline: FC = () => {
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
+    const postComment = (review: ReviewDetail) => {
+        if (!currentUser || !review || !comment) return false // 仮
+        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+    }
+
     useEffect(() => {
         getReviews()
 
@@ -95,6 +102,12 @@ export const Timeline: FC = () => {
         }
     }, [followStatus])
 
+    useEffect(() => {
+        if (commentStatus) {
+            getReviews()
+        }
+    }, [commentStatus])
+
     return (
         <>
             {reviews && (
@@ -117,6 +130,9 @@ export const Timeline: FC = () => {
                         follow={follow}
                         unfollow={unfollow}
                         deleteReview={deleteReview}
+                        comment={comment}
+                        setComment={setComment}
+                        postComment={postComment}
                     />
                 </>
             )}

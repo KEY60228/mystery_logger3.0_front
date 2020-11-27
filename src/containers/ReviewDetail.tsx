@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
-import { asyncDeleteReview, asyncGetReview, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncGetReview, asyncPostComment, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -19,11 +19,13 @@ export const ReviewDetail: FC = () => {
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const postStatus = useSelector((state: RootState) => state.review.postStatus)
+    const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>(null)
     const [contents, setContents] = useState<string | null>(null)
+    const [comment, setComment] = useState<string|null>('')
 
     const [open, setOpen] = useState<boolean>(false)
 
@@ -70,6 +72,11 @@ export const ReviewDetail: FC = () => {
         dispatch(asyncDeleteReview(review.id))
     }
 
+    const postComment = () => {
+        if (!review || !currentUser || !comment) return false
+        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+    }
+
     useEffect(() => {
         getReview()
     }, [])
@@ -85,6 +92,12 @@ export const ReviewDetail: FC = () => {
             history.push(`/products/${review?.product_id}`)
         }
     }, [postStatus])
+
+    useEffect(() => {
+        if (commentStatus) {
+            getReview()
+        }
+    }, [commentStatus])
 
     return (
         <>
@@ -106,6 +119,9 @@ export const ReviewDetail: FC = () => {
                     follow={follow}
                     unfollow={unfollow}
                     deleteReview={deleteReview}
+                    comment={comment}
+                    setComment={setComment}
+                    postComment={postComment}
                 />
             }
             {!review && <div>loading</div>}

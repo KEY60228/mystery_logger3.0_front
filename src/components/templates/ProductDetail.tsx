@@ -3,6 +3,7 @@ import React, { FC, useState } from 'react'
 import {
     Product,
     ProductDetail as ProductDetailInterface,
+    ReviewDetail,
     User,
 } from '../../@types'
 import { ProductContents } from '../organisms/ProductDetail/ProductContents/'
@@ -34,6 +35,9 @@ interface Props {
     unfollow: (user: User) => void
     wanna: (product: Product) => void
     unwanna: (product: Product) => void
+    comment: string | null
+    setComment: (value: string) => void
+    postComment: (review: ReviewDetail) => void
 }
 
 export const ProductDetail: FC<Props> = ({
@@ -59,6 +63,9 @@ export const ProductDetail: FC<Props> = ({
     unfollow,
     wanna,
     unwanna,
+    comment,
+    setComment,
+    postComment
 }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
@@ -73,7 +80,16 @@ export const ProductDetail: FC<Props> = ({
                 wanna={wanna}
                 unwanna={unwanna}
             />
-            <ProductReviews product={product} edit={edit} setConfirmOpen={setConfirmOpen} follow={follow} unfollow={unfollow} />
+            <ProductReviews
+                product={product}
+                edit={edit}
+                setConfirmOpen={setConfirmOpen}
+                follow={follow}
+                unfollow={unfollow}
+                comment={comment}
+                setComment={setComment}
+                postComment={postComment}
+            />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

@@ -23,6 +23,9 @@ interface Props {
     follow: (user: User) => void
     unfollow: (user: User) => void
     deleteReview: () => void
+    comment: string | null
+    setComment: (value: string) => void
+    postComment: () => void
 }
 
 export const ReviewDetail: FC<Props> = ({ 
@@ -41,7 +44,10 @@ export const ReviewDetail: FC<Props> = ({
     update,
     follow,
     unfollow,
-    deleteReview
+    deleteReview,
+    comment,
+    setComment,
+    postComment,
 }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
@@ -56,6 +62,9 @@ export const ReviewDetail: FC<Props> = ({
                 follow={follow}
                 unfollow={unfollow}
                 setConfirmOpen={setConfirmOpen}
+                comment={comment}
+                setComment={setComment}
+                postComment={postComment}
             />
             <ReviewForm
                 open={open}

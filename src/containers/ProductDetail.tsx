@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { Product, ReviewDetail, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
-import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncPostComment, asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -21,11 +21,13 @@ export const ProductDetail: FC = () => {
     const postStatus = useSelector((state: RootState) => state.review.postStatus)
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const wannaStatus = useSelector((state: RootState) => state.product.wannaStatus)
+    const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
     const [contents, setContents] = useState<string | null>('')
+    const [comment, setComment] = useState<string | null>('')
 
     // 投稿フォームの開閉
     const [open, setOpen] = useState<boolean>(false)
@@ -103,6 +105,11 @@ export const ProductDetail: FC = () => {
         dispatch(asyncUnwanna(currentUser.id, product.id))
     }
 
+    const postComment = (review: ReviewDetail) => {
+        if (!currentUser || !review || !comment) return false
+        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+    }
+
     useEffect(() => {
         getProduct()
 
@@ -138,6 +145,12 @@ export const ProductDetail: FC = () => {
         }
     }, [wannaStatus])
 
+    useEffect(() => {
+        if (commentStatus) {
+            getProduct()
+        }
+    }, [commentStatus])
+
     return (
         <>
             {product && (
@@ -165,6 +178,9 @@ export const ProductDetail: FC = () => {
                         unfollow={unfollow}
                         wanna={wanna}
                         unwanna={unwanna}
+                        comment={comment}
+                        setComment={setComment}
+                        postComment={postComment}
                     />
                 </>
             )}
