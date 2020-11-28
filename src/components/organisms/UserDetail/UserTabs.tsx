@@ -11,6 +11,12 @@ interface Props {
     follow: (user: User) => void
     unfollow: (user: User) => void
     setConfirmOpen: (value: boolean) => void
+    editReview: () => void
+    comment: string | null
+    setComment: (value: string) => void
+    postComment: (review: ReviewDetail) => void
+    likeReview: (review: ReviewDetail) => void
+    unlikeReview: (review: ReviewDetail) => void
     className?: ClassProps
 }
 
@@ -46,7 +52,7 @@ const TabPanel: FC<TabPanelProps> = ({ children, index, value }) => {
     )
 }
 
-export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, className }) => {
+export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, editReview, comment, setComment, postComment, likeReview, unlikeReview, className }) => {
     const classes = useStyles(className)
     const [value, setValue] = useState<number>(0)
 
@@ -115,16 +121,15 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                                 cardActionArea
                                 productTitle
                                 productCard
+                                edit={editReview}
+                                setConfirmOpen={setConfirmOpen}
                                 follow={follow}
                                 unfollow={unfollow}
-                                setConfirmOpen={setConfirmOpen}
-                                // 仮
-                                edit={() => console.log()}
-                                comment={''}
-                                setComment={() => console.log()}
-                                postComment={() => console.log()}
-                                likeReview={() => console.log()}
-                                unlikeReview={() => console.log()}
+                                comment={comment}
+                                setComment={setComment}
+                                postComment={postComment}
+                                likeReview={likeReview}
+                                unlikeReview={unlikeReview}
                             />
                         ))}
                     </Box>

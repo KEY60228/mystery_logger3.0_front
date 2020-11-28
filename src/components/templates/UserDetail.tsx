@@ -1,17 +1,19 @@
 import React, { FC, useState } from 'react'
 
-import { UserDetail as UserDetailInterface, User } from '../../@types'
+import { UserDetail as UserDetailInterface, User, ReviewDetail } from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
 import { UserProfile } from '../organisms/UserDetail/UserProfile/'
 import { UserStatics } from '../organisms/UserDetail/UserStatics/'
 import { UserTabs } from '../organisms/UserDetail/UserTabs'
 import { UserForm } from '../organisms/UserDetail/UserForm/'
 import { FollowList } from '../organisms/UserDetail/FollowList/'
+import { ReviewForm } from '../molecules/ReviewForm'
 
 interface Props {
     user: UserDetailInterface
-    open: boolean
-    setOpen: (value: boolean) => void
+    review: ReviewDetail | null
+    openUserForm: boolean
+    setOpenUserForm: (value: boolean) => void
     name: string
     setName: (value: string) => void
     accountId: string
@@ -20,14 +22,32 @@ interface Props {
     setProfile: (value: string) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
-    edit: () => void
-    update: () => void
+    editUser: () => void
+    updateUser: () => void
+    openReviewForm: boolean
+    setOpenReviewForm: (value: boolean) => void
+    editReview: () => void
+    updateReview: () => void
+    rating: number
+    setRating: (value: number) => void
+    result: number
+    setResult: (value: number) => void
+    joined_at: string | null
+    setJoined_at: (value: string | null) => void
+    contents: string | null
+    setContents: (value: string | null) => void
+    comment: string | null
+    setComment: (value: string) => void
+    postComment: (review: ReviewDetail) => void
+    likeReview: (review: ReviewDetail) => void
+    unlikeReview: (review: ReviewDetail) => void
 }
 
 export const UserDetail: FC<Props> = ({
     user,
-    open,
-    setOpen,
+    review,
+    openUserForm,
+    setOpenUserForm,
     name,
     setName,
     accountId,
@@ -36,8 +56,25 @@ export const UserDetail: FC<Props> = ({
     setProfile,
     follow,
     unfollow,
-    edit,
-    update,
+    editUser,
+    updateUser,
+    openReviewForm,
+    setOpenReviewForm,
+    editReview,
+    updateReview,
+    rating,
+    setRating,
+    result,
+    setResult,
+    joined_at,
+    setJoined_at,
+    contents,
+    setContents,
+    comment,
+    setComment,
+    postComment,
+    likeReview,
+    unlikeReview
 }) => {
     const [followsOpen, setFollowsOpen] = useState<boolean>(false)
     const [followerOpen, setFollowerOpen] = useState<boolean>(false)
@@ -49,7 +86,7 @@ export const UserDetail: FC<Props> = ({
                 user={user}
                 follow={follow}
                 unfollow={unfollow}
-                edit={edit}
+                edit={editUser}
                 setFollowsOpen={setFollowsOpen}
                 setFollowerOpen={setFollowerOpen}
             />
@@ -58,7 +95,13 @@ export const UserDetail: FC<Props> = ({
                 user={user}
                 follow={follow}
                 unfollow={unfollow}
-                setConfirmOpen={setConfirmOpen}
+                setConfirmOpen={setConfirmOpen} // 仮
+                editReview={editReview}
+                comment={comment}
+                setComment={setComment}
+                postComment={postComment}
+                likeReview={likeReview}
+                unlikeReview={unlikeReview}
             />
             <TempSpace
                 text="Ad Space"
@@ -66,9 +109,9 @@ export const UserDetail: FC<Props> = ({
             />
             <UserForm
                 user={user}
-                update={update}
-                open={open}
-                setOpen={setOpen}
+                update={updateUser}
+                open={openUserForm}
+                setOpen={setOpenUserForm}
                 name={name}
                 setName={setName}
                 accountId={accountId}
@@ -76,6 +119,23 @@ export const UserDetail: FC<Props> = ({
                 profile={profile}
                 setProfile={setProfile}
             />
+            { review &&
+                <ReviewForm
+                    open={openReviewForm}
+                    setOpen={setOpenReviewForm}
+                    rating={rating}
+                    setRating={setRating}
+                    result={result}
+                    setResult={setResult}
+                    joined_at={joined_at}
+                    setJoined_at={setJoined_at}
+                    contents={contents}
+                    setContents={setContents}
+                    update={updateReview}
+                    isNew={false}
+                    product={review.product}
+                />
+            }
             <FollowList
                 follows={user.follows}
                 label='フォローしている人'
