@@ -1,10 +1,11 @@
 import React, { FC, useState } from 'react'
+import { Card } from '@material-ui/core'
 
 import { ReviewDetail, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
-import { Card } from '@material-ui/core'
+import { TempSpace } from '../molecules/TempSpace'
 
 interface Props {
     reviews: ReviewDetail[]
@@ -78,6 +79,10 @@ export const Timeline: FC<Props> = ({
                     まだ投稿はありません
                 </Card>
             }
+            <TempSpace
+                text="Ad Space"
+                className={{ height: '320px', margin: '12px auto 60px' }}
+            />
             { review &&
                 <ReviewForm
                     open={open}

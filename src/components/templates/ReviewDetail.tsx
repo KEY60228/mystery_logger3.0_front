@@ -5,6 +5,8 @@ import { ProductCardM } from '../molecules/ProductCardM/'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
+import { ReviewComments } from '../organisms/ReviewDetail/ReviewComments/'
+import { TempSpace } from '../molecules/TempSpace'
 
 interface Props {
     review: ReviewDetailInterface
@@ -65,6 +67,15 @@ export const ReviewDetail: FC<Props> = ({
                 comment={comment}
                 setComment={setComment}
                 postComment={postComment}
+            />
+            { review.comments &&
+                <ReviewComments
+                    comments={review.comments}
+                />
+            }
+            <TempSpace
+                text="Ad Space"
+                className={{ height: '320px', margin: '12px auto 60px' }}
             />
             <ReviewForm
                 open={open}
