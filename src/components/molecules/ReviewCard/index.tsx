@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Grid, TextField, Button, IconButton, Typography } from '@material-ui/core'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble'
@@ -6,6 +7,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
+import { RootState } from '../../../stores/index'
 import { Review, User, Product } from '../../../@types'
 import { ReviewerProfile } from './ReviewerProfile/'
 import { ReviewContents } from './ReviewContents/'
@@ -73,6 +75,8 @@ export const ReviewCard: FC<Props> = ({
     const classes = useStyles(className)
     const [open, setOpen] = useState<boolean>(false)
 
+    const currentUser = useSelector((state: RootState) => state.auth.user)
+
     const localPostComment = () => {
         postComment(review)
         setOpen(false)
@@ -81,6 +85,10 @@ export const ReviewCard: FC<Props> = ({
 
     const localLikeReview = () => {
         likeReview(review)
+    }
+
+    const localUnlikeReview = () => {
+        console.log() // 仮
     }
 
     return (
@@ -108,12 +116,22 @@ export const ReviewCard: FC<Props> = ({
                         <Typography variant="button" className={classes.iconText}>{review.comments_count}</Typography>
                     }
                 </IconButton>
-                <IconButton size='small' onClick={localLikeReview}>
-                    <FavoriteIcon color='action' fontSize="small" />
-                    { review.review_likes_count !== 0 &&
-                        <Typography variant="button" className={classes.iconText}>{review.review_likes_count}</Typography>
-                    }
-                </IconButton>
+                { (currentUser && currentUser.like_reviews_id.includes(review.id)) &&
+                    <IconButton size='small' onClick={localUnlikeReview}>
+                        <FavoriteIcon color='error' fontSize="small" />
+                        { review.review_likes_count !== 0 &&
+                            <Typography variant="button" className={classes.iconText}>{review.review_likes_count}</Typography>
+                        }
+                    </IconButton>
+                }
+                { (!currentUser || !currentUser.like_reviews_id.includes(review.id)) &&
+                    <IconButton size='small' onClick={localLikeReview}>
+                        <FavoriteIcon color='action' fontSize="small" />
+                        { review.review_likes_count !== 0 &&
+                            <Typography variant="button" className={classes.iconText}>{review.review_likes_count}</Typography>
+                        }
+                    </IconButton>
+                }
                 <IconButton size='small'>
                     <RepeatIcon color='disabled' fontSize="small" />
                     { review.retweet_count !== 0 &&

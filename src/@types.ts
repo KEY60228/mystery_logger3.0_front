@@ -38,6 +38,7 @@ export interface User {
     success_rate: number | null
     wannas_count: number
     likeReviews_count: number
+    like_reviews_id: number[]
 }
 
 export interface Review {
