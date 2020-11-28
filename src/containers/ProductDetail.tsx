@@ -159,6 +159,7 @@ export const ProductDetail: FC = () => {
 
     useEffect(() => {
         if (likeStatus) {
+            dispatch(asyncGetCurrentUser())
             getProduct()
         }
     }, [likeStatus])

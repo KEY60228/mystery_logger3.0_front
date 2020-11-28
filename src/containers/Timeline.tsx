@@ -116,6 +116,7 @@ export const Timeline: FC = () => {
 
     useEffect(() => {
         if (likeStatus) {
+            dispatch(asyncGetCurrentUser())
             getReviews()
         }
     }, [likeStatus])

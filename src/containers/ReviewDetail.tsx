@@ -107,6 +107,7 @@ export const ReviewDetail: FC = () => {
 
     useEffect(() => {
         if (likeStatus) {
+            dispatch(asyncGetCurrentUser())
             getReview()
         }
     }, [likeStatus])
