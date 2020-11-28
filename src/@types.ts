@@ -49,6 +49,9 @@ export interface Review {
     clear_time: string | null
     rating: number
     joined_at: string | null
+    comments_count: number // 仮
+    like_count: number // 仮
+    retweet_count: number // 仮
     created_at: string
     updated_at: string | null
 }
@@ -100,6 +103,15 @@ export interface Wanna {
     updated_at: string | null
 }
 
+export interface Comment {
+    id: number
+    user_id: number
+    review_id: number
+    contents: string
+    created_at: string
+    updated_at: string | null
+}
+
 // extends model
 export interface ProductDetailWithoutReviews extends Product {
     performances: PerformanceWithVenue[]
@@ -130,7 +142,13 @@ export interface ReviewWithProduct extends Review {
     product: ProductDetailWithoutReviews
 }
 
-export interface ReviewDetail extends ReviewWithUser, ReviewWithProduct {}
+export interface CommentDetail extends Comment {
+    user: User
+}
+
+export interface ReviewDetail extends ReviewWithUser, ReviewWithProduct {
+    comments: CommentDetail[]
+}
 
 export interface OrganizerDetail extends Organizer {
     products: Product[]
