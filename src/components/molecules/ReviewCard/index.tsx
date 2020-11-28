@@ -71,6 +71,12 @@ export const ReviewCard: FC<Props> = ({
     const classes = useStyles(className)
     const [open, setOpen] = useState<boolean>(false)
 
+    const localPostComment = () => {
+        postComment(review)
+        setOpen(false)
+        setComment('')
+    }
+
     return (
         <Card className={classes.root}>
             {reviewerProfile && review.user && (
@@ -86,8 +92,8 @@ export const ReviewCard: FC<Props> = ({
             <Grid container justify='space-around' className={classes.icons}>
                 <IconButton size='small' onClick={() => setOpen(!open)}>
                     <ChatBubbleIcon color='action' fontSize="small" />
-                    { review.comment_count !== 0 &&
-                        <Typography variant="button" className={classes.iconText}>{review.comment_count}</Typography>
+                    { review.comments_count !== 0 &&
+                        <Typography variant="button" className={classes.iconText}>{review.comments_count}</Typography>
                     }
                 </IconButton>
                 <IconButton size='small'>
@@ -122,7 +128,7 @@ export const ReviewCard: FC<Props> = ({
                         <Button
                             color="primary"
                             variant="contained"
-                            onClick={() => postComment(review)}
+                            onClick={localPostComment}
                         >
                             コメント
                         </Button>
