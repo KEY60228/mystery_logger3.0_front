@@ -180,7 +180,34 @@ export const asyncLikeReview = (
             }
         )
 
-        if (response.status === 200) {
+        if (response.status === 201) {
+            dispatch(setLikeStatus(true))
+        }
+
+        if (response.status === 422) {
+            dispatch(setLikeStatus(false))
+        }
+    }
+}
+
+export const asyncUnlikeReview = (
+    user_id: number,
+    review_id: number,
+) => {
+    return async(dispatch: any) => {
+        dispatch(setLikeStatus(null))
+
+        const response = await axios.delete(
+            '/v1/likes/reviews',
+            {
+                params: {
+                    user_id: user_id,
+                    review_id: review_id,
+                }
+            }
+        )
+
+        if (response.status === 204) {
             dispatch(setLikeStatus(true))
         }
 

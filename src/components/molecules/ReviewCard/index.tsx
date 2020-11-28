@@ -32,6 +32,7 @@ interface Props {
     setComment: (value: string) => void
     postComment: (review: ReviewDetail) => void
     likeReview: (review: ReviewDetail) => void
+    unlikeReview: (review: ReviewDetail) => void
     className?: ClassProps
 }
 
@@ -70,6 +71,7 @@ export const ReviewCard: FC<Props> = ({
     setComment,
     postComment,
     likeReview,
+    unlikeReview,
     className,
 }) => {
     const classes = useStyles(className)
@@ -88,7 +90,7 @@ export const ReviewCard: FC<Props> = ({
     }
 
     const localUnlikeReview = () => {
-        console.log() // 仮
+        unlikeReview(review)
     }
 
     return (
