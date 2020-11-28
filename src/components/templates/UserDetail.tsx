@@ -54,7 +54,12 @@ export const UserDetail: FC<Props> = ({
                 setFollowerOpen={setFollowerOpen}
             />
             <UserStatics />
-            <UserTabs user={user} follow={follow} unfollow={unfollow} setConfirmOpen={setConfirmOpen} />
+            <UserTabs
+                user={user}
+                follow={follow}
+                unfollow={unfollow}
+                setConfirmOpen={setConfirmOpen}
+            />
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

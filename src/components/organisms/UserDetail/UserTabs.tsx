@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
-import { UserDetail, ReviewDetail, ReviewWithProduct, User, WannaWithProduct } from '../../../@types'
+import { UserDetail, ReviewDetail, ReviewWithProduct, User, WannaWithProduct, ReviewLikeDetail } from '../../../@types'
 import { ReviewCard } from '../../molecules/ReviewCard/'
 import { ProductCardS } from '../../molecules/ProductCardS/'
 
@@ -62,7 +62,7 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                         label={`行きたい公演 ${user.wannas_count || 0}`}
                     />
                     <Tab
-                        label={`LIKEした投稿 ${user.likeReviews_count || 0}`}
+                        label={`LIKEした投稿 ${user.like_reviews_id.length || 0}`}
                     />
                 </Tabs>
             </Grid>
@@ -105,12 +105,12 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                 )}
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {user.likeReviews && (
+                {user.review_likes && (
                     <Box>
-                        {user.likeReviews.map((likeReview: ReviewDetail) => (
+                        {user.review_likes.map((like_review: ReviewLikeDetail) => (
                             <ReviewCard
-                                key={likeReview.id}
-                                review={likeReview}
+                                key={like_review.review.id}
+                                review={like_review.review}
                                 reviewerProfile
                                 cardActionArea
                                 productTitle
@@ -129,7 +129,7 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, cl
                         ))}
                     </Box>
                 )}
-                {!user.likeReviews && (
+                {!user.review_likes && (
                     <Typography>まだLIKEした投稿はありません</Typography>
                 )}
             </TabPanel>

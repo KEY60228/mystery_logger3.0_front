@@ -37,7 +37,7 @@ export interface User {
     wanna_id: number[]
     success_rate: number | null
     wannas_count: number
-    likeReviews_count: number
+    review_likes_count: number
     like_reviews_id: number[]
 }
 
@@ -113,6 +113,14 @@ export interface Comment {
     updated_at: string | null
 }
 
+export interface ReviewLike {
+    id: number
+    user_id: number
+    review_id: number
+    created_at: string
+    updated_at: string | null
+}
+
 // extends model
 export interface ProductDetailWithoutReviews extends Product {
     performances: PerformanceWithVenue[]
@@ -131,12 +139,16 @@ export interface PerformanceWithVenue extends Performance {
     venue: Venue
 }
 
+export interface ReviewLikeDetail extends ReviewLike {
+    review: ReviewDetail
+}
+
 export interface UserDetail extends User {
     reviews: ReviewWithProduct[] | null
     follows: User[] | null
     followers: User[] | null
     wannas: WannaWithProduct[] | null
-    likeReviews: ReviewDetail[] | null
+    review_likes: ReviewLikeDetail[] | null
 }
 
 export interface ReviewWithProduct extends Review {
