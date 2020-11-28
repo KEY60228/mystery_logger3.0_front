@@ -29,6 +29,7 @@ interface Props {
     setComment: (value: string) => void
     postComment: (review: ReviewDetail) => void
     likeReview: (review: ReviewDetail) => void
+    unlikeReview: (review: ReviewDetail) => void
 }
 
 export const Timeline: FC<Props> = ({
@@ -53,6 +54,7 @@ export const Timeline: FC<Props> = ({
     setComment,
     postComment,
     likeReview,
+    unlikeReview,
 }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
@@ -74,6 +76,7 @@ export const Timeline: FC<Props> = ({
                     setComment={setComment}
                     postComment={postComment}
                     likeReview={likeReview}
+                    unlikeReview={unlikeReview}
                     className={{ margin: '8px' }}
                 />
             ))}

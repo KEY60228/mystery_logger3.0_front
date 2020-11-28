@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
-import { asyncDeleteReview, asyncGetReview, asyncLikeReview, asyncPostComment, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncGetReview, asyncLikeReview, asyncPostComment, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -83,6 +83,11 @@ export const ReviewDetail: FC = () => {
         dispatch(asyncLikeReview(currentUser.id, review.id))
     }
 
+    const unlikeReview = () => {
+        if (!currentUser || !review) return false // 仮
+        dispatch(asyncUnlikeReview(currentUser.id, review.id))
+    }
+
     useEffect(() => {
         getReview()
     }, [])
@@ -136,6 +141,7 @@ export const ReviewDetail: FC = () => {
                     setComment={setComment}
                     postComment={postComment}
                     likeReview={likeReview}
+                    unlikeReview={unlikeReview}
                 />
             }
             {!review && <div>loading</div>}

@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ReviewDetail, User } from '../@types'
-import { asyncDeleteReview, asyncGetTimeline, asyncLikeReview, asyncPostComment, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncGetTimeline, asyncLikeReview, asyncPostComment, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -83,6 +83,11 @@ export const Timeline: FC = () => {
         dispatch(asyncLikeReview(currentUser.id, review.id))
     }
 
+    const unlikeReview = (review: ReviewDetail) => {
+        if (!currentUser || !review) return false // 仮
+        dispatch(asyncUnlikeReview(currentUser.id, review.id));
+    }
+
     useEffect(() => {
         getReviews()
 
@@ -147,6 +152,7 @@ export const Timeline: FC = () => {
                         setComment={setComment}
                         postComment={postComment}
                         likeReview={likeReview}
+                        unlikeReview={unlikeReview}
                     />
                 </>
             )}

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { Product, ReviewDetail, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
-import { asyncDeleteReview, asyncLikeReview, asyncPostComment, asyncPostReview, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncLikeReview, asyncPostComment, asyncPostReview, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -107,13 +107,18 @@ export const ProductDetail: FC = () => {
     }
 
     const postComment = (review: ReviewDetail) => {
-        if (!currentUser || !review || !comment) return false
+        if (!currentUser || !review || !comment) return false // 仮
         dispatch(asyncPostComment(currentUser.id, review.id, comment))
     }
 
     const likeReview = (review: ReviewDetail) => {
-        if (!currentUser || !review) return false
+        if (!currentUser || !review) return false // 仮
         dispatch(asyncLikeReview(currentUser.id, review.id))
+    }
+
+    const unlikeReview = (review: ReviewDetail) => {
+        if (!currentUser || !review) return false // 仮
+        dispatch(asyncUnlikeReview(currentUser.id, review.id))
     }
 
     useEffect(() => {
@@ -195,6 +200,7 @@ export const ProductDetail: FC = () => {
                         setComment={setComment}
                         postComment={postComment}
                         likeReview={likeReview}
+                        unlikeReview={unlikeReview}
                     />
                 </>
             )}
