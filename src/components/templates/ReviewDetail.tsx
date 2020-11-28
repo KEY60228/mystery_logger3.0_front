@@ -28,6 +28,7 @@ interface Props {
     comment: string | null
     setComment: (value: string) => void
     postComment: () => void
+    likeReview: () => void
 }
 
 export const ReviewDetail: FC<Props> = ({ 
@@ -50,6 +51,7 @@ export const ReviewDetail: FC<Props> = ({
     comment,
     setComment,
     postComment,
+    likeReview,
 }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
@@ -67,6 +69,7 @@ export const ReviewDetail: FC<Props> = ({
                 comment={comment}
                 setComment={setComment}
                 postComment={postComment}
+                likeReview={likeReview}
             />
             { review.comments &&
                 <ReviewComments

@@ -38,6 +38,7 @@ interface Props {
     comment: string | null
     setComment: (value: string) => void
     postComment: (review: ReviewDetail) => void
+    likeReview: (review: ReviewDetail) => void
 }
 
 export const ProductDetail: FC<Props> = ({
@@ -65,7 +66,8 @@ export const ProductDetail: FC<Props> = ({
     unwanna,
     comment,
     setComment,
-    postComment
+    postComment,
+    likeReview,
 }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
 
@@ -89,6 +91,7 @@ export const ProductDetail: FC<Props> = ({
                 comment={comment}
                 setComment={setComment}
                 postComment={postComment}
+                likeReview={likeReview}
             />
             <TempSpace
                 text="Ad Space"

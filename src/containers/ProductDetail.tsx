@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { Product, ReviewDetail, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
-import { asyncDeleteReview, asyncPostComment, asyncPostReview, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncLikeReview, asyncPostComment, asyncPostReview, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -22,6 +22,7 @@ export const ProductDetail: FC = () => {
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const wannaStatus = useSelector((state: RootState) => state.product.wannaStatus)
     const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
+    const likeStatus = useSelector((state: RootState) => state.review.likeStatus)
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -110,6 +111,11 @@ export const ProductDetail: FC = () => {
         dispatch(asyncPostComment(currentUser.id, review.id, comment))
     }
 
+    const likeReview = (review: ReviewDetail) => {
+        if (!currentUser || !review) return false
+        dispatch(asyncLikeReview(currentUser.id, review.id))
+    }
+
     useEffect(() => {
         getProduct()
 
@@ -151,6 +157,12 @@ export const ProductDetail: FC = () => {
         }
     }, [commentStatus])
 
+    useEffect(() => {
+        if (likeStatus) {
+            getProduct()
+        }
+    }, [likeStatus])
+
     return (
         <>
             {product && (
@@ -181,6 +193,7 @@ export const ProductDetail: FC = () => {
                         comment={comment}
                         setComment={setComment}
                         postComment={postComment}
+                        likeReview={likeReview}
                     />
                 </>
             )}

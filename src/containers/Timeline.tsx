@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ReviewDetail, User } from '../@types'
-import { asyncDeleteReview, asyncGetTimeline, asyncPostComment, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncGetTimeline, asyncLikeReview, asyncPostComment, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -17,6 +17,7 @@ export const Timeline: FC = () => {
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const postStatus = useSelector((state: RootState) => state.review.postStatus)
     const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
+    const likeStatus = useSelector((state: RootState) => state.review.likeStatus)
     
     const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
     const [rating, setRating] = useState<number>(0)
@@ -77,6 +78,11 @@ export const Timeline: FC = () => {
         dispatch(asyncPostComment(currentUser.id, review.id, comment))
     }
 
+    const likeReview = (review: ReviewDetail) => {
+        if (!currentUser || !review) return false // 仮
+        dispatch(asyncLikeReview(currentUser.id, review.id))
+    }
+
     useEffect(() => {
         getReviews()
 
@@ -108,6 +114,12 @@ export const Timeline: FC = () => {
         }
     }, [commentStatus])
 
+    useEffect(() => {
+        if (likeStatus) {
+            getReviews()
+        }
+    }, [likeStatus])
+
     return (
         <>
             {reviews && (
@@ -133,6 +145,7 @@ export const Timeline: FC = () => {
                         comment={comment}
                         setComment={setComment}
                         postComment={postComment}
+                        likeReview={likeReview}
                     />
                 </>
             )}

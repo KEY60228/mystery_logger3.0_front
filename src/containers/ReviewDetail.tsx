@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
-import { asyncDeleteReview, asyncGetReview, asyncPostComment, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncGetReview, asyncLikeReview, asyncPostComment, asyncUpdateReview } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -20,6 +20,7 @@ export const ReviewDetail: FC = () => {
     const followStatus = useSelector((state: RootState) => state.user.followStatus)
     const postStatus = useSelector((state: RootState) => state.review.postStatus)
     const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
+    const likeStatus = useSelector((state: RootState) => state.review.likeStatus)
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -68,13 +69,18 @@ export const ReviewDetail: FC = () => {
     }
 
     const deleteReview = () => {
-        if (!review) return false
+        if (!review) return false // 仮
         dispatch(asyncDeleteReview(review.id))
     }
 
     const postComment = () => {
-        if (!review || !currentUser || !comment) return false
+        if (!review || !currentUser || !comment) return false // 仮
         dispatch(asyncPostComment(currentUser.id, review.id, comment))
+    }
+
+    const likeReview = () => {
+        if (!review || !currentUser) return false // 仮
+        dispatch(asyncLikeReview(currentUser.id, review.id))
     }
 
     useEffect(() => {
@@ -99,6 +105,12 @@ export const ReviewDetail: FC = () => {
         }
     }, [commentStatus])
 
+    useEffect(() => {
+        if (likeStatus) {
+            getReview()
+        }
+    }, [likeStatus])
+
     return (
         <>
             {review && 
@@ -122,6 +134,7 @@ export const ReviewDetail: FC = () => {
                     comment={comment}
                     setComment={setComment}
                     postComment={postComment}
+                    likeReview={likeReview}
                 />
             }
             {!review && <div>loading</div>}

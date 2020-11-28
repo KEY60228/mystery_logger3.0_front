@@ -14,6 +14,7 @@ interface Props {
     comment: string | null
     setComment: (value: string) => void
     postComment: (review: ReviewDetail) => void
+    likeReview: (review: ReviewDetail) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductReviews: FC<Props> = ({ product, edit, setConfirmOpen, follow, unfollow, comment, setComment, postComment }) => {
+export const ProductReviews: FC<Props> = ({ product, edit, setConfirmOpen, follow, unfollow, comment, setComment, postComment, likeReview }) => {
     const classes = useStyles()
 
     return (
@@ -43,6 +44,7 @@ export const ProductReviews: FC<Props> = ({ product, edit, setConfirmOpen, follo
                         comment={comment}
                         setComment={setComment}
                         postComment={postComment}
+                        likeReview={likeReview}
                     />
                 ))}
             {!product.reviews && (
