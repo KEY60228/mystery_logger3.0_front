@@ -24,7 +24,7 @@ export const ReviewComments: FC<Props> = ({
     return (
         <>
             { comments.map((comment: CommentDetail) =>
-                <CommentCard comment={comment} />
+                <CommentCard key={comment.id} comment={comment} />
             )}
         </>
     )
