@@ -29,6 +29,7 @@ interface Props {
     comment: string | null
     setComment: (value: string) => void
     postComment: (review: ReviewDetail) => void
+    likeReview: (review: ReviewDetail) => void
     className?: ClassProps
 }
 
@@ -66,6 +67,7 @@ export const ReviewCard: FC<Props> = ({
     comment,
     setComment,
     postComment,
+    likeReview,
     className,
 }) => {
     const classes = useStyles(className)
@@ -77,10 +79,20 @@ export const ReviewCard: FC<Props> = ({
         setComment('')
     }
 
+    const localLikeReview = () => {
+        likeReview(review)
+    }
+
     return (
         <Card className={classes.root}>
             {reviewerProfile && review.user && (
-                <ReviewerProfile review={review} setConfirmOpen={setConfirmOpen} edit={edit} follow={follow} unfollow={unfollow} />
+                <ReviewerProfile
+                    review={review}
+                    setConfirmOpen={setConfirmOpen}
+                    edit={edit}
+                    follow={follow}
+                    unfollow={unfollow} 
+                />
             )}
             <ReviewContents
                 review={review}
@@ -96,7 +108,7 @@ export const ReviewCard: FC<Props> = ({
                         <Typography variant="button" className={classes.iconText}>{review.comments_count}</Typography>
                     }
                 </IconButton>
-                <IconButton size='small'>
+                <IconButton size='small' onClick={localLikeReview}>
                     <FavoriteIcon color='action' fontSize="small" />
                     { review.like_count !== 0 &&
                         <Typography variant="button" className={classes.iconText}>{review.like_count}</Typography>
