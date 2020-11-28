@@ -110,8 +110,8 @@ export const ReviewCard: FC<Props> = ({
                 </IconButton>
                 <IconButton size='small' onClick={localLikeReview}>
                     <FavoriteIcon color='action' fontSize="small" />
-                    { review.like_count !== 0 &&
-                        <Typography variant="button" className={classes.iconText}>{review.like_count}</Typography>
+                    { review.review_likes_count !== 0 &&
+                        <Typography variant="button" className={classes.iconText}>{review.review_likes_count}</Typography>
                     }
                 </IconButton>
                 <IconButton size='small'>

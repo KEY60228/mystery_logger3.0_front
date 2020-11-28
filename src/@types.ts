@@ -50,7 +50,7 @@ export interface Review {
     rating: number
     joined_at: string | null
     comments_count: number // 仮
-    like_count: number // 仮
+    review_likes_count: number // 仮
     retweet_count: number // 仮
     created_at: string
     updated_at: string | null
