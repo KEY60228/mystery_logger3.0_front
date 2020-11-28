@@ -72,6 +72,7 @@ export const ProductDetail: FC<Props> = ({
     unlikeReview,
 }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+    const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
     return (
         <>
@@ -95,6 +96,8 @@ export const ProductDetail: FC<Props> = ({
                 postComment={postComment}
                 likeReview={likeReview}
                 unlikeReview={unlikeReview}
+                commentOpen={commentOpen}
+                setCommentOpen={setCommentOpen}
             />
             <TempSpace
                 text="Ad Space"

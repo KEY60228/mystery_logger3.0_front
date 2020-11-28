@@ -56,6 +56,7 @@ export const ReviewDetail: FC<Props> = ({
     unlikeReview,
 }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+    const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
     return (
         <>
@@ -73,6 +74,8 @@ export const ReviewDetail: FC<Props> = ({
                 postComment={postComment}
                 likeReview={likeReview}
                 unlikeReview={unlikeReview}
+                open={commentOpen}
+                setOpen={setCommentOpen}
             />
             { review.comments &&
                 <ReviewComments

@@ -57,6 +57,7 @@ export const Timeline: FC<Props> = ({
     unlikeReview,
 }) => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+    const [openComment, setOpenComment] = useState<number | false>(false)
 
     return (
         <>
@@ -77,6 +78,8 @@ export const Timeline: FC<Props> = ({
                     postComment={postComment}
                     likeReview={likeReview}
                     unlikeReview={unlikeReview}
+                    open={openComment}
+                    setOpen={setOpenComment}
                     className={{ margin: '8px' }}
                 />
             ))}

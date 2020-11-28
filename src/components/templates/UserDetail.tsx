@@ -8,6 +8,7 @@ import { UserTabs } from '../organisms/UserDetail/UserTabs'
 import { UserForm } from '../organisms/UserDetail/UserForm/'
 import { FollowList } from '../organisms/UserDetail/FollowList/'
 import { ReviewForm } from '../molecules/ReviewForm'
+import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 
 interface Props {
     user: UserDetailInterface
@@ -28,6 +29,7 @@ interface Props {
     setOpenReviewForm: (value: boolean) => void
     editReview: () => void
     updateReview: () => void
+    deleteReview: () => void
     rating: number
     setRating: (value: number) => void
     result: number
@@ -62,6 +64,7 @@ export const UserDetail: FC<Props> = ({
     setOpenReviewForm,
     editReview,
     updateReview,
+    deleteReview,
     rating,
     setRating,
     result,
@@ -78,7 +81,8 @@ export const UserDetail: FC<Props> = ({
 }) => {
     const [followsOpen, setFollowsOpen] = useState<boolean>(false)
     const [followerOpen, setFollowerOpen] = useState<boolean>(false)
-    const [confirmOpen, setConfirmOpen] = useState<boolean>(false) // 仮
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+    const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
     return (
         <>
@@ -95,13 +99,15 @@ export const UserDetail: FC<Props> = ({
                 user={user}
                 follow={follow}
                 unfollow={unfollow}
-                setConfirmOpen={setConfirmOpen} // 仮
+                setConfirmOpen={setConfirmOpen}
                 editReview={editReview}
                 comment={comment}
                 setComment={setComment}
                 postComment={postComment}
                 likeReview={likeReview}
                 unlikeReview={unlikeReview}
+                commentOpen={commentOpen}
+                setCommentOpen={setCommentOpen}
             />
             <TempSpace
                 text="Ad Space"
@@ -151,6 +157,11 @@ export const UserDetail: FC<Props> = ({
                 setOpen={setFollowerOpen}
                 follow={follow}
                 unfollow={unfollow}
+            />
+            <ConfirmDeleteReview
+                deleteReview={deleteReview}
+                confirmOpen={confirmOpen}
+                setConfirmOpen={setConfirmOpen}
             />
         </>
     )

@@ -17,6 +17,8 @@ interface Props {
     postComment: (review: ReviewDetail) => void
     likeReview: (review: ReviewDetail) => void
     unlikeReview: (review: ReviewDetail) => void
+    commentOpen: number | false
+    setCommentOpen: (value: number | false) => void
     className?: ClassProps
 }
 
@@ -52,7 +54,7 @@ const TabPanel: FC<TabPanelProps> = ({ children, index, value }) => {
     )
 }
 
-export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, editReview, comment, setComment, postComment, likeReview, unlikeReview, className }) => {
+export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, editReview, comment, setComment, postComment, likeReview, unlikeReview, commentOpen, setCommentOpen, className }) => {
     const classes = useStyles(className)
     const [value, setValue] = useState<number>(0)
 
@@ -130,6 +132,8 @@ export const UserTabs: FC<Props> = ({ user, follow, unfollow, setConfirmOpen, ed
                                 postComment={postComment}
                                 likeReview={likeReview}
                                 unlikeReview={unlikeReview}
+                                open={commentOpen}
+                                setOpen={setCommentOpen}
                             />
                         ))}
                     </Box>

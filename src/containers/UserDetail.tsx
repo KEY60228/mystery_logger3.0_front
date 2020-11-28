@@ -7,7 +7,7 @@ import { ReviewDetail, User, UserDetail as UserDetailInterface } from '../@types
 import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import { asyncGetUser, asyncFollow, asyncUnFollow, asyncUpdateUser } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { asyncLikeReview, asyncPostComment, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
+import { asyncDeleteReview, asyncLikeReview, asyncPostComment, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
@@ -90,6 +90,11 @@ export const UserDetail: FC = () => {
         )
     }
 
+    const deleteReview = () => {
+        if (!review) return false // 仮
+        dispatch(asyncDeleteReview(review.id))
+    }
+
     const postComment = (review: ReviewDetail) => {
         if (!currentUser || !review || !comment) return false // 仮
         dispatch(asyncPostComment(currentUser.id, review.id, comment))
@@ -169,6 +174,7 @@ export const UserDetail: FC = () => {
                         setOpenReviewForm={setOpenReviewForm}
                         editReview={editReview}
                         updateReview={updateReview}
+                        deleteReview={deleteReview}
                         rating={rating}
                         setRating={setRating}
                         result={result}

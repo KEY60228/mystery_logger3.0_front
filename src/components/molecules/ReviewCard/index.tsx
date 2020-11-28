@@ -33,6 +33,8 @@ interface Props {
     postComment: (review: ReviewDetail) => void
     likeReview: (review: ReviewDetail) => void
     unlikeReview: (review: ReviewDetail) => void
+    open: number | false
+    setOpen: (value: number | false) => void
     className?: ClassProps
 }
 
@@ -72,10 +74,11 @@ export const ReviewCard: FC<Props> = ({
     postComment,
     likeReview,
     unlikeReview,
+    open,
+    setOpen,
     className,
 }) => {
     const classes = useStyles(className)
-    const [open, setOpen] = useState<boolean>(false)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -112,7 +115,7 @@ export const ReviewCard: FC<Props> = ({
                 className={productCard ? { minHeight: '200px' } : {}}
             />
             <Grid container justify='space-around' className={classes.icons}>
-                <IconButton size='small' onClick={() => setOpen(!open)}>
+                <IconButton size='small' onClick={() => open === review.id ? setOpen(false) : setOpen(review.id)}>
                     <ChatBubbleIcon color='action' fontSize="small" />
                     { review.comments_count !== 0 &&
                         <Typography variant="button" className={classes.iconText}>{review.comments_count}</Typography>
@@ -144,7 +147,7 @@ export const ReviewCard: FC<Props> = ({
                     <ShareIcon color='action' fontSize="small" />
                 </IconButton>
             </Grid>
-            { open &&
+            { open === review.id &&
                 <>
                     <TextField 
                         fullWidth
