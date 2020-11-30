@@ -3,30 +3,45 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
-import { asyncDeleteReview, asyncGetReview, asyncLikeReview, asyncPostComment, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
+import {
+    asyncDeleteReview,
+    asyncGetReview,
+    asyncLikeReview,
+    asyncPostComment,
+    asyncUnlikeReview,
+    asyncUpdateReview,
+} from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 
 export const ReviewDetail: FC = () => {
-    const { id } = useParams<{id: string}>()
+    const { id } = useParams<{ id: string }>()
     const dispatch = useDispatch()
     const history = useHistory()
 
     const [review, setReview] = useState<ReviewDetailInterface | null>(null)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const followStatus = useSelector((state: RootState) => state.user.followStatus)
-    const postStatus = useSelector((state: RootState) => state.review.postStatus)
-    const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
-    const likeStatus = useSelector((state: RootState) => state.review.likeStatus)
+    const followStatus = useSelector(
+        (state: RootState) => state.user.followStatus,
+    )
+    const postStatus = useSelector(
+        (state: RootState) => state.review.postStatus,
+    )
+    const commentStatus = useSelector(
+        (state: RootState) => state.review.commentStatus,
+    )
+    const likeStatus = useSelector(
+        (state: RootState) => state.review.likeStatus,
+    )
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>(null)
     const [contents, setContents] = useState<string | null>(null)
-    const [comment, setComment] = useState<string|null>('')
+    const [comment, setComment] = useState<string | null>('')
 
     const [open, setOpen] = useState<boolean>(false)
 
@@ -38,9 +53,9 @@ export const ReviewDetail: FC = () => {
         if (!currentUser || !review?.user) return false
         dispatch(asyncFollow(currentUser.id, review.user.id))
     }
-    
+
     const unfollow = (user: User) => {
-        if(!currentUser || !review?.user) return false
+        if (!currentUser || !review?.user) return false
         dispatch(asyncUnFollow(currentUser.id, review.user.id))
     }
 
@@ -119,7 +134,7 @@ export const ReviewDetail: FC = () => {
 
     return (
         <>
-            {review && 
+            {review && (
                 <ReviewDetailTemp
                     review={review}
                     open={open}
@@ -143,7 +158,7 @@ export const ReviewDetail: FC = () => {
                     likeReview={likeReview}
                     unlikeReview={unlikeReview}
                 />
-            }
+            )}
             {!review && <div>loading</div>}
         </>
     )

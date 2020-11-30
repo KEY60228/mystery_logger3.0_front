@@ -43,7 +43,10 @@ export const ProductCardS: FC<Props> = ({ product, className }) => {
                     className={classes.media}
                     image={`/product_img/${product.image_name}`}
                 />
-                <ProductCounters product={product} className={{width: className?.rootWidth}} />
+                <ProductCounters
+                    product={product}
+                    className={{ width: className?.rootWidth }}
+                />
             </CardActionArea>
         </Card>
     )

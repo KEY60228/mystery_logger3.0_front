@@ -51,7 +51,14 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserProfile: FC<Props> = ({ user, follow, unfollow, edit, setFollowsOpen, setFollowerOpen }) => {
+export const UserProfile: FC<Props> = ({
+    user,
+    follow,
+    unfollow,
+    edit,
+    setFollowsOpen,
+    setFollowerOpen,
+}) => {
     const classes = useStyles()
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -88,7 +95,7 @@ export const UserProfile: FC<Props> = ({ user, follow, unfollow, edit, setFollow
                 {user.account_id === currentUser?.account_id && (
                     <Button onClick={edit}>設定</Button>
                 )}
-                {(currentUser && user.account_id !== currentUser?.account_id) && (
+                {currentUser && user.account_id !== currentUser?.account_id && (
                     <FollowButton
                         currentUser={currentUser}
                         user={user}

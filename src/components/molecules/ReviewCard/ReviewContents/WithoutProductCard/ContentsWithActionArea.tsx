@@ -36,12 +36,10 @@ const useStyles = makeStyles((theme: Theme) =>
             color: 'grey',
             fontSize: '12px',
         },
-    })
+    }),
 )
 
-export const ContentsWithActionArea: FC<Props> = ({
-    review, productTitle
-}) => {
+export const ContentsWithActionArea: FC<Props> = ({ review, productTitle }) => {
     const classes = useStyles()
 
     return (
@@ -61,9 +59,7 @@ export const ContentsWithActionArea: FC<Props> = ({
                         {review.created_at}
                     </Typography>
                     {productTitle && review.product && (
-                        <Typography>
-                            {review.product.name}
-                        </Typography>
+                        <Typography>{review.product.name}</Typography>
                     )}
                     <Ratings
                         number={review.rating || 0}
@@ -72,10 +68,7 @@ export const ContentsWithActionArea: FC<Props> = ({
                         className={{ marginLeft: '4px' }}
                     />
                     <Grid container>
-                        <Typography
-                            variant="body2"
-                            className={classes.remarks}
-                        >
+                        <Typography variant="body2" className={classes.remarks}>
                             参加日: {review.joined_at || '-'}{' '}
                         </Typography>
                         {review.result === 1 && (
@@ -95,9 +88,7 @@ export const ContentsWithActionArea: FC<Props> = ({
                             </Typography>
                         )}
                     </Grid>
-                    <Typography variant="body2">
-                        {review.contents}
-                    </Typography>
+                    <Typography variant="body2">{review.contents}</Typography>
                 </Grid>
                 <NavigateNextIcon />
             </Grid>

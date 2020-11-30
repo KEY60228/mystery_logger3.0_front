@@ -29,7 +29,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewerMenu: FC<Props> = ({ review, edit, setConfirmOpen, className }) => {
+export const ReviewerMenu: FC<Props> = ({
+    review,
+    edit,
+    setConfirmOpen,
+    className,
+}) => {
     const classes = useStyles(className)
     const dispatch = useDispatch()
     const [menu, setMenu] = useState<null | HTMLElement>(null)

@@ -20,11 +20,15 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: '8px',
             width: '200px',
         },
-    })
+    }),
 )
 
 export const SortBox: FC<Props> = ({
-    sortProductsByReviewsCount, sortProductsByAvgRatings, sortProductsBySuccessRatesDesc, sortProductsBySuccessRatesAsc, sortProductsByWannasCount,
+    sortProductsByReviewsCount,
+    sortProductsByAvgRatings,
+    sortProductsBySuccessRatesDesc,
+    sortProductsBySuccessRatesAsc,
+    sortProductsByWannasCount,
 }) => {
     const classes = useStyles()
     const [value, setValue] = useState<number>(0)
@@ -64,18 +68,33 @@ export const SortBox: FC<Props> = ({
 
     return (
         <Card className={classes.root}>
-            <Grid container wrap='nowrap' justify='flex-end' alignItems='center'>
+            <Grid
+                container
+                wrap="nowrap"
+                justify="flex-end"
+                alignItems="center"
+            >
                 <Typography>表示順:</Typography>
                 <Select
                     value={value}
                     onChange={(ev: ChangeEvent<{ value: unknown }>) => {
                         setValue(ev.target.value as number)
-                        choices.find((choice => choice.id === ev.target.value))?.onClick()
+                        choices
+                            .find(choice => choice.id === ev.target.value)
+                            ?.onClick()
                     }}
                     className={classes.select}
                 >
-                    { choices.map((choice: {id: number, name: string, onClick: () => void}) =>
-                        <MenuItem key={choice.id} value={choice.id}>{choice.name}</MenuItem>
+                    {choices.map(
+                        (choice: {
+                            id: number
+                            name: string
+                            onClick: () => void
+                        }) => (
+                            <MenuItem key={choice.id} value={choice.id}>
+                                {choice.name}
+                            </MenuItem>
+                        ),
                     )}
                 </Select>
             </Grid>

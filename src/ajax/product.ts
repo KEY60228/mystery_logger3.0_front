@@ -48,16 +48,13 @@ export const asyncGetProduct = (id: string) => {
 }
 
 export const asyncWanna = (user_id: number, product_id: number) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setWannaStatus(null))
 
-        const response = await axios.put(
-            '/v1/wanna',
-            {
-                user_id: user_id,
-                product_id: product_id,
-            }
-        )
+        const response = await axios.put('/v1/wanna', {
+            user_id: user_id,
+            product_id: product_id,
+        })
 
         if (response.status === 200) {
             dispatch(setWannaStatus(true))
@@ -70,16 +67,15 @@ export const asyncWanna = (user_id: number, product_id: number) => {
 }
 
 export const asyncUnwanna = (user_id: number, product_id: number) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setWannaStatus(null))
 
-        const response = await axios.delete(
-            '/v1/wanna',
-            { params: {
+        const response = await axios.delete('/v1/wanna', {
+            params: {
                 user_id: user_id,
                 product_id: product_id,
-            }}
-        )
+            },
+        })
 
         if (response.status === 204) {
             dispatch(setWannaStatus(true))

@@ -15,7 +15,9 @@ export const Register: FC = () => {
     const query = queryString.parse(useLocation().search)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const registerStatus = useSelector((state: RootState) => state.auth.registerStatus)
+    const registerStatus = useSelector(
+        (state: RootState) => state.auth.registerStatus,
+    )
 
     const [accountId, setAccountId] = useState<string>('')
     const [name, setName] = useState<string>('')

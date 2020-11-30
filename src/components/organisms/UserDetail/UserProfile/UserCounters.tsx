@@ -24,7 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserCounters: FC<Props> = ({ user, setFollowsOpen, setFollowerOpen }) => {
+export const UserCounters: FC<Props> = ({
+    user,
+    setFollowsOpen,
+    setFollowerOpen,
+}) => {
     const classes = useStyles()
 
     return (
@@ -64,7 +68,9 @@ export const UserCounters: FC<Props> = ({ user, setFollowsOpen, setFollowerOpen 
                 alignItems="center"
             >
                 <Typography variant="body1" className={classes.text}>
-                    {user.success_rate ? `${(user.success_rate * 100).toFixed(1)}%` : '-'}
+                    {user.success_rate
+                        ? `${(user.success_rate * 100).toFixed(1)}%`
+                        : '-'}
                 </Typography>
                 <Typography variant="subtitle1" className={classes.subtitle}>
                     成功率

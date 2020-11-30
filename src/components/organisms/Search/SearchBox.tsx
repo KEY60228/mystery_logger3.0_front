@@ -5,9 +5,9 @@ import { Button, Card, Grid, Input } from '@material-ui/core'
 import { SelectForm } from '../../molecules/SelectForm'
 
 interface Props {
-    organizers: {id: number, name: string}[]
-    venues: {id: number, name: string}[]
-    categories: {id: number, name: string}[]
+    organizers: { id: number; name: string }[]
+    venues: { id: number; name: string }[]
+    categories: { id: number; name: string }[]
     search: () => void
     keywords: string
     setKeywords: (value: string) => void
@@ -19,7 +19,7 @@ interface Props {
     setVenue: (value: number) => void
 }
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             margin: '8px',
@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         button: {
             margin: '8px',
-        }
-    })
+        },
+    }),
 )
 
 export const SearchBox: FC<Props> = ({
@@ -64,19 +64,19 @@ export const SearchBox: FC<Props> = ({
                         value={organizer}
                         setValue={setOrganizer}
                         choices={organizers}
-                        className={{width: '200px', margin: '8px'}}
+                        className={{ width: '200px', margin: '8px' }}
                     />
                     <SelectForm
                         value={venue}
                         setValue={setVenue}
                         choices={venues}
-                        className={{width: '200px', margin: '8px'}}
+                        className={{ width: '200px', margin: '8px' }}
                     />
                     <SelectForm
                         value={category}
                         setValue={setCategory}
                         choices={categories}
-                        className={{width: '200px', margin: '8px'}}
+                        className={{ width: '200px', margin: '8px' }}
                     />
                     <Button
                         variant="contained"

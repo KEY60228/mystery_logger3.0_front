@@ -98,9 +98,9 @@ export const ReviewForm: FC<Props> = ({
         id: number
         name: string
     }[] = [
-        { id: 0, name: '脱出結果を選択'},
+        { id: 0, name: '脱出結果を選択' },
         { id: 1, name: '成功！！' },
-        { id: 2, name: '失敗...' }
+        { id: 2, name: '失敗...' },
     ]
 
     return (
@@ -139,7 +139,7 @@ export const ReviewForm: FC<Props> = ({
                                 value={result}
                                 setValue={setResult}
                                 choices={resultSelect}
-                                className={{ width: '180px', margin: '0px'}}
+                                className={{ width: '180px', margin: '0px' }}
                             />
                             <Calender
                                 date={joined_at}

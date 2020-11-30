@@ -2,7 +2,12 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Typography } from '@material-ui/core'
 
-import { ProductDetail, ReviewDetail, ReviewWithUser, User } from '../../../@types'
+import {
+    ProductDetail,
+    ReviewDetail,
+    ReviewWithUser,
+    User,
+} from '../../../@types'
 import { ReviewCard } from '../../molecules/ReviewCard'
 
 interface Props {
@@ -28,7 +33,20 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductReviews: FC<Props> = ({ product, edit, setConfirmOpen, follow, unfollow, comment, setComment, postComment, likeReview, unlikeReview, commentOpen, setCommentOpen }) => {
+export const ProductReviews: FC<Props> = ({
+    product,
+    edit,
+    setConfirmOpen,
+    follow,
+    unfollow,
+    comment,
+    setComment,
+    postComment,
+    likeReview,
+    unlikeReview,
+    commentOpen,
+    setCommentOpen,
+}) => {
     const classes = useStyles()
 
     return (

@@ -23,7 +23,7 @@ const slice = createSlice({
         },
         setWannaStatus: (state, action) => {
             return Object.assign({}, state, { wannaStatus: action.payload })
-        }
+        },
     },
 })
 

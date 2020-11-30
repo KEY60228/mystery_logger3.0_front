@@ -83,16 +83,12 @@ export const Timeline: FC<Props> = ({
                     className={{ margin: '8px' }}
                 />
             ))}
-            { !reviews.length &&
-                <Card>
-                    まだ投稿はありません
-                </Card>
-            }
+            {!reviews.length && <Card>まだ投稿はありません</Card>}
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}
             />
-            { review &&
+            {review && (
                 <ReviewForm
                     open={open}
                     setOpen={setOpen}
@@ -108,7 +104,7 @@ export const Timeline: FC<Props> = ({
                     isNew={false}
                     product={review.product}
                 />
-            }
+            )}
             <ConfirmDeleteReview
                 deleteReview={deleteReview}
                 confirmOpen={confirmOpen}

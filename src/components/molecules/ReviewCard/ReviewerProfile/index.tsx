@@ -65,7 +65,14 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewerProfile: FC<Props> = ({ review, edit, setConfirmOpen, follow, unfollow, className }) => {
+export const ReviewerProfile: FC<Props> = ({
+    review,
+    edit,
+    setConfirmOpen,
+    follow,
+    unfollow,
+    className,
+}) => {
     const classes = useStyles(className)
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -101,17 +108,23 @@ export const ReviewerProfile: FC<Props> = ({ review, edit, setConfirmOpen, follo
                     </Typography>
                 </Grid>
             </Box>
-            {(currentUser && review.user && review.user.account_id !== currentUser.account_id) && (
-                <FollowButton
-                    currentUser={currentUser}
-                    user={review.user}
-                    follow={follow}
-                    unfollow={unfollow}
-                />
-            )}
+            {currentUser &&
+                review.user &&
+                review.user.account_id !== currentUser.account_id && (
+                    <FollowButton
+                        currentUser={currentUser}
+                        user={review.user}
+                        follow={follow}
+                        unfollow={unfollow}
+                    />
+                )}
             {currentUser &&
                 review.user?.account_id === currentUser.account_id && (
-                    <ReviewerMenu review={review} edit={edit} setConfirmOpen={setConfirmOpen} />
+                    <ReviewerMenu
+                        review={review}
+                        edit={edit}
+                        setConfirmOpen={setConfirmOpen}
+                    />
                 )}
         </Grid>
     )

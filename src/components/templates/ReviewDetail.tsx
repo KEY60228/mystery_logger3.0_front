@@ -32,7 +32,7 @@ interface Props {
     unlikeReview: () => void
 }
 
-export const ReviewDetail: FC<Props> = ({ 
+export const ReviewDetail: FC<Props> = ({
     review,
     open,
     setOpen,
@@ -77,11 +77,7 @@ export const ReviewDetail: FC<Props> = ({
                 open={commentOpen}
                 setOpen={setCommentOpen}
             />
-            { review.comments &&
-                <ReviewComments
-                    comments={review.comments}
-                />
-            }
+            {review.comments && <ReviewComments comments={review.comments} />}
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

@@ -17,24 +17,25 @@ const useStyles = makeStyles((theme: Theme) =>
         text: {
             margin: '8px',
         },
-    })
+    }),
 )
 
-export const SearchResult: FC<Props> = ({
-    results
-}) => {
+export const SearchResult: FC<Props> = ({ results }) => {
     const classes = useStyles()
 
     return (
         <>
-            { results && results.map((product: ProductDetail) =>
-                <ProductCardM key={product.id} product={product} />
-            )}
-            { !results.length &&
+            {results &&
+                results.map((product: ProductDetail) => (
+                    <ProductCardM key={product.id} product={product} />
+                ))}
+            {!results.length && (
                 <Card className={classes.root}>
-                    <Typography className={classes.text}>該当する作品はありません</Typography>
+                    <Typography className={classes.text}>
+                        該当する作品はありません
+                    </Typography>
                 </Card>
-            }
+            )}
         </>
     )
 }

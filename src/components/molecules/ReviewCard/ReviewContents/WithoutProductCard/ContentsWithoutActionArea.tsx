@@ -16,9 +16,7 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         remarks: {
             color: 'grey',
             fontSize: '12px',
@@ -29,11 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
             color: 'grey',
             fontSize: '12px',
         },
-    })
+    }),
 )
 
 export const ContentsWithoutActionArea: FC<Props> = ({
-    review, productTitle
+    review,
+    productTitle,
 }) => {
     const classes = useStyles()
 
@@ -52,32 +51,21 @@ export const ContentsWithoutActionArea: FC<Props> = ({
                     justify="flex-start"
                     className={{ marginLeft: '4px' }}
                 />
-                <Typography
-                    variant="body2"
-                    className={classes.remarks}
-                >
+                <Typography variant="body2" className={classes.remarks}>
                     参加日: {review.joined_at || '-'}{' '}
                 </Typography>
                 {review.result === 1 && (
-                    <Typography
-                        variant="body2"
-                        className={classes.remarks}
-                    >
+                    <Typography variant="body2" className={classes.remarks}>
                         脱出成功！
                     </Typography>
                 )}
                 {review.result === 2 && (
-                    <Typography
-                        variant="body2"
-                        className={classes.remarks}
-                    >
+                    <Typography variant="body2" className={classes.remarks}>
                         脱出失敗…
                     </Typography>
                 )}
             </Grid>
-            <Typography variant="body2">
-                {review.contents}
-            </Typography>
+            <Typography variant="body2">{review.contents}</Typography>
         </Box>
     )
 }

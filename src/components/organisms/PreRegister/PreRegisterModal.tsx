@@ -30,11 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const PreRegisterModal: FC<Props> = ({
-    open,
-    setOpen,
-    setEmail,
-}) => {
+export const PreRegisterModal: FC<Props> = ({ open, setOpen, setEmail }) => {
     const classes = useStyles()
 
     const handleClose = () => {

@@ -1,6 +1,10 @@
 import React, { FC, useState } from 'react'
 
-import { UserDetail as UserDetailInterface, User, ReviewDetail } from '../../@types'
+import {
+    UserDetail as UserDetailInterface,
+    User,
+    ReviewDetail,
+} from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
 import { UserProfile } from '../organisms/UserDetail/UserProfile/'
 import { UserStatics } from '../organisms/UserDetail/UserStatics/'
@@ -77,7 +81,7 @@ export const UserDetail: FC<Props> = ({
     setComment,
     postComment,
     likeReview,
-    unlikeReview
+    unlikeReview,
 }) => {
     const [followsOpen, setFollowsOpen] = useState<boolean>(false)
     const [followerOpen, setFollowerOpen] = useState<boolean>(false)
@@ -125,7 +129,7 @@ export const UserDetail: FC<Props> = ({
                 profile={profile}
                 setProfile={setProfile}
             />
-            { review &&
+            {review && (
                 <ReviewForm
                     open={openReviewForm}
                     setOpen={setOpenReviewForm}
@@ -141,10 +145,10 @@ export const UserDetail: FC<Props> = ({
                     isNew={false}
                     product={review.product}
                 />
-            }
+            )}
             <FollowList
                 follows={user.follows}
-                label='フォローしている人'
+                label="フォローしている人"
                 open={followsOpen}
                 setOpen={setFollowsOpen}
                 follow={follow}
@@ -152,7 +156,7 @@ export const UserDetail: FC<Props> = ({
             />
             <FollowList
                 follows={user.followers}
-                label='フォローされている人'
+                label="フォローされている人"
                 open={followerOpen}
                 setOpen={setFollowerOpen}
                 follow={follow}

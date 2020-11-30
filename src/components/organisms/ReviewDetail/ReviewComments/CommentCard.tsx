@@ -37,13 +37,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         comment: {
             margin: '8px',
-        }
-    })
+        },
+    }),
 )
 
-export const CommentCard: FC<Props> = ({
-    comment
-}) => {
+export const CommentCard: FC<Props> = ({ comment }) => {
     const classes = useStyles()
 
     return (

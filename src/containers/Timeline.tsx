@@ -2,7 +2,14 @@ import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { ReviewDetail, User } from '../@types'
-import { asyncDeleteReview, asyncGetTimeline, asyncLikeReview, asyncPostComment, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
+import {
+    asyncDeleteReview,
+    asyncGetTimeline,
+    asyncLikeReview,
+    asyncPostComment,
+    asyncUnlikeReview,
+    asyncUpdateReview,
+} from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -14,11 +21,19 @@ export const Timeline: FC = () => {
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認
-    const followStatus = useSelector((state: RootState) => state.user.followStatus)
-    const postStatus = useSelector((state: RootState) => state.review.postStatus)
-    const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
-    const likeStatus = useSelector((state: RootState) => state.review.likeStatus)
-    
+    const followStatus = useSelector(
+        (state: RootState) => state.user.followStatus,
+    )
+    const postStatus = useSelector(
+        (state: RootState) => state.review.postStatus,
+    )
+    const commentStatus = useSelector(
+        (state: RootState) => state.review.commentStatus,
+    )
+    const likeStatus = useSelector(
+        (state: RootState) => state.review.likeStatus,
+    )
+
     const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -67,9 +82,9 @@ export const Timeline: FC = () => {
         if (!currentUser || !user) return false // 仮
         dispatch(asyncFollow(currentUser.id, user.id))
     }
-    
+
     const unfollow = (user: User) => {
-        if(!currentUser || !user) return false // 仮
+        if (!currentUser || !user) return false // 仮
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
@@ -85,7 +100,7 @@ export const Timeline: FC = () => {
 
     const unlikeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id));
+        dispatch(asyncUnlikeReview(currentUser.id, review.id))
     }
 
     useEffect(() => {

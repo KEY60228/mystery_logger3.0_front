@@ -53,7 +53,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={'/'}
-                    value='/'
+                    value="/"
                     label="Top"
                     icon={<HomeIcon />}
                 />
@@ -62,7 +62,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={'/timeline'}
-                    value='/timeline'
+                    value="/timeline"
                     label="Timeline"
                     icon={<HistoryIcon />}
                 />
@@ -70,14 +70,14 @@ export const BottomNav: FC = () => {
             <BottomNavigationAction
                 component={Link}
                 to={'/search'}
-                value='/search'
+                value="/search"
                 label="Search"
                 icon={<SearchIcon />}
             />
             <BottomNavigationAction
                 component={Link}
                 to={'/accompany'}
-                value='/accompany'
+                value="/accompany"
                 label="Accompany"
                 icon={<EmojiPeopleIcon />}
             />
@@ -85,7 +85,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={'/preregister'}
-                    value='/preregister'
+                    value="/preregister"
                     label="Sign up"
                     icon={<HowToRegIcon />}
                 />
@@ -94,7 +94,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={'/notifications'}
-                    value='/notifications'
+                    value="/notifications"
                     label="Notifications"
                     icon={<NotificationsIcon />}
                 />
@@ -103,7 +103,7 @@ export const BottomNav: FC = () => {
                 <BottomNavigationAction
                     component={Link}
                     to={`/login`}
-                    value='/login'
+                    value="/login"
                     label="Login"
                     icon={<LockOpenIcon />}
                 />

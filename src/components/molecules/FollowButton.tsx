@@ -20,17 +20,21 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             whiteSpace: 'nowrap',
         },
-    })
+    }),
 )
 
 export const FollowButton: FC<Props> = ({
-    currentUser, user, follow, unfollow, className
+    currentUser,
+    user,
+    follow,
+    unfollow,
+    className,
 }) => {
     const classes = useStyles(className)
 
     return (
         <>
-            { currentUser.follows_id.includes(user.id) &&
+            {currentUser.follows_id.includes(user.id) && (
                 <Button
                     variant="contained"
                     color="primary"
@@ -39,8 +43,8 @@ export const FollowButton: FC<Props> = ({
                 >
                     フォロー解除
                 </Button>
-            }
-            { !currentUser.follows_id.includes(user.id) &&
+            )}
+            {!currentUser.follows_id.includes(user.id) && (
                 <Button
                     variant="contained"
                     color="primary"
@@ -49,7 +53,7 @@ export const FollowButton: FC<Props> = ({
                 >
                     フォロー
                 </Button>
-            }
+            )}
         </>
     )
 }

@@ -35,11 +35,13 @@ const useStyles = makeStyles((theme: Theme) =>
             color: 'grey',
             fontSize: '12px',
         },
-    })
+    }),
 )
 
 export const ContentsWithActionArea: FC<Props> = ({
-    review, productTitle, className
+    review,
+    productTitle,
+    className,
 }) => {
     const classes = useStyles(className)
 
@@ -61,31 +63,20 @@ export const ContentsWithActionArea: FC<Props> = ({
                 justify="flex-start"
                 className={{ marginLeft: '4px' }}
             />
-            <Typography
-                variant="body2"
-                className={classes.remarks}
-            >
+            <Typography variant="body2" className={classes.remarks}>
                 参加日: {review.joined_at || '-'}{' '}
             </Typography>
             {review.result === 1 && (
-                <Typography
-                    variant="body2"
-                    className={classes.remarks}
-                >
+                <Typography variant="body2" className={classes.remarks}>
                     脱出成功！
                 </Typography>
             )}
             {review.result === 2 && (
-                <Typography
-                    variant="body2"
-                    className={classes.remarks}
-                >
+                <Typography variant="body2" className={classes.remarks}>
                     脱出失敗…
                 </Typography>
             )}
-            <Typography variant="body2">
-                {review.contents}
-            </Typography>
+            <Typography variant="body2">{review.contents}</Typography>
         </CardActionArea>
     )
 }

@@ -1,6 +1,10 @@
 import axios from 'axios'
 import { ReviewDetail } from '../@types'
-import { setPostStatus, setCommentStatus, setLikeStatus } from '../stores/review'
+import {
+    setPostStatus,
+    setCommentStatus,
+    setLikeStatus,
+} from '../stores/review'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -40,7 +44,7 @@ export const asyncGetTimeline = (
 
 export const asyncGetReview = (
     id: string,
-    setReview: (value: ReviewDetail | null) => void
+    setReview: (value: ReviewDetail | null) => void,
 ) => {
     return async (dispatch: any) => {
         const response = await axios.get(`/v1/reviews/${id}`)
@@ -118,20 +122,16 @@ export const asyncUpdateReview = (
     }
 }
 
-export const asyncDeleteReview = (
-    review_id: number
-) => {
-    return async(dispatch: any) => {
+export const asyncDeleteReview = (review_id: number) => {
+    return async (dispatch: any) => {
         dispatch(setPostStatus(null))
-        
-        const response = await axios.delete(
-            `/v1/reviews/${review_id}`
-        )
+
+        const response = await axios.delete(`/v1/reviews/${review_id}`)
 
         if (response.status === 204) {
             dispatch(setPostStatus(true))
         }
-        
+
         if (response.status === 422) {
             dispatch(setPostStatus(false))
         }
@@ -143,17 +143,14 @@ export const asyncPostComment = (
     review_id: number,
     contents: string,
 ) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setCommentStatus(null))
 
-        const response = await axios.post(
-            '/v1/reviews/comments',
-            {
-                user_id: user_id,
-                review_id: review_id,
-                contents: contents,
-            }
-        )
+        const response = await axios.post('/v1/reviews/comments', {
+            user_id: user_id,
+            review_id: review_id,
+            contents: contents,
+        })
 
         if (response.status === 201) {
             dispatch(setCommentStatus(true))
@@ -165,20 +162,14 @@ export const asyncPostComment = (
     }
 }
 
-export const asyncLikeReview = (
-    user_id: number,
-    review_id: number,
-) => {
-    return async(dispatch: any) => {
+export const asyncLikeReview = (user_id: number, review_id: number) => {
+    return async (dispatch: any) => {
         dispatch(setLikeStatus(null))
-        
-        const response = await axios.put(
-            '/v1/likes/reviews',
-            {
-                user_id: user_id,
-                review_id: review_id,
-            }
-        )
+
+        const response = await axios.put('/v1/likes/reviews', {
+            user_id: user_id,
+            review_id: review_id,
+        })
 
         if (response.status === 201) {
             dispatch(setLikeStatus(true))
@@ -190,22 +181,16 @@ export const asyncLikeReview = (
     }
 }
 
-export const asyncUnlikeReview = (
-    user_id: number,
-    review_id: number,
-) => {
-    return async(dispatch: any) => {
+export const asyncUnlikeReview = (user_id: number, review_id: number) => {
+    return async (dispatch: any) => {
         dispatch(setLikeStatus(null))
 
-        const response = await axios.delete(
-            '/v1/likes/reviews',
-            {
-                params: {
-                    user_id: user_id,
-                    review_id: review_id,
-                }
-            }
-        )
+        const response = await axios.delete('/v1/likes/reviews', {
+            params: {
+                user_id: user_id,
+                review_id: review_id,
+            },
+        })
 
         if (response.status === 204) {
             dispatch(setLikeStatus(true))

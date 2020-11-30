@@ -27,9 +27,7 @@ interface ClassProps {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-            
-        }
+        root: {},
     }),
 )
 

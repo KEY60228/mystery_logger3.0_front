@@ -24,10 +24,12 @@ const slice = createSlice({
             return Object.assign({}, state, { user: action.payload })
         },
         setPreRegisterStatus: (state, action) => {
-            return Object.assign({}, state, { preRegisterStatus: action.payload})
+            return Object.assign({}, state, {
+                preRegisterStatus: action.payload,
+            })
         },
         setRegisterStatus: (state, action) => {
-            return Object.assign({}, state, {registerStatus: action.payload})
+            return Object.assign({}, state, { registerStatus: action.payload })
         },
     },
 })
@@ -36,4 +38,8 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setUser, setPreRegisterStatus, setRegisterStatus } = slice.actions
+export const {
+    setUser,
+    setPreRegisterStatus,
+    setRegisterStatus,
+} = slice.actions

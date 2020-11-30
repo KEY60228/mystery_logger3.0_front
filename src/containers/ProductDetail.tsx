@@ -4,7 +4,14 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { Product, ReviewDetail, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
-import { asyncDeleteReview, asyncLikeReview, asyncPostComment, asyncPostReview, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
+import {
+    asyncDeleteReview,
+    asyncLikeReview,
+    asyncPostComment,
+    asyncPostReview,
+    asyncUnlikeReview,
+    asyncUpdateReview,
+} from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState } from '../stores/index'
@@ -16,13 +23,25 @@ export const ProductDetail: FC = () => {
     const dispatch = useDispatch()
     const { id } = useParams<{ id: string }>()
 
-    const product = useSelector((state: RootState) => state.product.focusedProduct)
+    const product = useSelector(
+        (state: RootState) => state.product.focusedProduct,
+    )
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const postStatus = useSelector((state: RootState) => state.review.postStatus)
-    const followStatus = useSelector((state: RootState) => state.user.followStatus)
-    const wannaStatus = useSelector((state: RootState) => state.product.wannaStatus)
-    const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
-    const likeStatus = useSelector((state: RootState) => state.review.likeStatus)
+    const postStatus = useSelector(
+        (state: RootState) => state.review.postStatus,
+    )
+    const followStatus = useSelector(
+        (state: RootState) => state.user.followStatus,
+    )
+    const wannaStatus = useSelector(
+        (state: RootState) => state.product.wannaStatus,
+    )
+    const commentStatus = useSelector(
+        (state: RootState) => state.review.commentStatus,
+    )
+    const likeStatus = useSelector(
+        (state: RootState) => state.review.likeStatus,
+    )
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -32,7 +51,7 @@ export const ProductDetail: FC = () => {
 
     // 投稿フォームの開閉
     const [open, setOpen] = useState<boolean>(false)
-    
+
     // 新規投稿 or 編集
     const [isNew, setIsNew] = useState<boolean>(false)
 
@@ -55,7 +74,9 @@ export const ProductDetail: FC = () => {
     }
 
     const edit = () => {
-        const review = product?.reviews?.find((review: ReviewDetail) => currentUser?.done_id.includes(review.product_id))
+        const review = product?.reviews?.find((review: ReviewDetail) =>
+            currentUser?.done_id.includes(review.product_id),
+        )
         if (!review) return false // 仮
         setRating(review.rating)
         setResult(review.result)
@@ -65,7 +86,9 @@ export const ProductDetail: FC = () => {
     }
 
     const update = () => {
-        const review = product?.reviews?.find((review: ReviewDetail) => currentUser?.done_id.includes(review.product_id))
+        const review = product?.reviews?.find((review: ReviewDetail) =>
+            currentUser?.done_id.includes(review.product_id),
+        )
         if (!currentUser || !product || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
@@ -81,7 +104,9 @@ export const ProductDetail: FC = () => {
     }
 
     const deleteReview = () => {
-        const review = product?.reviews?.find((review: ReviewDetail) => currentUser?.done_id.includes(review.product_id))
+        const review = product?.reviews?.find((review: ReviewDetail) =>
+            currentUser?.done_id.includes(review.product_id),
+        )
         if (!review) return false // 仮
         dispatch(asyncDeleteReview(review.id))
     }
@@ -90,9 +115,9 @@ export const ProductDetail: FC = () => {
         if (!currentUser || !user) return false // 仮
         dispatch(asyncFollow(currentUser.id, user.id))
     }
-    
+
     const unfollow = (user: User) => {
-        if(!currentUser || !user) return false // 仮
+        if (!currentUser || !user) return false // 仮
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 

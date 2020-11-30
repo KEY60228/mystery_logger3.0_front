@@ -86,13 +86,13 @@ export const UserForm: FC<Props> = ({
             setPreview('')
             return false
         }
-        
+
         // ファイルが画像でない場合
-        if (! ev.target.files[0].type.match('image.*')) {
+        if (!ev.target.files[0].type.match('image.*')) {
             setPreview('')
             return false
         }
-    
+
         // FileReaderクラスのインスタンスを取得
         const reader = new FileReader()
 
@@ -114,34 +114,41 @@ export const UserForm: FC<Props> = ({
             onClose={() => setOpen(false)}
             TransitionComponent={Transition}
         >
-            <UserFormHeader
-                user={user}
-                setOpen={setOpen}
-                update={update}
-            />
+            <UserFormHeader user={user} setOpen={setOpen} update={update} />
             <Card className={classes.root}>
-                <Grid container direction='column' alignItems='center'>
-                    { preview &&
+                <Grid container direction="column" alignItems="center">
+                    {preview && (
                         <CardMedia image={preview} className={classes.media} />
-                    }
-                    { !preview &&
-                        <CardMedia image={`/user_img/${user.image_name}`} className={classes.media} />
-                    }
+                    )}
+                    {!preview && (
+                        <CardMedia
+                            image={`/user_img/${user.image_name}`}
+                            className={classes.media}
+                        />
+                    )}
                     <FormControl className={classes.form}>
-                        <Input type='file' onChange={onFileChange} />
+                        <Input type="file" onChange={onFileChange} />
                     </FormControl>
                     <FormControl className={classes.form}>
-                        <InputLabel htmlFor='Name'>Name</InputLabel>
-                        <Input id='Name' value={name} onChange={(ev) => setName(ev.target.value)} />
+                        <InputLabel htmlFor="Name">Name</InputLabel>
+                        <Input
+                            id="Name"
+                            value={name}
+                            onChange={ev => setName(ev.target.value)}
+                        />
                     </FormControl>
                     <FormControl className={classes.form}>
-                        <InputLabel htmlFor='AccountId'>Account ID</InputLabel>
-                        <Input id='AccountId' value={accountId} onChange={(ev) => setAccountId(ev.target.value)} />
+                        <InputLabel htmlFor="AccountId">Account ID</InputLabel>
+                        <Input
+                            id="AccountId"
+                            value={accountId}
+                            onChange={ev => setAccountId(ev.target.value)}
+                        />
                     </FormControl>
                     <FormControl className={classes.form}>
                         <TextField
                             multiline
-                            onChange={(ev) => setProfile(ev.target.value)}
+                            onChange={ev => setProfile(ev.target.value)}
                             value={profile}
                             fullWidth
                             variant="outlined"

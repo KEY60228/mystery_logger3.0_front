@@ -3,11 +3,26 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { RootState } from '../stores/index'
-import { ReviewDetail, User, UserDetail as UserDetailInterface } from '../@types'
+import {
+    ReviewDetail,
+    User,
+    UserDetail as UserDetailInterface,
+} from '../@types'
 import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
-import { asyncGetUser, asyncFollow, asyncUnFollow, asyncUpdateUser } from '../ajax/user'
+import {
+    asyncGetUser,
+    asyncFollow,
+    asyncUnFollow,
+    asyncUpdateUser,
+} from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { asyncDeleteReview, asyncLikeReview, asyncPostComment, asyncUnlikeReview, asyncUpdateReview } from '../ajax/review'
+import {
+    asyncDeleteReview,
+    asyncLikeReview,
+    asyncPostComment,
+    asyncUnlikeReview,
+    asyncUpdateReview,
+} from '../ajax/review'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
@@ -15,11 +30,21 @@ export const UserDetail: FC = () => {
 
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const followStatus = useSelector((state: RootState) => state.user.followStatus)
-    const updateUserStatus = useSelector((state: RootState) => state.user.updateUserStatus)
-    const postStatus = useSelector((state: RootState) => state.review.postStatus)
-    const commentStatus = useSelector((state: RootState) => state.review.commentStatus)
-    const likeStatus = useSelector((state: RootState) => state.review.likeStatus)
+    const followStatus = useSelector(
+        (state: RootState) => state.user.followStatus,
+    )
+    const updateUserStatus = useSelector(
+        (state: RootState) => state.user.updateUserStatus,
+    )
+    const postStatus = useSelector(
+        (state: RootState) => state.review.postStatus,
+    )
+    const commentStatus = useSelector(
+        (state: RootState) => state.review.commentStatus,
+    )
+    const likeStatus = useSelector(
+        (state: RootState) => state.review.likeStatus,
+    )
 
     const [user, setUser] = useState<UserDetailInterface | null>(null)
 
@@ -60,9 +85,9 @@ export const UserDetail: FC = () => {
         if (!currentUser || !user) return false // 仮
         dispatch(asyncFollow(currentUser.id, user.id))
     }
-    
+
     const unfollow = (user: User) => {
-        if(!currentUser || !user) return false // 仮
+        if (!currentUser || !user) return false // 仮
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
@@ -107,7 +132,7 @@ export const UserDetail: FC = () => {
 
     const unlikeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id));
+        dispatch(asyncUnlikeReview(currentUser.id, review.id))
     }
 
     useEffect(() => {
@@ -120,7 +145,7 @@ export const UserDetail: FC = () => {
             dispatch(asyncGetCurrentUser())
         }
     }, [followStatus])
-    
+
     useEffect(() => {
         if (updateUserStatus) {
             getUser()
@@ -153,7 +178,7 @@ export const UserDetail: FC = () => {
 
     return (
         <>
-            { user && 
+            {user && (
                 <>
                     <UserDetailTemp
                         user={user}
@@ -190,7 +215,7 @@ export const UserDetail: FC = () => {
                         unlikeReview={unlikeReview}
                     />
                 </>
-            }
+            )}
             {!user && <div>loading</div>}
         </>
     )

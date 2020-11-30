@@ -20,14 +20,8 @@ export const Search: FC = () => {
 
     return (
         <>
-            { products &&
-                <SearchTemp
-                    products={products}
-                />
-            }
-            { !products &&
-                <div>loading</div>
-            }
+            {products && <SearchTemp products={products} />}
+            {!products && <div>loading</div>}
         </>
     )
 }

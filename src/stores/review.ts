@@ -41,4 +41,9 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setFocusedReview, setPostStatus, setCommentStatus, setLikeStatus } = slice.actions
+export const {
+    setFocusedReview,
+    setPostStatus,
+    setCommentStatus,
+    setLikeStatus,
+} = slice.actions

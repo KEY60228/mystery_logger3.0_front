@@ -1,5 +1,9 @@
 import axios from 'axios'
-import { setPreRegisterStatus, setRegisterStatus, setUser } from '../stores/auth'
+import {
+    setPreRegisterStatus,
+    setRegisterStatus,
+    setUser,
+} from '../stores/auth'
 import queryString from 'query-string'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -21,16 +25,16 @@ axios.interceptors.response.use(
 export const asyncPreRegister = (email: string) => {
     return async (dispatch: any) => {
         dispatch(setPreRegisterStatus(null))
-        
+
         const response = await axios.post(
             'https://localhost:1443/v1/preregister',
             { email: email },
         )
-            
+
         if (response.status === 201) {
             dispatch(setPreRegisterStatus(true))
         }
-        
+
         if (response.status === 422) {
             dispatch(setPreRegisterStatus(false))
         }
@@ -110,10 +114,8 @@ export const asyncLogin = (email: string, password: string) => {
 
 // クッキーログイン & ユーザー情報更新
 export const asyncGetCurrentUser = () => {
-    return async(dispatch: any) => {
-        const response = await axios.get(
-            '/v1/currentuser'
-        )
+    return async (dispatch: any) => {
+        const response = await axios.get('/v1/currentuser')
 
         if (response.status === 200) {
             dispatch(setUser(response.data))
@@ -122,5 +124,5 @@ export const asyncGetCurrentUser = () => {
         if (response.status === 422) {
             // エラー処理
         }
-    }  
+    }
 }

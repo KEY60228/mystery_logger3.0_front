@@ -18,7 +18,7 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            margin :'8px',
+            margin: '8px',
             padding: '8px',
         },
         media: {
@@ -43,11 +43,14 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: '8px',
             marginLeft: '4px',
         },
-    })
+    }),
 )
 
 export const FollowCard: FC<Props> = ({
-    followUser, follow, unfollow, setOpen
+    followUser,
+    follow,
+    unfollow,
+    setOpen,
 }) => {
     const classes = useStyles()
     const history = useHistory()
@@ -61,7 +64,7 @@ export const FollowCard: FC<Props> = ({
 
     return (
         <Card className={classes.root}>
-            <Grid container wrap='nowrap'>
+            <Grid container wrap="nowrap">
                 <CardMedia
                     image={`/user_img/${followUser.image_name}`}
                     onClick={onClick}
@@ -74,25 +77,35 @@ export const FollowCard: FC<Props> = ({
                         alignItems="center"
                         wrap="nowrap"
                     >
-                        <Grid container direction='column' justify='center' onClick={onClick}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            onClick={onClick}
+                        >
                             <Typography
                                 variant="subtitle1"
                                 className={classes.userName}
                             >
                                 {followUser.name}
                             </Typography>
-                            <Typography variant="body1" className={classes.userId}>
+                            <Typography
+                                variant="body1"
+                                className={classes.userId}
+                            >
                                 @{followUser.account_id}
                             </Typography>
                         </Grid>
-                        {(currentUser && followUser.account_id !== currentUser?.account_id) && (
-                            <FollowButton
-                                currentUser={currentUser}
-                                user={followUser}
-                                follow={follow}
-                                unfollow={unfollow}
-                            />
-                        )}
+                        {currentUser &&
+                            followUser.account_id !==
+                                currentUser?.account_id && (
+                                <FollowButton
+                                    currentUser={currentUser}
+                                    user={followUser}
+                                    follow={follow}
+                                    unfollow={unfollow}
+                                />
+                            )}
                     </Grid>
                     <Typography variant="body1" className={classes.profile}>
                         {followUser.profile}

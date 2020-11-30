@@ -35,40 +35,34 @@ export const asyncGetUser = (
     }
 }
 
-export const asyncFollow = (
-    following_id: number,
-    followed_id: number,
-) => {
+export const asyncFollow = (following_id: number, followed_id: number) => {
     return async (dispatch: any) => {
         dispatch(setFollowStatus(null))
-        
+
         const response = await axios.put('/v1/follow', {
             following_id: following_id,
             followed_id: followed_id,
         })
-        
+
         if (response.status === 200) {
             dispatch(setFollowStatus(true))
         }
-        
+
         if (response.status === 422) {
             dispatch(setFollowStatus(false))
         }
     }
 }
 
-export const asyncUnFollow = (
-    following_id: number,
-    followed_id: number,
-) => {
-    return async(dispatch: any) => {
+export const asyncUnFollow = (following_id: number, followed_id: number) => {
+    return async (dispatch: any) => {
         dispatch(setFollowStatus(null))
-        
+
         const response = await axios.delete('/v1/unfollow', {
             params: {
                 following_id: following_id,
                 followed_id: followed_id,
-            }
+            },
         })
 
         if (response.status === 204) {
@@ -83,21 +77,18 @@ export const asyncUnFollow = (
 
 export const asyncUpdateUser = (
     id: number,
-    name: string, 
+    name: string,
     account_id: string,
     profile: string,
 ) => {
-    return async(dispatch: any) => {
+    return async (dispatch: any) => {
         dispatch(setUpdateUserStatus(null))
 
-        const response = await axios.put(
-            `/v1/users/${id}`,
-            {
-                name: name,
-                account_id: account_id,
-                profile: profile,
-            }
-        )
+        const response = await axios.put(`/v1/users/${id}`, {
+            name: name,
+            account_id: account_id,
+            profile: profile,
+        })
 
         if (response.status === 200) {
             dispatch(setUpdateUserStatus(true))

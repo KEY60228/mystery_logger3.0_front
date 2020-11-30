@@ -48,7 +48,7 @@ export const Buttons: FC<Props> = ({
 
     return (
         <Grid container direction="row" justify="center" alignItems="center">
-            { (!currentUser || !currentUser.done_id.includes(product.id)) &&
+            {(!currentUser || !currentUser.done_id.includes(product.id)) && (
                 <Button
                     variant="contained"
                     color="primary"
@@ -67,8 +67,8 @@ export const Buttons: FC<Props> = ({
                         </Typography>
                     </Grid>
                 </Button>
-            }
-            { (currentUser && currentUser.done_id.includes(product.id)) &&
+            )}
+            {currentUser && currentUser.done_id.includes(product.id) && (
                 <Button
                     variant="outlined"
                     color="primary"
@@ -87,8 +87,8 @@ export const Buttons: FC<Props> = ({
                         </Typography>
                     </Grid>
                 </Button>
-            }
-            { (!currentUser || !currentUser.wanna_id.includes(product.id)) &&
+            )}
+            {(!currentUser || !currentUser.wanna_id.includes(product.id)) && (
                 <Button
                     variant="contained"
                     color="primary"
@@ -102,11 +102,13 @@ export const Buttons: FC<Props> = ({
                         alignItems="center"
                     >
                         <QueueIcon />
-                        <Typography variant="caption">{product.wannas_count}</Typography>
+                        <Typography variant="caption">
+                            {product.wannas_count}
+                        </Typography>
                     </Grid>
                 </Button>
-            }
-            { (currentUser && currentUser.wanna_id.includes(product.id)) &&
+            )}
+            {currentUser && currentUser.wanna_id.includes(product.id) && (
                 <Button
                     variant="outlined"
                     color="primary"
@@ -120,10 +122,12 @@ export const Buttons: FC<Props> = ({
                         alignItems="center"
                     >
                         <QueueIcon />
-                        <Typography variant="caption">{product.wannas_count}</Typography>
+                        <Typography variant="caption">
+                            {product.wannas_count}
+                        </Typography>
                     </Grid>
                 </Button>
-            }
+            )}
         </Grid>
     )
 }

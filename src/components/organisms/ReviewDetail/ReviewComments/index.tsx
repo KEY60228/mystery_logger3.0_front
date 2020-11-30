@@ -10,22 +10,18 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        }
-    })
+        root: {},
+    }),
 )
 
-export const ReviewComments: FC<Props> = ({
-    comments
-}) => {
+export const ReviewComments: FC<Props> = ({ comments }) => {
     const classes = useStyles()
 
     return (
         <>
-            { comments.map((comment: CommentDetail) =>
+            {comments.map((comment: CommentDetail) => (
                 <CommentCard key={comment.id} comment={comment} />
-            )}
+            ))}
         </>
     )
 }

@@ -21,7 +21,9 @@ const slice = createSlice({
             return Object.assign({}, state, { followStatus: action.payload })
         },
         setUpdateUserStatus: (state, action) => {
-            return Object.assign({}, state, { updateUserStatus: action.payload })
+            return Object.assign({}, state, {
+                updateUserStatus: action.payload,
+            })
         },
     },
 })
@@ -30,4 +32,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setFollowStatus, setUpdateUserStatus} = slice.actions
+export const { setFollowStatus, setUpdateUserStatus } = slice.actions
