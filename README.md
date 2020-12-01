@@ -36,10 +36,10 @@ src/
 ### templates/
 
 - ページ単位
-- あくまでorganismsを統括する役割に徹する
+- 検索やソート等、データ加工を担う
 - useStyles不要
 - 認証失敗ページや404ページはtemplates/
-- modal等はフルスクリーンでもtemplates/以下
+- 投稿フォームのmodal等はフルスクリーンでもtemplates/以下
 - modalのopen/setOpen等、見た目に関係するstateはuseStateで所有可能
 
 ### organisms/
@@ -63,3 +63,5 @@ src/
 - apiStatusは使わない。各statusを使う
 - フォームはとりあえずRedux使わない。containerでuseStateする
 - とりあえず今はレスポンシブデザインは考えない
+
+- setFocusedReviewはTimeline用に残す。もっと良いやり方を思いついたら修正する
