@@ -34,20 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const SearchBox: FC<Props> = ({
-    organizers,
-    venues,
-    categories,
-    search,
-    keywords,
-    setKeywords,
-    category,
-    setCategory,
-    organizer,
-    setOrganizer,
-    venue,
-    setVenue,
-}) => {
+export const SearchBox: FC<Props> = props => {
     const classes = useStyles()
 
     return (
@@ -56,32 +43,32 @@ export const SearchBox: FC<Props> = ({
                 <Grid container direction="column" alignItems="center">
                     <Input
                         placeholder="Keywords"
-                        value={keywords}
-                        onChange={ev => setKeywords(ev.target.value)}
+                        value={props.keywords}
+                        onChange={ev => props.setKeywords(ev.target.value)}
                         className={classes.form}
                     />
                     <SelectForm
-                        value={organizer}
-                        setValue={setOrganizer}
-                        choices={organizers}
+                        value={props.organizer}
+                        setValue={props.setOrganizer}
+                        choices={props.organizers}
                         className={{ width: '200px', margin: '8px' }}
                     />
                     <SelectForm
-                        value={venue}
-                        setValue={setVenue}
-                        choices={venues}
+                        value={props.venue}
+                        setValue={props.setVenue}
+                        choices={props.venues}
                         className={{ width: '200px', margin: '8px' }}
                     />
                     <SelectForm
-                        value={category}
-                        setValue={setCategory}
-                        choices={categories}
+                        value={props.category}
+                        setValue={props.setCategory}
+                        choices={props.categories}
                         className={{ width: '200px', margin: '8px' }}
                     />
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={search}
+                        onClick={props.search}
                         className={classes.button}
                     >
                         検索

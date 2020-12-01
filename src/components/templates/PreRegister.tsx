@@ -11,24 +11,18 @@ interface Props {
     preRegister: () => void
 }
 
-export const PreRegister: FC<Props> = ({
-    email,
-    setEmail,
-    open,
-    setOpen,
-    preRegister,
-}) => {
+export const PreRegister: FC<Props> = props => {
     return (
         <>
             <PreRegisterForm
-                email={email}
-                setEmail={setEmail}
-                preRegister={preRegister}
+                email={props.email}
+                setEmail={props.setEmail}
+                preRegister={props.preRegister}
             />
             <PreRegisterModal
-                open={open}
-                setOpen={setOpen}
-                setEmail={setEmail}
+                open={props.open}
+                setOpen={props.setOpen}
+                setEmail={props.setEmail}
             />
         </>
     )

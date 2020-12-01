@@ -41,16 +41,16 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const CommentCard: FC<Props> = ({ comment }) => {
+export const CommentCard: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <Card className={classes.root}>
             <Grid container wrap="nowrap">
                 <CardMedia
-                    image={`/user_img/${comment.user.image_name}`}
+                    image={`/user_img/${props.comment.user.image_name}`}
                     component={Link}
-                    to={`/users/${comment.user?.account_id}`}
+                    to={`/users/${props.comment.user?.account_id}`}
                     className={classes.media}
                 />
                 <Grid container direction="column" className={classes.contents}>
@@ -58,22 +58,22 @@ export const CommentCard: FC<Props> = ({ comment }) => {
                         <Typography
                             variant="body1"
                             component={Link}
-                            to={`/users/${comment.user.account_id}`}
+                            to={`/users/${props.comment.user.account_id}`}
                             className={classes.userName}
                         >
-                            {comment.user.name}
+                            {props.comment.user.name}
                         </Typography>
                         <Typography
                             variant="body1"
                             component={Link}
-                            to={`/users/${comment.user.account_id}`}
+                            to={`/users/${props.comment.user.account_id}`}
                             className={classes.userId}
                         >
-                            @{comment.user.account_id}
+                            @{props.comment.user.account_id}
                         </Typography>
                     </Grid>
                     <Typography variant="body2" className={classes.comment}>
-                        {comment.contents}
+                        {props.comment.contents}
                     </Typography>
                 </Grid>
             </Grid>

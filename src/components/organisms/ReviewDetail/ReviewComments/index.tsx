@@ -14,12 +14,12 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewComments: FC<Props> = ({ comments }) => {
+export const ReviewComments: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <>
-            {comments.map((comment: CommentDetail) => (
+            {props.comments.map((comment: CommentDetail) => (
                 <CommentCard key={comment.id} comment={comment} />
             ))}
         </>

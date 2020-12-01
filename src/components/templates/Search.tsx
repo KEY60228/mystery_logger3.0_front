@@ -10,7 +10,7 @@ interface Props {
     products: ProductDetail[]
 }
 
-export const Search: FC<Props> = ({ products }) => {
+export const Search: FC<Props> = props => {
     const [results, setResults] = useState<ProductDetail[]>([])
     const [keywords, setKeywords] = useState<string>('')
     const [category, setCategory] = useState<number>(0)
@@ -19,7 +19,7 @@ export const Search: FC<Props> = ({ products }) => {
 
     const search = () => {
         setResults(
-            products.filter((product: ProductDetail) => {
+            props.products.filter((product: ProductDetail) => {
                 if (category && product.category_id !== category) return false
                 if (organizer && product.organizer_id !== organizer)
                     return false
@@ -41,7 +41,7 @@ export const Search: FC<Props> = ({ products }) => {
     const organizers: {
         id: number
         name: string
-    }[] = products
+    }[] = props.products
         .map((product: ProductDetail) => product.organizer)
         .filter((el1, i1, arr) => {
             return (
@@ -57,7 +57,7 @@ export const Search: FC<Props> = ({ products }) => {
     const venues: {
         id: number
         name: string
-    }[] = products
+    }[] = props.products
         .map(product =>
             product.performances.map(performance => performance.venue),
         )
@@ -75,7 +75,7 @@ export const Search: FC<Props> = ({ products }) => {
     const categories: {
         id: number
         name: string
-    }[] = products
+    }[] = props.products
         .map(product => product.category)
         .filter((el1, i1, arr) => {
             return (
@@ -153,7 +153,7 @@ export const Search: FC<Props> = ({ products }) => {
     }
 
     useEffect(() => {
-        setResults(products)
+        setResults(props.products)
     }, [])
 
     return (

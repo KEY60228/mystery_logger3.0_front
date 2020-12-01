@@ -25,22 +25,22 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const SlideRatings: FC<Props> = ({ rating, setRating, className }) => {
-    const classes = useStyles(className)
+export const SlideRatings: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <>
             <Ratings
-                number={rating}
+                number={props.rating}
                 size="large"
                 className={{
-                    marginLeft: className?.marginLeft,
-                    fontSize: className?.fontSize,
+                    marginLeft: props.className?.marginLeft,
+                    fontSize: props.className?.fontSize,
                 }}
             />
             <Slider
-                value={rating}
-                onChange={(ev, newValue: number) => setRating(newValue)}
+                value={props.rating}
+                onChange={(ev, newValue: number) => props.setRating(newValue)}
                 max={5}
                 step={0.5}
                 className={classes.slider}

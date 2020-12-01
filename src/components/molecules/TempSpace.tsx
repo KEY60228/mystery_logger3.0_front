@@ -30,13 +30,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const TempSpace: FC<Props> = ({ text, className }) => {
-    const classes = useStyles(className)
+export const TempSpace: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <Box className={classes.root}>
             <Typography variant="h3" className={classes.text}>
-                {text}
+                {props.text}
             </Typography>
         </Box>
     )

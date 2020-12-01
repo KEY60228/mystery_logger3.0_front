@@ -33,45 +33,32 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductReviews: FC<Props> = ({
-    product,
-    edit,
-    setConfirmOpen,
-    follow,
-    unfollow,
-    comment,
-    setComment,
-    postComment,
-    likeReview,
-    unlikeReview,
-    commentOpen,
-    setCommentOpen,
-}) => {
+export const ProductReviews: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <>
-            {product.reviews &&
-                product.reviews.map((review: ReviewWithUser) => (
+            {props.product.reviews &&
+                props.product.reviews.map((review: ReviewWithUser) => (
                     <ReviewCard
                         key={review.id}
                         review={review}
                         reviewerProfile
                         cardActionArea
-                        edit={edit}
-                        setConfirmOpen={setConfirmOpen}
-                        follow={follow}
-                        unfollow={unfollow}
-                        comment={comment}
-                        setComment={setComment}
-                        postComment={postComment}
-                        likeReview={likeReview}
-                        unlikeReview={unlikeReview}
-                        open={commentOpen}
-                        setOpen={setCommentOpen}
+                        edit={props.edit}
+                        setConfirmOpen={props.setConfirmOpen}
+                        follow={props.follow}
+                        unfollow={props.unfollow}
+                        comment={props.comment}
+                        setComment={props.setComment}
+                        postComment={props.postComment}
+                        likeReview={props.likeReview}
+                        unlikeReview={props.unlikeReview}
+                        open={props.commentOpen}
+                        setOpen={props.setCommentOpen}
                     />
                 ))}
-            {!product.reviews && (
+            {!props.product.reviews && (
                 <Card className={classes.root}>
                     <Typography>まだ投稿はありません</Typography>
                 </Card>

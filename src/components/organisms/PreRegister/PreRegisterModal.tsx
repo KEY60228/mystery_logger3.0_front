@@ -30,18 +30,18 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const PreRegisterModal: FC<Props> = ({ open, setOpen, setEmail }) => {
+export const PreRegisterModal: FC<Props> = props => {
     const classes = useStyles()
 
     const handleClose = () => {
-        setEmail('')
-        setOpen(false)
+        props.setEmail('')
+        props.setOpen(false)
     }
 
     return (
         <Modal
             className={classes.root}
-            open={open}
+            open={props.open}
             onClose={handleClose}
             closeAfterTransition
             BackdropComponent={Backdrop}
@@ -49,7 +49,7 @@ export const PreRegisterModal: FC<Props> = ({ open, setOpen, setEmail }) => {
                 timeout: 500,
             }}
         >
-            <Fade in={open}>
+            <Fade in={props.open}>
                 <Box className={classes.paper}>
                     <Typography variant="body1" className={classes.text}>
                         御登録のアドレス宛にメールを送信しました。

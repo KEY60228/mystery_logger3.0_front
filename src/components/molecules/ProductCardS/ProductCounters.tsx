@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductCounters: FC<Props> = ({ product, className }) => {
-    const classes = useStyles(className)
+export const ProductCounters: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <Grid
@@ -47,7 +47,7 @@ export const ProductCounters: FC<Props> = ({ product, className }) => {
             >
                 <DirectionsRunIcon color="primary" fontSize="small" />
                 <Typography variant="caption" className={classes.text}>
-                    {product.reviews_count}
+                    {props.product.reviews_count}
                 </Typography>
             </Grid>
             <Grid
@@ -58,8 +58,8 @@ export const ProductCounters: FC<Props> = ({ product, className }) => {
             >
                 <EqualizerIcon color="primary" fontSize="small" />
                 <Typography variant="caption" className={classes.text}>
-                    {product.success_rate
-                        ? `${(product.success_rate * 100).toFixed(1)}%`
+                    {props.product.success_rate
+                        ? `${(props.product.success_rate * 100).toFixed(1)}%`
                         : '-'}
                 </Typography>
             </Grid>
@@ -72,7 +72,9 @@ export const ProductCounters: FC<Props> = ({ product, className }) => {
             >
                 <StarRateIcon color="primary" fontSize="small" />
                 <Typography variant="caption" className={classes.text}>
-                    {product.avg_rating ? product.avg_rating.toFixed(1) : '-'}
+                    {props.product.avg_rating
+                        ? props.product.avg_rating.toFixed(1)
+                        : '-'}
                 </Typography>
             </Grid>
         </Grid>

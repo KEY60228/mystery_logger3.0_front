@@ -49,50 +49,43 @@ const Transition = forwardRef(
     },
 )
 
-export const FollowList: FC<Props> = ({
-    follows,
-    label,
-    open,
-    setOpen,
-    follow,
-    unfollow,
-}) => {
+export const FollowList: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <Dialog
             fullScreen
-            open={open}
-            onClose={() => setOpen(false)}
+            open={props.open}
+            onClose={() => props.setOpen(false)}
             TransitionComponent={Transition}
         >
             <AppBar color="primary" position="static">
                 <Toolbar>
                     <IconButton
                         color="inherit"
-                        onClick={() => setOpen(false)}
+                        onClick={() => props.setOpen(false)}
                         className={classes.icon}
                     >
                         <CloseIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        {label}
+                        {props.label}
                     </Typography>
                 </Toolbar>
             </AppBar>
-            {follows &&
-                follows.map((followUser: User) => (
+            {props.follows &&
+                props.follows.map((followUser: User) => (
                     <FollowCard
                         key={followUser.id}
                         followUser={followUser}
-                        follow={follow}
-                        unfollow={unfollow}
-                        setOpen={setOpen}
+                        follow={props.follow}
+                        unfollow={props.unfollow}
+                        setOpen={props.setOpen}
                     />
                 ))}
-            {!follows?.length && (
+            {!props.follows?.length && (
                 <Card className={classes.card}>
-                    <Typography>まだ{label}はいません</Typography>
+                    <Typography>まだ{props.label}はいません</Typography>
                 </Card>
             )}
         </Dialog>

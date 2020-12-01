@@ -33,7 +33,10 @@ const App: FC = () => {
                 <Switch>
                     <Route path="/" exact children={<TopPage />} />
                     <GuestRoute path="/login" children={<Login />} />
-                    <GuestRoute path="/preregister" children={<PreRegister />} />
+                    <GuestRoute
+                        path="/preregister"
+                        children={<PreRegister />}
+                    />
                     <GuestRoute path="/register" children={<Register />} />
                     <Route
                         path="/users/:account_id"

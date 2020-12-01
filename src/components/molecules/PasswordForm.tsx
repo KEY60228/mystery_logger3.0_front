@@ -31,12 +31,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const PasswordForm: FC<Props> = ({
-    password,
-    setPassword,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const PasswordForm: FC<Props> = props => {
+    const classes = useStyles(props.className)
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
     return (
@@ -46,8 +42,8 @@ export const PasswordForm: FC<Props> = ({
                 type={showPassword ? 'text' : 'password'}
                 id="password"
                 aria-describedby={`password-helper`}
-                value={password}
-                onChange={ev => setPassword(ev.target.value)}
+                value={props.password}
+                onChange={ev => props.setPassword(ev.target.value)}
                 endAdornment={
                     <InputAdornment position="end">
                         <IconButton

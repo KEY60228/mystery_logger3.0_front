@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductProfile: FC<Props> = ({ product }) => {
+export const ProductProfile: FC<Props> = props => {
     const classes = useStyles()
 
     const getParty = (min: number, max: number) => {
@@ -78,44 +78,49 @@ export const ProductProfile: FC<Props> = ({ product }) => {
                 制作会社
             </Typography>
             <Typography variant="body1" className={classes.body}>
-                {product.organizer.name}
+                {props.product.organizer.name}
             </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 開催地
             </Typography>
-            {product.performances.map((performance: PerformanceWithVenue) => (
-                <Typography
-                    key={performance.id}
-                    variant="body1"
-                    className={classes.body}
-                >
-                    {performance.venue.name}
-                </Typography>
-            ))}
+            {props.product.performances.map(
+                (performance: PerformanceWithVenue) => (
+                    <Typography
+                        key={performance.id}
+                        variant="body1"
+                        className={classes.body}
+                    >
+                        {performance.venue.name}
+                    </Typography>
+                ),
+            )}
             <Typography variant="subtitle1" className={classes.subtitle}>
                 カテゴリ
             </Typography>
             <Typography variant="body1" className={classes.body}>
-                {product.category.name}
+                {props.product.category.name}
             </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 制限時間 / 所要時間
             </Typography>
             <Typography variant="body1" className={classes.body}>
-                約{product.limitTime}分 / 約{product.requiredTime}分
+                約{props.product.limitTime}分 / 約{props.product.requiredTime}分
             </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 人数
             </Typography>
-            {getParty(product.minParty, product.maxParty)}
+            {getParty(props.product.minParty, props.product.maxParty)}
             <Typography variant="subtitle1" className={classes.subtitle}>
                 成功率
             </Typography>
             <Typography variant="body1" className={classes.body}>
-                {product.success_rate
-                    ? `${parseFloat(product.success_rate.toFixed(1)) * 100}%`
+                {props.product.success_rate
+                    ? `${
+                          parseFloat(props.product.success_rate.toFixed(1)) *
+                          100
+                      }%`
                     : '-'}{' '}
-                ({product.success_count}/{product.reviews_count})
+                ({props.product.success_count}/{props.product.reviews_count})
             </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 募集中の同行者募集

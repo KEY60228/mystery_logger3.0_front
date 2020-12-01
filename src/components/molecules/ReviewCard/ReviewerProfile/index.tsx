@@ -65,26 +65,19 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewerProfile: FC<Props> = ({
-    review,
-    edit,
-    setConfirmOpen,
-    follow,
-    unfollow,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const ReviewerProfile: FC<Props> = props => {
+    const classes = useStyles(props.className)
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
     return (
         <Grid container wrap="nowrap" alignItems="center">
             <CardActionArea
                 component={Link}
-                to={`/users/${review.user?.account_id}`}
+                to={`/users/${props.review.user?.account_id}`}
                 className={classes.imgArea}
             >
                 <CardMedia
-                    image={`/user_img/${review.user?.image_name}`}
+                    image={`/user_img/${props.review.user?.image_name}`}
                     className={classes.img}
                 />
             </CardActionArea>
@@ -93,37 +86,37 @@ export const ReviewerProfile: FC<Props> = ({
                     <Typography
                         variant="body1"
                         component={Link}
-                        to={`/users/${review.user?.account_id}`}
+                        to={`/users/${props.review.user?.account_id}`}
                         className={classes.userName}
                     >
-                        {review.user?.name}
+                        {props.review.user?.name}
                     </Typography>
                     <Typography
                         variant="body1"
                         component={Link}
-                        to={`/users/${review.user?.account_id}`}
+                        to={`/users/${props.review.user?.account_id}`}
                         className={classes.userId}
                     >
-                        @{review.user?.account_id}
+                        @{props.review.user?.account_id}
                     </Typography>
                 </Grid>
             </Box>
             {currentUser &&
-                review.user &&
-                review.user.account_id !== currentUser.account_id && (
+                props.review.user &&
+                props.review.user.account_id !== currentUser.account_id && (
                     <FollowButton
                         currentUser={currentUser}
-                        user={review.user}
-                        follow={follow}
-                        unfollow={unfollow}
+                        user={props.review.user}
+                        follow={props.follow}
+                        unfollow={props.unfollow}
                     />
                 )}
             {currentUser &&
-                review.user?.account_id === currentUser.account_id && (
+                props.review.user?.account_id === currentUser.account_id && (
                     <ReviewerMenu
-                        review={review}
-                        edit={edit}
-                        setConfirmOpen={setConfirmOpen}
+                        review={props.review}
+                        edit={props.edit}
+                        setConfirmOpen={props.setConfirmOpen}
                     />
                 )}
         </Grid>

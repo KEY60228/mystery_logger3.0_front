@@ -49,40 +49,7 @@ interface Props {
     unlikeReview: (review: ReviewDetail) => void
 }
 
-export const UserDetail: FC<Props> = ({
-    user,
-    review,
-    openUserForm,
-    setOpenUserForm,
-    name,
-    setName,
-    accountId,
-    setAccountId,
-    profile,
-    setProfile,
-    follow,
-    unfollow,
-    editUser,
-    updateUser,
-    openReviewForm,
-    setOpenReviewForm,
-    editReview,
-    updateReview,
-    deleteReview,
-    rating,
-    setRating,
-    result,
-    setResult,
-    joined_at,
-    setJoined_at,
-    contents,
-    setContents,
-    comment,
-    setComment,
-    postComment,
-    likeReview,
-    unlikeReview,
-}) => {
+export const UserDetail: FC<Props> = props => {
     const [followsOpen, setFollowsOpen] = useState<boolean>(false)
     const [followerOpen, setFollowerOpen] = useState<boolean>(false)
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
@@ -91,25 +58,25 @@ export const UserDetail: FC<Props> = ({
     return (
         <>
             <UserProfile
-                user={user}
-                follow={follow}
-                unfollow={unfollow}
-                edit={editUser}
+                user={props.user}
+                follow={props.follow}
+                unfollow={props.unfollow}
+                edit={props.editUser}
                 setFollowsOpen={setFollowsOpen}
                 setFollowerOpen={setFollowerOpen}
             />
             <UserStatics />
             <UserTabs
-                user={user}
-                follow={follow}
-                unfollow={unfollow}
+                user={props.user}
+                follow={props.follow}
+                unfollow={props.unfollow}
                 setConfirmOpen={setConfirmOpen}
-                editReview={editReview}
-                comment={comment}
-                setComment={setComment}
-                postComment={postComment}
-                likeReview={likeReview}
-                unlikeReview={unlikeReview}
+                editReview={props.editReview}
+                comment={props.comment}
+                setComment={props.setComment}
+                postComment={props.postComment}
+                likeReview={props.likeReview}
+                unlikeReview={props.unlikeReview}
                 commentOpen={commentOpen}
                 setCommentOpen={setCommentOpen}
             />
@@ -118,52 +85,52 @@ export const UserDetail: FC<Props> = ({
                 className={{ height: '320px', margin: '12px auto 60px' }}
             />
             <UserForm
-                user={user}
-                update={updateUser}
-                open={openUserForm}
-                setOpen={setOpenUserForm}
-                name={name}
-                setName={setName}
-                accountId={accountId}
-                setAccountId={setAccountId}
-                profile={profile}
-                setProfile={setProfile}
+                user={props.user}
+                update={props.updateUser}
+                open={props.openUserForm}
+                setOpen={props.setOpenUserForm}
+                name={props.name}
+                setName={props.setName}
+                accountId={props.accountId}
+                setAccountId={props.setAccountId}
+                profile={props.profile}
+                setProfile={props.setProfile}
             />
-            {review && (
+            {props.review && (
                 <ReviewForm
-                    open={openReviewForm}
-                    setOpen={setOpenReviewForm}
-                    rating={rating}
-                    setRating={setRating}
-                    result={result}
-                    setResult={setResult}
-                    joined_at={joined_at}
-                    setJoined_at={setJoined_at}
-                    contents={contents}
-                    setContents={setContents}
-                    update={updateReview}
+                    open={props.openReviewForm}
+                    setOpen={props.setOpenReviewForm}
+                    rating={props.rating}
+                    setRating={props.setRating}
+                    result={props.result}
+                    setResult={props.setResult}
+                    joined_at={props.joined_at}
+                    setJoined_at={props.setJoined_at}
+                    contents={props.contents}
+                    setContents={props.setContents}
+                    update={props.updateReview}
                     isNew={false}
-                    product={review.product}
+                    product={props.review.product}
                 />
             )}
             <FollowList
-                follows={user.follows}
+                follows={props.user.follows}
                 label="フォローしている人"
                 open={followsOpen}
                 setOpen={setFollowsOpen}
-                follow={follow}
-                unfollow={unfollow}
+                follow={props.follow}
+                unfollow={props.unfollow}
             />
             <FollowList
-                follows={user.followers}
+                follows={props.user.followers}
                 label="フォローされている人"
                 open={followerOpen}
                 setOpen={setFollowerOpen}
-                follow={follow}
-                unfollow={unfollow}
+                follow={props.follow}
+                unfollow={props.unfollow}
             />
             <ConfirmDeleteReview
-                deleteReview={deleteReview}
+                deleteReview={props.deleteReview}
                 confirmOpen={confirmOpen}
                 setConfirmOpen={setConfirmOpen}
             />

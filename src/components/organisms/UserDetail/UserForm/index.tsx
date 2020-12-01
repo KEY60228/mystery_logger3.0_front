@@ -63,20 +63,8 @@ const Transition = forwardRef(
     },
 )
 
-export const UserForm: FC<Props> = ({
-    user,
-    update,
-    open,
-    setOpen,
-    name,
-    setName,
-    accountId,
-    setAccountId,
-    profile,
-    setProfile,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const UserForm: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     const [preview, setPreview] = useState<any>(null)
 
@@ -110,11 +98,15 @@ export const UserForm: FC<Props> = ({
     return (
         <Dialog
             fullScreen
-            open={open}
-            onClose={() => setOpen(false)}
+            open={props.open}
+            onClose={() => props.setOpen(false)}
             TransitionComponent={Transition}
         >
-            <UserFormHeader user={user} setOpen={setOpen} update={update} />
+            <UserFormHeader
+                user={props.user}
+                setOpen={props.setOpen}
+                update={props.update}
+            />
             <Card className={classes.root}>
                 <Grid container direction="column" alignItems="center">
                     {preview && (
@@ -122,7 +114,7 @@ export const UserForm: FC<Props> = ({
                     )}
                     {!preview && (
                         <CardMedia
-                            image={`/user_img/${user.image_name}`}
+                            image={`/user_img/${props.user.image_name}`}
                             className={classes.media}
                         />
                     )}
@@ -133,23 +125,23 @@ export const UserForm: FC<Props> = ({
                         <InputLabel htmlFor="Name">Name</InputLabel>
                         <Input
                             id="Name"
-                            value={name}
-                            onChange={ev => setName(ev.target.value)}
+                            value={props.name}
+                            onChange={ev => props.setName(ev.target.value)}
                         />
                     </FormControl>
                     <FormControl className={classes.form}>
                         <InputLabel htmlFor="AccountId">Account ID</InputLabel>
                         <Input
                             id="AccountId"
-                            value={accountId}
-                            onChange={ev => setAccountId(ev.target.value)}
+                            value={props.accountId}
+                            onChange={ev => props.setAccountId(ev.target.value)}
                         />
                     </FormControl>
                     <FormControl className={classes.form}>
                         <TextField
                             multiline
-                            onChange={ev => setProfile(ev.target.value)}
-                            value={profile}
+                            onChange={ev => props.setProfile(ev.target.value)}
+                            value={props.profile}
                             fullWidth
                             variant="outlined"
                             rows={12}

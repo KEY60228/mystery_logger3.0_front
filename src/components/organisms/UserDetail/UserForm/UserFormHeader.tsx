@@ -32,13 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserFormHeader: FC<Props> = ({
-    user,
-    update,
-    setOpen,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const UserFormHeader: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <AppBar color="primary" position="static">
@@ -49,11 +44,14 @@ export const UserFormHeader: FC<Props> = ({
                     alignItems="center"
                     wrap="nowrap"
                 >
-                    <IconButton color="inherit" onClick={() => setOpen(false)}>
+                    <IconButton
+                        color="inherit"
+                        onClick={() => props.setOpen(false)}
+                    >
                         <CloseIcon />
                     </IconButton>
                     <Typography variant="h6">ユーザー情報編集</Typography>
-                    <Button color="inherit" onClick={update}>
+                    <Button color="inherit" onClick={props.update}>
                         更新
                     </Button>
                 </Grid>

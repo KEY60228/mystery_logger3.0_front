@@ -24,31 +24,24 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const Buttons: FC<Props> = ({
-    product,
-    currentUser,
-    setModalOpen,
-    setIsNew,
-    edit,
-    wanna,
-    unwanna,
-}) => {
+export const Buttons: FC<Props> = props => {
     const classes = useStyles()
 
     const onClickDone = () => {
-        if (!currentUser) return false // 仮
-        setIsNew(true)
-        setModalOpen(true)
+        if (!props.currentUser) return false // 仮
+        props.setIsNew(true)
+        props.setModalOpen(true)
     }
 
     const onClickEdit = () => {
-        if (!currentUser) return false // 仮
-        edit()
+        if (!props.currentUser) return false // 仮
+        props.edit()
     }
 
     return (
         <Grid container direction="row" justify="center" alignItems="center">
-            {(!currentUser || !currentUser.done_id.includes(product.id)) && (
+            {(!props.currentUser ||
+                !props.currentUser.done_id.includes(props.product.id)) && (
                 <Button
                     variant="contained"
                     color="primary"
@@ -63,36 +56,38 @@ export const Buttons: FC<Props> = ({
                     >
                         <DirectionsRunIcon />
                         <Typography variant="caption">
-                            {product.reviews_count}
+                            {props.product.reviews_count}
                         </Typography>
                     </Grid>
                 </Button>
             )}
-            {currentUser && currentUser.done_id.includes(product.id) && (
-                <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={onClickEdit}
-                    className={classes.button}
-                >
-                    <Grid
-                        container
-                        direction="column"
-                        justify="center"
-                        alignItems="center"
+            {props.currentUser &&
+                props.currentUser.done_id.includes(props.product.id) && (
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={onClickEdit}
+                        className={classes.button}
                     >
-                        <DirectionsRunIcon />
-                        <Typography variant="caption">
-                            {product.reviews_count}
-                        </Typography>
-                    </Grid>
-                </Button>
-            )}
-            {(!currentUser || !currentUser.wanna_id.includes(product.id)) && (
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <DirectionsRunIcon />
+                            <Typography variant="caption">
+                                {props.product.reviews_count}
+                            </Typography>
+                        </Grid>
+                    </Button>
+                )}
+            {(!props.currentUser ||
+                !props.currentUser.wanna_id.includes(props.product.id)) && (
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => wanna(product)}
+                    onClick={() => props.wanna(props.product)}
                     className={classes.button}
                 >
                     <Grid
@@ -103,31 +98,32 @@ export const Buttons: FC<Props> = ({
                     >
                         <QueueIcon />
                         <Typography variant="caption">
-                            {product.wannas_count}
+                            {props.product.wannas_count}
                         </Typography>
                     </Grid>
                 </Button>
             )}
-            {currentUser && currentUser.wanna_id.includes(product.id) && (
-                <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => unwanna(product)}
-                    className={classes.button}
-                >
-                    <Grid
-                        container
-                        direction="column"
-                        justify="center"
-                        alignItems="center"
+            {props.currentUser &&
+                props.currentUser.wanna_id.includes(props.product.id) && (
+                    <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => props.unwanna(props.product)}
+                        className={classes.button}
                     >
-                        <QueueIcon />
-                        <Typography variant="caption">
-                            {product.wannas_count}
-                        </Typography>
-                    </Grid>
-                </Button>
-            )}
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <QueueIcon />
+                            <Typography variant="caption">
+                                {props.product.wannas_count}
+                            </Typography>
+                        </Grid>
+                    </Button>
+                )}
         </Grid>
     )
 }

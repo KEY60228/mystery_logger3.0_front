@@ -44,15 +44,18 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductCardM: FC<Props> = ({ product }) => {
+export const ProductCardM: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <Card className={classes.root}>
-            <CardActionArea component={Link} to={`/products/${product.id}`}>
+            <CardActionArea
+                component={Link}
+                to={`/products/${props.product.id}`}
+            >
                 <Grid container wrap="nowrap" alignItems="center">
                     <CardMedia
-                        image={`/product_img/${product.image_name}`}
+                        image={`/product_img/${props.product.image_name}`}
                         className={classes.img}
                     />
                     <Grid
@@ -61,14 +64,14 @@ export const ProductCardM: FC<Props> = ({ product }) => {
                         justify="center"
                         className={classes.profile}
                     >
-                        <Typography>{product.name}</Typography>
+                        <Typography>{props.product.name}</Typography>
                         <Box className={classes.box}>
                             <Typography className={classes.text}>
-                                制作会社: {product.organizer.name}
+                                制作会社: {props.product.organizer.name}
                             </Typography>
                             <Typography className={classes.text}>
                                 開催場所:{' '}
-                                {product.performances.map(
+                                {props.product.performances.map(
                                     (performance: PerformanceWithVenue) => (
                                         <span key={performance.id}>
                                             {performance.venue.name}
@@ -77,11 +80,11 @@ export const ProductCardM: FC<Props> = ({ product }) => {
                                 )}
                             </Typography>
                             <Typography className={classes.text}>
-                                カテゴリ: {product.category.name}
+                                カテゴリ: {props.product.category.name}
                             </Typography>
                         </Box>
                         <Ratings
-                            number={product.avg_rating || 0}
+                            number={props.product.avg_rating || 0}
                             justify="flex-start"
                             size="small"
                             className={{ marginLeft: '4px' }}

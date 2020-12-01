@@ -27,15 +27,17 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const LinedProducts: FC<Props> = ({ products, subtitle }) => {
+export const LinedProducts: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <>
-            <Typography className={classes.subtitle}>{subtitle}</Typography>
+            <Typography className={classes.subtitle}>
+                {props.subtitle}
+            </Typography>
             <Box className={classes.outerBox}>
                 <Box className={classes.innerBox}>
-                    {products.map((product: Product) => (
+                    {props.products.map((product: Product) => (
                         <ProductCardS
                             key={product.id}
                             product={product}

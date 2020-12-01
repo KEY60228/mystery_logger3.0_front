@@ -75,24 +75,8 @@ const Transition = forwardRef(
     },
 )
 
-export const ReviewForm: FC<Props> = ({
-    open,
-    setOpen,
-    rating,
-    setRating,
-    result,
-    setResult,
-    joined_at,
-    setJoined_at,
-    contents,
-    setContents,
-    post,
-    update,
-    isNew,
-    product,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const ReviewForm: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     const resultSelect: {
         id: number
@@ -106,21 +90,21 @@ export const ReviewForm: FC<Props> = ({
     return (
         <Dialog
             fullScreen
-            open={open}
-            onClose={() => setOpen(false)}
+            open={props.open}
+            onClose={() => props.setOpen(false)}
             TransitionComponent={Transition}
         >
             <ReviewHeader
-                setOpen={setOpen}
-                post={post}
-                update={update}
-                isNew={isNew}
-                product={product}
+                setOpen={props.setOpen}
+                post={props.post}
+                update={props.update}
+                isNew={props.isNew}
+                product={props.product}
             />
             <Card className={classes.card}>
                 <Grid container justify="center" wrap="nowrap">
                     <CardMedia
-                        image={`/product_img/${product.image_name}`}
+                        image={`/product_img/${props.product.image_name}`}
                         className={classes.img}
                     />
                     <Grid
@@ -130,20 +114,20 @@ export const ReviewForm: FC<Props> = ({
                         alignItems="center"
                     >
                         <SlideRatings
-                            rating={rating}
-                            setRating={setRating}
+                            rating={props.rating}
+                            setRating={props.setRating}
                             className={{ marginLeft: '20px', fontSize: '16px' }}
                         />
                         <FormControl>
                             <SelectForm
-                                value={result}
-                                setValue={setResult}
+                                value={props.result}
+                                setValue={props.setResult}
                                 choices={resultSelect}
                                 className={{ width: '180px', margin: '0px' }}
                             />
                             <Calender
-                                date={joined_at}
-                                setDate={setJoined_at}
+                                date={props.joined_at}
+                                setDate={props.setJoined_at}
                                 className={{ width: '180px' }}
                             />
                         </FormControl>
@@ -158,8 +142,10 @@ export const ReviewForm: FC<Props> = ({
                     </Grid>
                     <TextField
                         multiline
-                        onChange={ev => setContents(ev.currentTarget.value)}
-                        value={contents}
+                        onChange={ev =>
+                            props.setContents(ev.currentTarget.value)
+                        }
+                        value={props.contents}
                         fullWidth
                         variant="outlined"
                         rows={12}

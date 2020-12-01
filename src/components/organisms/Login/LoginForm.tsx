@@ -30,13 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const LoginForm: FC<Props> = ({
-    email,
-    setEmail,
-    password,
-    setPassword,
-    login,
-}) => {
+export const LoginForm: FC<Props> = props => {
     const classes = useStyles()
 
     return (
@@ -56,15 +50,19 @@ export const LoginForm: FC<Props> = ({
                     justify="center"
                     alignItems="center"
                 >
-                    <Form label="Email" value={email} setValue={setEmail} />
+                    <Form
+                        label="Email"
+                        value={props.email}
+                        setValue={props.setEmail}
+                    />
                     <PasswordForm
-                        password={password}
-                        setPassword={setPassword}
+                        password={props.password}
+                        setPassword={props.setPassword}
                     />
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={login}
+                        onClick={props.login}
                         className={classes.button}
                     >
                         Submit

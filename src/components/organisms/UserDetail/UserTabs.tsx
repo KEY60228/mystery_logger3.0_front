@@ -61,22 +61,8 @@ const TabPanel: FC<TabPanelProps> = ({ children, index, value }) => {
     )
 }
 
-export const UserTabs: FC<Props> = ({
-    user,
-    follow,
-    unfollow,
-    setConfirmOpen,
-    editReview,
-    comment,
-    setComment,
-    postComment,
-    likeReview,
-    unlikeReview,
-    commentOpen,
-    setCommentOpen,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const UserTabs: FC<Props> = props => {
+    const classes = useStyles(props.className)
     const [value, setValue] = useState<number>(0)
 
     return (
@@ -86,23 +72,27 @@ export const UserTabs: FC<Props> = ({
                     value={value}
                     onChange={(ev, newValue) => setValue(newValue)}
                 >
-                    <Tab label={`行った公演 ${user.reviews_count || 0}`} />
-                    <Tab label={`行きたい公演 ${user.wannas_count || 0}`} />
+                    <Tab
+                        label={`行った公演 ${props.user.reviews_count || 0}`}
+                    />
+                    <Tab
+                        label={`行きたい公演 ${props.user.wannas_count || 0}`}
+                    />
                     <Tab
                         label={`LIKEした投稿 ${
-                            user.like_reviews_id.length || 0
+                            props.user.like_reviews_id.length || 0
                         }`}
                     />
                 </Tabs>
             </Grid>
             <TabPanel value={value} index={0}>
-                {user.reviews_count !== 0 && user.reviews && (
+                {props.user.reviews_count !== 0 && props.user.reviews && (
                     <Grid
                         container
                         justify="space-between"
                         className={classes.list}
                     >
-                        {user.reviews.map((review: ReviewWithProduct) => (
+                        {props.user.reviews.map((review: ReviewWithProduct) => (
                             <ProductCardS
                                 key={review.product.id}
                                 product={review.product}
@@ -110,18 +100,18 @@ export const UserTabs: FC<Props> = ({
                         ))}
                     </Grid>
                 )}
-                {user.reviews_count === 0 && (
+                {props.user.reviews_count === 0 && (
                     <Typography>まだ行った公演はありません</Typography>
                 )}
             </TabPanel>
             <TabPanel value={value} index={1}>
-                {user.wannas_count !== 0 && user.wannas && (
+                {props.user.wannas_count !== 0 && props.user.wannas && (
                     <Grid
                         container
                         justify="space-between"
                         className={classes.list}
                     >
-                        {user.wannas.map((wanna: WannaWithProduct) => (
+                        {props.user.wannas.map((wanna: WannaWithProduct) => (
                             <ProductCardS
                                 key={wanna.product.id}
                                 product={wanna.product}
@@ -129,14 +119,14 @@ export const UserTabs: FC<Props> = ({
                         ))}
                     </Grid>
                 )}
-                {user.wannas_count === 0 && (
+                {props.user.wannas_count === 0 && (
                     <Typography>まだ行きたい公演はありません</Typography>
                 )}
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {user.review_likes && (
+                {props.user.review_likes && (
                     <Box>
-                        {user.review_likes.map(
+                        {props.user.review_likes.map(
                             (like_review: ReviewLikeDetail) => (
                                 <ReviewCard
                                     key={like_review.review.id}
@@ -145,23 +135,23 @@ export const UserTabs: FC<Props> = ({
                                     cardActionArea
                                     productTitle
                                     productCard
-                                    edit={editReview}
-                                    setConfirmOpen={setConfirmOpen}
-                                    follow={follow}
-                                    unfollow={unfollow}
-                                    comment={comment}
-                                    setComment={setComment}
-                                    postComment={postComment}
-                                    likeReview={likeReview}
-                                    unlikeReview={unlikeReview}
-                                    open={commentOpen}
-                                    setOpen={setCommentOpen}
+                                    edit={props.editReview}
+                                    setConfirmOpen={props.setConfirmOpen}
+                                    follow={props.follow}
+                                    unfollow={props.unfollow}
+                                    comment={props.comment}
+                                    setComment={props.setComment}
+                                    postComment={props.postComment}
+                                    likeReview={props.likeReview}
+                                    unlikeReview={props.unlikeReview}
+                                    open={props.commentOpen}
+                                    setOpen={props.setCommentOpen}
                                 />
                             ),
                         )}
                     </Box>
                 )}
-                {!user.review_likes && (
+                {!props.user.review_likes && (
                     <Typography>まだLIKEした投稿はありません</Typography>
                 )}
             </TabPanel>

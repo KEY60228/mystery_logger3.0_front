@@ -31,55 +31,49 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewContents: FC<Props> = ({
-    review,
-    productCard,
-    productTitle,
-    cardActionArea,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const ReviewContents: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <>
-            {!productCard && (
+            {!props.productCard && (
                 <Box>
-                    {cardActionArea && (
+                    {props.cardActionArea && (
                         <WithoutProductCardWithActionArea
-                            review={review}
-                            productTitle={productTitle}
-                            className={className}
+                            review={props.review}
+                            productTitle={props.productTitle}
+                            className={props.className}
                         />
                     )}
-                    {!cardActionArea && (
+                    {!props.cardActionArea && (
                         <WithoutProductCardWithoutActionArea
-                            review={review}
-                            productTitle={productTitle}
+                            review={props.review}
+                            productTitle={props.productTitle}
                         />
                     )}
                 </Box>
             )}
-            {productCard && review.product && (
+            {props.productCard && props.review.product && (
                 <Grid
                     container
                     justify="space-between"
                     alignItems="flex-start"
                     wrap="nowrap"
                 >
-                    {cardActionArea && (
+                    {props.cardActionArea && (
                         <WithProductCardWithActionArea
-                            review={review}
-                            productTitle={productTitle}
-                            className={className}
+                            review={props.review}
+                            productTitle={props.productTitle}
+                            className={props.className}
                         />
                     )}
-                    {!cardActionArea && (
+                    {!props.cardActionArea && (
                         <WithProductCardWithoutActionArea
-                            review={review}
-                            productTitle={productTitle}
+                            review={props.review}
+                            productTitle={props.productTitle}
                         />
                     )}
-                    <ProductCardS product={review.product} />
+                    <ProductCardS product={props.review.product} />
                 </Grid>
             )}
         </>

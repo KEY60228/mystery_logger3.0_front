@@ -65,115 +65,98 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewCard: FC<Props> = ({
-    review,
-    reviewerProfile,
-    cardActionArea,
-    productTitle,
-    productCard,
-    shorten,
-    edit,
-    setConfirmOpen,
-    follow,
-    unfollow,
-    comment,
-    setComment,
-    postComment,
-    likeReview,
-    unlikeReview,
-    open,
-    setOpen,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const ReviewCard: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
     const localPostComment = () => {
-        postComment(review)
-        setOpen(false)
-        setComment('')
+        props.postComment(props.review)
+        props.setOpen(false)
+        props.setComment('')
     }
 
     const localLikeReview = () => {
-        likeReview(review)
+        props.likeReview(props.review)
     }
 
     const localUnlikeReview = () => {
-        unlikeReview(review)
+        props.unlikeReview(props.review)
     }
 
     return (
         <Card className={classes.root}>
-            {reviewerProfile && review.user && (
+            {props.reviewerProfile && props.review.user && (
                 <ReviewerProfile
-                    review={review}
-                    setConfirmOpen={setConfirmOpen}
-                    edit={edit}
-                    follow={follow}
-                    unfollow={unfollow}
+                    review={props.review}
+                    setConfirmOpen={props.setConfirmOpen}
+                    edit={props.edit}
+                    follow={props.follow}
+                    unfollow={props.unfollow}
                 />
             )}
             <ReviewContents
-                review={review}
-                productCard={productCard}
-                productTitle={productTitle}
-                cardActionArea={cardActionArea}
-                className={productCard ? { minHeight: '200px' } : {}}
+                review={props.review}
+                productCard={props.productCard}
+                productTitle={props.productTitle}
+                cardActionArea={props.cardActionArea}
+                className={props.productCard ? { minHeight: '200px' } : {}}
             />
             <Grid container justify="space-around" className={classes.icons}>
                 <IconButton
                     size="small"
                     onClick={() =>
-                        open === review.id ? setOpen(false) : setOpen(review.id)
+                        props.open === props.review.id
+                            ? props.setOpen(false)
+                            : props.setOpen(props.review.id)
                     }
                 >
                     <ChatBubbleIcon color="action" fontSize="small" />
-                    {review.comments_count !== 0 && (
+                    {props.review.comments_count !== 0 && (
                         <Typography
                             variant="button"
                             className={classes.iconText}
                         >
-                            {review.comments_count}
+                            {props.review.comments_count}
                         </Typography>
                     )}
                 </IconButton>
                 {currentUser &&
-                    currentUser.like_reviews_id.includes(review.id) && (
+                    currentUser.like_reviews_id.includes(props.review.id) && (
                         <IconButton size="small" onClick={localUnlikeReview}>
                             <FavoriteIcon color="error" fontSize="small" />
-                            {review.review_likes_count !== 0 && (
+                            {props.review.review_likes_count !== 0 && (
                                 <Typography
                                     variant="button"
                                     className={classes.iconText}
                                 >
-                                    {review.review_likes_count}
+                                    {props.review.review_likes_count}
                                 </Typography>
                             )}
                         </IconButton>
                     )}
                 {(!currentUser ||
-                    !currentUser.like_reviews_id.includes(review.id)) && (
+                    !currentUser.like_reviews_id.includes(props.review.id)) && (
                     <IconButton size="small" onClick={localLikeReview}>
                         <FavoriteIcon color="action" fontSize="small" />
-                        {review.review_likes_count !== 0 && (
+                        {props.review.review_likes_count !== 0 && (
                             <Typography
                                 variant="button"
                                 className={classes.iconText}
                             >
-                                {review.review_likes_count}
+                                {props.review.review_likes_count}
                             </Typography>
                         )}
                     </IconButton>
                 )}
                 <IconButton size="small">
                     <RepeatIcon color="disabled" fontSize="small" />
-                    {review.retweet_count !== 0 && (
+                    {props.review.retweet_count !== 0 && (
                         <Typography
                             variant="button"
                             className={classes.iconText}
                         >
-                            {review.retweet_count}
+                            {props.review.retweet_count}
                         </Typography>
                     )}
                 </IconButton>
@@ -181,7 +164,7 @@ export const ReviewCard: FC<Props> = ({
                     <ShareIcon color="action" fontSize="small" />
                 </IconButton>
             </Grid>
-            {open === review.id && (
+            {props.open === props.review.id && (
                 <>
                     <TextField
                         fullWidth
@@ -190,8 +173,10 @@ export const ReviewCard: FC<Props> = ({
                         placeholder="Comment"
                         rows={4}
                         margin="dense"
-                        value={comment}
-                        onChange={ev => setComment(ev.currentTarget.value)}
+                        value={props.comment}
+                        onChange={ev =>
+                            props.setComment(ev.currentTarget.value)
+                        }
                     />
                     <Grid container justify="flex-end">
                         <Button

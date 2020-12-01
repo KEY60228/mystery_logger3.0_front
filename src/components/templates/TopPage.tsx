@@ -8,7 +8,7 @@ interface Props {
     products: Product[]
 }
 
-export const TopPage: FC<Props> = ({ products }) => {
+export const TopPage: FC<Props> = props => {
     // 名前でソート
     const sortProductsByName = (products: Product[]) => {
         return products
@@ -63,15 +63,15 @@ export const TopPage: FC<Props> = ({ products }) => {
         <>
             <TempSpace text="Banner Space" />
             <LinedProducts
-                products={sortProductsByReviewsCount(products)}
+                products={sortProductsByReviewsCount(props.products)}
                 subtitle="投稿数の多い作品"
             />
             <LinedProducts
-                products={sortProductsByAvgRatings(products)}
+                products={sortProductsByAvgRatings(props.products)}
                 subtitle="評価の高い作品"
             />
             <LinedProducts
-                products={sortProductsBySuccessRates(products)}
+                products={sortProductsBySuccessRates(props.products)}
                 subtitle="成功率の高い作品"
             />
             <TempSpace

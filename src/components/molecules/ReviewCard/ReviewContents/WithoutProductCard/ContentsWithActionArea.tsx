@@ -39,13 +39,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ContentsWithActionArea: FC<Props> = ({ review, productTitle }) => {
+export const ContentsWithActionArea: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <CardActionArea
             component={Link}
-            to={`/reviews/${review.id}`}
+            to={`/reviews/${props.review.id}`}
             className={classes.root}
         >
             <Grid
@@ -56,22 +56,22 @@ export const ContentsWithActionArea: FC<Props> = ({ review, productTitle }) => {
             >
                 <Grid container direction="column">
                     <Typography variant="caption" className={classes.created}>
-                        {review.created_at}
+                        {props.review.created_at}
                     </Typography>
-                    {productTitle && review.product && (
-                        <Typography>{review.product.name}</Typography>
+                    {props.productTitle && props.review.product && (
+                        <Typography>{props.review.product.name}</Typography>
                     )}
                     <Ratings
-                        number={review.rating || 0}
+                        number={props.review.rating || 0}
                         size="small"
                         justify="flex-start"
                         className={{ marginLeft: '4px' }}
                     />
                     <Grid container>
                         <Typography variant="body2" className={classes.remarks}>
-                            参加日: {review.joined_at || '-'}{' '}
+                            参加日: {props.review.joined_at || '-'}{' '}
                         </Typography>
-                        {review.result === 1 && (
+                        {props.review.result === 1 && (
                             <Typography
                                 variant="body2"
                                 className={classes.remarks}
@@ -79,7 +79,7 @@ export const ContentsWithActionArea: FC<Props> = ({ review, productTitle }) => {
                                 脱出成功！
                             </Typography>
                         )}
-                        {review.result === 2 && (
+                        {props.review.result === 2 && (
                             <Typography
                                 variant="body2"
                                 className={classes.remarks}
@@ -88,7 +88,9 @@ export const ContentsWithActionArea: FC<Props> = ({ review, productTitle }) => {
                             </Typography>
                         )}
                     </Grid>
-                    <Typography variant="body2">{review.contents}</Typography>
+                    <Typography variant="body2">
+                        {props.review.contents}
+                    </Typography>
                 </Grid>
                 <NavigateNextIcon />
             </Grid>

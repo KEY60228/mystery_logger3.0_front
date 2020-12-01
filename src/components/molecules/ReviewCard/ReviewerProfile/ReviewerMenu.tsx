@@ -29,28 +29,23 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewerMenu: FC<Props> = ({
-    review,
-    edit,
-    setConfirmOpen,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const ReviewerMenu: FC<Props> = props => {
+    const classes = useStyles(props.className)
     const dispatch = useDispatch()
     const [menu, setMenu] = useState<null | HTMLElement>(null)
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        dispatch(setFocusedReview(review))
+        dispatch(setFocusedReview(props.review))
         setMenu(event.currentTarget)
     }
 
     const editReview = () => {
-        edit()
+        props.edit()
         setMenu(null)
     }
 
     const deleteReview = () => {
-        setConfirmOpen(true)
+        props.setConfirmOpen(true)
         setMenu(null)
     }
 

@@ -32,36 +32,13 @@ interface Props {
     unlikeReview: (review: ReviewDetail) => void
 }
 
-export const Timeline: FC<Props> = ({
-    reviews,
-    review,
-    open,
-    setOpen,
-    rating,
-    setRating,
-    result,
-    setResult,
-    joined_at,
-    setJoined_at,
-    contents,
-    setContents,
-    edit,
-    update,
-    follow,
-    unfollow,
-    deleteReview,
-    comment,
-    setComment,
-    postComment,
-    likeReview,
-    unlikeReview,
-}) => {
+export const Timeline: FC<Props> = props => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [openComment, setOpenComment] = useState<number | false>(false)
 
     return (
         <>
-            {reviews.map((review: ReviewDetail) => (
+            {props.reviews.map((review: ReviewDetail) => (
                 <ReviewCard
                     key={review.id}
                     review={review}
@@ -69,44 +46,44 @@ export const Timeline: FC<Props> = ({
                     cardActionArea
                     productTitle
                     productCard
-                    edit={edit}
-                    follow={follow}
-                    unfollow={unfollow}
+                    edit={props.edit}
+                    follow={props.follow}
+                    unfollow={props.unfollow}
                     setConfirmOpen={setConfirmOpen}
-                    comment={comment}
-                    setComment={setComment}
-                    postComment={postComment}
-                    likeReview={likeReview}
-                    unlikeReview={unlikeReview}
+                    comment={props.comment}
+                    setComment={props.setComment}
+                    postComment={props.postComment}
+                    likeReview={props.likeReview}
+                    unlikeReview={props.unlikeReview}
                     open={openComment}
                     setOpen={setOpenComment}
                     className={{ margin: '8px' }}
                 />
             ))}
-            {!reviews.length && <Card>まだ投稿はありません</Card>}
+            {!props.reviews.length && <Card>まだ投稿はありません</Card>}
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}
             />
-            {review && (
+            {props.review && (
                 <ReviewForm
-                    open={open}
-                    setOpen={setOpen}
-                    rating={rating}
-                    setRating={setRating}
-                    result={result}
-                    setResult={setResult}
-                    joined_at={joined_at}
-                    setJoined_at={setJoined_at}
-                    contents={contents}
-                    setContents={setContents}
-                    update={update}
+                    open={props.open}
+                    setOpen={props.setOpen}
+                    rating={props.rating}
+                    setRating={props.setRating}
+                    result={props.result}
+                    setResult={props.setResult}
+                    joined_at={props.joined_at}
+                    setJoined_at={props.setJoined_at}
+                    contents={props.contents}
+                    setContents={props.setContents}
+                    update={props.update}
                     isNew={false}
-                    product={review.product}
+                    product={props.review.product}
                 />
             )}
             <ConfirmDeleteReview
-                deleteReview={deleteReview}
+                deleteReview={props.deleteReview}
                 confirmOpen={confirmOpen}
                 setConfirmOpen={setConfirmOpen}
             />

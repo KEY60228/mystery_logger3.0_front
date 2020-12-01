@@ -46,27 +46,22 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const FollowCard: FC<Props> = ({
-    followUser,
-    follow,
-    unfollow,
-    setOpen,
-}) => {
+export const FollowCard: FC<Props> = props => {
     const classes = useStyles()
     const history = useHistory()
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
     const onClick = () => {
-        history.push(`/users/${followUser.account_id}`)
-        setOpen(false)
+        history.push(`/users/${props.followUser.account_id}`)
+        props.setOpen(false)
     }
 
     return (
         <Card className={classes.root}>
             <Grid container wrap="nowrap">
                 <CardMedia
-                    image={`/user_img/${followUser.image_name}`}
+                    image={`/user_img/${props.followUser.image_name}`}
                     onClick={onClick}
                     className={classes.media}
                 />
@@ -87,28 +82,28 @@ export const FollowCard: FC<Props> = ({
                                 variant="subtitle1"
                                 className={classes.userName}
                             >
-                                {followUser.name}
+                                {props.followUser.name}
                             </Typography>
                             <Typography
                                 variant="body1"
                                 className={classes.userId}
                             >
-                                @{followUser.account_id}
+                                @{props.followUser.account_id}
                             </Typography>
                         </Grid>
                         {currentUser &&
-                            followUser.account_id !==
+                            props.followUser.account_id !==
                                 currentUser?.account_id && (
                                 <FollowButton
                                     currentUser={currentUser}
-                                    user={followUser}
-                                    follow={follow}
-                                    unfollow={unfollow}
+                                    user={props.followUser}
+                                    follow={props.follow}
+                                    unfollow={props.unfollow}
                                 />
                             )}
                     </Grid>
                     <Typography variant="body1" className={classes.profile}>
-                        {followUser.profile}
+                        {props.followUser.profile}
                     </Typography>
                 </Grid>
             </Grid>

@@ -33,19 +33,22 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductCardS: FC<Props> = ({ product, className }) => {
-    const classes = useStyles(className)
+export const ProductCardS: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <Card className={classes.root}>
-            <CardActionArea component={Link} to={`/products/${product.id}`}>
+            <CardActionArea
+                component={Link}
+                to={`/products/${props.product.id}`}
+            >
                 <CardMedia
                     className={classes.media}
-                    image={`/product_img/${product.image_name}`}
+                    image={`/product_img/${props.product.image_name}`}
                 />
                 <ProductCounters
-                    product={product}
-                    className={{ width: className?.rootWidth }}
+                    product={props.product}
+                    className={{ width: props.className?.rootWidth }}
                 />
             </CardActionArea>
         </Card>

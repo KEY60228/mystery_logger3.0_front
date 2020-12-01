@@ -28,24 +28,26 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const Ratings: FC<Props> = ({ number, size, justify, className }) => {
-    const classes = useStyles(className)
+export const Ratings: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <Grid
             container
-            justify={justify || 'center'}
+            justify={props.justify || 'center'}
             alignItems="center"
             className={classes.root}
         >
             <Rating
-                value={number == 0 ? 0 : parseFloat(number.toFixed(1))}
+                value={
+                    props.number == 0 ? 0 : parseFloat(props.number.toFixed(1))
+                }
                 precision={0.1}
                 readOnly
-                size={size}
+                size={props.size}
             />
             <Typography variant="caption" className={classes.text}>
-                {number == 0 ? '-' : number.toFixed(1)}
+                {props.number == 0 ? '-' : props.number.toFixed(1)}
             </Typography>
         </Grid>
     )

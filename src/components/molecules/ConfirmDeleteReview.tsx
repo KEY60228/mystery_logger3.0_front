@@ -35,26 +35,21 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />
 })
 
-export const ConfirmDeleteReview: FC<Props> = ({
-    deleteReview,
-    confirmOpen,
-    setConfirmOpen,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const ConfirmDeleteReview: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     const confirmDelete = () => {
-        deleteReview()
-        setConfirmOpen(false)
+        props.deleteReview()
+        props.setConfirmOpen(false)
     }
 
     const cancelDelete = () => {
-        setConfirmOpen(false)
+        props.setConfirmOpen(false)
     }
 
     return (
         <Dialog
-            open={confirmOpen}
+            open={props.confirmOpen}
             TransitionComponent={Transition}
             keepMounted
             onClose={cancelDelete}

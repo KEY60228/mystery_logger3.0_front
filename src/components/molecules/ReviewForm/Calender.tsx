@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const Calender: FC<Props> = ({ date, setDate, className }) => {
-    const classes = useStyles(className)
+export const Calender: FC<Props> = props => {
+    const classes = useStyles(props.className)
     const handleDateChange = (newDate: Date | null) => {
         const joined = newDate?.toString() || null
-        setDate(joined)
+        props.setDate(joined)
     }
 
     return (
@@ -40,7 +40,7 @@ export const Calender: FC<Props> = ({ date, setDate, className }) => {
                 margin="normal"
                 id="joined-date"
                 label="Joined Date"
-                value={date ? new Date(date) : null}
+                value={props.date ? new Date(props.date) : null}
                 onChange={handleDateChange}
                 className={classes.root}
             />

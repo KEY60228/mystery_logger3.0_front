@@ -42,60 +42,32 @@ interface Props {
     unlikeReview: (review: ReviewDetail) => void
 }
 
-export const ProductDetail: FC<Props> = ({
-    currentUser,
-    product,
-    isNew,
-    setIsNew,
-    open,
-    setOpen,
-    rating,
-    setRating,
-    result,
-    setResult,
-    joined_at,
-    setJoined_at,
-    contents,
-    setContents,
-    edit,
-    post,
-    update,
-    deleteReview,
-    follow,
-    unfollow,
-    wanna,
-    unwanna,
-    comment,
-    setComment,
-    postComment,
-    likeReview,
-    unlikeReview,
-}) => {
+export const ProductDetail: FC<Props> = props => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
     return (
         <>
             <ProductContents
-                product={product}
-                currentUser={currentUser}
-                setModalOpen={setOpen}
-                setIsNew={setIsNew}
-                edit={edit}
-                wanna={wanna}
-                unwanna={unwanna}
+                product={props.product}
+                currentUser={props.currentUser}
+                setModalOpen={props.setOpen}
+                setIsNew={props.setIsNew}
+                edit={props.edit}
+                wanna={props.wanna}
+                unwanna={props.unwanna}
             />
             <ProductReviews
-                product={product}
-                edit={edit}
+                product={props.product}
+                edit={props.edit}
                 setConfirmOpen={setConfirmOpen}
-                follow={follow}
-                unfollow={unfollow}
-                comment={comment}
-                setComment={setComment}
-                postComment={postComment}
-                likeReview={likeReview}
-                unlikeReview={unlikeReview}
+                follow={props.follow}
+                unfollow={props.unfollow}
+                comment={props.comment}
+                setComment={props.setComment}
+                postComment={props.postComment}
+                likeReview={props.likeReview}
+                unlikeReview={props.unlikeReview}
                 commentOpen={commentOpen}
                 setCommentOpen={setCommentOpen}
             />
@@ -104,23 +76,23 @@ export const ProductDetail: FC<Props> = ({
                 className={{ height: '320px', margin: '12px auto 60px' }}
             />
             <ReviewForm
-                open={open}
-                setOpen={setOpen}
-                rating={rating}
-                setRating={setRating}
-                result={result}
-                setResult={setResult}
-                joined_at={joined_at}
-                setJoined_at={setJoined_at}
-                contents={contents}
-                setContents={setContents}
-                post={post}
-                update={update}
-                isNew={isNew}
-                product={product}
+                open={props.open}
+                setOpen={props.setOpen}
+                rating={props.rating}
+                setRating={props.setRating}
+                result={props.result}
+                setResult={props.setResult}
+                joined_at={props.joined_at}
+                setJoined_at={props.setJoined_at}
+                contents={props.contents}
+                setContents={props.setContents}
+                post={props.post}
+                update={props.update}
+                isNew={props.isNew}
+                product={props.product}
             />
             <ConfirmDeleteReview
-                deleteReview={deleteReview}
+                deleteReview={props.deleteReview}
                 confirmOpen={confirmOpen}
                 setConfirmOpen={setConfirmOpen}
             />

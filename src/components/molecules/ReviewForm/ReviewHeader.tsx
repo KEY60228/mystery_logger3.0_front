@@ -34,15 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ReviewHeader: FC<Props> = ({
-    setOpen,
-    post,
-    update,
-    isNew,
-    product,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const ReviewHeader: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <AppBar color="primary" position="static">
@@ -53,7 +46,10 @@ export const ReviewHeader: FC<Props> = ({
                     alignItems="center"
                     wrap="nowrap"
                 >
-                    <IconButton color="inherit" onClick={() => setOpen(false)}>
+                    <IconButton
+                        color="inherit"
+                        onClick={() => props.setOpen(false)}
+                    >
                         <CloseIcon />
                     </IconButton>
                     <Grid
@@ -67,16 +63,16 @@ export const ReviewHeader: FC<Props> = ({
                             variant="subtitle1"
                             className={classes.subtitle}
                         >
-                            {product.name}
+                            {props.product.name}
                         </Typography>
                     </Grid>
-                    {isNew && (
-                        <Button color="inherit" onClick={post}>
+                    {props.isNew && (
+                        <Button color="inherit" onClick={props.post}>
                             投稿
                         </Button>
                     )}
-                    {!isNew && (
-                        <Button color="inherit" onClick={update}>
+                    {!props.isNew && (
+                        <Button color="inherit" onClick={props.update}>
                             更新
                         </Button>
                     )}

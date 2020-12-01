@@ -27,23 +27,18 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const SelectForm: FC<Props> = ({
-    value,
-    setValue,
-    choices,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const SelectForm: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <Select
-            value={value}
+            value={props.value}
             onChange={(ev: ChangeEvent<{ value: unknown }>) =>
-                setValue(ev.target.value as number)
+                props.setValue(ev.target.value as number)
             }
             className={classes.select}
         >
-            {choices.map((choice: { id: number; name: string }) => (
+            {props.choices.map((choice: { id: number; name: string }) => (
                 <MenuItem key={choice.id} value={choice.id}>
                     {choice.name}
                 </MenuItem>

@@ -12,24 +12,6 @@ interface Props {
     register: () => void
 }
 
-export const Register: FC<Props> = ({
-    accountId,
-    setAccountId,
-    name,
-    setName,
-    password,
-    setPassword,
-    register,
-}) => {
-    return (
-        <RegisterForm
-            accountId={accountId}
-            setAccountId={setAccountId}
-            name={name}
-            setName={setName}
-            password={password}
-            setPassword={setPassword}
-            register={register}
-        />
-    )
+export const Register: FC<Props> = props => {
+    return <RegisterForm {...props} />
 }

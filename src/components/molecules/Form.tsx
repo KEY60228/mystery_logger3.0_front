@@ -28,17 +28,17 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const Form: FC<Props> = ({ label, value, setValue, className }) => {
-    const classes = useStyles(className)
+export const Form: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <FormControl className={classes.root}>
-            <InputLabel htmlFor={label}>{label}</InputLabel>
+            <InputLabel htmlFor={props.label}>{props.label}</InputLabel>
             <Input
-                id={label}
-                aria-describedby={`${label}-helper`}
-                value={value}
-                onChange={ev => setValue(ev.target.value)}
+                id={props.label}
+                aria-describedby={`${props.label}-helper`}
+                value={props.value}
+                onChange={ev => props.setValue(ev.target.value)}
             />
             {/* <FormHelperText id={`${label}-helper`}>
                 

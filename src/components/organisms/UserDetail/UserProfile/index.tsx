@@ -51,14 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserProfile: FC<Props> = ({
-    user,
-    follow,
-    unfollow,
-    edit,
-    setFollowsOpen,
-    setFollowerOpen,
-}) => {
+export const UserProfile: FC<Props> = props => {
     const classes = useStyles()
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
@@ -66,13 +59,13 @@ export const UserProfile: FC<Props> = ({
         <Card className={classes.root}>
             <Grid container justify="space-around" alignItems="center">
                 <CardMedia
-                    image={`/user_img/${user.image_name}`}
+                    image={`/user_img/${props.user.image_name}`}
                     className={classes.media}
                 />
                 <UserCounters
-                    user={user}
-                    setFollowsOpen={setFollowsOpen}
-                    setFollowerOpen={setFollowerOpen}
+                    user={props.user}
+                    setFollowsOpen={props.setFollowsOpen}
+                    setFollowerOpen={props.setFollowerOpen}
                 />
             </Grid>
             <Grid
@@ -86,26 +79,27 @@ export const UserProfile: FC<Props> = ({
                         variant="subtitle1"
                         className={classes.userName}
                     >
-                        {user.name}
+                        {props.user.name}
                     </Typography>
                     <Typography variant="body1" className={classes.userId}>
-                        @{user.account_id}
+                        @{props.user.account_id}
                     </Typography>
                 </Grid>
-                {user.account_id === currentUser?.account_id && (
-                    <Button onClick={edit}>設定</Button>
+                {props.user.account_id === currentUser?.account_id && (
+                    <Button onClick={props.edit}>設定</Button>
                 )}
-                {currentUser && user.account_id !== currentUser?.account_id && (
-                    <FollowButton
-                        currentUser={currentUser}
-                        user={user}
-                        follow={follow}
-                        unfollow={unfollow}
-                    />
-                )}
+                {currentUser &&
+                    props.user.account_id !== currentUser?.account_id && (
+                        <FollowButton
+                            currentUser={currentUser}
+                            user={props.user}
+                            follow={props.follow}
+                            unfollow={props.unfollow}
+                        />
+                    )}
             </Grid>
             <Typography variant="body1" className={classes.profile}>
-                {user.profile}
+                {props.user.profile}
             </Typography>
         </Card>
     )

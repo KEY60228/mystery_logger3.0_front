@@ -37,46 +37,40 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const ProductContents: FC<Props> = ({
-    product,
-    currentUser,
-    setModalOpen,
-    setIsNew,
-    edit,
-    wanna,
-    unwanna,
-}) => {
+export const ProductContents: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <Card className={classes.root}>
             <Box className={classes.box}>
-                <Typography variant="h6">{product.name}</Typography>
-                <Typography variant="subtitle1">{product.contents}</Typography>
+                <Typography variant="h6">{props.product.name}</Typography>
+                <Typography variant="subtitle1">
+                    {props.product.contents}
+                </Typography>
             </Box>
             <Grid container direction="row" wrap="nowrap">
                 <Grid>
                     <img
                         className={classes.media}
-                        src={`/product_img/${product.image_name}`}
-                        alt={product.name}
+                        src={`/product_img/${props.product.image_name}`}
+                        alt={props.product.name}
                     />
                     <Ratings
-                        number={product.avg_rating || 0}
+                        number={props.product.avg_rating || 0}
                         size="medium"
                         className={{ marginLeft: '4px' }}
                     />
                     <Buttons
-                        product={product}
-                        currentUser={currentUser}
-                        setModalOpen={setModalOpen}
-                        setIsNew={setIsNew}
-                        edit={edit}
-                        wanna={wanna}
-                        unwanna={unwanna}
+                        product={props.product}
+                        currentUser={props.currentUser}
+                        setModalOpen={props.setModalOpen}
+                        setIsNew={props.setIsNew}
+                        edit={props.edit}
+                        wanna={props.wanna}
+                        unwanna={props.unwanna}
                     />
                 </Grid>
-                <ProductProfile product={product} />
+                <ProductProfile product={props.product} />
             </Grid>
         </Card>
     )

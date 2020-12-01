@@ -27,11 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const PreRegisterForm: FC<Props> = ({
-    email,
-    setEmail,
-    preRegister,
-}) => {
+export const PreRegisterForm: FC<Props> = props => {
     const classes = useStyles()
 
     return (
@@ -51,11 +47,15 @@ export const PreRegisterForm: FC<Props> = ({
                     justify="center"
                     alignItems="center"
                 >
-                    <Form label="Email" value={email} setValue={setEmail} />
+                    <Form
+                        label="Email"
+                        value={props.email}
+                        setValue={props.setEmail}
+                    />
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={preRegister}
+                        onClick={props.preRegister}
                         className={classes.button}
                     >
                         Submit

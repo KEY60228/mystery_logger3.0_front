@@ -24,11 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const UserCounters: FC<Props> = ({
-    user,
-    setFollowsOpen,
-    setFollowerOpen,
-}) => {
+export const UserCounters: FC<Props> = props => {
     const classes = useStyles()
 
     return (
@@ -38,10 +34,10 @@ export const UserCounters: FC<Props> = ({
                 direction="column"
                 justify="center"
                 alignItems="center"
-                onClick={() => setFollowsOpen(true)} // 仮
+                onClick={() => props.setFollowsOpen(true)} // 仮
             >
                 <Typography variant="body1" className={classes.text}>
-                    {user.follows_count || 0}
+                    {props.user.follows_count || 0}
                 </Typography>
                 <Typography variant="subtitle1" className={classes.subtitle}>
                     フォロー
@@ -52,10 +48,10 @@ export const UserCounters: FC<Props> = ({
                 direction="column"
                 justify="center"
                 alignItems="center"
-                onClick={() => setFollowerOpen(true)} // 仮
+                onClick={() => props.setFollowerOpen(true)} // 仮
             >
                 <Typography variant="body1" className={classes.text}>
-                    {user.followers_count || 0}
+                    {props.user.followers_count || 0}
                 </Typography>
                 <Typography variant="subtitle1" className={classes.subtitle}>
                     フォロワー
@@ -68,8 +64,8 @@ export const UserCounters: FC<Props> = ({
                 alignItems="center"
             >
                 <Typography variant="body1" className={classes.text}>
-                    {user.success_rate
-                        ? `${(user.success_rate * 100).toFixed(1)}%`
+                    {props.user.success_rate
+                        ? `${(props.user.success_rate * 100).toFixed(1)}%`
                         : '-'}
                 </Typography>
                 <Typography variant="subtitle1" className={classes.subtitle}>

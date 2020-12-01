@@ -20,16 +20,16 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const SearchResult: FC<Props> = ({ results }) => {
+export const SearchResult: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <>
-            {results &&
-                results.map((product: ProductDetail) => (
+            {props.results &&
+                props.results.map((product: ProductDetail) => (
                     <ProductCardM key={product.id} product={product} />
                 ))}
-            {!results.length && (
+            {!props.results.length && (
                 <Card className={classes.root}>
                     <Typography className={classes.text}>
                         該当する作品はありません

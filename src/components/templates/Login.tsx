@@ -10,20 +10,6 @@ interface Props {
     login: () => void
 }
 
-export const Login: FC<Props> = ({
-    email,
-    setEmail,
-    password,
-    setPassword,
-    login,
-}) => {
-    return (
-        <LoginForm
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            login={login}
-        />
-    )
+export const Login: FC<Props> = props => {
+    return <LoginForm {...props} />
 }

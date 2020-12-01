@@ -32,15 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const RegisterForm: FC<Props> = ({
-    accountId,
-    setAccountId,
-    name,
-    setName,
-    password,
-    setPassword,
-    register,
-}) => {
+export const RegisterForm: FC<Props> = props => {
     const classes = useStyles()
 
     return (
@@ -63,18 +55,22 @@ export const RegisterForm: FC<Props> = ({
                     >
                         <Form
                             label="Account ID"
-                            value={accountId}
-                            setValue={setAccountId}
+                            value={props.accountId}
+                            setValue={props.setAccountId}
                         />
-                        <Form label="Name" value={name} setValue={setName} />
+                        <Form
+                            label="Name"
+                            value={props.name}
+                            setValue={props.setName}
+                        />
                         <PasswordForm
-                            password={password}
-                            setPassword={setPassword}
+                            password={props.password}
+                            setPassword={props.setPassword}
                         />
                         <Button
                             variant="contained"
                             color="primary"
-                            onClick={register}
+                            onClick={props.register}
                             className={classes.button}
                         >
                             Submit

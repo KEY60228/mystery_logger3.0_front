@@ -23,32 +23,26 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const FollowButton: FC<Props> = ({
-    currentUser,
-    user,
-    follow,
-    unfollow,
-    className,
-}) => {
-    const classes = useStyles(className)
+export const FollowButton: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <>
-            {currentUser.follows_id.includes(user.id) && (
+            {props.currentUser.follows_id.includes(props.user.id) && (
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => unfollow(user)}
+                    onClick={() => props.unfollow(props.user)}
                     className={classes.root}
                 >
                     フォロー解除
                 </Button>
             )}
-            {!currentUser.follows_id.includes(user.id) && (
+            {!props.currentUser.follows_id.includes(props.user.id) && (
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => follow(user)}
+                    onClick={() => props.follow(props.user)}
                     className={classes.root}
                 >
                     フォロー

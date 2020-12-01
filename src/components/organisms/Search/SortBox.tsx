@@ -23,13 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const SortBox: FC<Props> = ({
-    sortProductsByReviewsCount,
-    sortProductsByAvgRatings,
-    sortProductsBySuccessRatesDesc,
-    sortProductsBySuccessRatesAsc,
-    sortProductsByWannasCount,
-}) => {
+export const SortBox: FC<Props> = props => {
     const classes = useStyles()
     const [value, setValue] = useState<number>(0)
 
@@ -42,27 +36,27 @@ export const SortBox: FC<Props> = ({
         {
             id: 1,
             name: '投稿の多い順',
-            onClick: sortProductsByReviewsCount,
+            onClick: props.sortProductsByReviewsCount,
         },
         {
             id: 2,
             name: '評価の高い順',
-            onClick: sortProductsByAvgRatings,
+            onClick: props.sortProductsByAvgRatings,
         },
         {
             id: 3,
             name: '成功率の高い順',
-            onClick: sortProductsBySuccessRatesDesc,
+            onClick: props.sortProductsBySuccessRatesDesc,
         },
         {
             id: 4,
             name: '成功率の低い順',
-            onClick: sortProductsBySuccessRatesAsc,
+            onClick: props.sortProductsBySuccessRatesAsc,
         },
         {
             id: 5,
             name: '行きたい人の多い順',
-            onClick: sortProductsByWannasCount,
+            onClick: props.sortProductsByWannasCount,
         },
     ]
 
