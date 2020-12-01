@@ -65,6 +65,8 @@ export interface Organizer {
     tel: string
     mail: string
     establish: string | null
+    image_name: string
+    company_name: string
     created_at: string
     updated_at: string | null
 }
@@ -164,7 +166,7 @@ export interface ReviewDetail extends ReviewWithUser, ReviewWithProduct {
 }
 
 export interface OrganizerDetail extends Organizer {
-    products: Product[]
+    products: ProductDetail[]
     venues: Venue[]
 }
 
