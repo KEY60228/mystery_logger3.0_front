@@ -19,13 +19,18 @@ import { Ratings } from '../Ratings'
 
 interface Props {
     product: ProductDetailWithoutReviews
+    className?: ClassProps
+}
+
+interface ClassProps {
+    rootMargin?: string
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-            margin: '8px',
-        },
+        root: (className: ClassProps) => ({
+            margin: className.rootMargin || '8px',
+        }),
         img: {
             minWidth: '80px',
             height: '120px',
@@ -45,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 export const ProductCardM: FC<Props> = props => {
-    const classes = useStyles()
+    const classes = useStyles(props.className)
 
     return (
         <Card className={classes.root}>
