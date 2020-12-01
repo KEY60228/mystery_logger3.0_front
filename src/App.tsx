@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { CssBaseline } from '@material-ui/core'
 
+import { asyncGetCurrentUser } from './ajax/auth'
 import { GuestRoute } from './RouteComponents/GuestRoute'
 import { PrivateRoute } from './RouteComponents/PrivateRoute'
 import { Header } from './components/organisms/Header'
@@ -16,7 +17,7 @@ import { ProductDetail } from './containers/ProductDetail'
 import { ReviewDetail } from './containers/ReviewDetail'
 import { Timeline } from './containers/Timeline'
 import { Search } from './containers/Search'
-import { asyncGetCurrentUser } from './ajax/auth'
+import { OrganizerDetail } from './containers/OrganizerDetail'
 
 const App: FC = () => {
     const dispatch = useDispatch()
@@ -46,6 +47,7 @@ const App: FC = () => {
                     <Route path="/reviews/:id" children={<ReviewDetail />} />
                     <PrivateRoute path="/timeline" children={<Timeline />} />
                     <Route path="/search" children={<Search />} />
+                    <Route path="/organizers/:id" children={<OrganizerDetail />} />
                 </Switch>
                 <BottomNav />
             </BrowserRouter>
