@@ -176,7 +176,7 @@ export interface VenueDetail extends Venue {
 }
 
 export interface PerformanceWithProduct extends Performance {
-    product: Product
+    product: ProductDetail
 }
 
 export interface WannaWithProduct extends Wanna {
