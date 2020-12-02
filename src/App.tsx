@@ -18,6 +18,7 @@ import { ReviewDetail } from './containers/ReviewDetail'
 import { Timeline } from './containers/Timeline'
 import { Search } from './containers/Search'
 import { OrganizerDetail } from './containers/OrganizerDetail'
+import { VenueDetail } from './containers/VenueDetail'
 
 const App: FC = () => {
     const dispatch = useDispatch()
@@ -48,6 +49,7 @@ const App: FC = () => {
                     <PrivateRoute path="/timeline" children={<Timeline />} />
                     <Route path="/search" children={<Search />} />
                     <Route path="/organizers/:id" children={<OrganizerDetail />} />
+                    <Route path="/venues/:id" children={<VenueDetail />} />
                 </Switch>
                 <BottomNav />
             </BrowserRouter>
