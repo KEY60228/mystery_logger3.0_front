@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
+import { useHistory } from 'react-router'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Card, Typography } from '@material-ui/core'
+import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { ProductDetail, PerformanceWithVenue } from '../../../../@types'
 
@@ -20,15 +22,19 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: 'gainsboro',
             width: '100%',
         },
+        card: {
+            margin: '4px',
+        },
         body: {
             fontSize: '12px',
-            margin: '4px',
+            marginLeft: '4px',
         },
     }),
 )
 
 export const ProductProfile: FC<Props> = props => {
     const classes = useStyles()
+    const history = useHistory()
 
     const getParty = (min: number, max: number) => {
         if (min === null && max === null) {
@@ -77,23 +83,38 @@ export const ProductProfile: FC<Props> = props => {
             <Typography variant="subtitle1" className={classes.subtitle}>
                 制作会社
             </Typography>
-            <Typography variant="body1" className={classes.body}>
-                {props.product.organizer.name}
-            </Typography>
+            <Card onClick={() => history.push(`/organizers/${props.product.organizer.id}`)} className={classes.card}>
+                <Grid container justify='space-between' alignItems='center'>
+                    <Typography variant="body1" className={classes.body}>
+                        {props.product.organizer.name}
+                    </Typography>
+                    <NavigateNextIcon />
+                </Grid>
+            </Card>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 開催地
             </Typography>
-            {props.product.performances.map(
-                (performance: PerformanceWithVenue) => (
-                    <Typography
-                        key={performance.id}
-                        variant="body1"
-                        className={classes.body}
-                    >
-                        {performance.venue.name}
-                    </Typography>
-                ),
-            )}
+            <Grid container direction="column">
+                {props.product.performances.map(
+                    (performance: PerformanceWithVenue) => (
+                        <Card
+                            key={performance.id}
+                            onClick={() => history.push(`/venues/${performance.venue_id}`)} 
+                            className={classes.card}
+                        >
+                            <Grid container justify='space-between' alignItems='center'>
+                                <Typography
+                                    variant="body1"
+                                    className={classes.body}
+                                >
+                                    {performance.venue.name}
+                                </Typography>
+                                <NavigateNextIcon />
+                            </Grid>
+                        </Card>
+                    ),
+                )}
+            </Grid>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 カテゴリ
             </Typography>
@@ -125,9 +146,14 @@ export const ProductProfile: FC<Props> = props => {
             <Typography variant="subtitle1" className={classes.subtitle}>
                 募集中の同行者募集
             </Typography>
-            <Typography variant="body1" className={classes.body}>
-                3件
-            </Typography>
+            <Card onClick={() => history.push(`/accompany`)} className={classes.card}>
+                <Grid container justify='space-between' alignItems='center'>
+                    <Typography variant="body1" className={classes.body}>
+                        3件
+                    </Typography>
+                    <NavigateNextIcon />
+                </Grid>
+            </Card>
         </Grid>
     )
 }
