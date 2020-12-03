@@ -1,6 +1,7 @@
 // pathモジュールの読み込み
 const path = require('path')
 const fs = require('fs')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
     // モードを開発モードにする
@@ -41,4 +42,9 @@ module.exports = {
             cert: fs.readFileSync('./ssl/server.crt'),
         },
     },
+
+    // dotenv設定
+    plugins: [
+        new Dotenv({path: './.env'})
+    ]
 }
