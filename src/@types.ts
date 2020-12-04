@@ -123,6 +123,15 @@ export interface ReviewLike {
     updated_at: string | null
 }
 
+export interface Accompany {
+    id: number
+    user_id: number
+    performance_id: number
+    contents: number
+    created_at: string
+    updated_at: string | null
+}
+
 // extends model
 export interface ProductDetailWithoutReviews extends Product {
     performances: PerformanceWithVenue[]
@@ -179,6 +188,13 @@ export interface PerformanceWithProduct extends Performance {
     product: ProductDetail
 }
 
+export interface PerformanceDetail extends PerformanceWithProduct, PerformanceWithVenue {}
+
 export interface WannaWithProduct extends Wanna {
     product: Product
+}
+
+export interface AccompanyDetail extends Accompany {
+    user: UserDetail
+    performance: PerformanceDetail
 }
