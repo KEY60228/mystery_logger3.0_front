@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
-import { AccompanyDetail } from '../../../@types'
+import { AccompanyIndex } from '../../../@types'
 import { AccompanyCard } from './AccompanyCard'
 
 interface Props {
-    accompanies: AccompanyDetail[]
+    accompanies: AccompanyIndex[]
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -21,7 +21,7 @@ export const AccompaniesList: FC<Props> = props => {
 
     return (
         <>
-            { props.accompanies.length !== 0 && props.accompanies.map((accompany: AccompanyDetail) =>
+            { props.accompanies.length !== 0 && props.accompanies.map(accompany =>
                 <AccompanyCard
                     key={accompany.id}
                     accompany={accompany}

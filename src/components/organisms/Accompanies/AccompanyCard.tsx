@@ -2,10 +2,10 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, CardMedia, Typography } from '@material-ui/core'
 
-import { AccompanyDetail } from '../../../@types'
+import { AccompanyIndex } from '../../../@types'
 
 interface Props {
-    accompany: AccompanyDetail
+    accompany: AccompanyIndex
 }
 
 const useStyles = makeStyles((theme: Theme) =>
