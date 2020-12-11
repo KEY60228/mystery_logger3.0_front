@@ -14,13 +14,12 @@ export interface Product {
     maxParty: number | null // 最大人数
     created_at: string // 作成時
     updated_at: string // 更新時
-
-    reviews_count: number
-    avg_rating: number | null
-    success_rate: number | null
-    success_count: number
-    wannas_count: number
-    category: Category
+    avg_rating: number | null // 平均評価 0ならnullが返る
+    success_count: number // 成功数
+    na_counr: number // 失敗数
+    success_rate: number | null // 脱出成功率 有効回答が0ならnullが返る
+    reviews_count: number // 投稿数
+    wannas_count: number // 「行きたい」数
 }
 
 export interface User {
@@ -31,18 +30,17 @@ export interface User {
     image_name: string // ユーザー画像
     created_at: string // 作成時
     updated_at: string // 更新時
-
-    reviews_count: number
-    follows_id: number[]
-    follows_count: number
-    followers_id: number[]
-    followers_count: number
-    done_id: number[]
-    wanna_id: number[]
-    success_rate: number | null
-    wannas_count: number
-    review_likes_count: number
-    like_reviews_id: number[]
+    follows_count: number // フォロー数
+    follows_id: number[] // フォローしているユーザーのID
+    followers_count: number // フォロワー数
+    followers_id: number[] // フォローされているユーザーのID
+    success_rate: number | null // 脱出成功率 有効回答が0ならnullが返る
+    reviews_count: number // 投稿数
+    done_id: number[] // 行った作品のID
+    wannas_count: number // 「行きたい」数
+    wanna_id: number[] // 「行きたい」作品のID
+    review_likes_count: number // LIKEしたレビューの数
+    like_reviews_id: number[] // LIKEしたレビューのID
 }
 
 export interface Review {
@@ -56,9 +54,9 @@ export interface Review {
     joined_at: string | null // 参加日
     created_at: string // 作成時
     updated_at: string // 更新時
+    review_comments_count: number // ついたコメントの数
+    review_likes_count: number // ついたLIKEの数
 
-    comments_count: number // 仮
-    review_likes_count: number // 仮
     retweet_count: number // 仮
 }
 
@@ -124,19 +122,19 @@ export interface Wanna {
     updated_at: string // 更新時
 }
 
+export interface ReviewLike {
+    id: number // 代理キー
+    user_id: number // ユーザーID
+    review_id: number // レビューID
+    created_at: string // 作成時
+    updated_at: string // 更新時
+}
+
 export interface ReviewComment {
     id: number // 代理キー
     user_id: number // ユーザーID
     review_id: number // レビューID
     contents: string // コメント内容
-    created_at: string // 作成時
-    updated_at: string // 更新時
-}
-
-export interface ReviewLike {
-    id: number // 代理キー
-    user_id: number // ユーザーID
-    review_id: number // レビューID
     created_at: string // 作成時
     updated_at: string // 更新時
 }
@@ -158,69 +156,108 @@ export interface Accompany {
     updated_at: string // 更新時
 }
 
-// extends model
-export interface ProductDetailWithoutReviews extends Product {
-    performances: PerformanceWithVenue[]
+// For TopPage, Search
+export interface ProductIndex extends Product {
+    category: Category
     organizer: Organizer
+    performances: PerformanceWithVenue[]
 }
 
-export interface ProductDetail extends ProductDetailWithoutReviews {
-    reviews: ReviewWithUser[] | null
+// For ProductDetail
+export interface ProductDetail extends Product {
+    category: Category
+    organizer: Organizer
+    performances: PerformanceWithVenue[]
+    reviews: ReviewWithUser[]
 }
 
-export interface ReviewWithUser extends Review {
-    user: User
-}
-
-export interface PerformanceWithVenue extends Performance {
-    venue: Venue
-}
-
-export interface ReviewLikeDetail extends ReviewLike {
-    review: ReviewDetail
-}
-
+// For UserDetail
 export interface UserDetail extends User {
-    reviews: ReviewWithProduct[] | null
-    follows: User[] | null
-    followers: User[] | null
-    wannas: WannaWithProduct[] | null
-    review_likes: ReviewLikeDetail[] | null
+    reviews: ReviewWithProductWithCategory[]
+    wannas: WannaWithProduct[]
+    follows: User[]
+    followers: User[]
+    review_likes: ReviewLikeWithReviewWithProductAndUser[]
 }
 
-export interface ReviewWithProduct extends Review {
-    product: ProductDetailWithoutReviews
+// For ReviewDetail
+export interface ReviewDetail extends Review {
+    user: User
+    product: ProductWithCategoryAndOrganizerAndPerformancesWithVenue
+    review_comments: ReviewCommentWithUser[]
 }
 
-export interface ReviewCommentDetail extends ReviewComment {
+// For Timeline
+export interface ReviewIndex extends Review {
+    product: Product
     user: User
 }
 
-export interface ReviewDetail extends ReviewWithUser, ReviewWithProduct {
-    comments: ReviewCommentDetail[]
-}
-
+// For OrganizerDetail
 export interface OrganizerDetail extends Organizer {
-    products: ProductDetail[]
+    products: ProductWithCategoryAndOrganizerAndPerformancesWithVenue[]
     venues: Venue[]
 }
 
+// For VenueDetail
 export interface VenueDetail extends Venue {
-    performances: PerformanceWithProduct[]
     organizer: Organizer
+    performances: PerformanceWithProductWithCategoryAndOrganizerAndPerformancesWithVenue[]
 }
 
-export interface PerformanceWithProduct extends Performance {
-    product: ProductDetail
+// For Accompanies
+export interface AccompanyIndex extends Accompany {
+    user: User
+    performance: PerformanceWithVenueAndProduct
 }
 
-export interface PerformanceDetail extends PerformanceWithProduct, PerformanceWithVenue {}
 
-export interface WannaWithProduct extends Wanna {
+
+// extends model
+interface PerformanceWithVenue extends Performance {
+    venue: Venue
+}
+
+interface ReviewWithUser extends Review {
+    user: User
+}
+
+interface ProductWithCategory extends Product {
+    category: Category
+}
+
+interface WannaWithProduct extends Wanna {
     product: Product
 }
 
-export interface AccompanyDetail extends Accompany {
-    user: UserDetail
-    performance: PerformanceDetail
+interface ReviewCommentWithUser extends ReviewComment {
+    user: User
+}
+
+interface PerformanceWithVenueAndProduct extends Performance {
+    venue: Venue
+    product: Product
+}
+
+interface ReviewWithUserAndProduct extends Review {
+    user: User
+    product: Product
+}
+
+interface ReviewWithProductWithCategory extends Review {
+    product: ProductWithCategory
+}
+
+interface ReviewLikeWithReviewWithProductAndUser extends ReviewLike {
+    review: ReviewWithUserAndProduct
+}
+
+interface ProductWithCategoryAndOrganizerAndPerformancesWithVenue extends Product {
+    category: Category
+    organizer: Organizer
+    performances: PerformanceWithVenue[]
+}
+
+interface PerformanceWithProductWithCategoryAndOrganizerAndPerformancesWithVenue extends Performance {
+    product: ProductWithCategoryAndOrganizerAndPerformancesWithVenue
 }
