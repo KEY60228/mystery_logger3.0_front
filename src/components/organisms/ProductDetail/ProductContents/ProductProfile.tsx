@@ -4,7 +4,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Grid, Card, Typography } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import { ProductDetail, PerformanceWithVenue } from '../../../../@types'
+import { ProductDetail } from '../../../../@types'
 
 interface Props {
     product: ProductDetail
@@ -36,7 +36,7 @@ export const ProductProfile: FC<Props> = props => {
     const classes = useStyles()
     const history = useHistory()
 
-    const getParty = (min: number, max: number) => {
+    const getParty = (min: number | null, max: number | null) => {
         if (min === null && max === null) {
             return (
                 <Typography variant="body1" className={classes.body}>
@@ -86,7 +86,7 @@ export const ProductProfile: FC<Props> = props => {
             <Card onClick={() => history.push(`/organizers/${props.product.organizer.id}`)} className={classes.card}>
                 <Grid container justify='space-between' alignItems='center'>
                     <Typography variant="body1" className={classes.body}>
-                        {props.product.organizer.name}
+                        {props.product.organizer.service_name}
                     </Typography>
                     <NavigateNextIcon />
                 </Grid>
@@ -96,7 +96,7 @@ export const ProductProfile: FC<Props> = props => {
             </Typography>
             <Grid container direction="column">
                 {props.product.performances.map(
-                    (performance: PerformanceWithVenue) => (
+                    performance => (
                         <Card
                             key={performance.id}
                             onClick={() => history.push(`/venues/${performance.venue_id}`)} 

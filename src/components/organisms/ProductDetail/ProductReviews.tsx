@@ -5,7 +5,6 @@ import { Card, Typography } from '@material-ui/core'
 import {
     ProductDetail,
     ReviewDetail,
-    ReviewWithUser,
     User,
 } from '../../../@types'
 import { ReviewCard } from '../../molecules/ReviewCard'
@@ -39,7 +38,7 @@ export const ProductReviews: FC<Props> = props => {
     return (
         <>
             {props.product.reviews &&
-                props.product.reviews.map((review: ReviewWithUser) => (
+                props.product.reviews.map(review => (
                     <ReviewCard
                         key={review.id}
                         review={review}
