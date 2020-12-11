@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { ReviewDetail, User } from '../@types'
+import { ReviewIndex, User } from '../@types'
 import {
     asyncDeleteReview,
     asyncGetTimeline,
@@ -34,7 +34,7 @@ export const Timeline: FC = () => {
         (state: RootState) => state.review.likeStatus,
     )
 
-    const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
+    const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
@@ -88,17 +88,17 @@ export const Timeline: FC = () => {
         dispatch(asyncUnFollow(currentUser.id, user.id))
     }
 
-    const postComment = (review: ReviewDetail) => {
+    const postComment = (review: ReviewIndex) => {
         if (!currentUser || !review || !comment) return false // 仮
         dispatch(asyncPostComment(currentUser.id, review.id, comment))
     }
 
-    const likeReview = (review: ReviewDetail) => {
+    const likeReview = (review: ReviewIndex) => {
         if (!currentUser || !review) return false // 仮
         dispatch(asyncLikeReview(currentUser.id, review.id))
     }
 
-    const unlikeReview = (review: ReviewDetail) => {
+    const unlikeReview = (review: ReviewIndex) => {
         if (!currentUser || !review) return false // 仮
         dispatch(asyncUnlikeReview(currentUser.id, review.id))
     }
