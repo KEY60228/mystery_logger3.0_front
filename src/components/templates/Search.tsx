@@ -1,17 +1,17 @@
 import React, { FC, useEffect, useState } from 'react'
 
-import { ProductDetail, Performance } from '../../@types'
+import { ProductIndex, Performance } from '../../@types'
 import { SearchBox } from '../organisms/Search/SearchBox'
 import { SearchResult } from '../organisms/Search/SearchResult'
 import { TempSpace } from '../molecules/TempSpace'
 import { SortBox } from '../organisms/Search/SortBox'
 
 interface Props {
-    products: ProductDetail[]
+    products: ProductIndex[]
 }
 
 export const Search: FC<Props> = props => {
-    const [results, setResults] = useState<ProductDetail[]>([])
+    const [results, setResults] = useState<ProductIndex[]>([])
     const [keywords, setKeywords] = useState<string>('')
     const [category, setCategory] = useState<number>(0)
     const [organizer, setOrganizer] = useState<number>(0)
@@ -19,7 +19,7 @@ export const Search: FC<Props> = props => {
 
     const search = () => {
         setResults(
-            props.products.filter((product: ProductDetail) => {
+            props.products.filter((product: ProductIndex) => {
                 if (category && product.category_id !== category) return false
                 if (organizer && product.organizer_id !== organizer)
                     return false
@@ -42,8 +42,9 @@ export const Search: FC<Props> = props => {
         id: number
         name: string
     }[] = props.products
-        .map((product: ProductDetail) => product.organizer)
-        .filter((el1, i1, arr) => {
+        .map((product: ProductIndex) => {
+            return {id: product.organizer.id, name: product.organizer.service_name}
+        }).filter((el1, i1, arr) => {
             return (
                 arr.findIndex(el2 => {
                     return el1.id === el2.id

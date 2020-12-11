@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { ProductDetail } from '../@types'
+import { ProductIndex } from '../@types'
 import { asyncGetProducts } from '../ajax/product'
 import { Search as SearchTemp } from '../components/templates/Search'
 
 export const Search: FC = () => {
     const dispatch = useDispatch()
 
-    const [products, setProducts] = useState<ProductDetail[] | null>(null)
+    const [products, setProducts] = useState<ProductIndex[] | null>(null)
 
     const getProducts = () => {
         dispatch(asyncGetProducts(setProducts))

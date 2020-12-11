@@ -2,11 +2,11 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Typography } from '@material-ui/core'
 
-import { ProductDetail } from '../../../@types'
+import { ProductIndex } from '../../../@types'
 import { ProductCardM } from '../../molecules/ProductCardM/'
 
 interface Props {
-    results: ProductDetail[]
+    results: ProductIndex[]
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -26,7 +26,7 @@ export const SearchResult: FC<Props> = props => {
     return (
         <>
             {props.results &&
-                props.results.map((product: ProductDetail) => (
+                props.results.map((product: ProductIndex) => (
                     <ProductCardM key={product.id} product={product} />
                 ))}
             {!props.results.length && (
