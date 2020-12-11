@@ -11,14 +11,21 @@ import {
 } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import {
-    ProductDetailWithoutReviews,
-    PerformanceWithVenue,
-} from '../../../@types'
+import { Product, Performance, Venue, Organizer, Category } from '../../../@types'
 import { Ratings } from '../Ratings'
 
+interface PerformanceWithVenue extends Performance {
+    venue: Venue
+}
+
+interface ExtendsProduct extends Product {
+    category: Category
+    performances: PerformanceWithVenue[]
+    organizer: Organizer
+}
+
 interface Props {
-    product: ProductDetailWithoutReviews
+    product: ExtendsProduct
     className?: ClassProps
 }
 
@@ -72,12 +79,12 @@ export const ProductCardM: FC<Props> = props => {
                         <Typography>{props.product.name}</Typography>
                         <Box className={classes.box}>
                             <Typography className={classes.text}>
-                                制作会社: {props.product.organizer.name}
+                                制作会社: {props.product.organizer.service_name}
                             </Typography>
                             <Typography className={classes.text}>
                                 開催場所:{' '}
                                 {props.product.performances.map(
-                                    (performance: PerformanceWithVenue) => (
+                                    performance => (
                                         <span key={performance.id}>
                                             {performance.venue.name}
                                         </span>

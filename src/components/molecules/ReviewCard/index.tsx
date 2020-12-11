@@ -112,12 +112,12 @@ export const ReviewCard: FC<Props> = props => {
                     }
                 >
                     <ChatBubbleIcon color="action" fontSize="small" />
-                    {props.review.comments_count !== 0 && (
+                    {props.review.review_comments_count !== 0 && (
                         <Typography
                             variant="button"
                             className={classes.iconText}
                         >
-                            {props.review.comments_count}
+                            {props.review.review_comments_count}
                         </Typography>
                     )}
                 </IconButton>
