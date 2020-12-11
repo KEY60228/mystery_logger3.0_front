@@ -1,11 +1,15 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 
-import { CommentDetail } from '../../../../@types'
+import { ReviewComment, User } from '../../../../@types'
 import { CommentCard } from './CommentCard'
 
+interface ReviewCommentWithUser extends ReviewComment {
+    user: User
+}
+
 interface Props {
-    comments: CommentDetail[]
+    comments: ReviewCommentWithUser[]
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -19,7 +23,7 @@ export const ReviewComments: FC<Props> = props => {
 
     return (
         <>
-            {props.comments.map((comment: CommentDetail) => (
+            {props.comments.map(comment => (
                 <CommentCard key={comment.id} comment={comment} />
             ))}
         </>

@@ -55,8 +55,8 @@ export const ReviewDetail: FC<Props> = props => {
                 open={commentOpen}
                 setOpen={setCommentOpen}
             />
-            {props.review.comments && (
-                <ReviewComments comments={props.review.comments} />
+            {props.review.review_comments && (
+                <ReviewComments comments={props.review.review_comments} />
             )}
             <TempSpace
                 text="Ad Space"
