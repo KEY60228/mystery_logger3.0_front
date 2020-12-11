@@ -2,11 +2,11 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Typography, Box } from '@material-ui/core'
 
-import { Product } from '../../../@types'
+import { ProductIndex } from '../../../@types'
 import { ProductCardS } from '../../molecules/ProductCardS/'
 
 interface Props {
-    products: Product[]
+    products: ProductIndex[]
     subtitle: string
 }
 
@@ -37,7 +37,7 @@ export const LinedProducts: FC<Props> = props => {
             </Typography>
             <Box className={classes.outerBox}>
                 <Box className={classes.innerBox}>
-                    {props.products.map((product: Product) => (
+                    {props.products.map((product: ProductIndex) => (
                         <ProductCardS
                             key={product.id}
                             product={product}
