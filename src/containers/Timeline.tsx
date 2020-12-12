@@ -24,9 +24,6 @@ export const Timeline: FC = () => {
     const followStatus = useSelector(
         (state: RootState) => state.user.followStatus,
     )
-    const likeStatus = useSelector(
-        (state: RootState) => state.review.likeStatus,
-    )
 
     const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
     const [rating, setRating] = useState<number>(0)
@@ -80,7 +77,18 @@ export const Timeline: FC = () => {
 
     const deleteReview = () => {
         if (!review) return false // 仮
-        dispatch(asyncDeleteReview(review.id))
+        dispatch(asyncDeleteReview(review.id)).then(
+            () => {
+                getReviews()
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+            }
+        ).catch(
+
+        )
     }
 
     const follow = (user: User) => {
@@ -104,12 +112,26 @@ export const Timeline: FC = () => {
 
     const likeReview = (review: ReviewIndex) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id))
+        dispatch(asyncLikeReview(currentUser.id, review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getReviews()
+            }
+        ).catch(
+
+        )
     }
 
     const unlikeReview = (review: ReviewIndex) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id))
+        dispatch(asyncUnlikeReview(currentUser.id, review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getReviews()
+            }
+        ).catch(
+
+        )
     }
 
     useEffect(() => {
@@ -125,13 +147,6 @@ export const Timeline: FC = () => {
             dispatch(asyncGetCurrentUser())
         }
     }, [followStatus])
-
-    useEffect(() => {
-        if (likeStatus) {
-            dispatch(asyncGetCurrentUser())
-            getReviews()
-        }
-    }, [likeStatus])
 
     return (
         <>

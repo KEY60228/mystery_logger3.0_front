@@ -1,9 +1,6 @@
 import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
-import {
-    setLikeStatus,
-} from '../stores/review'
 import { ReviewDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -144,7 +141,7 @@ export const asyncPostComment = (
     review_id: number,
     contents: string,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.post<void|ErrorResponse>('/v1/reviews/comments', {
             user_id: user_id,
             review_id: review_id,
@@ -162,28 +159,24 @@ export const asyncPostComment = (
 }
 
 export const asyncLikeReview = (user_id: number, review_id: number) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
-        dispatch(setLikeStatus(null))
-
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.put<void>('/v1/likes/reviews', {
             user_id: user_id,
             review_id: review_id,
         })
 
         if (response.status === 201) {
-            dispatch(setLikeStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setLikeStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }
 
 export const asyncUnlikeReview = (user_id: number, review_id: number) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
-        dispatch(setLikeStatus(null))
-
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.delete<void>('/v1/likes/reviews', {
             params: {
                 user_id: user_id,
@@ -192,11 +185,11 @@ export const asyncUnlikeReview = (user_id: number, review_id: number) => {
         })
 
         if (response.status === 204) {
-            dispatch(setLikeStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setLikeStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }

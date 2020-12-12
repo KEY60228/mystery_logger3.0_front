@@ -36,9 +36,6 @@ export const UserDetail: FC = () => {
     const updateUserStatus = useSelector(
         (state: RootState) => state.user.updateUserStatus,
     )
-    const likeStatus = useSelector(
-        (state: RootState) => state.review.likeStatus,
-    )
 
     const [user, setUser] = useState<UserDetailInterface | null>(null)
 
@@ -122,7 +119,16 @@ export const UserDetail: FC = () => {
 
     const deleteReview = () => {
         if (!review) return false // 仮
-        dispatch(asyncDeleteReview(review.id))
+        dispatch(asyncDeleteReview(review.id)).then(
+            () => {
+                getUser()
+                setOpenReviewForm(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+            }
+        )
     }
 
     const postComment = (review: ReviewDetail) => {
@@ -134,12 +140,26 @@ export const UserDetail: FC = () => {
 
     const likeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id))
+        dispatch(asyncLikeReview(currentUser.id, review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getUser()
+            }
+        ).catch(
+
+        )
     }
 
     const unlikeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id))
+        dispatch(asyncUnlikeReview(currentUser.id, review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getUser()
+            }
+        ).catch(
+
+        )
     }
 
     useEffect(() => {
@@ -158,13 +178,6 @@ export const UserDetail: FC = () => {
             getUser()
         }
     }, [updateUserStatus])
-
-    useEffect(() => {
-        if (likeStatus) {
-            dispatch(asyncGetCurrentUser())
-            getUser()
-        }
-    }, [likeStatus])
 
     return (
         <>

@@ -29,9 +29,6 @@ export const ProductDetail: FC = () => {
     const followStatus = useSelector(
         (state: RootState) => state.user.followStatus,
     )
-    const likeStatus = useSelector(
-        (state: RootState) => state.review.likeStatus,
-    )
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -124,7 +121,18 @@ export const ProductDetail: FC = () => {
             currentUser?.done_id.includes(review.product_id),
         )
         if (!review) return false // 仮
-        dispatch(asyncDeleteReview(review.id))
+        dispatch(asyncDeleteReview(review.id)).then(
+            () => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+                setIsNew(false)
+            }
+        ).catch()
     }
 
     const follow = (user: User) => {
@@ -172,12 +180,26 @@ export const ProductDetail: FC = () => {
 
     const likeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id))
+        dispatch(asyncLikeReview(currentUser.id, review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getProduct()
+            }
+        ).catch(
+
+        )
     }
 
     const unlikeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id))
+        dispatch(asyncUnlikeReview(currentUser.id, review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getProduct()
+            }
+        ).catch(
+
+        )
     }
 
     useEffect(() => {
@@ -193,13 +215,6 @@ export const ProductDetail: FC = () => {
             dispatch(asyncGetCurrentUser())
         }
     }, [followStatus])
-
-    useEffect(() => {
-        if (likeStatus) {
-            dispatch(asyncGetCurrentUser())
-            getProduct()
-        }
-    }, [likeStatus])
 
     return (
         <>

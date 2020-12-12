@@ -3,13 +3,11 @@ import { ReviewDetail } from '../@types'
 
 export interface ReviewStore {
     focusedReview: ReviewDetail | null
-    likeStatus: boolean | null
 }
 
 // Stateの初期状態
 const initialState: ReviewStore = {
     focusedReview: null,
-    likeStatus: null,
 }
 
 // Sliceを生成する
@@ -21,9 +19,6 @@ const slice = createSlice({
         setFocusedReview: (state, action) => {
             return Object.assign({}, state, { focusedReview: action.payload })
         },
-        setLikeStatus: (state, action) => {
-            return Object.assign({}, state, { likeStatus: action.payload })
-        },
     },
 })
 
@@ -33,5 +28,4 @@ export default slice.reducer
 // Action Creatorsをエクスポートする
 export const {
     setFocusedReview,
-    setLikeStatus,
 } = slice.actions
