@@ -1,6 +1,8 @@
 import axios from 'axios'
+
+import { AppDispatch } from '../stores/index'
+import { setFocusedProduct } from '../stores/product'
 import { ProductDetail } from '../@types'
-import { setFocusedProduct, setWannaStatus } from '../stores/product'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -17,11 +19,17 @@ axios.interceptors.response.use(
     error => error.response || error,
 )
 
+// エラーレスポンスの型
+interface ErrorResponse {
+    errors?: []
+    message: string
+}
+
 export const asyncGetProducts = (
     setProducts: (value: ProductDetail[] | null) => void,
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.get('/v1/products')
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<ProductDetail[]>('/v1/products')
 
         if (response.status === 200) {
             setProducts(response.data)
@@ -34,8 +42,8 @@ export const asyncGetProducts = (
 }
 
 export const asyncGetProduct = (id: string) => {
-    return async (dispatch: any) => {
-        const response = await axios.get(`/v1/products/${id}`)
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<ProductDetail>(`/v1/products/${id}`)
 
         if (response.status === 200) {
             dispatch(setFocusedProduct(response.data))
@@ -47,42 +55,36 @@ export const asyncGetProduct = (id: string) => {
     }
 }
 
-export const asyncWanna = (user_id: number, product_id: number) => {
-    return async (dispatch: any) => {
-        dispatch(setWannaStatus(null))
-
-        const response = await axios.put('/v1/wanna', {
-            user_id: user_id,
+export const asyncWanna = (product_id: number) => {
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+        const response = await axios.put<void>('/v1/wanna', {
             product_id: product_id,
         })
 
         if (response.status === 200) {
-            dispatch(setWannaStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setWannaStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }
 
-export const asyncUnwanna = (user_id: number, product_id: number) => {
-    return async (dispatch: any) => {
-        dispatch(setWannaStatus(null))
-
-        const response = await axios.delete('/v1/wanna', {
+export const asyncUnwanna = (product_id: number) => {
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+        const response = await axios.delete<void>('/v1/wanna', {
             params: {
-                user_id: user_id,
                 product_id: product_id,
             },
         })
 
         if (response.status === 204) {
-            dispatch(setWannaStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setWannaStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }

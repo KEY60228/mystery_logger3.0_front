@@ -1,17 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { User } from '../@types'
+import { CurrentUser } from '../@types'
 
 export interface AuthStore {
-    user: User | null
-    preRegisterStatus: boolean | null
-    registerStatus: boolean | null
+    user: CurrentUser | null
 }
 
 // Stateの初期状態
 const initialState: AuthStore = {
     user: null,
-    preRegisterStatus: null,
-    registerStatus: null,
 }
 
 // Sliceを生成する
@@ -23,14 +19,6 @@ const slice = createSlice({
         setUser: (state, action) => {
             return Object.assign({}, state, { user: action.payload })
         },
-        setPreRegisterStatus: (state, action) => {
-            return Object.assign({}, state, {
-                preRegisterStatus: action.payload,
-            })
-        },
-        setRegisterStatus: (state, action) => {
-            return Object.assign({}, state, { registerStatus: action.payload })
-        },
     },
 })
 
@@ -40,6 +28,4 @@ export default slice.reducer
 // Action Creatorsをエクスポートする
 export const {
     setUser,
-    setPreRegisterStatus,
-    setRegisterStatus,
 } = slice.actions

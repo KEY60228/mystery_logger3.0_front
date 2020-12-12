@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 
+import { useAppDispatch } from '../stores/index'
 import { VenueDetail as VenueDetailInterface } from '../@types'
 import { asyncGetVenue } from '../ajax/venue'
 import { VenueDetail as VenueDetailTemp } from '../components/templates/VenueDetail'
 
 export const VenueDetail: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const { id } = useParams<{id: string}>()
 
     const [venue, setVenue] = useState<VenueDetailInterface | null>(null)

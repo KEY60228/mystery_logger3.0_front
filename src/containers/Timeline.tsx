@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import { ReviewDetail, User } from '../@types'
+import { ReviewIndex, User } from '../@types'
 import {
     asyncDeleteReview,
     asyncGetTimeline,
@@ -12,29 +12,18 @@ import {
 } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { setFocusedReview } from '../stores/review'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 
 export const Timeline: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認
-    const followStatus = useSelector(
-        (state: RootState) => state.user.followStatus,
-    )
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
-    const commentStatus = useSelector(
-        (state: RootState) => state.review.commentStatus,
-    )
-    const likeStatus = useSelector(
-        (state: RootState) => state.review.likeStatus,
-    )
 
-    const [reviews, setReviews] = useState<ReviewDetail[] | null>(null)
+    const [spoil, setSpoil] = useState<boolean>(false)
+    const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
@@ -46,7 +35,7 @@ export const Timeline: FC = () => {
 
     const getReviews = async () => {
         if (!currentUser) return false // 仮
-        dispatch(asyncGetTimeline(currentUser.id, setReviews))
+        dispatch(asyncGetTimeline(setReviews))
     }
 
     const edit = () => {
@@ -62,45 +51,92 @@ export const Timeline: FC = () => {
         if (!currentUser || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
+                review.id,
+                spoil,
                 rating,
                 result,
                 joined_at,
                 contents,
-                currentUser.id,
-                review.product.id,
-                review.id,
             ),
+        ).then(
+            () => {
+                getReviews()
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+            }
+        ).catch(
+
         )
     }
 
     const deleteReview = () => {
         if (!review) return false // 仮
-        dispatch(asyncDeleteReview(review.id))
+        dispatch(asyncDeleteReview(review.id)).then(
+            () => {
+                getReviews()
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+            }
+        ).catch(
+
+        )
     }
 
     const follow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncFollow(currentUser.id, user.id))
+        dispatch(asyncFollow(user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const unfollow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncUnFollow(currentUser.id, user.id))
+        dispatch(asyncUnFollow(user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
-    const postComment = (review: ReviewDetail) => {
+    const postComment = (review: ReviewIndex) => {
         if (!currentUser || !review || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+        dispatch(asyncPostComment(review.id, comment)).then(
+            () => getReviews()
+        ).catch(
+
+        )
     }
 
-    const likeReview = (review: ReviewDetail) => {
+    const likeReview = (review: ReviewIndex) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id))
+        dispatch(asyncLikeReview(review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getReviews()
+            }
+        ).catch(
+
+        )
     }
 
-    const unlikeReview = (review: ReviewDetail) => {
+    const unlikeReview = (review: ReviewIndex) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id))
+        dispatch(asyncUnlikeReview(review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getReviews()
+            }
+        ).catch(
+
+        )
     }
 
     useEffect(() => {
@@ -110,36 +146,6 @@ export const Timeline: FC = () => {
             dispatch(setFocusedReview(null))
         }
     }, [])
-
-    useEffect(() => {
-        if (postStatus) {
-            getReviews()
-            setOpen(false)
-            setRating(0)
-            setResult(0)
-            setJoined_at('')
-            setContents('')
-        }
-    }, [postStatus])
-
-    useEffect(() => {
-        if (followStatus) {
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [followStatus])
-
-    useEffect(() => {
-        if (commentStatus) {
-            getReviews()
-        }
-    }, [commentStatus])
-
-    useEffect(() => {
-        if (likeStatus) {
-            dispatch(asyncGetCurrentUser())
-            getReviews()
-        }
-    }, [likeStatus])
 
     return (
         <>
@@ -156,6 +162,8 @@ export const Timeline: FC = () => {
                         setResult={setResult}
                         joined_at={joined_at}
                         setJoined_at={setJoined_at}
+                        spoil={spoil}
+                        setSpoil={setSpoil}
                         contents={contents}
                         setContents={setContents}
                         edit={edit}

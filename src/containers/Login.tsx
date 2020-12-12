@@ -1,14 +1,14 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { asyncLogin } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { Login as LoginTemp } from '../components/templates/Login'
 
 export const Login: FC = () => {
     const history = useHistory()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
 

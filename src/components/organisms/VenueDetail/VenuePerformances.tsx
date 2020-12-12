@@ -4,8 +4,22 @@ import { Card, Grid, Typography } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 
-import { PerformanceWithProduct } from '../../../@types'
+import { Category, Organizer, Performance, Product, Venue } from '../../../@types'
 import { ProductCardM } from '../../molecules/ProductCardM'
+
+interface PerformanceWithVenue extends Performance {
+    venue: Venue
+}
+
+interface ExtendsProduct extends Product {
+    category: Category
+    performances: PerformanceWithVenue[]
+    organizer: Organizer
+}
+
+interface PerformanceWithProduct extends Performance {
+    product: ExtendsProduct
+}
 
 interface Props {
     performances: PerformanceWithProduct[]
@@ -47,7 +61,7 @@ export const VenuePerformances: FC<Props> = props => {
                     }
                 </Grid>
             </Card>
-            { open && props.performances.map((performance: PerformanceWithProduct) =>
+            { open && props.performances.map(performance =>
                 <ProductCardM
                     key={performance.product.id}
                     product={performance.product}

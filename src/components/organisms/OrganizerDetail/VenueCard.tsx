@@ -35,7 +35,10 @@ export const VenueCard: FC<Props> = (props) => {
                         {props.venue.name}
                     </Typography>
                     <Typography>
-                        {props.venue.address}
+                        {props.venue.addr_prefecture}
+                        {props.venue.addr_city}
+                        {props.venue.addr_block}
+                        {props.venue.addr_building}
                     </Typography>
                 </Grid>
                 <NavigateNextIcon />

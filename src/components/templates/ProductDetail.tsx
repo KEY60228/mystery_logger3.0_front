@@ -4,6 +4,7 @@ import {
     Product,
     ProductDetail as ProductDetailInterface,
     ReviewDetail,
+    CurrentUser,
     User,
 } from '../../@types'
 import { ProductContents } from '../organisms/ProductDetail/ProductContents/'
@@ -13,7 +14,7 @@ import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
 
 interface Props {
-    currentUser: User | null
+    currentUser: CurrentUser | null
     product: ProductDetailInterface
     isNew: boolean
     setIsNew: (value: boolean) => void
@@ -25,6 +26,8 @@ interface Props {
     setResult: (value: number) => void
     joined_at: string | null
     setJoined_at: (value: string | null) => void
+    spoil: boolean
+    setSpoil: (value: boolean) => void
     contents: string | null
     setContents: (value: string | null) => void
     edit: () => void
@@ -84,6 +87,8 @@ export const ProductDetail: FC<Props> = props => {
                 setResult={props.setResult}
                 joined_at={props.joined_at}
                 setJoined_at={props.setJoined_at}
+                spoil={props.spoil}
+                setSpoil={props.setSpoil}
                 contents={props.contents}
                 setContents={props.setContents}
                 post={props.post}

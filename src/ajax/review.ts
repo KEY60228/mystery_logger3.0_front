@@ -1,10 +1,7 @@
 import axios from 'axios'
-import { ReviewDetail } from '../@types'
-import {
-    setPostStatus,
-    setCommentStatus,
-    setLikeStatus,
-} from '../stores/review'
+
+import { AppDispatch } from '../stores/index'
+import { ReviewIndex, ReviewDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -21,16 +18,17 @@ axios.interceptors.response.use(
     error => error.response || error,
 )
 
+// エラーレスポンスの型
+interface ErrorResponse {
+    errors?: []
+    message: string
+}
+
 export const asyncGetTimeline = (
-    user_id: number,
-    setReviews: (value: ReviewDetail[] | null) => void,
+    setReviews: (value: ReviewIndex[] | null) => void,
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.get('/v1/reviews', {
-            params: {
-                user_id: user_id, // 仮
-            },
-        })
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<ReviewIndex[]>('/v1/reviews')
 
         if (response.status === 200) {
             setReviews(response.data)
@@ -46,8 +44,8 @@ export const asyncGetReview = (
     id: string,
     setReview: (value: ReviewDetail | null) => void,
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.get(`/v1/reviews/${id}`)
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<ReviewDetail>(`/v1/reviews/${id}`)
 
         if (response.status === 200) {
             setReview(response.data)
@@ -60,144 +58,124 @@ export const asyncGetReview = (
 }
 
 export const asyncPostReview = (
+    product_id: number,
+    spoil: boolean,
     rating: number,
     result: number,
     joined_at: string | null,
     contents: string | null,
-    user_id: number,
-    product_id: number,
 ) => {
-    return async (dispatch: any) => {
-        dispatch(setPostStatus(null))
-
-        const response = await axios.post('/v1/reviews', {
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+        const response = await axios.post<void>('/v1/reviews', {
+            product_id: product_id,
+            spoil: spoil,
             rating: rating,
             result: result,
             joined_at: joined_at,
             contents: contents,
-            user_id: user_id,
-            product_id: product_id,
-            clear_time: null, // 仮
         })
 
         if (response.status === 201) {
-            dispatch(setPostStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setPostStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }
 
 export const asyncUpdateReview = (
+    review_id: number,
+    spoil: boolean,
     rating: number,
     result: number,
     joined_at: string | null,
     contents: string | null,
-    user_id: number,
-    product_id: number,
-    review_id: number,
 ) => {
-    return async (dispatch: any) => {
-        dispatch(setPostStatus(null))
-
-        const response = await axios.put(`/v1/reviews/${review_id}`, {
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+        const response = await axios.put<void>(`/v1/reviews/${review_id}`, {
+            spoil: spoil,
             rating: rating,
             result: result,
             joined_at: joined_at,
             contents: contents,
-            user_id: user_id,
-            product_id: product_id,
-            clear_time: null, // 仮
         })
 
         if (response.status === 200) {
-            dispatch(setPostStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setPostStatus(false))
+            return Promise.reject()
         }
     }
 }
 
 export const asyncDeleteReview = (review_id: number) => {
-    return async (dispatch: any) => {
-        dispatch(setPostStatus(null))
-
-        const response = await axios.delete(`/v1/reviews/${review_id}`)
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+        const response = await axios.delete<void>(`/v1/reviews/${review_id}`)
 
         if (response.status === 204) {
-            dispatch(setPostStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setPostStatus(false))
+            return Promise.reject()
         }
     }
 }
 
 export const asyncPostComment = (
-    user_id: number,
     review_id: number,
     contents: string,
 ) => {
-    return async (dispatch: any) => {
-        dispatch(setCommentStatus(null))
-
-        const response = await axios.post('/v1/reviews/comments', {
-            user_id: user_id,
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+        const response = await axios.post<void|ErrorResponse>('/v1/comments/review', {
             review_id: review_id,
             contents: contents,
         })
 
         if (response.status === 201) {
-            dispatch(setCommentStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setCommentStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }
 
-export const asyncLikeReview = (user_id: number, review_id: number) => {
-    return async (dispatch: any) => {
-        dispatch(setLikeStatus(null))
-
-        const response = await axios.put('/v1/likes/reviews', {
-            user_id: user_id,
+export const asyncLikeReview = (review_id: number) => {
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+        const response = await axios.put<void>('/v1/likes/review', {
             review_id: review_id,
         })
 
         if (response.status === 201) {
-            dispatch(setLikeStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setLikeStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }
 
-export const asyncUnlikeReview = (user_id: number, review_id: number) => {
-    return async (dispatch: any) => {
-        dispatch(setLikeStatus(null))
-
-        const response = await axios.delete('/v1/likes/reviews', {
+export const asyncUnlikeReview = (review_id: number) => {
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+        const response = await axios.delete<void>('/v1/likes/review', {
             params: {
-                user_id: user_id,
                 review_id: review_id,
             },
         })
 
         if (response.status === 204) {
-            dispatch(setLikeStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setLikeStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }

@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 
-import { AccompanyDetail } from '../../@types'
+import { AccompanyIndex } from '../../@types'
 import { AccompaniesList } from '../organisms/Accompanies/AccompaniesList'
 
 interface Props {
-    accompanies: AccompanyDetail[]
+    accompanies: AccompanyIndex[]
 }
 
 export const Accompanies: FC<Props> = props => {

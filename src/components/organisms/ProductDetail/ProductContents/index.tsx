@@ -1,15 +1,15 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Card, Box, Grid, Typography } from '@material-ui/core'
+import { Card, Box, Grid, Typography, CardMedia } from '@material-ui/core'
 
-import { Product, ProductDetail, User } from '../../../../@types'
+import { Product, ProductDetail, CurrentUser } from '../../../../@types'
 import { Ratings } from '../../../molecules/Ratings'
 import { Buttons } from './Buttons'
 import { ProductProfile } from './ProductProfile'
 
 interface Props {
     product: ProductDetail
-    currentUser: User | null
+    currentUser: CurrentUser | null
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
     edit: () => void
@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         media: {
             height: '240px',
+            minWidth: '160px',
+            maxWidth: '160px',
             backgroundSize: 'contain',
             margin: '6px',
         },
@@ -45,15 +47,14 @@ export const ProductContents: FC<Props> = props => {
             <Box className={classes.box}>
                 <Typography variant="h6">{props.product.name}</Typography>
                 <Typography variant="subtitle1">
-                    {props.product.contents}
+                    {props.product.phrase}
                 </Typography>
             </Box>
             <Grid container direction="row" wrap="nowrap">
                 <Grid>
-                    <img
+                    <CardMedia
                         className={classes.media}
-                        src={`/product_img/${props.product.image_name}`}
-                        alt={props.product.name}
+                        image={`/product_img/${props.product.image_name}`}
                     />
                     <Ratings
                         number={props.product.avg_rating || 0}

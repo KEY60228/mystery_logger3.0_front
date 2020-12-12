@@ -1,15 +1,15 @@
 import React, { FC, useState } from 'react'
 import { Card } from '@material-ui/core'
 
-import { ReviewDetail, User } from '../../@types'
+import { ReviewIndex, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
 import { TempSpace } from '../molecules/TempSpace'
 
 interface Props {
-    reviews: ReviewDetail[]
-    review: ReviewDetail | null
+    reviews: ReviewIndex[]
+    review: ReviewIndex | null
     open: boolean
     setOpen: (value: boolean) => void
     rating: number
@@ -18,6 +18,8 @@ interface Props {
     setResult: (value: number) => void
     joined_at: string | null
     setJoined_at: (value: string | null) => void
+    spoil: boolean
+    setSpoil: (value: boolean) => void
     contents: string | null
     setContents: (value: string | null) => void
     edit: () => void
@@ -27,9 +29,9 @@ interface Props {
     deleteReview: () => void
     comment: string | null
     setComment: (value: string) => void
-    postComment: (review: ReviewDetail) => void
-    likeReview: (review: ReviewDetail) => void
-    unlikeReview: (review: ReviewDetail) => void
+    postComment: (review: ReviewIndex) => void
+    likeReview: (review: ReviewIndex) => void
+    unlikeReview: (review: ReviewIndex) => void
 }
 
 export const Timeline: FC<Props> = props => {
@@ -38,7 +40,7 @@ export const Timeline: FC<Props> = props => {
 
     return (
         <>
-            {props.reviews.map((review: ReviewDetail) => (
+            {props.reviews.map(review => (
                 <ReviewCard
                     key={review.id}
                     review={review}
@@ -75,6 +77,8 @@ export const Timeline: FC<Props> = props => {
                     setResult={props.setResult}
                     joined_at={props.joined_at}
                     setJoined_at={props.setJoined_at}
+                    spoil={props.spoil}
+                    setSpoil={props.setSpoil}
                     contents={props.contents}
                     setContents={props.setContents}
                     update={props.update}

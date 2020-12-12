@@ -5,10 +5,7 @@ import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 import {
     UserDetail,
     ReviewDetail,
-    ReviewWithProduct,
     User,
-    WannaWithProduct,
-    ReviewLikeDetail,
 } from '../../../@types'
 import { ReviewCard } from '../../molecules/ReviewCard/'
 import { ProductCardS } from '../../molecules/ProductCardS/'
@@ -92,7 +89,7 @@ export const UserTabs: FC<Props> = props => {
                         justify="space-between"
                         className={classes.list}
                     >
-                        {props.user.reviews.map((review: ReviewWithProduct) => (
+                        {props.user.reviews.map(review => (
                             <ProductCardS
                                 key={review.product.id}
                                 product={review.product}
@@ -111,7 +108,7 @@ export const UserTabs: FC<Props> = props => {
                         justify="space-between"
                         className={classes.list}
                     >
-                        {props.user.wannas.map((wanna: WannaWithProduct) => (
+                        {props.user.wannas.map(wanna => (
                             <ProductCardS
                                 key={wanna.product.id}
                                 product={wanna.product}
@@ -127,7 +124,7 @@ export const UserTabs: FC<Props> = props => {
                 {props.user.review_likes && (
                     <Box>
                         {props.user.review_likes.map(
-                            (like_review: ReviewLikeDetail) => (
+                            like_review => (
                                 <ReviewCard
                                     key={like_review.review.id}
                                     review={like_review.review}

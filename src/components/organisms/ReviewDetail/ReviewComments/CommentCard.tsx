@@ -3,10 +3,14 @@ import { Link } from 'react-router-dom'
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
 import { Card, CardMedia, Grid, Typography } from '@material-ui/core'
 
-import { CommentDetail } from '../../../../@types'
+import { ReviewComment, User } from '../../../../@types'
+
+interface ReviewCommentWithUser extends ReviewComment {
+    user: User
+}
 
 interface Props {
-    comment: CommentDetail
+    comment: ReviewCommentWithUser
 }
 
 const useStyles = makeStyles((theme: Theme) =>

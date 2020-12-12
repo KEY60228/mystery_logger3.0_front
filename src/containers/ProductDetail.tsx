@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { Product, ReviewDetail, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
@@ -14,35 +14,20 @@ import {
 } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { setFocusedProduct } from '../stores/product'
-import { setPostStatus } from '../stores/review'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 
 export const ProductDetail: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const { id } = useParams<{ id: string }>()
 
     const product = useSelector(
         (state: RootState) => state.product.focusedProduct,
     )
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
-    const followStatus = useSelector(
-        (state: RootState) => state.user.followStatus,
-    )
-    const wannaStatus = useSelector(
-        (state: RootState) => state.product.wannaStatus,
-    )
-    const commentStatus = useSelector(
-        (state: RootState) => state.review.commentStatus,
-    )
-    const likeStatus = useSelector(
-        (state: RootState) => state.review.likeStatus,
-    )
 
+    const [spoil, setSpoil] = useState<boolean>(false)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
@@ -63,19 +48,32 @@ export const ProductDetail: FC = () => {
         if (!currentUser || !product) return false // 仮
         dispatch(
             asyncPostReview(
+                product.id,
+                spoil,
                 rating,
                 result,
                 joined_at,
                 contents,
-                currentUser.id,
-                product.id,
             ),
+        ).then(
+            () => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+                setIsNew(false)
+            }
+        ).catch(
+
         )
     }
 
     const edit = () => {
         const review = product?.reviews?.find((review: ReviewDetail) =>
-            currentUser?.done_id.includes(review.product_id),
+            review.user_id === currentUser?.id
         )
         if (!review) return false // 仮
         setRating(review.rating)
@@ -87,19 +85,31 @@ export const ProductDetail: FC = () => {
 
     const update = () => {
         const review = product?.reviews?.find((review: ReviewDetail) =>
-            currentUser?.done_id.includes(review.product_id),
+            review.user_id === currentUser?.id
         )
         if (!currentUser || !product || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
+                review.id,
+                spoil,
                 rating,
                 result,
                 joined_at,
                 contents,
-                currentUser.id,
-                product.id,
-                review.id,
             ),
+        ).then(
+            () => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+                setIsNew(false)
+            }
+        ).catch(
+
         )
     }
 
@@ -108,42 +118,93 @@ export const ProductDetail: FC = () => {
             currentUser?.done_id.includes(review.product_id),
         )
         if (!review) return false // 仮
-        dispatch(asyncDeleteReview(review.id))
+        dispatch(asyncDeleteReview(review.id)).then(
+            () => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+                setIsNew(false)
+            }
+        ).catch()
     }
 
     const follow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncFollow(currentUser.id, user.id))
+        dispatch(asyncFollow(user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const unfollow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncUnFollow(currentUser.id, user.id))
+        dispatch(asyncUnFollow(user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const wanna = (product: Product) => {
         if (!currentUser || !product) return false // 仮
-        dispatch(asyncWanna(currentUser.id, product.id))
+        dispatch(asyncWanna(product.id)).then(
+            () => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+            }
+        ).catch(
+
+        )
     }
 
     const unwanna = (product: Product) => {
         if (!currentUser || !product) return false // 仮
-        dispatch(asyncUnwanna(currentUser.id, product.id))
+        dispatch(asyncUnwanna(product.id)).then(
+            () => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+            }
+        ).catch(
+
+        )
     }
 
     const postComment = (review: ReviewDetail) => {
         if (!currentUser || !review || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+        dispatch(asyncPostComment(review.id, comment)).then(
+            () => getProduct()
+        ).catch(
+
+        )
     }
 
     const likeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id))
+        dispatch(asyncLikeReview(review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getProduct()
+            }
+        ).catch(
+
+        )
     }
 
     const unlikeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id))
+        dispatch(asyncUnlikeReview(review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getProduct()
+            }
+        ).catch(
+
+        )
     }
 
     useEffect(() => {
@@ -153,46 +214,6 @@ export const ProductDetail: FC = () => {
             dispatch(setFocusedProduct(null))
         }
     }, [])
-
-    useEffect(() => {
-        if (postStatus) {
-            getProduct()
-            dispatch(asyncGetCurrentUser())
-            setOpen(false)
-            setRating(0)
-            setResult(0)
-            setJoined_at('')
-            setContents('')
-            setIsNew(false)
-            dispatch(setPostStatus(null))
-        }
-    }, [postStatus])
-
-    useEffect(() => {
-        if (followStatus) {
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [followStatus])
-
-    useEffect(() => {
-        if (wannaStatus) {
-            getProduct()
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [wannaStatus])
-
-    useEffect(() => {
-        if (commentStatus) {
-            getProduct()
-        }
-    }, [commentStatus])
-
-    useEffect(() => {
-        if (likeStatus) {
-            dispatch(asyncGetCurrentUser())
-            getProduct()
-        }
-    }, [likeStatus])
 
     return (
         <>
@@ -211,6 +232,8 @@ export const ProductDetail: FC = () => {
                         setResult={setResult}
                         joined_at={joined_at}
                         setJoined_at={setJoined_at}
+                        spoil={spoil}
+                        setSpoil={setSpoil}
                         contents={contents}
                         setContents={setContents}
                         edit={edit}

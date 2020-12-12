@@ -4,11 +4,21 @@ import { Card, Grid, Typography } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 
-import { ProductDetail } from '../../../@types'
+import { Product, Venue, Category, Organizer, Performance } from '../../../@types'
 import { ProductCardM } from '../../molecules/ProductCardM/'
 
+interface PerformanceWithVenue extends Performance {
+    venue: Venue
+}
+
+interface ExtendsProduct extends Product {
+    category: Category
+    organizer: Organizer
+    performances: PerformanceWithVenue[]
+}
+
 interface Props {
-    products: ProductDetail[]
+    products: ExtendsProduct[]
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -47,7 +57,7 @@ export const OrganizerProducts: FC<Props> = (props) => {
                     }
                 </Grid>
             </Card>
-            { open && props.products.map((product: ProductDetail) =>
+            { open && props.products.map(product =>
                 <ProductCardM
                     key={product.id}
                     product={product}

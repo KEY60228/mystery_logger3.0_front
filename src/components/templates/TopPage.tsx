@@ -1,16 +1,16 @@
 import React, { FC } from 'react'
 
-import { Product } from '../../@types'
+import { ProductIndex } from '../../@types'
 import { TempSpace } from '../molecules/TempSpace'
 import { LinedProducts } from '../organisms/TopPage/LinedProducts'
 
 interface Props {
-    products: Product[]
+    products: ProductIndex[]
 }
 
 export const TopPage: FC<Props> = props => {
     // 名前でソート
-    const sortProductsByName = (products: Product[]) => {
+    const sortProductsByName = (products: ProductIndex[]) => {
         return products
             .sort((a, b) => {
                 const nameA: string = a.name.toUpperCase()
@@ -27,7 +27,7 @@ export const TopPage: FC<Props> = props => {
     }
 
     // レビュー数でソート
-    const sortProductsByReviewsCount = (products: Product[]) => {
+    const sortProductsByReviewsCount = (products: ProductIndex[]) => {
         return products
             .sort((a, b) => {
                 return b.reviews_count - a.reviews_count
@@ -36,7 +36,7 @@ export const TopPage: FC<Props> = props => {
     }
 
     // レートでソート
-    const sortProductsByAvgRatings = (products: Product[]) => {
+    const sortProductsByAvgRatings = (products: ProductIndex[]) => {
         return products
             .sort((a, b) => {
                 const avgRatingA = a.avg_rating || 0
@@ -48,7 +48,7 @@ export const TopPage: FC<Props> = props => {
     }
 
     // 成功率でソート (高い順)
-    const sortProductsBySuccessRates = (products: Product[]) => {
+    const sortProductsBySuccessRates = (products: ProductIndex[]) => {
         return products
             .sort((a, b) => {
                 const successRateA = a.success_rate || 0

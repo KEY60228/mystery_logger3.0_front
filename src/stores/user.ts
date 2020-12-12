@@ -1,35 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit'
+// import { createSlice } from '@reduxjs/toolkit'
 
-export interface UserStore {
-    followStatus: boolean | null
-    updateUserStatus: boolean | null
-}
+// export interface UserStore {
 
-// Stateの初期状態
-const initialState: UserStore = {
-    followStatus: null,
-    updateUserStatus: null,
-}
+// }
 
-// Sliceを生成する
-const slice = createSlice({
-    name: 'user', // Sliceの名称
-    initialState, // Stateの初期状態 (上で定義)
-    reducers: {
-        // action.payloadに渡された引数が入っている
-        setFollowStatus: (state, action) => {
-            return Object.assign({}, state, { followStatus: action.payload })
-        },
-        setUpdateUserStatus: (state, action) => {
-            return Object.assign({}, state, {
-                updateUserStatus: action.payload,
-            })
-        },
-    },
-})
+// // Stateの初期状態
+// const initialState: UserStore = {
 
-// Reducerをエクスポートする
-export default slice.reducer
+// }
 
-// Action Creatorsをエクスポートする
-export const { setFollowStatus, setUpdateUserStatus } = slice.actions
+// // Sliceを生成する
+// const slice = createSlice({
+//     name: 'user', // Sliceの名称
+//     initialState, // Stateの初期状態 (上で定義)
+//     reducers: {
+//         // action.payloadに渡された引数が入っている
+
+//     },
+// })
+
+// // Reducerをエクスポートする
+// export default slice.reducer
+
+// // Action Creatorsをエクスポートする
+// export const {  } = slice.actions
