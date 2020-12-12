@@ -30,9 +30,6 @@ export const UserDetail: FC = () => {
 
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const followStatus = useSelector(
-        (state: RootState) => state.user.followStatus,
-    )
     const updateUserStatus = useSelector(
         (state: RootState) => state.user.updateUserStatus,
     )
@@ -74,12 +71,20 @@ export const UserDetail: FC = () => {
 
     const follow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncFollow(currentUser.id, user.id))
+        dispatch(asyncFollow(currentUser.id, user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const unfollow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncUnFollow(currentUser.id, user.id))
+        dispatch(asyncUnFollow(currentUser.id, user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const editReview = () => {
@@ -166,12 +171,6 @@ export const UserDetail: FC = () => {
         setUser(null)
         getUser()
     }, [account_id])
-
-    useEffect(() => {
-        if (followStatus) {
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [followStatus])
 
     useEffect(() => {
         if (updateUserStatus) {

@@ -26,9 +26,6 @@ export const ProductDetail: FC = () => {
         (state: RootState) => state.product.focusedProduct,
     )
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const followStatus = useSelector(
-        (state: RootState) => state.user.followStatus,
-    )
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -137,12 +134,20 @@ export const ProductDetail: FC = () => {
 
     const follow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncFollow(currentUser.id, user.id))
+        dispatch(asyncFollow(currentUser.id, user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const unfollow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncUnFollow(currentUser.id, user.id))
+        dispatch(asyncUnFollow(currentUser.id, user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const wanna = (product: Product) => {
@@ -209,12 +214,6 @@ export const ProductDetail: FC = () => {
             dispatch(setFocusedProduct(null))
         }
     }, [])
-
-    useEffect(() => {
-        if (followStatus) {
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [followStatus])
 
     return (
         <>

@@ -24,7 +24,6 @@ interface ErrorResponse {
     message: string
 }
 
-
 export const asyncGetTimeline = (
     user_id: number,
     setReviews: (value: ReviewDetail[] | null) => void,

@@ -24,9 +24,6 @@ export const ReviewDetail: FC = () => {
     const [review, setReview] = useState<ReviewDetailInterface | null>(null)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const followStatus = useSelector(
-        (state: RootState) => state.user.followStatus,
-    )
 
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -42,12 +39,20 @@ export const ReviewDetail: FC = () => {
 
     const follow = (user: User) => {
         if (!currentUser || !review?.user) return false
-        dispatch(asyncFollow(currentUser.id, review.user.id))
+        dispatch(asyncFollow(currentUser.id, review.user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const unfollow = (user: User) => {
         if (!currentUser || !review?.user) return false
-        dispatch(asyncUnFollow(currentUser.id, review.user.id))
+        dispatch(asyncUnFollow(currentUser.id, review.user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const edit = () => {
@@ -123,12 +128,6 @@ export const ReviewDetail: FC = () => {
     useEffect(() => {
         getReview()
     }, [])
-
-    useEffect(() => {
-        if (followStatus) {
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [followStatus])
 
     return (
         <>

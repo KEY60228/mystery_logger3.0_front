@@ -21,9 +21,6 @@ export const Timeline: FC = () => {
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認
-    const followStatus = useSelector(
-        (state: RootState) => state.user.followStatus,
-    )
 
     const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
     const [rating, setRating] = useState<number>(0)
@@ -93,12 +90,20 @@ export const Timeline: FC = () => {
 
     const follow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncFollow(currentUser.id, user.id))
+        dispatch(asyncFollow(currentUser.id, user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const unfollow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncUnFollow(currentUser.id, user.id))
+        dispatch(asyncUnFollow(currentUser.id, user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const postComment = (review: ReviewIndex) => {
@@ -141,12 +146,6 @@ export const Timeline: FC = () => {
             dispatch(setFocusedReview(null))
         }
     }, [])
-
-    useEffect(() => {
-        if (followStatus) {
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [followStatus])
 
     return (
         <>
