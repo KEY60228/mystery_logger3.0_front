@@ -7,7 +7,7 @@ import authReducer from './auth'
 import errorReducer from './error'
 import productReducer from './product'
 import reviewReducer from './review'
-import userReducer from './user'
+// import userReducer from './user'
 // import messageReducer from './message'
 
 // 各reducerを統合
@@ -16,7 +16,7 @@ const reducer = combineReducers({
     error: errorReducer,
     product: productReducer,
     review: reviewReducer,
-    user: userReducer,
+    // user: userReducer,
     // message: messageReducer,
 })
 

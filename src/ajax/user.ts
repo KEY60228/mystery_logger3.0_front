@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
-import { setUpdateUserStatus } from '../stores/user'
 import { UserDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -85,8 +84,6 @@ export const asyncUpdateUser = (
     profile: string,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
-        dispatch(setUpdateUserStatus(null))
-
         const response = await axios.put(`/v1/users/${id}`, {
             name: name,
             account_id: account_id,
@@ -94,11 +91,11 @@ export const asyncUpdateUser = (
         })
 
         if (response.status === 200) {
-            dispatch(setUpdateUserStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setUpdateUserStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }

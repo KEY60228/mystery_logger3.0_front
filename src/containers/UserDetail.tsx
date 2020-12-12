@@ -30,9 +30,6 @@ export const UserDetail: FC = () => {
 
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const updateUserStatus = useSelector(
-        (state: RootState) => state.user.updateUserStatus,
-    )
 
     const [user, setUser] = useState<UserDetailInterface | null>(null)
 
@@ -65,8 +62,14 @@ export const UserDetail: FC = () => {
 
     const updateUser = () => {
         if (!user) return false // 仮
-        dispatch(asyncUpdateUser(user.id, name, accountId, profile))
-        setOpenUserForm(false)
+        dispatch(asyncUpdateUser(user.id, name, accountId, profile)).then(
+            () => {
+                getUser()
+                setOpenUserForm(false)
+            }
+        ).catch(
+
+        )
     }
 
     const follow = (user: User) => {
@@ -171,12 +174,6 @@ export const UserDetail: FC = () => {
         setUser(null)
         getUser()
     }, [account_id])
-
-    useEffect(() => {
-        if (updateUserStatus) {
-            getUser()
-        }
-    }, [updateUserStatus])
 
     return (
         <>
