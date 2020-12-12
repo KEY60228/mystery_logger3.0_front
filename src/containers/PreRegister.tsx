@@ -1,36 +1,22 @@
-import React, { FC, useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { FC, useState } from 'react'
 
 import { asyncPreRegister } from '../ajax/auth'
-import { RootState } from '../stores/index'
-import { setPreRegisterStatus } from '../stores/auth'
+import { useAppDispatch } from '../stores/index'
 import { PreRegister as PreRegisterTemp } from '../components/templates/PreRegister'
 
 export const PreRegister: FC = () => {
-    const dispatch = useDispatch()
-
-    const preRegisterStatus = useSelector(
-        (state: RootState) => state.auth.preRegisterStatus,
-    )
+    const dispatch = useAppDispatch()
 
     const [email, setEmail] = useState<string>('')
     const [open, setOpen] = useState<boolean>(false)
 
     const preRegister = () => {
-        dispatch(asyncPreRegister(email))
+        dispatch(asyncPreRegister(email)).then(
+            () => setOpen(true) // 成功時挙動
+        ).catch(
+            (error) => console.log(error) // 失敗時挙動
+        )
     }
-
-    useEffect(() => {
-        return () => {
-            dispatch(setPreRegisterStatus(null))
-        }
-    }, [])
-
-    useEffect(() => {
-        if (preRegisterStatus) {
-            setOpen(true)
-        }
-    }, [preRegisterStatus])
 
     return (
         <PreRegisterTemp

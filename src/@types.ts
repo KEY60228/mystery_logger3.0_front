@@ -211,6 +211,18 @@ export interface AccompanyIndex extends Accompany {
     performance: PerformanceWithVenueAndProduct
 }
 
+// For Auth
+export interface CurrentUser {
+    id: number // 代理キー
+    account_id: string // アカウントID
+    name: string // アカウントネーム
+    follows_id: number[] // フォローしているユーザーのID
+    followers_id: number[] // フォローされているユーザーのID
+    done_id: number[] // 行った作品のID
+    wanna_id: number[] // 「行きたい」作品のID
+    like_reviews_id: number[] // LIKEしたレビューのID
+}
+
 
 
 // extends model

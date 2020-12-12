@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { AccompanyDetail } from '../@types'
+import { AccompanyIndex } from '../@types'
+import { AppDispatch } from '../stores/index'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -17,10 +18,10 @@ axios.interceptors.response.use(
 )
 
 export const asyncGetAccompanies = (
-    setAccompanies: (value: AccompanyDetail[]) => void
+    setAccompanies: (value: AccompanyIndex[]) => void
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.get(`/v1/accompanies`)
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<AccompanyIndex[]>(`/v1/accompanies`)
 
         if (response.status === 200) {
             setAccompanies(response.data)

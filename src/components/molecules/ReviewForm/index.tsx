@@ -29,6 +29,8 @@ interface Props {
     setResult: (value: number) => void
     joined_at: string | null
     setJoined_at: (value: string | null) => void
+    spoil: boolean
+    setSpoil: (value: boolean) => void
     contents: string | null
     setContents: (value: string | null) => void
     product: Product
@@ -135,7 +137,10 @@ export const ReviewForm: FC<Props> = props => {
                 </Grid>
                 <Box className={classes.box}>
                     <Grid container alignItems="center" wrap="nowrap">
-                        <Checkbox />
+                        <Checkbox
+                            checked={props.spoil}
+                            onChange={() => props.setSpoil(!props.spoil)}
+                        />
                         <Typography className={classes.alert}>
                             ネタバレが含まれる場合"必ず"チェックしてください
                         </Typography>

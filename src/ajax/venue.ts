@@ -1,4 +1,6 @@
 import axios from 'axios'
+
+import { AppDispatch } from '../stores/index'
 import { VenueDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -20,7 +22,7 @@ export const asyncGetVenue = (
     venue_id: string,
     setVenue: (value: VenueDetail) => void
 ) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         const response = await axios.get(`/v1/venues/${venue_id}`)
 
         if (response.status === 200) {

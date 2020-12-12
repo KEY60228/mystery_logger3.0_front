@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
 import {
@@ -13,30 +13,19 @@ import {
 } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const history = useHistory()
 
     const [review, setReview] = useState<ReviewDetailInterface | null>(null)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const followStatus = useSelector(
-        (state: RootState) => state.user.followStatus,
-    )
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
-    const commentStatus = useSelector(
-        (state: RootState) => state.review.commentStatus,
-    )
-    const likeStatus = useSelector(
-        (state: RootState) => state.review.likeStatus,
-    )
 
+    const [spoil, setSpoil] = useState<boolean>(false)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>(null)
@@ -51,12 +40,20 @@ export const ReviewDetail: FC = () => {
 
     const follow = (user: User) => {
         if (!currentUser || !review?.user) return false
-        dispatch(asyncFollow(currentUser.id, review.user.id))
+        dispatch(asyncFollow(review.user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const unfollow = (user: User) => {
         if (!currentUser || !review?.user) return false
-        dispatch(asyncUnFollow(currentUser.id, review.user.id))
+        dispatch(asyncUnFollow(review.user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const edit = () => {
@@ -72,65 +69,65 @@ export const ReviewDetail: FC = () => {
         if (!currentUser || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
+                review.id,
+                spoil,
                 rating,
                 result,
                 joined_at,
                 contents,
-                currentUser.id,
-                review.product.id,
-                review.id,
             ),
+        ).then(
+            () => history.push(`/products/${review?.product_id}`)
+        ).catch(
+
         )
     }
 
     const deleteReview = () => {
         if (!review) return false // 仮
-        dispatch(asyncDeleteReview(review.id))
+        dispatch(asyncDeleteReview(review.id)).then(
+            () => history.push(`/products/${review?.product_id}`)
+        ).catch(
+
+        )
     }
 
     const postComment = () => {
         if (!review || !currentUser || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+        dispatch(asyncPostComment(review.id, comment)).then(
+            () => getReview()
+        ).catch(
+
+        )
     }
 
     const likeReview = () => {
         if (!review || !currentUser) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id))
+        dispatch(asyncLikeReview(review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getReview()
+            }
+        ).catch(
+
+        )
     }
 
     const unlikeReview = () => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id))
+        dispatch(asyncUnlikeReview(review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getReview()
+            }
+        ).catch(
+
+        )
     }
 
     useEffect(() => {
         getReview()
     }, [])
-
-    useEffect(() => {
-        if (followStatus) {
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [followStatus])
-
-    useEffect(() => {
-        if (postStatus) {
-            history.push(`/products/${review?.product_id}`)
-        }
-    }, [postStatus])
-
-    useEffect(() => {
-        if (commentStatus) {
-            getReview()
-        }
-    }, [commentStatus])
-
-    useEffect(() => {
-        if (likeStatus) {
-            dispatch(asyncGetCurrentUser())
-            getReview()
-        }
-    }, [likeStatus])
 
     return (
         <>
@@ -145,6 +142,8 @@ export const ReviewDetail: FC = () => {
                     setResult={setResult}
                     joined_at={joined_at}
                     setJoined_at={setJoined_at}
+                    spoil={spoil}
+                    setSpoil={setSpoil}
                     contents={contents}
                     setContents={setContents}
                     edit={edit}

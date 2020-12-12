@@ -1,8 +1,8 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import {
     ReviewDetail,
     User,
@@ -26,25 +26,10 @@ import {
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const followStatus = useSelector(
-        (state: RootState) => state.user.followStatus,
-    )
-    const updateUserStatus = useSelector(
-        (state: RootState) => state.user.updateUserStatus,
-    )
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
-    const commentStatus = useSelector(
-        (state: RootState) => state.review.commentStatus,
-    )
-    const likeStatus = useSelector(
-        (state: RootState) => state.review.likeStatus,
-    )
 
     const [user, setUser] = useState<UserDetailInterface | null>(null)
 
@@ -54,6 +39,7 @@ export const UserDetail: FC = () => {
 
     const [openUserForm, setOpenUserForm] = useState<boolean>(false)
 
+    const [spoil, setSpoil] = useState<boolean>(false)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
@@ -77,18 +63,32 @@ export const UserDetail: FC = () => {
 
     const updateUser = () => {
         if (!user) return false // 仮
-        dispatch(asyncUpdateUser(user.id, name, accountId, profile))
-        setOpenUserForm(false)
+        dispatch(asyncUpdateUser(name, accountId, profile)).then(
+            () => {
+                getUser()
+                setOpenUserForm(false)
+            }
+        ).catch(
+
+        )
     }
 
     const follow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncFollow(currentUser.id, user.id))
+        dispatch(asyncFollow(user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const unfollow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncUnFollow(currentUser.id, user.id))
+        dispatch(asyncUnFollow(user.id)).then(
+            () => dispatch(asyncGetCurrentUser())
+        ).catch(
+
+        )
     }
 
     const editReview = () => {
@@ -104,77 +104,76 @@ export const UserDetail: FC = () => {
         if (!currentUser || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
+                review.id,
+                spoil,
                 rating,
                 result,
                 joined_at,
                 contents,
-                currentUser.id,
-                review.product.id,
-                review.id,
             ),
+        ).then(
+            () => {
+                getUser()
+                setOpenReviewForm(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+            }
+        ).catch(
+
         )
     }
 
     const deleteReview = () => {
         if (!review) return false // 仮
-        dispatch(asyncDeleteReview(review.id))
+        dispatch(asyncDeleteReview(review.id)).then(
+            () => {
+                getUser()
+                setOpenReviewForm(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+            }
+        )
     }
 
     const postComment = (review: ReviewDetail) => {
         if (!currentUser || !review || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+        dispatch(asyncPostComment(review.id, comment)).then(
+            () => getUser()
+        )
     }
 
     const likeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id))
+        dispatch(asyncLikeReview(review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getUser()
+            }
+        ).catch(
+
+        )
     }
 
     const unlikeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id))
+        dispatch(asyncUnlikeReview(review.id)).then(
+            () => {
+                dispatch(asyncGetCurrentUser())
+                getUser()
+            }
+        ).catch(
+
+        )
     }
 
     useEffect(() => {
         setUser(null)
         getUser()
     }, [account_id])
-
-    useEffect(() => {
-        if (followStatus) {
-            dispatch(asyncGetCurrentUser())
-        }
-    }, [followStatus])
-
-    useEffect(() => {
-        if (updateUserStatus) {
-            getUser()
-        }
-    }, [updateUserStatus])
-
-    useEffect(() => {
-        if (postStatus) {
-            getUser()
-            setOpenReviewForm(false)
-            setRating(0)
-            setResult(0)
-            setJoined_at('')
-            setContents('')
-        }
-    }, [postStatus])
-
-    useEffect(() => {
-        if (commentStatus) {
-            getUser()
-        }
-    }, [commentStatus])
-
-    useEffect(() => {
-        if (likeStatus) {
-            dispatch(asyncGetCurrentUser())
-            getUser()
-        }
-    }, [likeStatus])
 
     return (
         <>
@@ -206,6 +205,8 @@ export const UserDetail: FC = () => {
                         setResult={setResult}
                         joined_at={joined_at}
                         setJoined_at={setJoined_at}
+                        spoil={spoil}
+                        setSpoil={setSpoil}
                         contents={contents}
                         setContents={setContents}
                         comment={comment}
