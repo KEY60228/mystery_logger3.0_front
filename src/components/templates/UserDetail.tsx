@@ -67,7 +67,9 @@ export const UserDetail: FC<Props> = props => {
                 setFollowsOpen={setFollowsOpen}
                 setFollowerOpen={setFollowerOpen}
             />
-            <UserStatics />
+            <UserStatics
+                user={props.user}
+            />
             <UserTabs
                 user={props.user}
                 follow={props.follow}
