@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { CardActionArea, Grid, Typography } from '@material-ui/core'
+import { CardActionArea, Grid, Typography, Box } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { Product, Review } from '../../../../../@types'
@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
         root: (className: ClassProps) => ({
             minHeight: className.minHeight,
         }),
+        contents: {
+            whiteSpace: 'pre-wrap',
+        },
         remarks: {
             color: 'grey',
             fontSize: '12px',
@@ -88,9 +91,11 @@ export const ContentsWithActionArea: FC<Props> = props => {
                             </Typography>
                         )}
                     </Grid>
-                    <Typography variant="body2">
-                        {props.review.contents}
-                    </Typography>
+                    <Box className={classes.contents}>
+                        <Typography variant="body2">
+                            {props.review.contents}
+                        </Typography>
+                    </Box>
                 </Grid>
                 <NavigateNextIcon />
             </Grid>

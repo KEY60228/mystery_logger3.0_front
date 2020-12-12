@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Calender: FC<Props> = props => {
     const classes = useStyles(props.className)
     const handleDateChange = (newDate: Date | null) => {
-        const joined = newDate?.toString() || null
+        const joined = newDate?.toISOString() || null
         props.setDate(joined)
     }
 

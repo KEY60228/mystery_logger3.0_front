@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { CardActionArea, Typography } from '@material-ui/core'
+import { CardActionArea, Typography, Box } from '@material-ui/core'
 
 import { Review, Product } from '../../../../../@types'
 import { Ratings } from '../../../Ratings'
@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
         root: (className: ClassProps) => ({
             minHeight: className.minHeight,
         }),
+        contents: {
+            whiteSpace: 'pre-wrap',
+        },
         remarks: {
             color: 'grey',
             fontSize: '12px',
@@ -72,7 +75,9 @@ export const ContentsWithActionArea: FC<Props> = props => {
                     脱出失敗…
                 </Typography>
             )}
-            <Typography variant="body2">{props.review.contents}</Typography>
+            <Box className={classes.contents}>
+                <Typography variant="body2">{props.review.contents}</Typography>
+            </Box>
         </CardActionArea>
     )
 }

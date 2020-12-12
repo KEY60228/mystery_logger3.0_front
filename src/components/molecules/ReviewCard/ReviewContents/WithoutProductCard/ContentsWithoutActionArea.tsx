@@ -17,6 +17,9 @@ interface Props {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {},
+        contents: {
+            whiteSpace: 'pre-wrap',
+        },
         remarks: {
             color: 'grey',
             fontSize: '12px',
@@ -62,7 +65,9 @@ export const ContentsWithoutActionArea: FC<Props> = props => {
                     </Typography>
                 )}
             </Grid>
-            <Typography variant="body2">{props.review.contents}</Typography>
+            <Box className={classes.contents}>
+                <Typography variant="body2">{props.review.contents}</Typography>
+            </Box>
         </Box>
     )
 }
