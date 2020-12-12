@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {
-    setRegisterStatus,
     setUser,
 } from '../stores/auth'
 import queryString from 'query-string'
@@ -55,9 +54,7 @@ export const asyncVerify = (
     setPreRegisterId: (value: number) => void,
     setEmail: (value: string) => void,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
-        dispatch(setRegisterStatus(null))
-
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.post<{email: string, pre_register_id: number}>('/v1/register/verify', {
             token: query.token,
         })
@@ -65,11 +62,11 @@ export const asyncVerify = (
         if (response.status === 200) {
             setPreRegisterId(response.data.pre_register_id)
             setEmail(response.data.email)
-            dispatch(setRegisterStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setRegisterStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }
