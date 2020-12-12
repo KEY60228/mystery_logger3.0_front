@@ -1,4 +1,6 @@
 import axios from 'axios'
+
+import { AppDispatch } from '../stores/index'
 import { OrganizerDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -20,8 +22,8 @@ export const asyncGetOrganizer = (
     organizer_id: string,
     setOrganizer: (value: OrganizerDetail) => void
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.get(`/v1/organizer/${organizer_id}`)
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<OrganizerDetail>(`/v1/organizer/${organizer_id}`)
 
         if (response.status === 200) {
             setOrganizer(response.data)

@@ -1,10 +1,12 @@
 import axios from 'axios'
-import { ReviewDetail } from '../@types'
+
+import { AppDispatch } from '../stores/index'
 import {
     setPostStatus,
     setCommentStatus,
     setLikeStatus,
 } from '../stores/review'
+import { ReviewDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -25,8 +27,8 @@ export const asyncGetTimeline = (
     user_id: number,
     setReviews: (value: ReviewDetail[] | null) => void,
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.get('/v1/reviews', {
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<ReviewDetail[]>('/v1/reviews', {
             params: {
                 user_id: user_id, // 仮
             },
@@ -46,8 +48,8 @@ export const asyncGetReview = (
     id: string,
     setReview: (value: ReviewDetail | null) => void,
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.get(`/v1/reviews/${id}`)
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<ReviewDetail>(`/v1/reviews/${id}`)
 
         if (response.status === 200) {
             setReview(response.data)
@@ -67,10 +69,10 @@ export const asyncPostReview = (
     user_id: number,
     product_id: number,
 ) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setPostStatus(null))
 
-        const response = await axios.post('/v1/reviews', {
+        const response = await axios.post<void>('/v1/reviews', {
             rating: rating,
             result: result,
             joined_at: joined_at,
@@ -99,10 +101,10 @@ export const asyncUpdateReview = (
     product_id: number,
     review_id: number,
 ) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setPostStatus(null))
 
-        const response = await axios.put(`/v1/reviews/${review_id}`, {
+        const response = await axios.put<void>(`/v1/reviews/${review_id}`, {
             rating: rating,
             result: result,
             joined_at: joined_at,
@@ -123,10 +125,10 @@ export const asyncUpdateReview = (
 }
 
 export const asyncDeleteReview = (review_id: number) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setPostStatus(null))
 
-        const response = await axios.delete(`/v1/reviews/${review_id}`)
+        const response = await axios.delete<void>(`/v1/reviews/${review_id}`)
 
         if (response.status === 204) {
             dispatch(setPostStatus(true))
@@ -143,10 +145,10 @@ export const asyncPostComment = (
     review_id: number,
     contents: string,
 ) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCommentStatus(null))
 
-        const response = await axios.post('/v1/reviews/comments', {
+        const response = await axios.post<void>('/v1/reviews/comments', {
             user_id: user_id,
             review_id: review_id,
             contents: contents,
@@ -163,10 +165,10 @@ export const asyncPostComment = (
 }
 
 export const asyncLikeReview = (user_id: number, review_id: number) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setLikeStatus(null))
 
-        const response = await axios.put('/v1/likes/reviews', {
+        const response = await axios.put<void>('/v1/likes/reviews', {
             user_id: user_id,
             review_id: review_id,
         })
@@ -182,10 +184,10 @@ export const asyncLikeReview = (user_id: number, review_id: number) => {
 }
 
 export const asyncUnlikeReview = (user_id: number, review_id: number) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setLikeStatus(null))
 
-        const response = await axios.delete('/v1/likes/reviews', {
+        const response = await axios.delete<void>('/v1/likes/reviews', {
             params: {
                 user_id: user_id,
                 review_id: review_id,

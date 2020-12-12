@@ -6,6 +6,9 @@ import {
 } from '../stores/auth'
 import queryString from 'query-string'
 
+import { AppDispatch } from '../stores/index'
+import { CurrentUser } from '../@types'
+
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
@@ -23,10 +26,10 @@ axios.interceptors.response.use(
 
 // 仮登録処理
 export const asyncPreRegister = (email: string) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setPreRegisterStatus(null))
 
-        const response = await axios.post(
+        const response = await axios.post<void>(
             'https://localhost:1443/v1/preregister',
             { email: email },
         )
@@ -47,10 +50,10 @@ export const asyncVerify = (
     setPreRegisterId: (value: number) => void,
     setEmail: (value: string) => void,
 ) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setRegisterStatus(null))
 
-        const response = await axios.post('/v1/register/verify', {
+        const response = await axios.post<{email: string, pre_register_id: number}>('/v1/register/verify', {
             token: query.token,
         })
 
@@ -74,8 +77,8 @@ export const asyncRegister = (
     password: string,
     preRegisterId: number,
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.post('/v1/register', {
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.post<CurrentUser>('/v1/register', {
             account_id: accountId,
             email: email,
             name: name,
@@ -96,8 +99,8 @@ export const asyncRegister = (
 
 // ログイン処理
 export const asyncLogin = (email: string, password: string) => {
-    return async (dispatch: any) => {
-        const response = await axios.post('/v1/login', {
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.post<CurrentUser>('/v1/login', {
             email: email,
             password: password,
         })
@@ -114,8 +117,8 @@ export const asyncLogin = (email: string, password: string) => {
 
 // クッキーログイン & ユーザー情報更新
 export const asyncGetCurrentUser = () => {
-    return async (dispatch: any) => {
-        const response = await axios.get('/v1/currentuser')
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<CurrentUser>('/v1/currentuser')
 
         if (response.status === 200) {
             dispatch(setUser(response.data))

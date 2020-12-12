@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { setApiStatus } from '../stores/error'
-import { UserDetail } from '../@types'
+
+import { AppDispatch } from '../stores/index'
 import { setFollowStatus, setUpdateUserStatus } from '../stores/user'
+import { UserDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -22,7 +23,7 @@ export const asyncGetUser = (
     account_id: string,
     setUser: (value: UserDetail) => void,
 ) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         const response = await axios.get(`/v1/users/${account_id}`)
 
         if (response.status === 200) {
@@ -36,7 +37,7 @@ export const asyncGetUser = (
 }
 
 export const asyncFollow = (following_id: number, followed_id: number) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setFollowStatus(null))
 
         const response = await axios.put('/v1/follow', {
@@ -55,7 +56,7 @@ export const asyncFollow = (following_id: number, followed_id: number) => {
 }
 
 export const asyncUnFollow = (following_id: number, followed_id: number) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setFollowStatus(null))
 
         const response = await axios.delete('/v1/unfollow', {
@@ -81,7 +82,7 @@ export const asyncUpdateUser = (
     account_id: string,
     profile: string,
 ) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setUpdateUserStatus(null))
 
         const response = await axios.put(`/v1/users/${id}`, {

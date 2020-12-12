@@ -1,6 +1,8 @@
 import axios from 'axios'
-import { ProductDetail } from '../@types'
+
+import { AppDispatch } from '../stores/index'
 import { setFocusedProduct, setWannaStatus } from '../stores/product'
+import { ProductDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -20,8 +22,8 @@ axios.interceptors.response.use(
 export const asyncGetProducts = (
     setProducts: (value: ProductDetail[] | null) => void,
 ) => {
-    return async (dispatch: any) => {
-        const response = await axios.get('/v1/products')
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<ProductDetail[]>('/v1/products')
 
         if (response.status === 200) {
             setProducts(response.data)
@@ -34,8 +36,8 @@ export const asyncGetProducts = (
 }
 
 export const asyncGetProduct = (id: string) => {
-    return async (dispatch: any) => {
-        const response = await axios.get(`/v1/products/${id}`)
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get<ProductDetail>(`/v1/products/${id}`)
 
         if (response.status === 200) {
             dispatch(setFocusedProduct(response.data))
@@ -48,10 +50,10 @@ export const asyncGetProduct = (id: string) => {
 }
 
 export const asyncWanna = (user_id: number, product_id: number) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setWannaStatus(null))
 
-        const response = await axios.put('/v1/wanna', {
+        const response = await axios.put<void>('/v1/wanna', {
             user_id: user_id,
             product_id: product_id,
         })
@@ -67,10 +69,10 @@ export const asyncWanna = (user_id: number, product_id: number) => {
 }
 
 export const asyncUnwanna = (user_id: number, product_id: number) => {
-    return async (dispatch: any) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setWannaStatus(null))
 
-        const response = await axios.delete('/v1/wanna', {
+        const response = await axios.delete<void>('/v1/wanna', {
             params: {
                 user_id: user_id,
                 product_id: product_id,
