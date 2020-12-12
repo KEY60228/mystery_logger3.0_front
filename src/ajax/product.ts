@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
-import { setFocusedProduct, setWannaStatus } from '../stores/product'
+import { setFocusedProduct } from '../stores/product'
 import { ProductDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -18,6 +18,12 @@ axios.interceptors.response.use(
     response => response,
     error => error.response || error,
 )
+
+// エラーレスポンスの型
+interface ErrorResponse {
+    errors?: []
+    message: string
+}
 
 export const asyncGetProducts = (
     setProducts: (value: ProductDetail[] | null) => void,
@@ -50,28 +56,24 @@ export const asyncGetProduct = (id: string) => {
 }
 
 export const asyncWanna = (user_id: number, product_id: number) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
-        dispatch(setWannaStatus(null))
-
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.put<void>('/v1/wanna', {
             user_id: user_id,
             product_id: product_id,
         })
 
         if (response.status === 200) {
-            dispatch(setWannaStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setWannaStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }
 
 export const asyncUnwanna = (user_id: number, product_id: number) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
-        dispatch(setWannaStatus(null))
-
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.delete<void>('/v1/wanna', {
             params: {
                 user_id: user_id,
@@ -80,11 +82,11 @@ export const asyncUnwanna = (user_id: number, product_id: number) => {
         })
 
         if (response.status === 204) {
-            dispatch(setWannaStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setWannaStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }
