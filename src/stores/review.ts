@@ -3,14 +3,12 @@ import { ReviewDetail } from '../@types'
 
 export interface ReviewStore {
     focusedReview: ReviewDetail | null
-    commentStatus: boolean | null
     likeStatus: boolean | null
 }
 
 // Stateの初期状態
 const initialState: ReviewStore = {
     focusedReview: null,
-    commentStatus: null,
     likeStatus: null,
 }
 
@@ -22,9 +20,6 @@ const slice = createSlice({
         // action.payloadに渡された引数が入っている
         setFocusedReview: (state, action) => {
             return Object.assign({}, state, { focusedReview: action.payload })
-        },
-        setCommentStatus: (state, action) => {
-            return Object.assign({}, state, { commentStatus: action.payload })
         },
         setLikeStatus: (state, action) => {
             return Object.assign({}, state, { likeStatus: action.payload })
@@ -38,6 +33,5 @@ export default slice.reducer
 // Action Creatorsをエクスポートする
 export const {
     setFocusedReview,
-    setCommentStatus,
     setLikeStatus,
 } = slice.actions

@@ -36,9 +36,6 @@ export const UserDetail: FC = () => {
     const updateUserStatus = useSelector(
         (state: RootState) => state.user.updateUserStatus,
     )
-    const commentStatus = useSelector(
-        (state: RootState) => state.review.commentStatus,
-    )
     const likeStatus = useSelector(
         (state: RootState) => state.review.likeStatus,
     )
@@ -130,7 +127,9 @@ export const UserDetail: FC = () => {
 
     const postComment = (review: ReviewDetail) => {
         if (!currentUser || !review || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+        dispatch(asyncPostComment(currentUser.id, review.id, comment)).then(
+            () => getUser()
+        )
     }
 
     const likeReview = (review: ReviewDetail) => {
@@ -159,12 +158,6 @@ export const UserDetail: FC = () => {
             getUser()
         }
     }, [updateUserStatus])
-
-    useEffect(() => {
-        if (commentStatus) {
-            getUser()
-        }
-    }, [commentStatus])
 
     useEffect(() => {
         if (likeStatus) {

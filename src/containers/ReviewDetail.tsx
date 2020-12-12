@@ -27,9 +27,6 @@ export const ReviewDetail: FC = () => {
     const followStatus = useSelector(
         (state: RootState) => state.user.followStatus,
     )
-    const commentStatus = useSelector(
-        (state: RootState) => state.review.commentStatus,
-    )
     const likeStatus = useSelector(
         (state: RootState) => state.review.likeStatus,
     )
@@ -91,7 +88,11 @@ export const ReviewDetail: FC = () => {
 
     const postComment = () => {
         if (!review || !currentUser || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+        dispatch(asyncPostComment(currentUser.id, review.id, comment)).then(
+            () => getReview()
+        ).catch(
+
+        )
     }
 
     const likeReview = () => {
@@ -113,12 +114,6 @@ export const ReviewDetail: FC = () => {
             dispatch(asyncGetCurrentUser())
         }
     }, [followStatus])
-
-    useEffect(() => {
-        if (commentStatus) {
-            getReview()
-        }
-    }, [commentStatus])
 
     useEffect(() => {
         if (likeStatus) {

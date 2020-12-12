@@ -2,7 +2,6 @@ import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
 import {
-    setCommentStatus,
     setLikeStatus,
 } from '../stores/review'
 import { ReviewDetail } from '../@types'
@@ -146,20 +145,18 @@ export const asyncPostComment = (
     contents: string,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
-        dispatch(setCommentStatus(null))
-
-        const response = await axios.post<void>('/v1/reviews/comments', {
+        const response = await axios.post<void|ErrorResponse>('/v1/reviews/comments', {
             user_id: user_id,
             review_id: review_id,
             contents: contents,
         })
 
         if (response.status === 201) {
-            dispatch(setCommentStatus(true))
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setCommentStatus(false))
+            return Promise.reject(response.data)
         }
     }
 }

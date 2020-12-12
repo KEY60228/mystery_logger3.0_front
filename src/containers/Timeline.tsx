@@ -24,9 +24,6 @@ export const Timeline: FC = () => {
     const followStatus = useSelector(
         (state: RootState) => state.user.followStatus,
     )
-    const commentStatus = useSelector(
-        (state: RootState) => state.review.commentStatus,
-    )
     const likeStatus = useSelector(
         (state: RootState) => state.review.likeStatus,
     )
@@ -98,7 +95,11 @@ export const Timeline: FC = () => {
 
     const postComment = (review: ReviewIndex) => {
         if (!currentUser || !review || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment))
+        dispatch(asyncPostComment(currentUser.id, review.id, comment)).then(
+            () => getReviews()
+        ).catch(
+
+        )
     }
 
     const likeReview = (review: ReviewIndex) => {
@@ -124,12 +125,6 @@ export const Timeline: FC = () => {
             dispatch(asyncGetCurrentUser())
         }
     }, [followStatus])
-
-    useEffect(() => {
-        if (commentStatus) {
-            getReviews()
-        }
-    }, [commentStatus])
 
     useEffect(() => {
         if (likeStatus) {
