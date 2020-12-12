@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
 import {
@@ -13,12 +13,12 @@ import {
 } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const history = useHistory()
 
     const [review, setReview] = useState<ReviewDetailInterface | null>(null)

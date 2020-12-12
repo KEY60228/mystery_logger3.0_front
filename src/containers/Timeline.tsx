@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { ReviewIndex, User } from '../@types'
 import {
@@ -12,12 +12,12 @@ import {
 } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { setFocusedReview } from '../stores/review'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 
 export const Timeline: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認

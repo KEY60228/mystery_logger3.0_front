@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { Product, ReviewDetail, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
@@ -14,13 +14,13 @@ import {
 } from '../ajax/review'
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { setFocusedProduct } from '../stores/product'
 import { setPostStatus } from '../stores/review'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 
 export const ProductDetail: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const { id } = useParams<{ id: string }>()
 
     const product = useSelector(

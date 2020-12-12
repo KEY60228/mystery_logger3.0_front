@@ -1,17 +1,17 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import queryString from 'query-string'
 
 import { asyncRegister, asyncVerify } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { setRegisterStatus } from '../stores/auth'
 import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
 import { Register as RegisterTemp } from '../components/templates/Register'
 
 export const Register: FC = () => {
     const history = useHistory()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const query = queryString.parse(useLocation().search)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)

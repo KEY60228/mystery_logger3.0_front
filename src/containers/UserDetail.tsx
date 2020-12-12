@@ -1,8 +1,8 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import {
     ReviewDetail,
     User,
@@ -26,7 +26,7 @@ import {
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)

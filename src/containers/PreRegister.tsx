@@ -1,13 +1,13 @@
 import React, { FC, useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { asyncPreRegister } from '../ajax/auth'
-import { RootState } from '../stores/index'
+import { RootState, useAppDispatch } from '../stores/index'
 import { setPreRegisterStatus } from '../stores/auth'
 import { PreRegister as PreRegisterTemp } from '../components/templates/PreRegister'
 
 export const PreRegister: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const preRegisterStatus = useSelector(
         (state: RootState) => state.auth.preRegisterStatus,
