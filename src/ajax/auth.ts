@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {
-    setPreRegisterStatus,
     setRegisterStatus,
     setUser,
 } from '../stores/auth'
@@ -24,22 +23,28 @@ axios.interceptors.response.use(
     error => error.response || error,
 )
 
+// エラーレスポンスの型
+interface ErrorResponse {
+    errors?: []
+    message: string
+}
+
 // 仮登録処理
 export const asyncPreRegister = (email: string) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
-        dispatch(setPreRegisterStatus(null))
-
+    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.post<void>(
             'https://localhost:1443/v1/preregister',
             { email: email },
         )
 
         if (response.status === 201) {
-            dispatch(setPreRegisterStatus(true))
+            // 成功時挙動
+            return Promise.resolve()
         }
 
         if (response.status === 422) {
-            dispatch(setPreRegisterStatus(false))
+            // 失敗時挙動
+            return Promise.reject(response.data)
         }
     }
 }
