@@ -36,9 +36,6 @@ export const UserDetail: FC = () => {
     const updateUserStatus = useSelector(
         (state: RootState) => state.user.updateUserStatus,
     )
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
     const commentStatus = useSelector(
         (state: RootState) => state.review.commentStatus,
     )
@@ -112,6 +109,17 @@ export const UserDetail: FC = () => {
                 review.product.id,
                 review.id,
             ),
+        ).then(
+            () => {
+                getUser()
+                setOpenReviewForm(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+            }
+        ).catch(
+
         )
     }
 
@@ -151,17 +159,6 @@ export const UserDetail: FC = () => {
             getUser()
         }
     }, [updateUserStatus])
-
-    useEffect(() => {
-        if (postStatus) {
-            getUser()
-            setOpenReviewForm(false)
-            setRating(0)
-            setResult(0)
-            setJoined_at('')
-            setContents('')
-        }
-    }, [postStatus])
 
     useEffect(() => {
         if (commentStatus) {

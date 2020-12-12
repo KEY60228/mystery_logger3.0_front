@@ -16,7 +16,6 @@ import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
 import { setFocusedProduct } from '../stores/product'
-import { setPostStatus } from '../stores/review'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 
 export const ProductDetail: FC = () => {
@@ -27,9 +26,6 @@ export const ProductDetail: FC = () => {
         (state: RootState) => state.product.focusedProduct,
     )
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
     const followStatus = useSelector(
         (state: RootState) => state.user.followStatus,
     )
@@ -67,6 +63,19 @@ export const ProductDetail: FC = () => {
                 currentUser.id,
                 product.id,
             ),
+        ).then(
+            () => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+                setIsNew(false)
+            }
+        ).catch(
+
         )
     }
 
@@ -97,6 +106,19 @@ export const ProductDetail: FC = () => {
                 product.id,
                 review.id,
             ),
+        ).then(
+            () => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+                setIsNew(false)
+            }
+        ).catch(
+
         )
     }
 
@@ -164,20 +186,6 @@ export const ProductDetail: FC = () => {
             dispatch(setFocusedProduct(null))
         }
     }, [])
-
-    useEffect(() => {
-        if (postStatus) {
-            getProduct()
-            dispatch(asyncGetCurrentUser())
-            setOpen(false)
-            setRating(0)
-            setResult(0)
-            setJoined_at('')
-            setContents('')
-            setIsNew(false)
-            dispatch(setPostStatus(null))
-        }
-    }, [postStatus])
 
     useEffect(() => {
         if (followStatus) {

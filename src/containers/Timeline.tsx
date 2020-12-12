@@ -24,9 +24,6 @@ export const Timeline: FC = () => {
     const followStatus = useSelector(
         (state: RootState) => state.user.followStatus,
     )
-    const postStatus = useSelector(
-        (state: RootState) => state.review.postStatus,
-    )
     const commentStatus = useSelector(
         (state: RootState) => state.review.commentStatus,
     )
@@ -70,6 +67,17 @@ export const Timeline: FC = () => {
                 review.product.id,
                 review.id,
             ),
+        ).then(
+            () => {
+                getReviews()
+                setOpen(false)
+                setRating(0)
+                setResult(0)
+                setJoined_at('')
+                setContents('')
+            }
+        ).catch(
+
         )
     }
 
@@ -110,17 +118,6 @@ export const Timeline: FC = () => {
             dispatch(setFocusedReview(null))
         }
     }, [])
-
-    useEffect(() => {
-        if (postStatus) {
-            getReviews()
-            setOpen(false)
-            setRating(0)
-            setResult(0)
-            setJoined_at('')
-            setContents('')
-        }
-    }, [postStatus])
 
     useEffect(() => {
         if (followStatus) {
