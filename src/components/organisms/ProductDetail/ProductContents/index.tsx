@@ -2,14 +2,14 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Typography, CardMedia } from '@material-ui/core'
 
-import { Product, ProductDetail, User } from '../../../../@types'
+import { Product, ProductDetail, CurrentUser } from '../../../../@types'
 import { Ratings } from '../../../molecules/Ratings'
 import { Buttons } from './Buttons'
 import { ProductProfile } from './ProductProfile'
 
 interface Props {
     product: ProductDetail
-    currentUser: User | null
+    currentUser: CurrentUser | null
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
     edit: () => void

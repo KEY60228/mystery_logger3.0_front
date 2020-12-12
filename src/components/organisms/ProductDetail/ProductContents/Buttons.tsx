@@ -4,11 +4,11 @@ import { Grid, Button, Typography } from '@material-ui/core'
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import QueueIcon from '@material-ui/icons/Queue'
 
-import { Product, ProductDetail, User } from '../../../../@types'
+import { Product, ProductDetail, CurrentUser } from '../../../../@types'
 
 interface Props {
     product: ProductDetail
-    currentUser: User | null
+    currentUser: CurrentUser | null
     setModalOpen: (value: boolean) => void
     setIsNew: (value: boolean) => void
     edit: () => void

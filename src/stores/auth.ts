@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { User } from '../@types'
+import { CurrentUser } from '../@types'
 
 export interface AuthStore {
-    user: User | null
+    user: CurrentUser | null
     preRegisterStatus: boolean | null
     registerStatus: boolean | null
 }

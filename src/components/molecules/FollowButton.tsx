@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
-import { User } from '../../@types'
+import { CurrentUser, User } from '../../@types'
 
 interface Props {
-    currentUser: User
+    currentUser: CurrentUser
     user: User
     follow: (user: User) => void
     unfollow: (user: User) => void

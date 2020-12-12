@@ -4,6 +4,7 @@ import {
     Product,
     ProductDetail as ProductDetailInterface,
     ReviewDetail,
+    CurrentUser,
     User,
 } from '../../@types'
 import { ProductContents } from '../organisms/ProductDetail/ProductContents/'
@@ -13,7 +14,7 @@ import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
 
 interface Props {
-    currentUser: User | null
+    currentUser: CurrentUser | null
     product: ProductDetailInterface
     isNew: boolean
     setIsNew: (value: boolean) => void
