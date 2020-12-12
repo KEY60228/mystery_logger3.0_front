@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
-import { ReviewDetail } from '../@types'
+import { ReviewIndex, ReviewDetail } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -25,15 +25,10 @@ interface ErrorResponse {
 }
 
 export const asyncGetTimeline = (
-    user_id: number,
-    setReviews: (value: ReviewDetail[] | null) => void,
+    setReviews: (value: ReviewIndex[] | null) => void,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
-        const response = await axios.get<ReviewDetail[]>('/v1/reviews', {
-            params: {
-                user_id: user_id, // 仮
-            },
-        })
+        const response = await axios.get<ReviewIndex[]>('/v1/reviews')
 
         if (response.status === 200) {
             setReviews(response.data)
@@ -63,22 +58,21 @@ export const asyncGetReview = (
 }
 
 export const asyncPostReview = (
+    product_id: number,
+    spoil: boolean,
     rating: number,
     result: number,
     joined_at: string | null,
     contents: string | null,
-    user_id: number,
-    product_id: number,
 ) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.post<void>('/v1/reviews', {
+            product_id: product_id,
+            spoil: spoil,
             rating: rating,
             result: result,
             joined_at: joined_at,
             contents: contents,
-            user_id: user_id,
-            product_id: product_id,
-            clear_time: null, // 仮
         })
 
         if (response.status === 201) {
@@ -92,23 +86,20 @@ export const asyncPostReview = (
 }
 
 export const asyncUpdateReview = (
+    review_id: number,
+    spoil: boolean,
     rating: number,
     result: number,
     joined_at: string | null,
     contents: string | null,
-    user_id: number,
-    product_id: number,
-    review_id: number,
 ) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.put<void>(`/v1/reviews/${review_id}`, {
+            spoil: spoil,
             rating: rating,
             result: result,
             joined_at: joined_at,
             contents: contents,
-            user_id: user_id,
-            product_id: product_id,
-            clear_time: null, // 仮
         })
 
         if (response.status === 200) {
@@ -136,13 +127,11 @@ export const asyncDeleteReview = (review_id: number) => {
 }
 
 export const asyncPostComment = (
-    user_id: number,
     review_id: number,
     contents: string,
 ) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
-        const response = await axios.post<void|ErrorResponse>('/v1/reviews/comments', {
-            user_id: user_id,
+        const response = await axios.post<void|ErrorResponse>('/v1/comments/review', {
             review_id: review_id,
             contents: contents,
         })
@@ -157,10 +146,9 @@ export const asyncPostComment = (
     }
 }
 
-export const asyncLikeReview = (user_id: number, review_id: number) => {
+export const asyncLikeReview = (review_id: number) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
-        const response = await axios.put<void>('/v1/likes/reviews', {
-            user_id: user_id,
+        const response = await axios.put<void>('/v1/likes/review', {
             review_id: review_id,
         })
 
@@ -174,11 +162,10 @@ export const asyncLikeReview = (user_id: number, review_id: number) => {
     }
 }
 
-export const asyncUnlikeReview = (user_id: number, review_id: number) => {
+export const asyncUnlikeReview = (review_id: number) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
-        const response = await axios.delete<void>('/v1/likes/reviews', {
+        const response = await axios.delete<void>('/v1/likes/review', {
             params: {
-                user_id: user_id,
                 review_id: review_id,
             },
         })

@@ -55,10 +55,9 @@ export const asyncGetProduct = (id: string) => {
     }
 }
 
-export const asyncWanna = (user_id: number, product_id: number) => {
+export const asyncWanna = (product_id: number) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.put<void>('/v1/wanna', {
-            user_id: user_id,
             product_id: product_id,
         })
 
@@ -72,11 +71,10 @@ export const asyncWanna = (user_id: number, product_id: number) => {
     }
 }
 
-export const asyncUnwanna = (user_id: number, product_id: number) => {
+export const asyncUnwanna = (product_id: number) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.delete<void>('/v1/wanna', {
             params: {
-                user_id: user_id,
                 product_id: product_id,
             },
         })

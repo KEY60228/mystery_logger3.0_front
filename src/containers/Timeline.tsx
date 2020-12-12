@@ -22,6 +22,7 @@ export const Timeline: FC = () => {
     const currentUser = useSelector((state: RootState) => state.auth.user)
     const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認
 
+    const [spoil, setSpoil] = useState<boolean>(false)
     const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
@@ -34,7 +35,7 @@ export const Timeline: FC = () => {
 
     const getReviews = async () => {
         if (!currentUser) return false // 仮
-        dispatch(asyncGetTimeline(currentUser.id, setReviews))
+        dispatch(asyncGetTimeline(setReviews))
     }
 
     const edit = () => {
@@ -50,13 +51,12 @@ export const Timeline: FC = () => {
         if (!currentUser || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
+                review.id,
+                spoil,
                 rating,
                 result,
                 joined_at,
                 contents,
-                currentUser.id,
-                review.product.id,
-                review.id,
             ),
         ).then(
             () => {
@@ -90,7 +90,7 @@ export const Timeline: FC = () => {
 
     const follow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncFollow(currentUser.id, user.id)).then(
+        dispatch(asyncFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
 
@@ -99,7 +99,7 @@ export const Timeline: FC = () => {
 
     const unfollow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncUnFollow(currentUser.id, user.id)).then(
+        dispatch(asyncUnFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
 
@@ -108,7 +108,7 @@ export const Timeline: FC = () => {
 
     const postComment = (review: ReviewIndex) => {
         if (!currentUser || !review || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment)).then(
+        dispatch(asyncPostComment(review.id, comment)).then(
             () => getReviews()
         ).catch(
 
@@ -117,7 +117,7 @@ export const Timeline: FC = () => {
 
     const likeReview = (review: ReviewIndex) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id)).then(
+        dispatch(asyncLikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
                 getReviews()
@@ -129,7 +129,7 @@ export const Timeline: FC = () => {
 
     const unlikeReview = (review: ReviewIndex) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id)).then(
+        dispatch(asyncUnlikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
                 getReviews()
@@ -162,6 +162,8 @@ export const Timeline: FC = () => {
                         setResult={setResult}
                         joined_at={joined_at}
                         setJoined_at={setJoined_at}
+                        spoil={spoil}
+                        setSpoil={setSpoil}
                         contents={contents}
                         setContents={setContents}
                         edit={edit}

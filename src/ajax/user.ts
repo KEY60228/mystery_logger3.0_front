@@ -41,10 +41,9 @@ export const asyncGetUser = (
     }
 }
 
-export const asyncFollow = (following_id: number, followed_id: number) => {
+export const asyncFollow = (followed_id: number) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.put('/v1/follow', {
-            following_id: following_id,
             followed_id: followed_id,
         })
 
@@ -58,11 +57,10 @@ export const asyncFollow = (following_id: number, followed_id: number) => {
     }
 }
 
-export const asyncUnFollow = (following_id: number, followed_id: number) => {
+export const asyncUnFollow = (followed_id: number) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
-        const response = await axios.delete('/v1/unfollow', {
+        const response = await axios.delete('/v1/follow', {
             params: {
-                following_id: following_id,
                 followed_id: followed_id,
             },
         })
@@ -78,13 +76,12 @@ export const asyncUnFollow = (following_id: number, followed_id: number) => {
 }
 
 export const asyncUpdateUser = (
-    id: number,
     name: string,
     account_id: string,
     profile: string,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
-        const response = await axios.put(`/v1/users/${id}`, {
+        const response = await axios.put(`/v1/users`, {
             name: name,
             account_id: account_id,
             profile: profile,

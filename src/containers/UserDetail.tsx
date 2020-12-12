@@ -39,6 +39,7 @@ export const UserDetail: FC = () => {
 
     const [openUserForm, setOpenUserForm] = useState<boolean>(false)
 
+    const [spoil, setSpoil] = useState<boolean>(false)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<string | null>('')
@@ -62,7 +63,7 @@ export const UserDetail: FC = () => {
 
     const updateUser = () => {
         if (!user) return false // 仮
-        dispatch(asyncUpdateUser(user.id, name, accountId, profile)).then(
+        dispatch(asyncUpdateUser(name, accountId, profile)).then(
             () => {
                 getUser()
                 setOpenUserForm(false)
@@ -74,7 +75,7 @@ export const UserDetail: FC = () => {
 
     const follow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncFollow(currentUser.id, user.id)).then(
+        dispatch(asyncFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
 
@@ -83,7 +84,7 @@ export const UserDetail: FC = () => {
 
     const unfollow = (user: User) => {
         if (!currentUser || !user) return false // 仮
-        dispatch(asyncUnFollow(currentUser.id, user.id)).then(
+        dispatch(asyncUnFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
 
@@ -103,13 +104,12 @@ export const UserDetail: FC = () => {
         if (!currentUser || !review) return false // 仮
         dispatch(
             asyncUpdateReview(
+                review.id,
+                spoil,
                 rating,
                 result,
                 joined_at,
                 contents,
-                currentUser.id,
-                review.product.id,
-                review.id,
             ),
         ).then(
             () => {
@@ -141,14 +141,14 @@ export const UserDetail: FC = () => {
 
     const postComment = (review: ReviewDetail) => {
         if (!currentUser || !review || !comment) return false // 仮
-        dispatch(asyncPostComment(currentUser.id, review.id, comment)).then(
+        dispatch(asyncPostComment(review.id, comment)).then(
             () => getUser()
         )
     }
 
     const likeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncLikeReview(currentUser.id, review.id)).then(
+        dispatch(asyncLikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
                 getUser()
@@ -160,7 +160,7 @@ export const UserDetail: FC = () => {
 
     const unlikeReview = (review: ReviewDetail) => {
         if (!currentUser || !review) return false // 仮
-        dispatch(asyncUnlikeReview(currentUser.id, review.id)).then(
+        dispatch(asyncUnlikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
                 getUser()
@@ -205,6 +205,8 @@ export const UserDetail: FC = () => {
                         setResult={setResult}
                         joined_at={joined_at}
                         setJoined_at={setJoined_at}
+                        spoil={spoil}
+                        setSpoil={setSpoil}
                         contents={contents}
                         setContents={setContents}
                         comment={comment}
