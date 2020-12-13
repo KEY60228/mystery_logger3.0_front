@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
 import { setFocusedProduct } from '../stores/product'
-import { ProductDetail } from '../@types'
+import { ProductDetail, ProductIndex } from '../@types'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -26,10 +26,10 @@ interface ErrorResponse {
 }
 
 export const asyncGetProducts = (
-    setProducts: (value: ProductDetail[] | null) => void,
+    setProducts: (value: ProductIndex[] | null) => void,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
-        const response = await axios.get<ProductDetail[]>('/v1/products')
+        const response = await axios.get<ProductIndex[]>('/v1/products')
 
         if (response.status === 200) {
             setProducts(response.data)

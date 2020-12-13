@@ -30,6 +30,19 @@ export const Search: FC<Props> = props => {
                     )
                     if (result === undefined) return false
                 }
+                // 仮 検索ロジック。もう少し精度あげる方法あるかも…？
+                // 作品名、主催団体サービス名、会場名でフィルター
+                if (
+                    keywords
+                    && product.name.indexOf(keywords) === -1
+                    && product.kana_name.indexOf(keywords) === -1
+                    && product.organizer.service_name.indexOf(keywords) === -1
+                    && product.organizer.kana_service_name.indexOf(keywords) === -1
+                    && product.performances.filter(performance => performance.venue.name.indexOf(keywords) !== -1).length === 0
+                    && product.performances.filter(performance => performance.venue.kana_name.indexOf(keywords) !== -1).length === 0
+                ) {
+                    return false
+                }
                 return true
             }),
         )
