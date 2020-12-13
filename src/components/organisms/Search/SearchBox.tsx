@@ -37,43 +37,51 @@ const useStyles = makeStyles((theme: Theme) =>
 export const SearchBox: FC<Props> = props => {
     const classes = useStyles()
 
+    const onClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        ev.preventDefault()
+        props.search()
+    } 
+
     return (
         <>
             <Card className={classes.root}>
-                <Grid container direction="column" alignItems="center">
-                    <Input
-                        placeholder="Keywords"
-                        value={props.keywords}
-                        onChange={ev => props.setKeywords(ev.target.value)}
-                        className={classes.form}
-                    />
-                    <SelectForm
-                        value={props.organizer}
-                        setValue={props.setOrganizer}
-                        choices={props.organizers}
-                        className={{ width: '200px', margin: '8px' }}
-                    />
-                    <SelectForm
-                        value={props.venue}
-                        setValue={props.setVenue}
-                        choices={props.venues}
-                        className={{ width: '200px', margin: '8px' }}
-                    />
-                    <SelectForm
-                        value={props.category}
-                        setValue={props.setCategory}
-                        choices={props.categories}
-                        className={{ width: '200px', margin: '8px' }}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={props.search}
-                        className={classes.button}
-                    >
-                        検索
-                    </Button>
-                </Grid>
+                <form>
+                    <Grid container direction="column" alignItems="center">
+                        <Input
+                            placeholder="Keywords"
+                            value={props.keywords}
+                            onChange={ev => props.setKeywords(ev.target.value)}
+                            className={classes.form}
+                        />
+                        <SelectForm
+                            value={props.organizer}
+                            setValue={props.setOrganizer}
+                            choices={props.organizers}
+                            className={{ width: '200px', margin: '8px' }}
+                        />
+                        <SelectForm
+                            value={props.venue}
+                            setValue={props.setVenue}
+                            choices={props.venues}
+                            className={{ width: '200px', margin: '8px' }}
+                        />
+                        <SelectForm
+                            value={props.category}
+                            setValue={props.setCategory}
+                            choices={props.categories}
+                            className={{ width: '200px', margin: '8px' }}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={onClick}
+                            className={classes.button}
+                        >
+                            検索
+                        </Button>
+                    </Grid>
+                </form>
             </Card>
         </>
     )

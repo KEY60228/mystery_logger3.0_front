@@ -30,6 +30,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export const PreRegisterForm: FC<Props> = props => {
     const classes = useStyles()
 
+    const onClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        ev.preventDefault()
+        props.preRegister()
+    }
+
     return (
         <Card className={classes.root}>
             <Grid
@@ -41,26 +46,29 @@ export const PreRegisterForm: FC<Props> = props => {
                 <Typography variant="h5" className={classes.subtitle}>
                     会員登録
                 </Typography>
-                <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                >
-                    <Form
-                        label="Email"
-                        value={props.email}
-                        setValue={props.setEmail}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={props.preRegister}
-                        className={classes.button}
+                <form>
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
                     >
-                        Submit
-                    </Button>
-                </Grid>
+                        <Form
+                            label="Email"
+                            value={props.email}
+                            setValue={props.setEmail}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={onClick}
+                            className={classes.button}
+                        >
+                            Submit
+                        </Button>
+                    </Grid>
+                </form>
             </Grid>
         </Card>
     )

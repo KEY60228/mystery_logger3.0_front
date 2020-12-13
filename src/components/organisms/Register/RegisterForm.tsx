@@ -35,6 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export const RegisterForm: FC<Props> = props => {
     const classes = useStyles()
 
+    const onClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        ev.preventDefault()
+        props.register()
+    }
+
     return (
         <Card className={classes.root}>
             <Grid
@@ -68,9 +73,10 @@ export const RegisterForm: FC<Props> = props => {
                             setPassword={props.setPassword}
                         />
                         <Button
+                            type="submit"
                             variant="contained"
                             color="primary"
-                            onClick={props.register}
+                            onClick={onClick}
                             className={classes.button}
                         >
                             Submit

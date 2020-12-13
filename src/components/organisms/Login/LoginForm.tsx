@@ -33,6 +33,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export const LoginForm: FC<Props> = props => {
     const classes = useStyles()
 
+    const onClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        ev.preventDefault()
+        props.login()
+    }
+
     return (
         <Card className={classes.root}>
             <Grid
@@ -44,30 +49,33 @@ export const LoginForm: FC<Props> = props => {
                 <Typography variant="h5" className={classes.subtitle}>
                     ログイン
                 </Typography>
-                <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                >
-                    <Form
-                        label="Email"
-                        value={props.email}
-                        setValue={props.setEmail}
-                    />
-                    <PasswordForm
-                        password={props.password}
-                        setPassword={props.setPassword}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={props.login}
-                        className={classes.button}
+                <form>
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
                     >
-                        Submit
-                    </Button>
-                </Grid>
+                        <Form
+                            label="Email"
+                            value={props.email}
+                            setValue={props.setEmail}
+                        />
+                        <PasswordForm
+                            password={props.password}
+                            setPassword={props.setPassword}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            onClick={onClick}
+                            className={classes.button}
+                        >
+                            Submit
+                        </Button>
+                    </Grid>
+                </form>
             </Grid>
         </Card>
     )
