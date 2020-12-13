@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { RootState, useAppDispatch } from '../stores/index'
@@ -15,7 +15,7 @@ import {
     asyncUnFollow,
     asyncUpdateUser,
 } from '../ajax/user'
-import { asyncGetCurrentUser } from '../ajax/auth'
+import { asyncGetCurrentUser, asyncLogout } from '../ajax/auth'
 import {
     asyncDeleteReview,
     asyncLikeReview,
@@ -27,6 +27,7 @@ import {
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
     const dispatch = useAppDispatch()
+    const history = useHistory()
 
     const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
@@ -170,6 +171,13 @@ export const UserDetail: FC = () => {
         )
     }
 
+    const logout = () => {
+        if (!currentUser) return false // 仮
+        dispatch(asyncLogout()).then(
+            () => history.push('/login')
+        )
+    }
+
     useEffect(() => {
         setUser(null)
         getUser()
@@ -214,6 +222,7 @@ export const UserDetail: FC = () => {
                         postComment={postComment}
                         likeReview={likeReview}
                         unlikeReview={unlikeReview}
+                        logout={logout}
                     />
                 </>
             )}

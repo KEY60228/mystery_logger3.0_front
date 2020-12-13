@@ -15,6 +15,7 @@ import { TransitionProps } from '@material-ui/core/transitions'
 
 import { UserDetail } from '../../../../@types'
 import { UserFormHeader } from './UserFormHeader'
+import { LogoutButton } from './LogoutButton'
 
 interface Props {
     user: UserDetail
@@ -28,6 +29,7 @@ interface Props {
     profile: string
     setProfile: (value: string) => void
     className?: ClassProps
+    logout: () => void
 }
 
 interface ClassProps {
@@ -151,6 +153,9 @@ export const UserForm: FC<Props> = props => {
                     </FormControl>
                 </Grid>
             </Card>
+            <LogoutButton
+                logout={props.logout}
+            />
         </Dialog>
     )
 }

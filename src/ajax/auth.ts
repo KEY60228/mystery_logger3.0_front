@@ -131,3 +131,14 @@ export const asyncGetCurrentUser = () => {
         }
     }
 }
+
+// ログアウト
+export const asyncLogout = () => {
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.post<void>('/v1/logout')
+
+        if (response.status === 200) {
+            dispatch(setUser(null))
+        }
+    }
+}

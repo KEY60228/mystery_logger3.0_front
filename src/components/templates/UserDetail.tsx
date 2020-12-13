@@ -49,6 +49,7 @@ interface Props {
     postComment: (review: ReviewDetail) => void
     likeReview: (review: ReviewDetail) => void
     unlikeReview: (review: ReviewDetail) => void
+    logout: () => void
 }
 
 export const UserDetail: FC<Props> = props => {
@@ -99,6 +100,7 @@ export const UserDetail: FC<Props> = props => {
                 setAccountId={props.setAccountId}
                 profile={props.profile}
                 setProfile={props.setProfile}
+                logout={props.logout}
             />
             {props.review && (
                 <ReviewForm
