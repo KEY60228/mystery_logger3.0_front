@@ -76,15 +76,14 @@ export const asyncUnFollow = (followed_id: number) => {
 }
 
 export const asyncUpdateUser = (
-    name: string,
-    account_id: string,
-    profile: string,
+    formData: FormData,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
-        const response = await axios.put(`/v1/users`, {
-            name: name,
-            account_id: account_id,
-            profile: profile,
+        // PHPの仕様でputがFormDataを受け取れないらしいので偽装処理
+        const response = await axios.post(`/v1/users`, formData, {
+            headers: {
+                'X-HTTP-Method-Override': 'PUT'
+            }
         })
 
         if (response.status === 200) {

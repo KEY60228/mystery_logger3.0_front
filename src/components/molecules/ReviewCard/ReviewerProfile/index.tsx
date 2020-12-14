@@ -77,7 +77,7 @@ export const ReviewerProfile: FC<Props> = props => {
                 className={classes.imgArea}
             >
                 <CardMedia
-                    image={`/user_img/${props.review.user?.image_name}`}
+                    image={`https://localhost:1443${props.review.user?.image_name}`}
                     className={classes.img}
                 />
             </CardActionArea>

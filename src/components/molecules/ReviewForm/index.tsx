@@ -150,7 +150,7 @@ export const ReviewForm: FC<Props> = props => {
                         onChange={ev =>
                             props.setContents(ev.currentTarget.value)
                         }
-                        value={props.contents}
+                        value={props.contents || ''}
                         fullWidth
                         variant="outlined"
                         rows={12}

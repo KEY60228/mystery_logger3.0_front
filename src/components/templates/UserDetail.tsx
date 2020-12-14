@@ -25,6 +25,8 @@ interface Props {
     setAccountId: (value: string) => void
     profile: string
     setProfile: (value: string) => void
+    image_name: File | null
+    setImage_name: (value: File | null) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
     editUser: () => void
@@ -100,6 +102,8 @@ export const UserDetail: FC<Props> = props => {
                 setAccountId={props.setAccountId}
                 profile={props.profile}
                 setProfile={props.setProfile}
+                image_name={props.image_name}
+                setImage_name={props.setImage_name}
                 logout={props.logout}
             />
             {props.review && (

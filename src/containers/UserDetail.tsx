@@ -37,6 +37,7 @@ export const UserDetail: FC = () => {
     const [name, setName] = useState<string>('')
     const [accountId, setAccountId] = useState<string>('')
     const [profile, setProfile] = useState<string>('')
+    const [image_name, setImage_name] = useState<File|null>(null)
 
     const [openUserForm, setOpenUserForm] = useState<boolean>(false)
 
@@ -64,7 +65,16 @@ export const UserDetail: FC = () => {
 
     const updateUser = () => {
         if (!user) return false // 仮
-        dispatch(asyncUpdateUser(name, accountId, profile)).then(
+
+        const formData = new FormData()
+        formData.append('name', name)
+        formData.append('account_id', accountId)
+        formData.append('profile', profile)
+        if (image_name !== null) {
+            formData.append('image_name', image_name)
+        }
+
+        dispatch(asyncUpdateUser(formData)).then(
             () => {
                 getUser()
                 setOpenUserForm(false)
@@ -198,6 +208,8 @@ export const UserDetail: FC = () => {
                         setAccountId={setAccountId}
                         profile={profile}
                         setProfile={setProfile}
+                        image_name={image_name}
+                        setImage_name={setImage_name}
                         follow={follow}
                         unfollow={unfollow}
                         editUser={editUser}

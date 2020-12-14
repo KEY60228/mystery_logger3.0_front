@@ -28,6 +28,8 @@ interface Props {
     setAccountId: (value: string) => void
     profile: string
     setProfile: (value: string) => void
+    image_name: File | null
+    setImage_name: (value: File | null) => void
     className?: ClassProps
     logout: () => void
 }
@@ -70,16 +72,18 @@ export const UserForm: FC<Props> = props => {
 
     const [preview, setPreview] = useState<any>(null)
 
-    const onFileChange = (ev: any) => {
+    const onFileChange = (ev: React.ChangeEvent<HTMLInputElement>): false|void => {
         // 何も選択されていない場合
-        if (ev.target.files.length === 0) {
+        if (ev.target.files === null || ev.target.files.length === 0) {
             setPreview('')
+            props.setImage_name(null)
             return false
         }
 
         // ファイルが画像でない場合
-        if (!ev.target.files[0].type.match('image.*')) {
+        if (ev.target.files[0].type.match('image.*') === null) {
             setPreview('')
+            props.setImage_name(null)
             return false
         }
 
@@ -95,6 +99,8 @@ export const UserForm: FC<Props> = props => {
             // previewに読み込み結果(データURL)を代入する
             setPreview(e.target?.result)
         }
+
+        props.setImage_name(ev.target.files[0])
     }
 
     return (
@@ -116,7 +122,7 @@ export const UserForm: FC<Props> = props => {
                     )}
                     {!preview && (
                         <CardMedia
-                            image={`/user_img/${props.user.image_name}`}
+                            image={`https://localhost:1443${props.user.image_name}`}
                             className={classes.media}
                         />
                     )}
