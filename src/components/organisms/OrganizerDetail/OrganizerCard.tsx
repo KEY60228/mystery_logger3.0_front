@@ -41,16 +41,14 @@ export const OrganizerCard: FC<Props> = (props) => {
                     image={'/organizer_img/noimage.png'} // 仮
                     className={classes.img}
                 />
-                {/* <Typography>
-                    {props.organizer.name}
-                </Typography> */}
-                <Typography className={classes.title}>リアル脱出ゲーム</Typography>
-                {/* { props.organizer.company_name &&
+                <Typography>
+                    {props.organizer.service_name}
+                </Typography>
+                { props.organizer.company_name &&
                     <Typography>
                         {`produced by ${props.organizer.company_name}`}
                     </Typography>
-                } */}
-                <Typography className={classes.company}>produced by 株式会社SCRUP</Typography>
+                }
                 { props.organizer.website &&
                     <Typography>
                         {`Website: ${props.organizer.website}`}
