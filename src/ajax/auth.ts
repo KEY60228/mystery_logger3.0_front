@@ -14,7 +14,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.withCredentials = true
 
 // デフォルトURLの設定
-axios.defaults.baseURL = 'https://localhost:1443'
+axios.defaults.baseURL = process.env.API_BASEURL
 
 // エラーレスポンスが返って来た場合、レスポンスオブジェクトを返す
 axios.interceptors.response.use(
@@ -32,7 +32,7 @@ interface ErrorResponse {
 export const asyncPreRegister = (email: string) => {
     return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
         const response = await axios.post<void>(
-            'https://localhost:1443/v1/preregister',
+            '/v1/preregister',
             { email: email },
         )
 

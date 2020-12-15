@@ -122,7 +122,7 @@ export const UserForm: FC<Props> = props => {
                     )}
                     {!preview && (
                         <CardMedia
-                            image={`https://localhost:1443${props.user.image_name}`}
+                            image={`${process.env.API_BASEURL}${props.user.image_name}`}
                             className={classes.media}
                         />
                     )}

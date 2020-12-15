@@ -61,7 +61,7 @@ export const FollowCard: FC<Props> = props => {
         <Card className={classes.root}>
             <Grid container wrap="nowrap">
                 <CardMedia
-                    image={`https://localhost:1443${props.followUser.image_name}`}
+                    image={`${process.env.API_BASEURL}${props.followUser.image_name}`}
                     onClick={onClick}
                     className={classes.media}
                 />

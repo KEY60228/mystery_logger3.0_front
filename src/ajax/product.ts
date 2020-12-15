@@ -11,7 +11,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.withCredentials = true
 
 // デフォルトURLの設定
-axios.defaults.baseURL = 'https://localhost:1443'
+axios.defaults.baseURL = process.env.API_BASEURL
 
 // エラーレスポンスが返って来た場合、レスポンスオブジェクトを返す
 axios.interceptors.response.use(

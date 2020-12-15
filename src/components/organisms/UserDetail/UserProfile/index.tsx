@@ -59,7 +59,7 @@ export const UserProfile: FC<Props> = props => {
         <Card className={classes.root}>
             <Grid container justify="space-around" alignItems="center">
                 <CardMedia
-                    image={`https://localhost:1443${props.user.image_name}`}
+                    image={`${process.env.API_BASEURL}${props.user.image_name}`}
                     className={classes.media}
                 />
                 <UserCounters
