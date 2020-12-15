@@ -100,6 +100,15 @@ export const Search: FC<Props> = props => {
         })
     categories.unshift({ id: 0, name: 'カテゴリーを選択' })
 
+    const sortProductsByRandom = () => {
+        if (!results) return
+        setResults(
+            results.sort((a, b) => {
+                return Math.random() - Math.random()
+            }).slice()
+        )
+    }
+
     // レビュー数でソート
     const sortProductsByReviewsCount = () => {
         if (!results) return
@@ -187,6 +196,7 @@ export const Search: FC<Props> = props => {
                 setVenue={setVenue}
             />
             <SortBox
+                sortProductsByRandom={sortProductsByRandom}
                 sortProductsByReviewsCount={sortProductsByReviewsCount}
                 sortProductsByAvgRatings={sortProductsByAvgRatings}
                 sortProductsBySuccessRatesDesc={sortProductsBySuccessRatesDesc}

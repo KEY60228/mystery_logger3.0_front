@@ -3,6 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Grid, MenuItem, Select, Typography } from '@material-ui/core'
 
 interface Props {
+    sortProductsByRandom: () => void
     sortProductsByReviewsCount: () => void
     sortProductsByAvgRatings: () => void
     sortProductsBySuccessRatesDesc: () => void
@@ -31,7 +32,7 @@ export const SortBox: FC<Props> = props => {
         {
             id: 0,
             name: 'おすすめ順',
-            onClick: () => console.log(),
+            onClick: props.sortProductsByRandom
         },
         {
             id: 1,
