@@ -13,6 +13,7 @@ interface ReviewWithProduct extends Review {
 interface Props {
     review: ReviewWithProduct
     productTitle?: boolean
+    getSpoiledContents?: () => void
     className?: ClassProps
 }
 
@@ -27,6 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
         }),
         contents: {
             whiteSpace: 'pre-wrap',
+        },
+        spoil: {
+            color: 'red',
+            fontSize: '12px',
         },
         remarks: {
             color: 'grey',
@@ -76,7 +81,16 @@ export const ContentsWithActionArea: FC<Props> = props => {
                 </Typography>
             )}
             <Box className={classes.contents}>
-                <Typography variant="body2">{props.review.contents}</Typography>
+                { !props.review.spoil &&
+                    <Typography variant="body2">
+                        {props.review.exposed_contents}
+                    </Typography>
+                }
+                { props.review.spoil &&
+                    <Typography variant="body2" onClick={props.getSpoiledContents} className={classes.spoil}>
+                        ※ネタバレを表示する
+                    </Typography>
+                }
             </Box>
         </CardActionArea>
     )

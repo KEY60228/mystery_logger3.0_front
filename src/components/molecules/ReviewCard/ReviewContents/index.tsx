@@ -18,6 +18,7 @@ interface Props {
     productCard?: boolean
     productTitle?: boolean
     cardActionArea?: boolean
+    getSpoiledContents?: () => void
     className?: ClassProps
 }
 
@@ -42,6 +43,7 @@ export const ReviewContents: FC<Props> = props => {
                         <WithoutProductCardWithActionArea
                             review={props.review}
                             productTitle={props.productTitle}
+                            getSpoiledContents={props.getSpoiledContents}
                             className={props.className}
                         />
                     )}
@@ -49,6 +51,7 @@ export const ReviewContents: FC<Props> = props => {
                         <WithoutProductCardWithoutActionArea
                             review={props.review}
                             productTitle={props.productTitle}
+                            getSpoiledContents={props.getSpoiledContents}
                         />
                     )}
                 </Box>
@@ -64,6 +67,7 @@ export const ReviewContents: FC<Props> = props => {
                         <WithProductCardWithActionArea
                             review={props.review}
                             productTitle={props.productTitle}
+                            getSpoiledContents={props.getSpoiledContents}
                             className={props.className}
                         />
                     )}
@@ -71,6 +75,7 @@ export const ReviewContents: FC<Props> = props => {
                         <WithProductCardWithoutActionArea
                             review={props.review}
                             productTitle={props.productTitle}
+                            getSpoiledContents={props.getSpoiledContents}
                         />
                     )}
                     <ProductCardS product={props.review.product} />

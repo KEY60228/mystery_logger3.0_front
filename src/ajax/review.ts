@@ -179,3 +179,24 @@ export const asyncUnlikeReview = (review_id: number) => {
         }
     }
 }
+
+export const asyncGetSpoiledContents = (
+    review_id: number,
+    setReview: (value: ReviewDetail) => void
+) => {
+    return async (dispatch: AppDispatch): Promise<void> => {
+        const response = await axios.get(`/v1/spoil/${review_id}`)
+
+        if (response.status === 200) {
+            setReview(response.data)
+        }
+
+        if (response.status === 401) {
+            return Promise.reject(response.data)
+        }
+
+        if (response.status === 422) {
+            return Promise.reject(response.data)
+        }
+    }
+}

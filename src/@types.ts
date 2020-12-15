@@ -56,6 +56,7 @@ export interface Review {
     updated_at: string // 更新時
     review_comments_count: number // ついたコメントの数
     review_likes_count: number // ついたLIKEの数
+    exposed_contents: string | null // レビュー内容 (ネタバレなし or 許可されたもの)
 
     retweet_count: number // 仮
 }

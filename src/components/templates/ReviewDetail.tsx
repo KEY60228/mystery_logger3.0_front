@@ -32,6 +32,7 @@ interface Props {
     postComment: () => void
     likeReview: () => void
     unlikeReview: () => void
+    getSpoiledContents: () => void
 }
 
 export const ReviewDetail: FC<Props> = props => {
@@ -56,6 +57,7 @@ export const ReviewDetail: FC<Props> = props => {
                 unlikeReview={props.unlikeReview}
                 open={commentOpen}
                 setOpen={setCommentOpen}
+                getSpoiledContents={props.getSpoiledContents}
             />
             {props.review.review_comments && (
                 <ReviewComments comments={props.review.review_comments} />

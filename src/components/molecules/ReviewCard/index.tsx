@@ -42,6 +42,7 @@ interface Props {
     unlikeReview: (review: ReviewDetail) => void
     open: number | false
     setOpen: (value: number | false) => void
+    getSpoiledContents?: () => void
     className?: ClassProps
 }
 
@@ -100,6 +101,7 @@ export const ReviewCard: FC<Props> = props => {
                 productCard={props.productCard}
                 productTitle={props.productTitle}
                 cardActionArea={props.cardActionArea}
+                getSpoiledContents={props.getSpoiledContents}
                 className={props.productCard ? { minHeight: '200px' } : {}}
             />
             <Grid container justify="space-around" className={classes.icons}>

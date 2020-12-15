@@ -6,6 +6,7 @@ import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
 import {
     asyncDeleteReview,
     asyncGetReview,
+    asyncGetSpoiledContents,
     asyncLikeReview,
     asyncPostComment,
     asyncUnlikeReview,
@@ -125,6 +126,15 @@ export const ReviewDetail: FC = () => {
         )
     }
 
+    const getSpoiledContents = () => {
+        if (!review) return false // 仮
+        dispatch(asyncGetSpoiledContents(review.id, setReview)).then(
+
+        ).catch(
+
+        )
+    }
+
     useEffect(() => {
         getReview()
     }, [])
@@ -156,6 +166,7 @@ export const ReviewDetail: FC = () => {
                     postComment={postComment}
                     likeReview={likeReview}
                     unlikeReview={unlikeReview}
+                    getSpoiledContents={getSpoiledContents}
                 />
             )}
             {!review && <div>loading</div>}
