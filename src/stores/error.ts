@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 export interface ErrorStore {
-    apiStatus: boolean | null // 仮
+    code: number | null
 }
 
 // Stateの初期状態
 const initialState: ErrorStore = {
-    apiStatus: null, // 仮
+    code: null,
 }
 
 // Sliceを生成する
@@ -15,8 +15,8 @@ const slice = createSlice({
     initialState, // Stateの初期状態 (上で定義)
     reducers: {
         // action.payloadに渡された引数が入っている
-        setApiStatus: (state, action) => {
-            return Object.assign({}, state, { apiStatus: action.payload })
+        setCode: (state, action) => {
+            return Object.assign({}, state, { code: action.payload })
         },
     },
 })
@@ -25,4 +25,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setApiStatus } = slice.actions
+export const { setCode } = slice.actions

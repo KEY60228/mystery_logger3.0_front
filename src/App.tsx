@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { CssBaseline } from '@material-ui/core'
 
+import { useAppDispatch } from './stores/index'
 import { asyncGetCurrentUser } from './ajax/auth'
+
 import { GuestRoute } from './RouteComponents/GuestRoute'
 import { PrivateRoute } from './RouteComponents/PrivateRoute'
 import { Header } from './components/organisms/Header'
@@ -21,8 +22,12 @@ import { OrganizerDetail } from './containers/OrganizerDetail'
 import { VenueDetail } from './containers/VenueDetail'
 import { Accompanies } from './containers/Accompanies'
 
+import { ErrorHandler } from './ErrorHandler/ErrorHandler'
+import { SystemErrorPage } from './ErrorHandler/SystemErrorPage'
+import { NotFoundPage } from './ErrorHandler/NotFoundPage'
+
 const App: FC = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(asyncGetCurrentUser())
@@ -32,6 +37,7 @@ const App: FC = () => {
         <>
             <CssBaseline />
             <BrowserRouter>
+                <ErrorHandler />
                 <Header />
                 <Switch>
                     <Route path="/" exact children={<TopPage />} />
@@ -52,6 +58,8 @@ const App: FC = () => {
                     <Route path="/organizers/:id" children={<OrganizerDetail />} />
                     <Route path="/venues/:id" children={<VenueDetail />} />
                     <Route path="/accompany" children={<Accompanies />} />
+                    <Route path="/404" children={<NotFoundPage />} />
+                    <Route path="/500" children={<SystemErrorPage />} />
                 </Switch>
                 <BottomNav />
             </BrowserRouter>
