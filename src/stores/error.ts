@@ -2,11 +2,21 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export interface ErrorStore {
     code: number | null
+    message: ErrorResponse | null
+}
+
+interface ErrorResponse {
+    errors?: {
+        email?: string[]
+        password?: string[]
+    }
+    message: string
 }
 
 // Stateの初期状態
 const initialState: ErrorStore = {
     code: null,
+    message: null,
 }
 
 // Sliceを生成する
@@ -18,6 +28,9 @@ const slice = createSlice({
         setCode: (state, action) => {
             return Object.assign({}, state, { code: action.payload })
         },
+        setMessage: (state, action) => {
+            return Object.assign({}, state, { message: action.payload})
+        },
     },
 })
 
@@ -25,4 +38,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setCode } = slice.actions
+export const { setCode, setMessage } = slice.actions

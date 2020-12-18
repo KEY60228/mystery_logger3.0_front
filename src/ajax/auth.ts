@@ -6,7 +6,7 @@ import queryString from 'query-string'
 
 import { AppDispatch } from '../stores/index'
 import { CurrentUser } from '../@types'
-import { setCode } from '../stores/error'
+import { setCode, setMessage } from '../stores/error'
 import { CREATED, NO_CONTENT, OK, UNPROCESSABLE_ENTITY } from '../util'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -28,7 +28,7 @@ axios.interceptors.response.use(
 export const asyncPreRegister = (email: string) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
-        
+
         const response = await axios.post<void>(
             '/v1/preregister',
             { email: email },
@@ -41,11 +41,13 @@ export const asyncPreRegister = (email: string) => {
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            dispatch(setMessage(response.data))
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
-        return Promise.reject(response.data)
+        dispatch(setMessage(response.data))
+        return Promise.reject()
     }
 }
 

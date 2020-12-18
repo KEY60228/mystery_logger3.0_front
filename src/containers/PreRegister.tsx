@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 import { asyncPreRegister } from '../ajax/auth'
 import { useAppDispatch } from '../stores/index'
 import { PreRegister as PreRegisterTemp } from '../components/templates/PreRegister'
+import { setMessage } from '../stores/error'
 
 export const PreRegister: FC = () => {
     const dispatch = useAppDispatch()
@@ -13,10 +14,12 @@ export const PreRegister: FC = () => {
     const preRegister = () => {
         dispatch(asyncPreRegister(email)).then(
             () => setOpen(true) // 成功時挙動
-        ).catch(
-            (error) => console.log(error) // 失敗時挙動
-        )
+        ).catch()
     }
+
+    useEffect(() => {
+        dispatch(setMessage(null))
+    }, [])
 
     return (
         <PreRegisterTemp
