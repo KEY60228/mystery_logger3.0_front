@@ -6,6 +6,8 @@ import queryString from 'query-string'
 
 import { AppDispatch } from '../stores/index'
 import { CurrentUser } from '../@types'
+import { setCode } from '../stores/error'
+import { CREATED, NO_CONTENT, OK, UNPROCESSABLE_ENTITY } from '../util'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -22,29 +24,28 @@ axios.interceptors.response.use(
     error => error.response || error,
 )
 
-// エラーレスポンスの型
-interface ErrorResponse {
-    errors?: []
-    message: string
-}
-
 // 仮登録処理
 export const asyncPreRegister = (email: string) => {
-    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+    return async (dispatch: AppDispatch): Promise<void> => {
+        dispatch(setCode(null))
+        
         const response = await axios.post<void>(
             '/v1/preregister',
             { email: email },
         )
 
-        if (response.status === 201) {
-            // 成功時挙動
+        if (response.status === CREATED) {
+            dispatch(setCode(CREATED))
             return Promise.resolve()
         }
 
-        if (response.status === 422) {
-            // 失敗時挙動
+        if (response.status === UNPROCESSABLE_ENTITY) {
+            dispatch(setCode(UNPROCESSABLE_ENTITY))
             return Promise.reject(response.data)
         }
+
+        dispatch(setCode(response.status))
+        return Promise.reject(response.data)
     }
 }
 
@@ -54,20 +55,27 @@ export const asyncVerify = (
     setPreRegisterId: (value: number) => void,
     setEmail: (value: string) => void,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void|ErrorResponse> => {
+    return async (dispatch: AppDispatch): Promise<void> => {
+        dispatch(setCode(null))
+
         const response = await axios.post<{email: string, pre_register_id: number}>('/v1/register/verify', {
             token: query.token,
         })
 
-        if (response.status === 200) {
+        if (response.status === OK) {
             setPreRegisterId(response.data.pre_register_id)
             setEmail(response.data.email)
+            dispatch(setCode(OK))
             return Promise.resolve()
         }
 
-        if (response.status === 422) {
+        if (response.status === UNPROCESSABLE_ENTITY) {
+            dispatch(setCode(UNPROCESSABLE_ENTITY))
             return Promise.reject(response.data)
         }
+
+        dispatch(setCode(response.status))
+        return Promise.reject(response.data)
     }
 }
 
@@ -80,6 +88,8 @@ export const asyncRegister = (
     preRegisterId: number,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
+        dispatch(setCode(null))
+
         const response = await axios.post<CurrentUser>('/v1/register', {
             account_id: accountId,
             email: email,
@@ -89,56 +99,85 @@ export const asyncRegister = (
             pre_register_id: preRegisterId,
         })
 
-        if (response.status === 201) {
+        if (response.status === CREATED) {
             dispatch(setUser(response.data))
+            dispatch(setCode(CREATED))
+            return Promise.resolve()
         }
 
-        if (response.status === 422) {
-            // エラー処理
+        if (response.status === UNPROCESSABLE_ENTITY) {
+            dispatch(setCode(UNPROCESSABLE_ENTITY))
+            return Promise.reject(response.data)
         }
+
+        dispatch(setCode(response.status))
+        return Promise.reject(response.data)
     }
 }
 
 // ログイン処理
 export const asyncLogin = (email: string, password: string) => {
     return async (dispatch: AppDispatch): Promise<void> => {
+        dispatch(setCode(null))
+
         const response = await axios.post<CurrentUser>('/v1/login', {
             email: email,
             password: password,
         })
 
-        if (response.status === 200) {
+        if (response.status === OK) {
             dispatch(setUser(response.data))
+            dispatch(setCode(OK))
+            return Promise.resolve()
         }
 
-        if (response.status === 422) {
-            // エラー処理
+        if (response.status === UNPROCESSABLE_ENTITY) {
+            dispatch(setCode(UNPROCESSABLE_ENTITY))
+            return Promise.reject(response.data)
         }
+
+        dispatch(setCode(response.status))
+        return Promise.reject(response.data)
     }
 }
 
 // クッキーログイン & ユーザー情報更新
 export const asyncGetCurrentUser = () => {
     return async (dispatch: AppDispatch): Promise<void> => {
+        dispatch(setCode(null))
+
         const response = await axios.get<CurrentUser>('/v1/currentuser')
 
-        if (response.status === 200) {
+        if (response.status === OK) {
             dispatch(setUser(response.data))
+            dispatch(setCode(OK))
+            return Promise.resolve()
         }
 
-        if (response.status === 422) {
-            // エラー処理
+        if (response.status === NO_CONTENT) {
+            dispatch(setCode(NO_CONTENT))
+            return Promise.resolve()
         }
+
+        dispatch(setCode(response.status))
+        return Promise.reject(response.data)
     }
 }
 
 // ログアウト
 export const asyncLogout = () => {
     return async (dispatch: AppDispatch): Promise<void> => {
+        dispatch(setCode(null))
+
         const response = await axios.post<void>('/v1/logout')
 
-        if (response.status === 200) {
+        if (response.status === OK) {
             dispatch(setUser(null))
+            dispatch(setCode(OK))
+            return Promise.resolve()
         }
+
+        dispatch(setCode(response.status))
+        return Promise.reject(response.data)
     }
 }

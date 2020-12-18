@@ -2,6 +2,8 @@ import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
 import { OrganizerDetail } from '../@types'
+import { setCode } from '../stores/error'
+import { NOT_FOUND, OK } from '../util'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -23,15 +25,23 @@ export const asyncGetOrganizer = (
     setOrganizer: (value: OrganizerDetail) => void
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
+        dispatch(setCode(null))
+
         const response = await axios.get<OrganizerDetail>(`/v1/organizer/${organizer_id}`)
 
-        if (response.status === 200) {
+        if (response.status === OK) {
+            dispatch(setCode(OK))
             setOrganizer(response.data)
+            return Promise.resolve()
         }
 
-        if (response.status === 422) {
-            // エラーハンドリング
+        if (response.status === NOT_FOUND) {
+            dispatch(setCode(NOT_FOUND))
+            return Promise.reject(response.data)
         }
+
+        dispatch(setCode(response.status))
+        return Promise.reject(response.data)
     }
 }
 
