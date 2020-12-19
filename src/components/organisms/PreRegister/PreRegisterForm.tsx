@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Card, Grid, Typography, Button, FormControl, InputLabel, Input, FormHelperText, } from '@material-ui/core'
+import { Card, Grid, Typography, Button, FormControl, InputLabel, Input, FormHelperText } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '../../../stores'
 import { setMessage } from '../../../stores/error'
@@ -80,6 +80,7 @@ export const PreRegisterForm: FC<Props> = props => {
                                 id='Email'
                                 aria-describedby={'Email-helper'}
                                 value={props.email}
+                                error={!!message?.errors?.email}
                                 onChange={ev => validateEmail(ev.target.value)}
                             />
                             { message?.errors?.email &&
@@ -92,7 +93,7 @@ export const PreRegisterForm: FC<Props> = props => {
                             type="submit"
                             variant="contained"
                             color="primary"
-                            disabled={message !== null}
+                            disabled={!!message?.errors?.email}
                             onClick={onClick}
                             className={classes.button}
                         >

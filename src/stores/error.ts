@@ -8,6 +8,8 @@ export interface ErrorStore {
 interface ErrorResponse {
     errors?: {
         email?: string[]
+        account_id?: string[]
+        name?: string[]
         password?: string[]
     }
     message: string

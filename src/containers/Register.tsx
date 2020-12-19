@@ -7,6 +7,7 @@ import { asyncRegister, asyncVerify } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
 import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
 import { Register as RegisterTemp } from '../components/templates/Register'
+import { setMessage } from '../stores/error'
 
 export const Register: FC = () => {
     const history = useHistory()
@@ -31,18 +32,15 @@ export const Register: FC = () => {
     }
 
     const register = () => {
-        dispatch(asyncRegister(accountId, email, name, password, preRegisterId))
+        dispatch(asyncRegister(accountId, email, name, password, preRegisterId)).then(
+            () => history.push(`/users/${currentUser?.account_id}`)
+        ).catch()
     }
 
     useEffect(() => {
+        dispatch(setMessage(null))
         verify()
     }, [])
-
-    useEffect(() => {
-        if (currentUser) {
-            history.push(`/users/${currentUser.account_id}`)
-        }
-    }, [currentUser])
 
     return (
         <>

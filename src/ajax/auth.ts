@@ -73,11 +73,11 @@ export const asyncVerify = (
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
-        return Promise.reject(response.data)
+        return Promise.reject()
     }
 }
 
@@ -109,11 +109,13 @@ export const asyncRegister = (
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            dispatch(setMessage(response.data))
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
-        return Promise.reject(response.data)
+        dispatch(setMessage(response.data))
+        return Promise.reject()
     }
 }
 
