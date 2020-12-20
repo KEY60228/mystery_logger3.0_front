@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface ErrorStore {
     code: number | null
     message: ErrorResponse | null
+    popper: string | null
 }
 
 interface ErrorResponse {
@@ -19,6 +20,7 @@ interface ErrorResponse {
 const initialState: ErrorStore = {
     code: null,
     message: null,
+    popper: null
 }
 
 // Sliceを生成する
@@ -31,7 +33,10 @@ const slice = createSlice({
             return Object.assign({}, state, { code: action.payload })
         },
         setMessage: (state, action) => {
-            return Object.assign({}, state, { message: action.payload})
+            return Object.assign({}, state, { message: action.payload })
+        },
+        setPopper: (state, action) => {
+            return Object.assign({}, state, { popper: action.payload })
         },
     },
 })
@@ -40,4 +45,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setCode, setMessage } = slice.actions
+export const { setCode, setMessage, setPopper } = slice.actions

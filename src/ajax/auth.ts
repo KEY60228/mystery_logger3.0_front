@@ -6,7 +6,7 @@ import queryString from 'query-string'
 
 import { AppDispatch } from '../stores/index'
 import { CurrentUser } from '../@types'
-import { setCode, setMessage } from '../stores/error'
+import { setCode, setMessage, setPopper } from '../stores/error'
 import { CREATED, NO_CONTENT, OK, UNPROCESSABLE_ENTITY } from '../util'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -90,6 +90,7 @@ export const asyncRegister = (
 ) => {
     return async (dispatch: AppDispatch): Promise<CurrentUser> => {
         dispatch(setCode(null))
+        dispatch(setPopper(null))
 
         const response = await axios.post<CurrentUser>('/v1/register', {
             account_id: accountId,
@@ -102,6 +103,7 @@ export const asyncRegister = (
 
         if (response.status === CREATED) {
             dispatch(setUser(response.data))
+            dispatch(setPopper('login'))
             dispatch(setCode(CREATED))
             return Promise.resolve(response.data)
         }
@@ -121,6 +123,7 @@ export const asyncRegister = (
 export const asyncLogin = (email: string, password: string) => {
     return async (dispatch: AppDispatch): Promise<CurrentUser> => {
         dispatch(setCode(null))
+        dispatch(setPopper(null))
 
         const response = await axios.post<CurrentUser>('/v1/login', {
             email: email,
@@ -129,6 +132,7 @@ export const asyncLogin = (email: string, password: string) => {
 
         if (response.status === OK) {
             dispatch(setUser(response.data))
+            dispatch(setPopper('login'))
             dispatch(setCode(OK))
             return Promise.resolve(response.data)
         }

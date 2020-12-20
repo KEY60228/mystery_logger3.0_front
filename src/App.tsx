@@ -26,6 +26,8 @@ import { ErrorHandler } from './ErrorHandler/ErrorHandler'
 import { SystemErrorPage } from './ErrorHandler/SystemErrorPage'
 import { NotFoundPage } from './ErrorHandler/NotFoundPage'
 
+import { PopHandler } from './PopHandler/PopHandler'
+
 const App: FC = () => {
     const dispatch = useAppDispatch()
 
@@ -39,6 +41,7 @@ const App: FC = () => {
             <BrowserRouter>
                 <ErrorHandler />
                 <Header />
+                <PopHandler />
                 <Switch>
                     <Route path="/" exact children={<TopPage />} />
                     <GuestRoute path="/login" children={<Login />} />
