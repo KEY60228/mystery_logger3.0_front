@@ -15,6 +15,7 @@ import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
 import { setFocusedReview } from '../stores/review'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
+import { setPopper } from '../stores/error'
 
 export const Timeline: FC = () => {
     const dispatch = useAppDispatch()
@@ -34,7 +35,6 @@ export const Timeline: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const getReviews = async () => {
-        if (!currentUser) return false // 仮
         dispatch(asyncGetTimeline(setReviews))
     }
 
@@ -48,7 +48,11 @@ export const Timeline: FC = () => {
     }
 
     const update = () => {
-        if (!currentUser || !review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(
             asyncUpdateReview(
                 review.id,
@@ -89,7 +93,11 @@ export const Timeline: FC = () => {
     }
 
     const follow = (user: User) => {
-        if (!currentUser || !user) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!user) return false // 仮
         dispatch(asyncFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
@@ -98,7 +106,11 @@ export const Timeline: FC = () => {
     }
 
     const unfollow = (user: User) => {
-        if (!currentUser || !user) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!user) return false // 仮
         dispatch(asyncUnFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
@@ -107,7 +119,11 @@ export const Timeline: FC = () => {
     }
 
     const postComment = (review: ReviewIndex) => {
-        if (!currentUser || !review || !comment) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review || !comment) return false // 仮
         dispatch(asyncPostComment(review.id, comment)).then(
             () => getReviews()
         ).catch(
@@ -116,7 +132,11 @@ export const Timeline: FC = () => {
     }
 
     const likeReview = (review: ReviewIndex) => {
-        if (!currentUser || !review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(asyncLikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
@@ -128,7 +148,11 @@ export const Timeline: FC = () => {
     }
 
     const unlikeReview = (review: ReviewIndex) => {
-        if (!currentUser || !review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(asyncUnlikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())

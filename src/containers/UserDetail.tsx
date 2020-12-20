@@ -23,6 +23,7 @@ import {
     asyncUnlikeReview,
     asyncUpdateReview,
 } from '../ajax/review'
+import { setPopper } from '../stores/error'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
@@ -85,7 +86,11 @@ export const UserDetail: FC = () => {
     }
 
     const follow = (user: User) => {
-        if (!currentUser || !user) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!user) return false // 仮
         dispatch(asyncFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
@@ -94,7 +99,11 @@ export const UserDetail: FC = () => {
     }
 
     const unfollow = (user: User) => {
-        if (!currentUser || !user) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!user) return false // 仮
         dispatch(asyncUnFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
@@ -112,7 +121,11 @@ export const UserDetail: FC = () => {
     }
 
     const updateReview = () => {
-        if (!currentUser || !review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(
             asyncUpdateReview(
                 review.id,
@@ -151,14 +164,22 @@ export const UserDetail: FC = () => {
     }
 
     const postComment = (review: ReviewDetail) => {
-        if (!currentUser || !review || !comment) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review || !comment) return false // 仮
         dispatch(asyncPostComment(review.id, comment)).then(
             () => getUser()
         )
     }
 
     const likeReview = (review: ReviewDetail) => {
-        if (!currentUser || !review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(asyncLikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
@@ -170,7 +191,11 @@ export const UserDetail: FC = () => {
     }
 
     const unlikeReview = (review: ReviewDetail) => {
-        if (!currentUser || !review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(asyncUnlikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
@@ -182,7 +207,10 @@ export const UserDetail: FC = () => {
     }
 
     const logout = () => {
-        if (!currentUser) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
         dispatch(asyncLogout()).then(
             () => history.push('/login')
         )

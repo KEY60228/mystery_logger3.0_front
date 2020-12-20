@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../stores'
 import { LoginPop } from './LoginPop'
 import { LogoutPop } from './LogoutPop'
+import { UnauthPop } from './UnauthPop'
 
 export const PopHandler: FC = () => {
     const popper = useSelector((state: RootState) => state.error.popper)
@@ -12,6 +13,7 @@ export const PopHandler: FC = () => {
     const [logoutOpen, setLogoutOpen] = useState<boolean>(false)
     const [unauthOpen, setUnauthOpen] = useState<boolean>(false)
     const [loggedInOpen, setLoggedInOpen] = useState<boolean>(false)
+    const [undoneOpen, setUndoneOpen] = useState<boolean>(false)
     const [badRequestOpen, setBadRequestOpen] = useState<boolean>(false)
 
     useEffect(() => {
@@ -27,6 +29,9 @@ export const PopHandler: FC = () => {
                 break
             case 'already logged in':
                 setLoggedInOpen(true)
+                break
+            case 'undone':
+                setUndoneOpen(true)
                 break
             case 'bad request':
                 setBadRequestOpen(true)
@@ -45,6 +50,10 @@ export const PopHandler: FC = () => {
             <LogoutPop
                 open={logoutOpen}
                 setOpen={setLogoutOpen}
+            />
+            <UnauthPop
+                open={unauthOpen}
+                setOpen={setUnauthOpen}
             />
         </>
     )

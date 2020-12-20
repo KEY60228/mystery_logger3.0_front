@@ -16,6 +16,7 @@ import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
+import { setPopper } from '../stores/error'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
@@ -40,7 +41,11 @@ export const ReviewDetail: FC = () => {
     }
 
     const follow = (user: User) => {
-        if (!currentUser || !review?.user) return false
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review?.user) return false
         dispatch(asyncFollow(review.user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
@@ -49,7 +54,11 @@ export const ReviewDetail: FC = () => {
     }
 
     const unfollow = (user: User) => {
-        if (!currentUser || !review?.user) return false
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review?.user) return false
         dispatch(asyncUnFollow(review.user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
@@ -67,7 +76,11 @@ export const ReviewDetail: FC = () => {
     }
 
     const update = () => {
-        if (!currentUser || !review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(
             asyncUpdateReview(
                 review.id,
@@ -94,7 +107,11 @@ export const ReviewDetail: FC = () => {
     }
 
     const postComment = () => {
-        if (!review || !currentUser || !comment) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review || !comment) return false // 仮
         dispatch(asyncPostComment(review.id, comment)).then(
             () => getReview()
         ).catch(
@@ -103,7 +120,11 @@ export const ReviewDetail: FC = () => {
     }
 
     const likeReview = () => {
-        if (!review || !currentUser) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(asyncLikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
@@ -115,7 +136,11 @@ export const ReviewDetail: FC = () => {
     }
 
     const unlikeReview = () => {
-        if (!currentUser || !review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(asyncUnlikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
@@ -127,6 +152,10 @@ export const ReviewDetail: FC = () => {
     }
 
     const getSpoiledContents = () => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
         if (!review) return false // 仮
         dispatch(asyncGetSpoiledContents(review.id, setReview)).then(
 
