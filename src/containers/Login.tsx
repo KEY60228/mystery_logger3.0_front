@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -16,14 +16,10 @@ export const Login: FC = () => {
     const [password, setPassword] = useState<string>('')
 
     const login = () => {
-        dispatch(asyncLogin(email, password))
+        dispatch(asyncLogin(email, password)).then(
+            () => history.push(`/users/${currentUser?.account_id}`)
+        ).catch()
     }
-
-    useEffect(() => {
-        if (currentUser) {
-            history.push(`/users/${currentUser.account_id}`)
-        }
-    }, [currentUser])
 
     return (
         <>

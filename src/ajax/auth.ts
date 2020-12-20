@@ -46,8 +46,7 @@ export const asyncPreRegister = (email: string) => {
         }
 
         dispatch(setCode(response.status))
-        dispatch(setMessage(response.data))
-        return Promise.reject()
+        return Promise.reject(response.status)
     }
 }
 
@@ -77,7 +76,7 @@ export const asyncVerify = (
         }
 
         dispatch(setCode(response.status))
-        return Promise.reject()
+        return Promise.reject(response.data)
     }
 }
 
@@ -114,8 +113,7 @@ export const asyncRegister = (
         }
 
         dispatch(setCode(response.status))
-        dispatch(setMessage(response.data))
-        return Promise.reject()
+        return Promise.reject(response.data)
     }
 }
 
@@ -137,9 +135,10 @@ export const asyncLogin = (email: string, password: string) => {
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            dispatch(setMessage(response.data))
+            return Promise.reject()
         }
-
+        
         dispatch(setCode(response.status))
         return Promise.reject(response.data)
     }
