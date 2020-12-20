@@ -88,7 +88,7 @@ export const asyncRegister = (
     password: string,
     preRegisterId: number,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<CurrentUser> => {
         dispatch(setCode(null))
 
         const response = await axios.post<CurrentUser>('/v1/register', {
@@ -103,7 +103,7 @@ export const asyncRegister = (
         if (response.status === CREATED) {
             dispatch(setUser(response.data))
             dispatch(setCode(CREATED))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
@@ -119,7 +119,7 @@ export const asyncRegister = (
 
 // ログイン処理
 export const asyncLogin = (email: string, password: string) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<CurrentUser> => {
         dispatch(setCode(null))
 
         const response = await axios.post<CurrentUser>('/v1/login', {
@@ -130,7 +130,7 @@ export const asyncLogin = (email: string, password: string) => {
         if (response.status === OK) {
             dispatch(setUser(response.data))
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {

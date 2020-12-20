@@ -17,7 +17,7 @@ export const Login: FC = () => {
 
     const login = () => {
         dispatch(asyncLogin(email, password)).then(
-            () => history.push(`/users/${currentUser?.account_id}`)
+            (result) => history.push(`/users/${result.account_id}`)
         ).catch()
     }
 

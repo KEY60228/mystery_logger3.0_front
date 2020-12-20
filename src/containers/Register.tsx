@@ -33,7 +33,7 @@ export const Register: FC = () => {
 
     const register = () => {
         dispatch(asyncRegister(accountId, email, name, password, preRegisterId)).then(
-            () => history.push(`/users/${currentUser?.account_id}`)
+            (result) => history.push(`/users/${result.account_id}`)
         ).catch()
     }
 
