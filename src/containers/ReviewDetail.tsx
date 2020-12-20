@@ -157,6 +157,10 @@ export const ReviewDetail: FC = () => {
             return false
         }
         if (!review) return false // 仮
+        if (!currentUser.done_id.includes(review.id)) {
+            dispatch(setPopper('undone'))
+            return false
+        }
         dispatch(asyncGetSpoiledContents(review.id, setReview)).then(
 
         ).catch(

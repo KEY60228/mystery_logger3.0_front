@@ -5,6 +5,7 @@ import { RootState } from '../stores'
 import { LoginPop } from './LoginPop'
 import { LogoutPop } from './LogoutPop'
 import { UnauthPop } from './UnauthPop'
+import { UndonePop } from './UndonePop'
 
 export const PopHandler: FC = () => {
     const popper = useSelector((state: RootState) => state.error.popper)
@@ -12,7 +13,6 @@ export const PopHandler: FC = () => {
     const [loginOpen, setLoginOpen] = useState<boolean>(false)
     const [logoutOpen, setLogoutOpen] = useState<boolean>(false)
     const [unauthOpen, setUnauthOpen] = useState<boolean>(false)
-    const [loggedInOpen, setLoggedInOpen] = useState<boolean>(false)
     const [undoneOpen, setUndoneOpen] = useState<boolean>(false)
     const [badRequestOpen, setBadRequestOpen] = useState<boolean>(false)
 
@@ -26,9 +26,6 @@ export const PopHandler: FC = () => {
                 break
             case 'unauthenticated':
                 setUnauthOpen(true)
-                break
-            case 'already logged in':
-                setLoggedInOpen(true)
                 break
             case 'undone':
                 setUndoneOpen(true)
@@ -54,6 +51,10 @@ export const PopHandler: FC = () => {
             <UnauthPop
                 open={unauthOpen}
                 setOpen={setUnauthOpen}
+            />
+            <UndonePop
+                open={undoneOpen}
+                setOpen={setUndoneOpen}
             />
         </>
     )
