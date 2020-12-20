@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { RootState } from '../stores'
 import { LoginPop } from './LoginPop'
+import { LogoutPop } from './LogoutPop'
 
 export const PopHandler: FC = () => {
     const popper = useSelector((state: RootState) => state.error.popper)
@@ -40,6 +41,10 @@ export const PopHandler: FC = () => {
             <LoginPop
                 open={loginOpen}
                 setOpen={setLoginOpen}
+            />
+            <LogoutPop
+                open={logoutOpen}
+                setOpen={setLogoutOpen}
             />
         </>
     )

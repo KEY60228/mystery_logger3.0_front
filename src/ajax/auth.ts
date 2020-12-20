@@ -152,11 +152,13 @@ export const asyncLogin = (email: string, password: string) => {
 export const asyncGetCurrentUser = () => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setPopper(null))
 
         const response = await axios.get<CurrentUser>('/v1/currentuser')
 
         if (response.status === OK) {
             dispatch(setUser(response.data))
+            dispatch(setPopper('login'))
             dispatch(setCode(OK))
             return Promise.resolve()
         }
@@ -175,11 +177,13 @@ export const asyncGetCurrentUser = () => {
 export const asyncLogout = () => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setPopper(null))
 
         const response = await axios.post<void>('/v1/logout')
 
         if (response.status === OK) {
             dispatch(setUser(null))
+            dispatch(setPopper('logout'))
             dispatch(setCode(OK))
             return Promise.resolve()
         }
