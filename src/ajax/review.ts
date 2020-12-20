@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
 import { ReviewIndex, ReviewDetail } from '../@types'
-import { setCode } from '../stores/error'
+import { setCode, setPopper } from '../stores/error'
 import { CREATED, NOT_FOUND, NO_CONTENT, OK, UNAUTHENTICATED, UNPROCESSABLE_ENTITY } from '../util'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -79,6 +79,7 @@ export const asyncPostReview = (
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setPopper(null))
         
         const response = await axios.post<void>('/v1/reviews', {
             product_id: product_id,
@@ -91,6 +92,7 @@ export const asyncPostReview = (
 
         if (response.status === CREATED) {
             dispatch(setCode(CREATED))
+            dispatch(setPopper('posted review'))
             return Promise.resolve()
         }
 
@@ -119,6 +121,7 @@ export const asyncUpdateReview = (
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setPopper(null))
 
         const response = await axios.put<void>(`/v1/reviews/${review_id}`, {
             spoil: spoil,
@@ -129,6 +132,7 @@ export const asyncUpdateReview = (
         })
 
         if (response.status === OK) {
+            dispatch(setPopper('posted review'))
             dispatch(setCode(OK))
             return Promise.resolve()
         }
