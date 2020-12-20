@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { RootState } from '../stores'
+import { DeletedReviewPop } from './DeletedReviewPopper'
 import { LoginPop } from './LoginPop'
 import { LogoutPop } from './LogoutPop'
 import { PostedReviewPop } from './PostedReviewPop'
@@ -16,6 +17,7 @@ export const PopHandler: FC = () => {
     const [unauthOpen, setUnauthOpen] = useState<boolean>(false)
     const [undoneOpen, setUndoneOpen] = useState<boolean>(false)
     const [postedReviewOpen, setPostedReviewOpen] = useState<boolean>(false)
+    const [deletedReviewOpen, setDeletedReviewOpen] = useState<boolean>(false)
     const [badRequestOpen, setBadRequestOpen] = useState<boolean>(false)
 
     useEffect(() => {
@@ -34,6 +36,9 @@ export const PopHandler: FC = () => {
                 break
             case 'posted review':
                 setPostedReviewOpen(true)
+                break
+            case 'deleted review':
+                setDeletedReviewOpen(true)
                 break
             case 'bad request':
                 setBadRequestOpen(true)
@@ -64,6 +69,10 @@ export const PopHandler: FC = () => {
             <PostedReviewPop
                 open={postedReviewOpen}
                 setOpen={setPostedReviewOpen}
+            />
+            <DeletedReviewPop
+                open={deletedReviewOpen}
+                setOpen={setDeletedReviewOpen}
             />
         </>
     )

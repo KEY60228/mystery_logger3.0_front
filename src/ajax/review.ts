@@ -160,10 +160,12 @@ export const asyncUpdateReview = (
 export const asyncDeleteReview = (review_id: number) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setPopper(null))
 
         const response = await axios.delete<void>(`/v1/reviews/${review_id}`)
 
         if (response.status === NO_CONTENT) {
+            dispatch(setPopper('deleted review'))
             dispatch(setCode(NO_CONTENT))
             return Promise.resolve()
         }
