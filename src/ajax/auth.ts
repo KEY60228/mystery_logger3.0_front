@@ -191,6 +191,7 @@ export const asyncLogout = () => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
         dispatch(setPopper(null))
+        dispatch(setLoading(true))
 
         const response = await axios.post<void>('/v1/logout')
 
@@ -198,9 +199,11 @@ export const asyncLogout = () => {
             dispatch(setUser(null))
             dispatch(setPopper('logout'))
             dispatch(setCode(OK))
+            dispatch(setLoading(false))
             return Promise.resolve()
         }
-
+        
+        dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.data)
     }

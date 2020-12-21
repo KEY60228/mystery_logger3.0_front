@@ -20,6 +20,7 @@ import { LogoutButton } from './LogoutButton'
 import { RootState, useAppDispatch } from '../../../../stores'
 import { useSelector } from 'react-redux'
 import { setMessage } from '../../../../stores/error'
+import { LinearLoader } from '../../../../Loader/LinearLoader'
 
 interface Props {
     user: UserDetail
@@ -75,6 +76,7 @@ export const UserForm: FC<Props> = props => {
     const classes = useStyles(props.className)
     const dispatch = useAppDispatch()
     const message = useSelector((state: RootState) => state.error.message)
+    const loading = useSelector((state: RootState) => state.error.loading)
 
     const [preview, setPreview] = useState<any>(null)
 
@@ -175,6 +177,9 @@ export const UserForm: FC<Props> = props => {
                 onClose={handleClose}
                 update={props.update}
             />
+            { loading &&
+                <LinearLoader />
+            }
             <Card className={classes.root}>
                 <Grid container direction="column" alignItems="center">
                     {preview && (
