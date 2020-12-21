@@ -31,6 +31,7 @@ axios.interceptors.response.use(
 export const asyncPreRegister = (email: string) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setLoading(true))
 
         const response = await axios.post<void>(
             '/v1/preregister',
@@ -39,11 +40,13 @@ export const asyncPreRegister = (email: string) => {
 
         if (response.status === CREATED) {
             dispatch(setCode(CREATED))
+            dispatch(setLoading(false))
             return Promise.resolve()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
+            dispatch(setLoading(false))
             dispatch(setMessage(response.data))
             return Promise.reject()
         }
