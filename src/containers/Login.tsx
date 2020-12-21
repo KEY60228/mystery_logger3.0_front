@@ -1,9 +1,10 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { asyncLogin } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
+import { setMessage } from '../stores/error'
 import { Login as LoginTemp } from '../components/templates/Login'
 
 export const Login: FC = () => {
@@ -20,6 +21,10 @@ export const Login: FC = () => {
             (result) => history.push(`/users/${result.account_id}`)
         ).catch()
     }
+
+    useEffect(() => {
+        dispatch(setMessage(null))
+    }, [])
 
     return (
         <>

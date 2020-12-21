@@ -8,6 +8,7 @@ import { LogoutPop } from './LogoutPop'
 import { PostedReviewPop } from './PostedReviewPop'
 import { UnauthPop } from './UnauthPop'
 import { UndonePop } from './UndonePop'
+import { PostedUserPop } from './PostedUserPop'
 
 export const PopHandler: FC = () => {
     const popper = useSelector((state: RootState) => state.error.popper)
@@ -18,6 +19,7 @@ export const PopHandler: FC = () => {
     const [undoneOpen, setUndoneOpen] = useState<boolean>(false)
     const [postedReviewOpen, setPostedReviewOpen] = useState<boolean>(false)
     const [deletedReviewOpen, setDeletedReviewOpen] = useState<boolean>(false)
+    const [postedUserOpen, setPostedUserOpen] = useState<boolean>(false)
     const [badRequestOpen, setBadRequestOpen] = useState<boolean>(false)
 
     useEffect(() => {
@@ -39,6 +41,9 @@ export const PopHandler: FC = () => {
                 break
             case 'deleted review':
                 setDeletedReviewOpen(true)
+                break
+            case 'posted user':
+                setPostedUserOpen(true)
                 break
             case 'bad request':
                 setBadRequestOpen(true)
@@ -73,6 +78,10 @@ export const PopHandler: FC = () => {
             <DeletedReviewPop
                 open={deletedReviewOpen}
                 setOpen={setDeletedReviewOpen}
+            />
+            <PostedUserPop
+                open={postedUserOpen}
+                setOpen={setPostedUserOpen}
             />
         </>
     )
