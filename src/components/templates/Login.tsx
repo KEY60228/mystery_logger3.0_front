@@ -1,5 +1,8 @@
 import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
 
+import { LinearLoader } from '../../Loader/LinearLoader'
+import { RootState } from '../../stores'
 import { LoginForm } from '../organisms/Login/LoginForm'
 
 interface Props {
@@ -11,5 +14,14 @@ interface Props {
 }
 
 export const Login: FC<Props> = props => {
-    return <LoginForm {...props} />
+    const loading = useSelector((state: RootState) => state.error.loading)
+
+    return (
+        <>
+            { loading &&
+                <LinearLoader />
+            }
+            <LoginForm {...props} />
+        </>
+    )
 }

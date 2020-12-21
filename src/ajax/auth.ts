@@ -6,7 +6,7 @@ import queryString from 'query-string'
 
 import { AppDispatch } from '../stores/index'
 import { CurrentUser } from '../@types'
-import { setCode, setMessage, setPopper } from '../stores/error'
+import { setCode, setLoading, setMessage, setPopper } from '../stores/error'
 import { CREATED, NO_CONTENT, OK, UNPROCESSABLE_ENTITY } from '../util'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -127,6 +127,7 @@ export const asyncLogin = (email: string, password: string) => {
     return async (dispatch: AppDispatch): Promise<CurrentUser> => {
         dispatch(setCode(null))
         dispatch(setPopper(null))
+        dispatch(setLoading(true))
 
         const response = await axios.post<CurrentUser>('/v1/login', {
             email: email,
@@ -137,16 +138,19 @@ export const asyncLogin = (email: string, password: string) => {
             dispatch(setUser(response.data))
             dispatch(setPopper('login'))
             dispatch(setCode(OK))
+            dispatch(setLoading(false))
             return Promise.resolve(response.data)
         }
-
+        
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setMessage(response.data))
+            dispatch(setLoading(false))
             return Promise.reject()
         }
         
         dispatch(setCode(response.status))
+        dispatch(setLoading(false))
         return Promise.reject(response.data)
     }
 }
