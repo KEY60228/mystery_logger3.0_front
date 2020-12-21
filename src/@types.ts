@@ -39,7 +39,7 @@ export interface User {
     done_id: number[] // 行った作品のID
     wannas_count: number // 「行きたい」数
     wanna_id: number[] // 「行きたい」作品のID
-    review_likes_count: number // LIKEしたレビューの数
+    like_reviews_count: number // LIKEしたレビューの数
     like_reviews_id: number[] // LIKEしたレビューのID
 }
 

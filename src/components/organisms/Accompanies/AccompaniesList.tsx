@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { Card } from '@material-ui/core'
 
 import { AccompanyIndex } from '../../../@types'
 import { AccompanyCard } from './AccompanyCard'
@@ -12,6 +13,10 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
 
+        },
+        card: {
+            margin: '8px',
+            padding: '8px',
         }
     })
 )
@@ -28,7 +33,7 @@ export const AccompaniesList: FC<Props> = props => {
                 />
             )}
             { props.accompanies.length === 0 &&
-                <div>まだ同行募集はありません</div>
+                <Card className={classes.card}>まだ同行募集はありません</Card>
             }
         </>
     )

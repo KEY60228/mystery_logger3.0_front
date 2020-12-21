@@ -121,7 +121,7 @@ export const UserTabs: FC<Props> = props => {
                 )}
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {props.user.review_likes && (
+                {props.user.like_reviews_count !== 0 && props.user.review_likes && (
                     <Box>
                         {props.user.review_likes.map(
                             like_review => (
@@ -148,7 +148,7 @@ export const UserTabs: FC<Props> = props => {
                         )}
                     </Box>
                 )}
-                {!props.user.review_likes && (
+                {props.user.like_reviews_count === 0 && (
                     <Typography>まだLIKEした投稿はありません</Typography>
                 )}
             </TabPanel>

@@ -21,6 +21,7 @@ import { Search } from './containers/Search'
 import { OrganizerDetail } from './containers/OrganizerDetail'
 import { VenueDetail } from './containers/VenueDetail'
 import { Accompanies } from './containers/Accompanies'
+import { Notifications } from './containers/Notifications'
 
 import { ErrorHandler } from './ErrorHandler/ErrorHandler'
 import { SystemErrorPage } from './ErrorHandler/SystemErrorPage'
@@ -61,6 +62,7 @@ const App: FC = () => {
                     <Route path="/organizers/:id" children={<OrganizerDetail />} />
                     <Route path="/venues/:id" children={<VenueDetail />} />
                     <Route path="/accompany" children={<Accompanies />} />
+                    <Route path="/notifications" children={<Notifications />} />
                     <Route path="/404" children={<NotFoundPage />} />
                     <Route path="/500" children={<SystemErrorPage />} />
                 </Switch>

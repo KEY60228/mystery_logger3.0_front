@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles' // 仮
 import { Card } from '@material-ui/core'
 
 import { ReviewIndex, User } from '../../@types'
@@ -34,7 +35,20 @@ interface Props {
     unlikeReview: (review: ReviewIndex) => void
 }
 
+const useStyles = makeStyles((theme: Theme) => // 仮
+    createStyles({
+        root: {
+
+        },
+        card: {
+            margin: '8px',
+            padding: '8px',
+        },
+    })
+)
+
 export const Timeline: FC<Props> = props => {
+    const classes = useStyles() // 仮
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [openComment, setOpenComment] = useState<number | false>(false)
 
@@ -62,7 +76,7 @@ export const Timeline: FC<Props> = props => {
                     className={{ margin: '8px' }}
                 />
             ))}
-            {!props.reviews.length && <Card>まだ投稿はありません</Card>}
+            {!props.reviews.length && <Card className={classes.card}>まだ投稿はありません</Card>}
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}
