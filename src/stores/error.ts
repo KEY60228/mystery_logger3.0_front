@@ -4,6 +4,7 @@ export interface ErrorStore {
     code: number | null
     message: ErrorResponse | null
     popper: string | null
+    loading: boolean
 }
 
 interface ErrorResponse {
@@ -21,7 +22,8 @@ interface ErrorResponse {
 const initialState: ErrorStore = {
     code: null,
     message: null,
-    popper: null
+    popper: null,
+    loading: false,
 }
 
 // Sliceを生成する
@@ -39,6 +41,9 @@ const slice = createSlice({
         setPopper: (state, action) => {
             return Object.assign({}, state, { popper: action.payload })
         },
+        setLoading: (state, action) => {
+            return Object.assign({}, state, { loading: action.payload })
+        },
     },
 })
 
@@ -46,4 +51,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const { setCode, setMessage, setPopper } = slice.actions
+export const { setCode, setMessage, setPopper, setLoading } = slice.actions
