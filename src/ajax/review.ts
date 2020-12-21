@@ -196,6 +196,7 @@ export const asyncPostComment = (
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setPopper(null))
 
         const response = await axios.post<void>('/v1/comments/review', {
             review_id: review_id,
@@ -203,6 +204,7 @@ export const asyncPostComment = (
         })
 
         if (response.status === CREATED) {
+            dispatch(setPopper('commented'))
             dispatch(setCode(CREATED))
             return Promise.resolve()
         }
