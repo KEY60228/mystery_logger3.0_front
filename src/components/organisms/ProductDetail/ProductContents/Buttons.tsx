@@ -5,6 +5,9 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import QueueIcon from '@material-ui/icons/Queue'
 
 import { Product, ProductDetail, CurrentUser } from '../../../../@types'
+import { RootState, useAppDispatch } from '../../../../stores'
+import { useSelector } from 'react-redux'
+import { setPopper } from '../../../../stores/error'
 
 interface Props {
     product: ProductDetail
@@ -26,22 +29,31 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Buttons: FC<Props> = props => {
     const classes = useStyles()
+    const dispatch = useAppDispatch()
+
+    const currentUser = useSelector((state: RootState) => state.auth.user)
 
     const onClickDone = () => {
-        if (!props.currentUser) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
         props.setIsNew(true)
         props.setModalOpen(true)
     }
 
     const onClickEdit = () => {
-        if (!props.currentUser) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
         props.edit()
     }
 
     return (
         <Grid container direction="row" justify="center" alignItems="center">
-            {(!props.currentUser ||
-                !props.currentUser.done_id.includes(props.product.id)) && (
+            {(!currentUser ||
+                !currentUser.done_id.includes(props.product.id)) && (
                 <Button
                     variant="contained"
                     color="primary"
@@ -61,8 +73,8 @@ export const Buttons: FC<Props> = props => {
                     </Grid>
                 </Button>
             )}
-            {props.currentUser &&
-                props.currentUser.done_id.includes(props.product.id) && (
+            {currentUser &&
+                currentUser.done_id.includes(props.product.id) && (
                     <Button
                         variant="outlined"
                         color="primary"
@@ -82,8 +94,8 @@ export const Buttons: FC<Props> = props => {
                         </Grid>
                     </Button>
                 )}
-            {(!props.currentUser ||
-                !props.currentUser.wanna_id.includes(props.product.id)) && (
+            {(!currentUser ||
+                !currentUser.wanna_id.includes(props.product.id)) && (
                 <Button
                     variant="contained"
                     color="primary"
@@ -103,8 +115,8 @@ export const Buttons: FC<Props> = props => {
                     </Grid>
                 </Button>
             )}
-            {props.currentUser &&
-                props.currentUser.wanna_id.includes(props.product.id) && (
+            {currentUser &&
+                currentUser.wanna_id.includes(props.product.id) && (
                     <Button
                         variant="outlined"
                         color="primary"
