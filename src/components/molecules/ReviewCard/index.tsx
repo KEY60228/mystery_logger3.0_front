@@ -14,10 +14,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
-import { RootState } from '../../../stores/index'
+import { RootState, useAppDispatch } from '../../../stores/index'
 import { Review, User, Product } from '../../../@types'
 import { ReviewerProfile } from './ReviewerProfile/'
 import { ReviewContents } from './ReviewContents/'
+import { setMessage } from '../../../stores/error'
 
 interface ReviewDetail extends Review {
     user?: User
@@ -68,11 +69,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const ReviewCard: FC<Props> = props => {
     const classes = useStyles(props.className)
+    const dispatch = useAppDispatch()
+    const message = useSelector((state: RootState) => state.error.message)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
     const localPostComment = () => {
         props.postComment(props.review)
+        if (!props.comment) return false
         props.setOpen(false)
         props.setComment('')
     }
@@ -83,6 +87,25 @@ export const ReviewCard: FC<Props> = props => {
 
     const localUnlikeReview = () => {
         props.unlikeReview(props.review)
+    }
+
+    const validateComment = (comment: string) => {
+        props.setComment(comment)
+        if (!comment) {
+            if (message) {
+                const errors = Object.assign({}, message.errors, {comment: '入力してください'})
+                dispatch(setMessage({errors: errors}))
+            } else {
+                dispatch(setMessage({errors: {comment: '入力してください'}}))
+            }
+            return
+        }
+        if (message) {
+            const errors = Object.assign({}, message.errors, {comment: null})
+            dispatch(setMessage({errors: errors}))
+        } else {
+            dispatch(setMessage(null))
+        }
     }
 
     return (
@@ -174,16 +197,19 @@ export const ReviewCard: FC<Props> = props => {
                         variant="outlined"
                         placeholder="Comment"
                         rows={4}
+                        error={!!message?.errors?.comment}
+                        helperText={message?.errors?.comment}
                         margin="dense"
                         value={props.comment}
                         onChange={ev =>
-                            props.setComment(ev.currentTarget.value)
+                            validateComment(ev.currentTarget.value)
                         }
                     />
                     <Grid container justify="flex-end">
                         <Button
                             color="primary"
                             variant="contained"
+                            disabled={!!message?.errors?.comment}
                             onClick={localPostComment}
                         >
                             コメント

@@ -16,7 +16,7 @@ import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
-import { setPopper } from '../stores/error'
+import { setMessage, setPopper } from '../stores/error'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
@@ -111,7 +111,11 @@ export const ReviewDetail: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!review || !comment) return false // 仮
+        if (!comment) {
+            dispatch(setMessage({errors: {comment: '入力してください'}}))
+            return false
+        }
+        if (!review) return false // 仮
         dispatch(asyncPostComment(review.id, comment)).then(
             () => getReview()
         ).catch(

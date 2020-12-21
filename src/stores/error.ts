@@ -12,6 +12,7 @@ interface ErrorResponse {
         account_id?: string[]
         name?: string[]
         password?: string[]
+        comment?: string[]
     }
     message: string
 }

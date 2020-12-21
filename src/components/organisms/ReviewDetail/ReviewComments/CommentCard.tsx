@@ -52,7 +52,7 @@ export const CommentCard: FC<Props> = props => {
         <Card className={classes.root}>
             <Grid container wrap="nowrap">
                 <CardMedia
-                    image={`https://locahost:1443${props.comment.user.image_name}`}
+                    image={`${process.env.API_BASEURL}${props.comment.user.image_name}`}
                     component={Link}
                     to={`/users/${props.comment.user?.account_id}`}
                     className={classes.media}
