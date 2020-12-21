@@ -7,6 +7,9 @@ import { OK } from '../util'
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
+// プリフライト飛ばすためのヘッダー
+axios.defaults.headers.common['X-NAZOLOG-TOKEN'] = process.env.X_NAZOLOG_TOKEN
+
 // Cookieの送信を許可する
 axios.defaults.withCredentials = true
 
