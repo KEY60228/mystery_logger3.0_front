@@ -45,7 +45,7 @@ export const UserDetail: FC = () => {
     const [spoil, setSpoil] = useState<boolean>(false)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
-    const [joined_at, setJoined_at] = useState<string | null>('')
+    const [joined_at, setJoined_at] = useState<Date | null>(null)
     const [contents, setContents] = useState<string | null>('')
 
     const [openReviewForm, setOpenReviewForm] = useState<boolean>(false)
@@ -115,7 +115,7 @@ export const UserDetail: FC = () => {
         if (!review) return false // 仮
         setRating(review.rating)
         setResult(review.result)
-        setJoined_at(review.joined_at)
+        setJoined_at(review.joined_at ? new Date(review.joined_at) : null)
         setContents(review.contents)
         setOpenReviewForm(true)
     }
@@ -132,7 +132,7 @@ export const UserDetail: FC = () => {
                 spoil,
                 rating,
                 result,
-                joined_at,
+                joined_at?.toISOString() || null,
                 contents,
             ),
         ).then(
@@ -141,7 +141,7 @@ export const UserDetail: FC = () => {
                 setOpenReviewForm(false)
                 setRating(0)
                 setResult(0)
-                setJoined_at('')
+                setJoined_at(null)
                 setContents('')
             }
         ).catch(
@@ -157,7 +157,7 @@ export const UserDetail: FC = () => {
                 setOpenReviewForm(false)
                 setRating(0)
                 setResult(0)
-                setJoined_at('')
+                setJoined_at(null)
                 setContents('')
             }
         )

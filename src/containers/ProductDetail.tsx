@@ -31,7 +31,7 @@ export const ProductDetail: FC = () => {
     const [spoil, setSpoil] = useState<boolean>(false)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
-    const [joined_at, setJoined_at] = useState<string | null>('')
+    const [joined_at, setJoined_at] = useState<Date | null>(null)
     const [contents, setContents] = useState<string | null>('')
     const [comment, setComment] = useState<string | null>('')
 
@@ -51,13 +51,14 @@ export const ProductDetail: FC = () => {
             return false
         }
         if (!product) return false // 仮
+        const joined = joined_at?.toISOString() || null
         dispatch(
             asyncPostReview(
                 product.id,
                 spoil,
                 rating,
                 result,
-                joined_at,
+                joined,
                 contents,
             ),
         ).then(
@@ -67,7 +68,7 @@ export const ProductDetail: FC = () => {
                 setOpen(false)
                 setRating(0)
                 setResult(0)
-                setJoined_at('')
+                setJoined_at(null)
                 setContents('')
                 setIsNew(false)
             }
@@ -87,7 +88,7 @@ export const ProductDetail: FC = () => {
         if (!review) return false // 仮
         setRating(review.rating)
         setResult(review.result)
-        setJoined_at(review.joined_at)
+        setJoined_at(review.joined_at ? new Date(review.joined_at) : null)
         setContents(review.contents)
         setOpen(true)
     }
@@ -107,7 +108,7 @@ export const ProductDetail: FC = () => {
                 spoil,
                 rating,
                 result,
-                joined_at,
+                joined_at?.toISOString() || null,
                 contents,
             ),
         ).then(
@@ -117,7 +118,7 @@ export const ProductDetail: FC = () => {
                 setOpen(false)
                 setRating(0)
                 setResult(0)
-                setJoined_at('')
+                setJoined_at(null)
                 setContents('')
                 setIsNew(false)
             }
@@ -142,7 +143,7 @@ export const ProductDetail: FC = () => {
                 setOpen(false)
                 setRating(0)
                 setResult(0)
-                setJoined_at('')
+                setJoined_at(null)
                 setContents('')
                 setIsNew(false)
             }

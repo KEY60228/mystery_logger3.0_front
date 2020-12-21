@@ -27,8 +27,8 @@ interface Props {
     setRating: (value: number) => void
     result: number
     setResult: (value: number) => void
-    joined_at: string | null
-    setJoined_at: (value: string | null) => void
+    joined_at: Date | null
+    setJoined_at: (value: Date | null) => void
     spoil: boolean
     setSpoil: (value: boolean) => void
     contents: string | null

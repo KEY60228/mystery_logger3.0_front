@@ -27,7 +27,7 @@ export const Timeline: FC = () => {
     const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
-    const [joined_at, setJoined_at] = useState<string | null>('')
+    const [joined_at, setJoined_at] = useState<Date | null>(null)
     const [contents, setContents] = useState<string | null>('')
     const [comment, setComment] = useState<string | null>('')
 
@@ -42,7 +42,7 @@ export const Timeline: FC = () => {
         if (!review) return false // 仮
         setRating(review.rating)
         setResult(review.result)
-        setJoined_at(review.joined_at)
+        setJoined_at(review.joined_at ? new Date(review.joined_at) : null)
         setContents(review.contents)
         setOpen(true)
     }
@@ -59,7 +59,7 @@ export const Timeline: FC = () => {
                 spoil,
                 rating,
                 result,
-                joined_at,
+                joined_at?.toISOString() || null,
                 contents,
             ),
         ).then(
@@ -68,7 +68,7 @@ export const Timeline: FC = () => {
                 setOpen(false)
                 setRating(0)
                 setResult(0)
-                setJoined_at('')
+                setJoined_at(null)
                 setContents('')
             }
         ).catch(
@@ -84,7 +84,7 @@ export const Timeline: FC = () => {
                 setOpen(false)
                 setRating(0)
                 setResult(0)
-                setJoined_at('')
+                setJoined_at(null)
                 setContents('')
             }
         ).catch(

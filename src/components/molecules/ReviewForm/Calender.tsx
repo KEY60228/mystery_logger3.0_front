@@ -8,8 +8,8 @@ import {
 } from '@material-ui/pickers'
 
 interface Props {
-    date: string | null
-    setDate: (value: string | null) => void
+    date: Date | null
+    setDate: (value: Date | null) => void
     className?: ClassProps
 }
 
@@ -28,8 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Calender: FC<Props> = props => {
     const classes = useStyles(props.className)
     const handleDateChange = (newDate: Date | null) => {
-        const joined = newDate?.toISOString() || null
-        props.setDate(joined)
+        props.setDate(newDate)
     }
 
     return (
@@ -40,7 +39,8 @@ export const Calender: FC<Props> = props => {
                 margin="normal"
                 id="joined-date"
                 label="Joined Date"
-                value={props.date ? new Date(props.date) : null}
+                value={props.date}
+                maxDate={Date()}
                 onChange={handleDateChange}
                 className={classes.root}
             />
