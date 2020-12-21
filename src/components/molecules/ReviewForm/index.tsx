@@ -19,6 +19,9 @@ import { Calender } from './Calender'
 import { SlideRatings } from './SlideRatings'
 import { ReviewHeader } from './ReviewHeader'
 import { SelectForm } from '../SelectForm'
+import { RootState } from '../../../stores'
+import { useSelector } from 'react-redux'
+import { LinearLoader } from '../../../Loader/LinearLoader'
 
 interface Props {
     open: boolean
@@ -79,6 +82,7 @@ const Transition = forwardRef(
 
 export const ReviewForm: FC<Props> = props => {
     const classes = useStyles(props.className)
+    const loading = useSelector((state: RootState) => state.error.loading)
 
     const resultSelect: {
         id: number
@@ -103,6 +107,9 @@ export const ReviewForm: FC<Props> = props => {
                 isNew={props.isNew}
                 product={props.product}
             />
+            { loading &&
+                <LinearLoader />
+            }
             <Card className={classes.card}>
                 <Grid container justify="center" wrap="nowrap">
                     <CardMedia
