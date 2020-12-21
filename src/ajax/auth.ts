@@ -50,7 +50,8 @@ export const asyncPreRegister = (email: string) => {
             dispatch(setMessage(response.data))
             return Promise.reject()
         }
-
+        
+        dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.status)
     }
@@ -97,6 +98,7 @@ export const asyncRegister = (
     return async (dispatch: AppDispatch): Promise<CurrentUser> => {
         dispatch(setCode(null))
         dispatch(setPopper(null))
+        dispatch(setLoading(true))
 
         const response = await axios.post<CurrentUser>('/v1/register', {
             account_id: accountId,
@@ -110,16 +112,19 @@ export const asyncRegister = (
         if (response.status === CREATED) {
             dispatch(setUser(response.data))
             dispatch(setPopper('login'))
+            dispatch(setLoading(false))
             dispatch(setCode(CREATED))
             return Promise.resolve(response.data)
         }
-
+        
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
+            dispatch(setLoading(false))
             dispatch(setMessage(response.data))
             return Promise.reject()
         }
-
+        
+        dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.data)
     }
