@@ -148,6 +148,7 @@ export const LoginForm: FC<Props> = props => {
                             type="submit"
                             variant="contained"
                             color="primary"
+                            disabled={!!message?.errors?.email || !!message?.errors?.password}
                             onClick={onClick}
                             className={classes.button}
                         >

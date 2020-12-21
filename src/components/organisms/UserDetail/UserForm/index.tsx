@@ -1,4 +1,4 @@
-import React, { FC, useState, forwardRef, ReactElement, Ref } from 'react'
+import React, { FC, useState, forwardRef, ReactElement, Ref, useEffect } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import {
     Dialog,
@@ -10,12 +10,16 @@ import {
     Slide,
     Input,
     InputLabel,
+    FormHelperText,
 } from '@material-ui/core'
 import { TransitionProps } from '@material-ui/core/transitions'
 
 import { UserDetail } from '../../../../@types'
 import { UserFormHeader } from './UserFormHeader'
 import { LogoutButton } from './LogoutButton'
+import { RootState, useAppDispatch } from '../../../../stores'
+import { useSelector } from 'react-redux'
+import { setMessage } from '../../../../stores/error'
 
 interface Props {
     user: UserDetail
@@ -69,6 +73,8 @@ const Transition = forwardRef(
 
 export const UserForm: FC<Props> = props => {
     const classes = useStyles(props.className)
+    const dispatch = useAppDispatch()
+    const message = useSelector((state: RootState) => state.error.message)
 
     const [preview, setPreview] = useState<any>(null)
 
@@ -103,16 +109,70 @@ export const UserForm: FC<Props> = props => {
         props.setImage_name(ev.target.files[0])
     }
 
+    const validateAccountId = (accountId: string) => {
+        props.setAccountId(accountId)
+        
+        if (!accountId) {
+            if (message) {
+                const errors = Object.assign({}, message.errors, {account_id: 'Account IDは必須です'})
+                dispatch(setMessage({errors: errors}))
+            } else {
+                dispatch(setMessage({errors: {account_id: 'Account IDは必須です'}}))
+            }
+            return
+        }
+        const regex = /^[0-9a-zA-Z]+$/
+        if (!regex.test(accountId)) {
+            if (message) {
+                const errors = Object.assign({}, message.errors, {account_id: 'Account IDは半角英数字で入力してください'})
+                dispatch(setMessage({errors: errors}))
+            } else {
+                dispatch(setMessage({errors: {account_id: 'Account IDは半角英数字で入力してください'}}))
+            }
+            return
+        }
+        if (message) {
+            const errors = Object.assign({}, message.errors, {account_id: null})
+            dispatch(setMessage(errors))
+        } else {
+            dispatch(setMessage(null))
+        }
+    }
+
+    const validateName = (name: string) => {
+        props.setName(name)
+        if (!name) {
+            if (message) {
+                const errors = Object.assign({}, message.errors, {name: 'Nameは必須です'})
+                dispatch(setMessage({errors: errors}))
+            } else {
+                dispatch(setMessage({errors: {name: 'Nameは必須です'}}))
+            }
+            return
+        }
+        if (message) {
+            const errors = Object.assign({}, message.errors, {name: null})
+            dispatch(setMessage({errors: errors}))
+        } else {
+            dispatch(setMessage(null))
+        }
+    }
+
+    const handleClose = () => {
+        dispatch(setMessage(null))
+        props.setOpen(false)
+    }
+
     return (
         <Dialog
             fullScreen
             open={props.open}
-            onClose={() => props.setOpen(false)}
+            onClose={handleClose}
             TransitionComponent={Transition}
         >
             <UserFormHeader
                 user={props.user}
-                setOpen={props.setOpen}
+                onClose={handleClose}
                 update={props.update}
             />
             <Card className={classes.root}>
@@ -130,20 +190,34 @@ export const UserForm: FC<Props> = props => {
                         <Input type="file" onChange={onFileChange} />
                     </FormControl>
                     <FormControl className={classes.form}>
-                        <InputLabel htmlFor="Name">Name</InputLabel>
+                        <InputLabel htmlFor='name'>Name</InputLabel>
                         <Input
-                            id="Name"
+                            id='name'
+                            aria-describedby={'name-helper'}
                             value={props.name}
-                            onChange={ev => props.setName(ev.target.value)}
+                            error={!!message?.errors?.name}
+                            onChange={ev => validateName(ev.target.value)}
                         />
+                        { message?.errors?.name &&
+                            <FormHelperText id={'name-helper'}>
+                                {message.errors.name}
+                            </FormHelperText>
+                        }
                     </FormControl>
                     <FormControl className={classes.form}>
-                        <InputLabel htmlFor="AccountId">Account ID</InputLabel>
+                        <InputLabel htmlFor='account_id'>Account ID</InputLabel>
                         <Input
-                            id="AccountId"
+                            id='account_id'
+                            aria-describedby={'account_id-helper'}
                             value={props.accountId}
-                            onChange={ev => props.setAccountId(ev.target.value)}
+                            error={!!message?.errors?.account_id}
+                            onChange={ev => validateAccountId(ev.target.value)}
                         />
+                        { message?.errors?.account_id &&
+                            <FormHelperText id={'account_id-helper'}>
+                                {message.errors.account_id}
+                            </FormHelperText>
+                        }
                     </FormControl>
                     <FormControl className={classes.form}>
                         <TextField

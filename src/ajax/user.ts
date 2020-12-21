@@ -3,7 +3,7 @@ import axios from 'axios'
 import { AppDispatch } from '../stores/index'
 import { UserDetail } from '../@types'
 import { NOT_FOUND, NO_CONTENT, OK, UNAUTHENTICATED, UNPROCESSABLE_ENTITY } from '../util'
-import { setCode, setPopper } from '../stores/error'
+import { setCode, setMessage, setPopper } from '../stores/error'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -106,6 +106,7 @@ export const asyncUpdateUser = (
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setMessage(null))
         dispatch(setPopper(null))
 
         // PHPの仕様でputがFormDataを受け取れないらしいので偽装処理
@@ -123,12 +124,13 @@ export const asyncUpdateUser = (
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            dispatch(setMessage(response.data))
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))

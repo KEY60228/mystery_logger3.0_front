@@ -15,7 +15,7 @@ import { UserDetail } from '../../../../@types'
 interface Props {
     user: UserDetail
     update: () => void
-    setOpen: (value: boolean) => void
+    onClose: () => void
     className?: ClassProps
 }
 
@@ -46,7 +46,7 @@ export const UserFormHeader: FC<Props> = props => {
                 >
                     <IconButton
                         color="inherit"
-                        onClick={() => props.setOpen(false)}
+                        onClick={props.onClose}
                     >
                         <CloseIcon />
                     </IconButton>
