@@ -8,6 +8,7 @@ import { RootState, useAppDispatch } from '../stores/index'
 import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
 import { Register as RegisterTemp } from '../components/templates/Register'
 import { setMessage } from '../stores/error'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const Register: FC = () => {
     const history = useHistory()
@@ -56,7 +57,7 @@ export const Register: FC = () => {
                 />
             )}
             {registerStatus === false && <FailVerifyTemp />}
-            {registerStatus === null && <div>loading</div>}
+            {registerStatus === null && <CircularLoader />}
         </>
     )
 }

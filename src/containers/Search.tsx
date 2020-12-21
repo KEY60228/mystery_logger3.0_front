@@ -4,6 +4,7 @@ import { useAppDispatch } from '../stores/index'
 import { ProductIndex } from '../@types'
 import { asyncGetProducts } from '../ajax/product'
 import { Search as SearchTemp } from '../components/templates/Search'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const Search: FC = () => {
     
@@ -21,7 +22,7 @@ export const Search: FC = () => {
     return (
         <>
             {products && <SearchTemp products={products} />}
-            {!products && <div>loading</div>}
+            {!products && <CircularLoader />}
         </>
     )
 }

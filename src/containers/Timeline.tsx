@@ -16,6 +16,7 @@ import { RootState, useAppDispatch } from '../stores/index'
 import { setFocusedReview } from '../stores/review'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 import { setPopper } from '../stores/error'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const Timeline: FC = () => {
     const dispatch = useAppDispatch()
@@ -203,7 +204,7 @@ export const Timeline: FC = () => {
                     />
                 </>
             )}
-            {!reviews && <div>loading</div>}
+            {!reviews && <CircularLoader />}
         </>
     )
 }

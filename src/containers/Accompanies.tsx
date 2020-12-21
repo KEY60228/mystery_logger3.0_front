@@ -4,6 +4,7 @@ import { useAppDispatch } from '../stores/index'
 import { AccompanyIndex } from '../@types'
 import { asyncGetAccompanies } from '../ajax/accompany'
 import { Accompanies as AccompaniesTemp } from '../components/templates/Accompanies'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const Accompanies: FC = () => {
     const dispatch = useAppDispatch()
@@ -23,7 +24,7 @@ export const Accompanies: FC = () => {
                 <AccompaniesTemp accompanies={accompanies} />
             }
             { !accompanies &&
-                <div>loading</div>
+                <CircularLoader />
             }
         </>
     )

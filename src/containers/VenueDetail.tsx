@@ -5,6 +5,7 @@ import { useAppDispatch } from '../stores/index'
 import { VenueDetail as VenueDetailInterface } from '../@types'
 import { asyncGetVenue } from '../ajax/venue'
 import { VenueDetail as VenueDetailTemp } from '../components/templates/VenueDetail'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const VenueDetail: FC = () => {
     const dispatch = useAppDispatch()
@@ -28,7 +29,7 @@ export const VenueDetail: FC = () => {
                 />
             }
             { !venue &&
-                <div>loading</div>
+                <CircularLoader />
             }
         </>
     )

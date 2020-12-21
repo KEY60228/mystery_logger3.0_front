@@ -24,6 +24,7 @@ import {
     asyncUpdateReview,
 } from '../ajax/review'
 import { setPopper } from '../stores/error'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
@@ -266,7 +267,7 @@ export const UserDetail: FC = () => {
                     />
                 </>
             )}
-            {!user && <div>loading</div>}
+            {!user && <CircularLoader />}
         </>
     )
 }

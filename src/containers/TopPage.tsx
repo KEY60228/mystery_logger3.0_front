@@ -4,6 +4,7 @@ import { useAppDispatch } from '../stores/index'
 import { ProductIndex } from '../@types'
 import { asyncGetProducts } from '../ajax/product'
 import { TopPage as TPTemp } from '../components/templates/TopPage'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const TopPage: FC = () => {
     const dispatch = useAppDispatch()
@@ -21,7 +22,7 @@ export const TopPage: FC = () => {
     return (
         <>
             {products && <TPTemp products={products} />}
-            {!products && <div>loading</div>}
+            {!products && <CircularLoader />}
         </>
     )
 }

@@ -5,6 +5,7 @@ import { useAppDispatch } from '../stores/index'
 import { OrganizerDetail as OrganizerDetailInterface } from '../@types'
 import { asyncGetOrganizer } from '../ajax/organizer'
 import { OrganizerDetail as OrganizerDetailTemp } from '../components/templates/OrganizerDetail'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const OrganizerDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
@@ -25,7 +26,7 @@ export const OrganizerDetail: FC = () => {
                 <OrganizerDetailTemp organizer={organizer} />
             }
             {!organizer &&
-                <div>loading</div>
+                <CircularLoader />
             }
         </>
     )

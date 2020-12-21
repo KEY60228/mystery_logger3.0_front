@@ -18,6 +18,7 @@ import { RootState, useAppDispatch } from '../stores/index'
 import { setFocusedProduct } from '../stores/product'
 import { setPopper } from '../stores/error'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()
@@ -298,7 +299,7 @@ export const ProductDetail: FC = () => {
                     />
                 </>
             )}
-            {!product && <div>loading</div>}
+            {!product && <CircularLoader />}
         </>
     )
 }
