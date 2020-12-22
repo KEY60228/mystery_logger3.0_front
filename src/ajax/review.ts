@@ -302,30 +302,36 @@ export const asyncGetSpoiledContents = (
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
+        dispatch(setLoading(true))
 
         const response = await axios.get(`/v1/spoil/${review_id}`)
 
         if (response.status === OK) {
             setReview(response.data)
+            dispatch(setLoading(false))
             dispatch(setCode(OK))
             return Promise.resolve()
         }
 
         if (response.status === UNAUTHENTICATED) {
+            dispatch(setLoading(false))
             dispatch(setCode(UNAUTHENTICATED))
             return Promise.reject(response.data)
         }
 
         if (response.status === NOT_FOUND) {
+            dispatch(setLoading(false))
             dispatch(setCode(NOT_FOUND))
             return Promise.reject(response.data)
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
+            dispatch(setLoading(false))
             return Promise.reject(response.data)
         }
 
+        dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.data)
     }

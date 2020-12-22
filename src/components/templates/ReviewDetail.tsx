@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { ReviewDetail as ReviewDetailInterface, User } from '../../@types'
 import { ProductCardM } from '../molecules/ProductCardM/'
@@ -7,6 +8,8 @@ import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
 import { ReviewComments } from '../organisms/ReviewDetail/ReviewComments/'
 import { TempSpace } from '../molecules/TempSpace'
+import { LinearLoader } from '../../Loader/LinearLoader'
+import { RootState } from '../../stores'
 
 interface Props {
     review: ReviewDetailInterface
@@ -39,8 +42,13 @@ export const ReviewDetail: FC<Props> = props => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
+    const loading = useSelector((state: RootState) => state.error.loading)
+
     return (
         <>
+            { loading &&
+                <LinearLoader />
+            }
             <ProductCardM product={props.review.product} />
             <ReviewCard
                 review={props.review}
