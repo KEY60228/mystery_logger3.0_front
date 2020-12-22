@@ -18,6 +18,7 @@ import { RootState, useAppDispatch } from '../stores/index'
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 import { setMessage, setPopper } from '../stores/error'
 import { CircularLoader } from '../Loader/CircularLoader'
+import { setUser } from '../stores/auth'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
@@ -130,6 +131,11 @@ export const ReviewDetail: FC = () => {
             return false
         }
         if (!review) return false // 仮
+
+        // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
+        dispatch(setUser(Object.assign({}, currentUser, {like_reviews_id: currentUser.like_reviews_id.concat([review.id])})))
+        setReview(Object.assign({}, review, {review_likes_count: review.review_likes_count + 1}))
+
         dispatch(asyncLikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
@@ -146,14 +152,20 @@ export const ReviewDetail: FC = () => {
             return false
         }
         if (!review) return false // 仮
+
+        // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
+        const like_reviews_id = currentUser.like_reviews_id.filter(el => {
+            return el !== review.id
+        })
+        dispatch(setUser(Object.assign({}, currentUser, {like_reviews_id: like_reviews_id})))
+        setReview(Object.assign({}, review, {review_likes_count: review.review_likes_count - 1}))
+
         dispatch(asyncUnlikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
                 getReview()
             }
-        ).catch(
-
-        )
+        ).catch()
     }
 
     const getSpoiledContents = () => {

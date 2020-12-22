@@ -17,6 +17,7 @@ import { setFocusedReview } from '../stores/review'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 import { setPopper } from '../stores/error'
 import { CircularLoader } from '../Loader/CircularLoader'
+import { setUser } from '../stores/auth'
 
 export const Timeline: FC = () => {
     const dispatch = useAppDispatch()
@@ -137,7 +138,19 @@ export const Timeline: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!review) return false // 仮
+        if (!review || !reviews) return false // 仮
+
+        // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
+        dispatch(setUser(Object.assign({}, currentUser, {like_reviews_id: currentUser.like_reviews_id.concat([review.id])})))
+        const tmp = reviews.map(el => {
+            if (el.id === review.id) {
+                const num = el.review_likes_count
+                return Object.assign({}, el, {review_likes_count: num + 1})
+            }
+            return el
+        })
+        setReviews(tmp)
+
         dispatch(asyncLikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
@@ -153,7 +166,22 @@ export const Timeline: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!review) return false // 仮
+        if (!review || !reviews) return false // 仮
+
+        // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
+        const like_reviews_id = currentUser.like_reviews_id.filter(el => {
+            return el !== review.id
+        })
+        dispatch(setUser(Object.assign({}, currentUser, {like_reviews_id: like_reviews_id})))
+        const tmp = reviews.map(el => {
+            if (el.id === review.id) {
+                const num = el.review_likes_count
+                return Object.assign({}, el, {review_likes_count: num - 1})
+            }
+            return el
+        })
+        setReviews(tmp)
+
         dispatch(asyncUnlikeReview(review.id)).then(
             () => {
                 dispatch(asyncGetCurrentUser())
