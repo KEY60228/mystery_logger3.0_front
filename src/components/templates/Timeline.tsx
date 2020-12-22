@@ -7,6 +7,9 @@ import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
 import { TempSpace } from '../molecules/TempSpace'
+import { LinearLoader } from '../../Loader/LinearLoader'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../stores'
 
 interface Props {
     reviews: ReviewIndex[]
@@ -52,8 +55,13 @@ export const Timeline: FC<Props> = props => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [openComment, setOpenComment] = useState<number | false>(false)
 
+    const loading = useSelector((state: RootState) => state.error.loading)
+
     return (
         <>
+            { loading &&
+                <LinearLoader />
+            }
             {props.reviews.map(review => (
                 <ReviewCard
                     key={review.id}

@@ -13,6 +13,9 @@ import { UserForm } from '../organisms/UserDetail/UserForm/'
 import { FollowList } from '../organisms/UserDetail/FollowList/'
 import { ReviewForm } from '../molecules/ReviewForm'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
+import { LinearLoader } from '../../Loader/LinearLoader'
+import { RootState } from '../../stores'
+import { useSelector } from 'react-redux'
 
 interface Props {
     user: UserDetailInterface
@@ -60,8 +63,13 @@ export const UserDetail: FC<Props> = props => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
+    const loading = useSelector((state: RootState) => state.error.loading)
+
     return (
         <>
+            { loading &&
+                <LinearLoader />
+            }
             <UserProfile
                 user={props.user}
                 follow={props.follow}

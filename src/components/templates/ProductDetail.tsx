@@ -12,6 +12,9 @@ import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
 import { TempSpace } from '../molecules/TempSpace'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
+import { LinearLoader } from '../../Loader/LinearLoader'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../stores'
 
 interface Props {
     currentUser: CurrentUser | null
@@ -49,8 +52,13 @@ export const ProductDetail: FC<Props> = props => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
+    const loading = useSelector((state: RootState) => state.error.loading)
+
     return (
         <>
+            {loading &&
+                <LinearLoader />
+            }
             <ProductContents
                 product={props.product}
                 currentUser={props.currentUser}

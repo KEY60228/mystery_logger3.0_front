@@ -175,30 +175,36 @@ export const asyncDeleteReview = (review_id: number) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
         dispatch(setPopper(null))
+        dispatch(setLoading(true))
 
         const response = await axios.delete<void>(`/v1/reviews/${review_id}`)
 
         if (response.status === NO_CONTENT) {
             dispatch(setPopper('deleted review'))
             dispatch(setCode(NO_CONTENT))
+            dispatch(setLoading(false))
             return Promise.resolve()
         }
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
+            dispatch(setLoading(false))
             return Promise.reject(response.data)
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
-            return Promise.reject(response.data)
-        }
-        
-        if (response.status === UNPROCESSABLE_ENTITY) {
-            dispatch(setCode(UNPROCESSABLE_ENTITY))
+            dispatch(setLoading(false))
             return Promise.reject(response.data)
         }
 
+        if (response.status === UNPROCESSABLE_ENTITY) {
+            dispatch(setCode(UNPROCESSABLE_ENTITY))
+            dispatch(setLoading(false))
+            return Promise.reject(response.data)
+        }
+
+        dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.data)
     }
