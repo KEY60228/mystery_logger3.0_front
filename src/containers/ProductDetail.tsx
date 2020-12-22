@@ -189,13 +189,18 @@ export const ProductDetail: FC = () => {
         )
     }
 
-    const wanna = (product: Product) => {
+    const wanna = (prod: Product) => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!product) return false // 仮
-        dispatch(asyncWanna(product.id)).then(
+        if (!prod) return false // 仮
+
+        // 楽観的更新
+        dispatch(setUser(Object.assign({}, currentUser, { wanna_id: currentUser.wanna_id.concat([prod.id])})))
+        dispatch(setFocusedProduct(Object.assign({}, product, { wannas_count: product!.wannas_count + 1 })))
+
+        dispatch(asyncWanna(prod.id)).then(
             () => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
@@ -211,6 +216,14 @@ export const ProductDetail: FC = () => {
             return false
         }
         if (!product) return false // 仮
+
+        // 楽観的更新
+        const wanna_id = currentUser.wanna_id.filter(el => {
+            return el !== product.id
+        })
+        dispatch(setUser(Object.assign({}, currentUser, {wanna_id: wanna_id})))
+        dispatch(setFocusedProduct(Object.assign({}, product, { wannas_count: product!.wannas_count - 1 })))
+
         dispatch(asyncUnwanna(product.id)).then(
             () => {
                 getProduct()
