@@ -158,6 +158,10 @@ export const ProductDetail: FC = () => {
             return false
         }
         if (!user) return false // 仮
+
+        // 楽観的更新
+        dispatch(setUser(Object.assign({}, currentUser, {follows_id: currentUser.follows_id.concat([user.id])})))
+
         dispatch(asyncFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
@@ -171,6 +175,13 @@ export const ProductDetail: FC = () => {
             return false
         }
         if (!user) return false // 仮
+
+        // 楽観的更新
+        const follows_id = currentUser.follows_id.filter(el => {
+            return el !== user.id
+        })
+        dispatch(setUser(Object.assign({}, currentUser, {follows_id: follows_id})))
+
         dispatch(asyncUnFollow(user.id)).then(
             () => dispatch(asyncGetCurrentUser())
         ).catch(
