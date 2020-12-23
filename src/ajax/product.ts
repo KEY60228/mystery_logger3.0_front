@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
-import { setFocusedProduct } from '../stores/product'
 import { setCode } from '../stores/error'
 import { ProductDetail, ProductIndex } from '../@types'
 import { NOT_FOUND, NO_CONTENT, OK, UNAUTHENTICATED, UNPROCESSABLE_ENTITY } from '../util'
@@ -44,14 +43,13 @@ export const asyncGetProducts = (
 }
 
 export const asyncGetProduct = (id: string) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<ProductDetail> => {
         dispatch(setCode(null))
 
         const response = await axios.get<ProductDetail>(`/v1/products/${id}`)
 
         if (response.status === OK) {
-            dispatch(setFocusedProduct(response.data))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === NOT_FOUND) {

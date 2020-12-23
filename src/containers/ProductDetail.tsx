@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { Product, ReviewDetail, User } from '../@types'
+import { Product, ProductDetail as ProductDetailInterface, ReviewDetail, User } from '../@types'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
 import {
     asyncDeleteReview,
@@ -15,7 +15,6 @@ import {
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
-import { setFocusedProduct } from '../stores/product'
 import { setPopper } from '../stores/error'
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 import { CircularLoader } from '../Loader/CircularLoader'
@@ -25,10 +24,9 @@ export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()
     const { id } = useParams<{ id: string }>()
 
-    const product = useSelector(
-        (state: RootState) => state.product.focusedProduct,
-    )
     const currentUser = useSelector((state: RootState) => state.auth.user)
+
+    const [product, setProduct] = useState<ProductDetailInterface | null>(null)
 
     const [spoil, setSpoil] = useState<boolean>(false)
     const [rating, setRating] = useState<number>(0)
@@ -44,7 +42,9 @@ export const ProductDetail: FC = () => {
     const [isNew, setIsNew] = useState<boolean>(false)
 
     const getProduct = () => {
-        dispatch(asyncGetProduct(id))
+        dispatch(asyncGetProduct(id)).then(
+            (result) => setProduct(result)
+        )
     }
 
     const post = () => {
@@ -198,7 +198,7 @@ export const ProductDetail: FC = () => {
 
         // 楽観的更新
         dispatch(setUser(Object.assign({}, currentUser, { wanna_id: currentUser.wanna_id.concat([prod.id])})))
-        dispatch(setFocusedProduct(Object.assign({}, product, { wannas_count: product!.wannas_count + 1 })))
+        setProduct(Object.assign({}, product, { wannas_count: product!.wannas_count + 1 }))
 
         dispatch(asyncWanna(prod.id)).then(
             () => {
@@ -210,21 +210,21 @@ export const ProductDetail: FC = () => {
         )
     }
 
-    const unwanna = (product: Product) => {
+    const unwanna = (prod: Product) => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!product) return false // 仮
+        if (!prod) return false // 仮
 
         // 楽観的更新
         const wanna_id = currentUser.wanna_id.filter(el => {
-            return el !== product.id
+            return el !== prod.id
         })
         dispatch(setUser(Object.assign({}, currentUser, {wanna_id: wanna_id})))
-        dispatch(setFocusedProduct(Object.assign({}, product, { wannas_count: product!.wannas_count - 1 })))
+        setProduct(Object.assign({}, product, { wannas_count: product!.wannas_count - 1 }))
 
-        dispatch(asyncUnwanna(product.id)).then(
+        dispatch(asyncUnwanna(prod.id)).then(
             () => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
@@ -263,7 +263,7 @@ export const ProductDetail: FC = () => {
             }
             return el
         })
-        dispatch(setFocusedProduct(Object.assign({}, product, {reviews: reviews})))
+        setProduct(Object.assign({}, product, {reviews: reviews}))
 
         dispatch(asyncLikeReview(review.id)).then(
             () => {
@@ -294,7 +294,7 @@ export const ProductDetail: FC = () => {
             }
             return el
         })
-        dispatch(setFocusedProduct(Object.assign({}, product, {reviews: reviews})))
+        setProduct(Object.assign({}, product, {reviews: reviews}))
 
         dispatch(asyncUnlikeReview(review.id)).then(
             () => {
@@ -310,7 +310,7 @@ export const ProductDetail: FC = () => {
         getProduct()
 
         return () => {
-            dispatch(setFocusedProduct(null))
+            setProduct(null)
         }
     }, [])
 
