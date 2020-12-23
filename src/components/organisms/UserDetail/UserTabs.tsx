@@ -15,7 +15,7 @@ interface Props {
     follow: (user: User) => void
     unfollow: (user: User) => void
     setConfirmOpen: (value: boolean) => void
-    editReview: () => void
+    editReview: (value: ReviewDetail) => void
     comment: string | null
     setComment: (value: string) => void
     postComment: (review: ReviewDetail) => void

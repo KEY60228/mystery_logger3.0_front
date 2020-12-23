@@ -22,7 +22,7 @@ interface ReviewDetail extends Review {
 
 interface Props {
     review: ReviewDetail
-    edit: () => void
+    edit: (value: ReviewDetail) => void
     setConfirmOpen: (value: boolean) => void
     follow: (user: User) => void
     unfollow: (user: User) => void

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import authReducer from './auth'
 import errorReducer from './error'
 // import productReducer from './product'
-import reviewReducer from './review'
+// import reviewReducer from './review'
 // import userReducer from './user'
 // import messageReducer from './message'
 
@@ -15,7 +15,7 @@ const reducer = combineReducers({
     auth: authReducer,
     error: errorReducer,
     // product: productReducer,
-    review: reviewReducer,
+    // review: reviewReducer,
     // user: userReducer,
     // message: messageReducer,
 })

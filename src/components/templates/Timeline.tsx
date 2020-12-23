@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles' // 仮
 import { Card } from '@material-ui/core'
 
-import { ReviewIndex, User } from '../../@types'
+import { ReviewDetail, ReviewIndex, User } from '../../@types'
 import { ReviewCard } from '../molecules/ReviewCard'
 import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
 import { ReviewForm } from '../molecules/ReviewForm/'
@@ -26,7 +26,7 @@ interface Props {
     setSpoil: (value: boolean) => void
     contents: string | null
     setContents: (value: string | null) => void
-    edit: () => void
+    edit: (value: ReviewDetail) => void
     update: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void

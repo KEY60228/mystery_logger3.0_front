@@ -91,7 +91,8 @@ export const ProductDetail: FC = () => {
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at ? new Date(review.joined_at) : null)
-        setContents(review.contents)
+        setContents(review.exposed_contents)
+        setSpoil(review.spoil)
         setOpen(true)
     }
 

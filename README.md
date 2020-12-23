@@ -63,5 +63,3 @@ src/
 - apiStatusは使わない。各statusを使う
 - フォームはとりあえずRedux使わない。containerでuseStateする
 - とりあえず今はレスポンシブデザインは考えない
-
-- setFocusedReviewはTimeline用に残す。もっと良いやり方を思いついたら修正する

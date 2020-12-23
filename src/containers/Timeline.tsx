@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { ReviewIndex, User } from '../@types'
+import { ReviewIndex, ReviewDetail, User } from '../@types'
 import {
     asyncDeleteReview,
     asyncGetTimeline,
@@ -13,7 +13,6 @@ import {
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
-import { setFocusedReview } from '../stores/review'
 import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 import { setPopper } from '../stores/error'
 import { CircularLoader } from '../Loader/CircularLoader'
@@ -23,10 +22,10 @@ export const Timeline: FC = () => {
     const dispatch = useAppDispatch()
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    const review = useSelector((state: RootState) => state.review.focusedReview) // 要確認
+    const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
+    const [review, setReview] = useState<ReviewDetail | null>(null)
 
     const [spoil, setSpoil] = useState<boolean>(false)
-    const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
     const [rating, setRating] = useState<number>(0)
     const [result, setResult] = useState<number>(0)
     const [joined_at, setJoined_at] = useState<Date | null>(null)
@@ -40,12 +39,14 @@ export const Timeline: FC = () => {
         dispatch(asyncGetTimeline(setReviews))
     }
 
-    const edit = () => {
+    const edit = (review: ReviewDetail) => {
         if (!review) return false // 仮
+        setReview(review)
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at ? new Date(review.joined_at) : null)
-        setContents(review.contents)
+        setSpoil(review.spoil)
+        setContents(review.exposed_contents)
         setOpen(true)
     }
 
@@ -67,6 +68,7 @@ export const Timeline: FC = () => {
         ).then(
             () => {
                 getReviews()
+                setReview(null)
                 setOpen(false)
                 setRating(0)
                 setResult(0)
@@ -205,10 +207,6 @@ export const Timeline: FC = () => {
 
     useEffect(() => {
         getReviews()
-
-        return () => {
-            dispatch(setFocusedReview(null))
-        }
     }, [])
 
     return (

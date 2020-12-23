@@ -32,10 +32,10 @@ export const UserDetail: FC = () => {
     const dispatch = useAppDispatch()
     const history = useHistory()
 
-    const review = useSelector((state: RootState) => state.review.focusedReview)
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
     const [user, setUser] = useState<UserDetailInterface | null>(null)
+    const [review, setReview] = useState<ReviewDetail | null>(null)
 
     const [name, setName] = useState<string>('')
     const [accountId, setAccountId] = useState<string>('')
@@ -124,12 +124,14 @@ export const UserDetail: FC = () => {
         )
     }
 
-    const editReview = () => {
+    const editReview = (review: ReviewDetail) => {
         if (!review) return false // 仮
+        setReview(review)
         setRating(review.rating)
         setResult(review.result)
         setJoined_at(review.joined_at ? new Date(review.joined_at) : null)
-        setContents(review.contents)
+        setContents(review.exposed_contents)
+        setSpoil(review.spoil)
         setOpenReviewForm(true)
     }
 

@@ -36,7 +36,7 @@ interface Props {
     updateUser: () => void
     openReviewForm: boolean
     setOpenReviewForm: (value: boolean) => void
-    editReview: () => void
+    editReview: (value: ReviewDetail) => void
     updateReview: () => void
     deleteReview: () => void
     rating: number

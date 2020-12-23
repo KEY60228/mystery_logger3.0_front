@@ -32,7 +32,7 @@ interface Props {
     productTitle?: boolean
     productCard?: boolean
     shorten?: boolean
-    edit: () => void
+    edit: (value: ReviewDetail) => void
     setConfirmOpen: (value: boolean) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
