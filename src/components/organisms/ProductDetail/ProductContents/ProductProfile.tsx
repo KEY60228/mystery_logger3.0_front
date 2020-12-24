@@ -78,6 +78,34 @@ export const ProductProfile: FC<Props> = props => {
         }
     }
 
+    const getLimitTime = (time: number | null) => {
+        if (time === null) {
+            return (
+                <>不明</>
+            )
+        } else if (time === 0) {
+            return (
+                <>制限時間なし</>
+            )
+        } else {
+            return (
+                <>{time}分</>
+            )
+        }
+    }
+
+    const getRequiredTime = (time: number | null) => {
+        if (time === null) {
+            return (
+                <>不明</>
+            )
+        } else {
+            return (
+                <>約{time}分(目安)</>
+            )
+        }
+    }
+
     return (
         <Grid container direction="column" className={classes.root}>
             <Typography variant="subtitle1" className={classes.subtitle}>
@@ -125,7 +153,7 @@ export const ProductProfile: FC<Props> = props => {
                 制限時間 / 所要時間
             </Typography>
             <Typography variant="body1" className={classes.body}>
-                約{props.product.limitTime}分 / 約{props.product.requiredTime}分
+                {getLimitTime(props.product.limitTime)} / {getRequiredTime(props.product.requiredTime)}
             </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 人数
