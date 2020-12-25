@@ -67,7 +67,7 @@ export const ProductCardM: FC<Props> = props => {
             >
                 <Grid container wrap="nowrap" alignItems="center">
                     <CardMedia
-                        image={`/product_img/${props.product.image_name}`}
+                        image={`${process.env.API_BASEURL}${props.product.image_name}`}
                         className={classes.img}
                     />
                     <Grid

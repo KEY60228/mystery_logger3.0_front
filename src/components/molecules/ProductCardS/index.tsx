@@ -44,7 +44,7 @@ export const ProductCardS: FC<Props> = props => {
             >
                 <CardMedia
                     className={classes.media}
-                    image={`/product_img/${props.product.image_name}`}
+                    image={`${process.env.API_BASEURL}${props.product.image_name}`}
                 />
                 <ProductCounters
                     product={props.product}

@@ -54,7 +54,7 @@ export const ProductContents: FC<Props> = props => {
                 <Grid>
                     <CardMedia
                         className={classes.media}
-                        image={`/product_img/${props.product.image_name}`}
+                        image={`${process.env.API_BASEURL}${props.product.image_name}`}
                     />
                     <Ratings
                         number={props.product.avg_rating || 0}

@@ -113,7 +113,7 @@ export const ReviewForm: FC<Props> = props => {
             <Card className={classes.card}>
                 <Grid container justify="center" wrap="nowrap">
                     <CardMedia
-                        image={`/product_img/${props.product.image_name}`}
+                        image={`${process.env.API_BASEURL}${props.product.image_name}`}
                         className={classes.img}
                     />
                     <Grid
