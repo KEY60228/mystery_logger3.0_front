@@ -8,8 +8,8 @@ export interface Product {
     phrase: string | null // 作品フレーズ
     website: string | null // 作品WEBページ
     image_name: string // 作品画像
-    limitTime: string | null // 制限時間
-    requiredTime: string | null // 必要時間
+    limitTime: number | null // 制限時間
+    requiredTime: number | null // 必要時間
     minParty: number | null // 最小人数
     maxParty: number | null // 最大人数
     created_at: string // 作成時

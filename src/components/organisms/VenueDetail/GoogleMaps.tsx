@@ -50,19 +50,14 @@ export const SimpleMap: FC<Props> = props => {
                         <GoogleMapReact
                             bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY || '' /* API KEY */ }}
                             defaultCenter={{
-                                // lat: venue.lat
-                                lat: 35.6984357,
-                                // lng: venue.lng
-                                lng: 139.7035704
+                                lat: props.venue.lat ? parseFloat(props.venue.lat) : 0,
+                                lng: props.venue.long ? parseFloat(props.venue.long) : 0,
                             }}
                             defaultZoom={16}
                         >
                             <Pin
-                                // lat={venue.lat}
-                                lat={35.6984357}
-                                // lng={venue.lng}
-                                lng={139.7035704}
-                                // text={venue.name}
+                                lat={props.venue.lat ? parseFloat(props.venue.lat) : 0}
+                                lng={props.venue.long ? parseFloat(props.venue.long) : 0}
                             />
                         </GoogleMapReact>
                     </div>
