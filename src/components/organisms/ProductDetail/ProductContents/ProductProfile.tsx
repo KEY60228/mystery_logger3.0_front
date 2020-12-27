@@ -112,7 +112,7 @@ export const ProductProfile: FC<Props> = props => {
                 制作会社
             </Typography>
             <Card onClick={() => history.push(`/organizers/${props.product.organizer.id}`)} className={classes.card}>
-                <Grid container justify='space-between' alignItems='center'>
+                <Grid container justify='space-between' alignItems='center' wrap="nowrap">
                     <Typography variant="body1" className={classes.body}>
                         {props.product.organizer.service_name}
                     </Typography>
@@ -130,7 +130,7 @@ export const ProductProfile: FC<Props> = props => {
                             onClick={() => history.push(`/venues/${performance.venue_id}`)} 
                             className={classes.card}
                         >
-                            <Grid container justify='space-between' alignItems='center'>
+                            <Grid container justify='space-between' alignItems='center' wrap="nowrap">
                                 <Typography
                                     variant="body1"
                                     className={classes.body}
@@ -177,7 +177,7 @@ export const ProductProfile: FC<Props> = props => {
             <Card onClick={() => history.push(`/accompany`)} className={classes.card}>
                 <Grid container justify='space-between' alignItems='center'>
                     <Typography variant="body1" className={classes.body}>
-                        3件
+                        0件
                     </Typography>
                     <NavigateNextIcon />
                 </Grid>

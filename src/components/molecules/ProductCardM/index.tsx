@@ -84,11 +84,21 @@ export const ProductCardM: FC<Props> = props => {
                             <Typography className={classes.text}>
                                 開催場所:{' '}
                                 {props.product.performances.map(
-                                    performance => (
-                                        <span key={performance.id}>
-                                            {performance.venue.name}
-                                        </span>
-                                    ),
+                                    (performance, index, array) => {
+                                        if (index === array.length - 1) {
+                                            return (
+                                                <span key={performance.id}>
+                                                    {performance.venue.name}
+                                                </span>
+                                            )
+                                        } else {
+                                            return (
+                                                <span key={performance.id}>
+                                                    {`${performance.venue.name} / `}
+                                                </span>
+                                            )
+                                        }
+                                    },
                                 )}
                             </Typography>
                             <Typography className={classes.text}>

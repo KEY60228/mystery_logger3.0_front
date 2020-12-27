@@ -44,7 +44,7 @@ export const Search: FC<Props> = props => {
                     return false
                 }
                 return true
-            }),
+            }).slice(0,10)
         )
     }
 
@@ -101,82 +101,82 @@ export const Search: FC<Props> = props => {
     categories.unshift({ id: 0, name: 'カテゴリーを選択' })
 
     const sortProductsByRandom = () => {
-        if (!results) return
+        if (!props.products) return
         setResults(
-            results.sort((a, b) => {
+            props.products.sort((a, b) => {
                 return Math.random() - Math.random()
-            }).slice()
+            }).slice(0,10)
         )
     }
 
     // レビュー数でソート
     const sortProductsByReviewsCount = () => {
-        if (!results) return
+        if (!props.products) return
         setResults(
-            results
+            props.products
                 .sort((a, b) => {
                     return b.reviews_count - a.reviews_count
                 })
-                .slice(),
+                .slice(0,10)
         )
     }
 
     // レートでソート
     const sortProductsByAvgRatings = () => {
-        if (!results) return
+        if (!props.products) return
         setResults(
-            results
+            props.products
                 .sort((a, b) => {
                     const avgRatingA = a.avg_rating || 0
                     const avgRatingB = b.avg_rating || 0
                     return avgRatingB - avgRatingA
                 })
-                .slice(),
+                .slice(0,10)
         )
     }
 
     // 成功率でソート (高い順)
     const sortProductsBySuccessRatesDesc = () => {
-        if (!results) return
+        if (!props.products) return
         setResults(
-            results
+            props.products
                 .sort((a, b) => {
                     const successRateA = a.success_rate || 0
                     const successRateB = b.success_rate || 0
                     return successRateB - successRateA
                 })
-                .slice(),
+                .slice(0,10)
         )
     }
 
     // 成功率でソート (低い順)
     const sortProductsBySuccessRatesAsc = () => {
-        if (!results) return
+        if (!props.products) return
         setResults(
-            results
+            props.products
                 .sort((a, b) => {
                     const successRateA = a.success_rate || 0
                     const successRateB = b.success_rate || 0
                     return successRateA - successRateB
                 })
-                .slice(),
+                .slice(0,10)
         )
     }
 
     // wanna数でソート
     const sortProductsByWannasCount = () => {
-        if (!results) return
+        if (!props.products) return
         setResults(
-            results
+            props.products
                 .sort((a, b) => {
                     return b.wannas_count - a.wannas_count
                 })
-                .slice(),
+                .slice(0,10)
         )
     }
 
     useEffect(() => {
-        setResults(props.products)
+        sortProductsByRandom()
     }, [])
 
     return (
