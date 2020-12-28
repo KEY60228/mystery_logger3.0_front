@@ -1,7 +1,5 @@
 // pathモジュールの読み込み
 const path = require('path')
-// Dotenvモジュールの読み込み
-const Dotenv = require('dotenv-webpack')
 
 module.exports = {
     // 入力ファイル設定
@@ -29,9 +27,4 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json'],
     },
-
-    // dotenv設定
-    plugins: [
-        new Dotenv({path: './.env'})
-    ]
 }
