@@ -8,15 +8,11 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: '8px',
             padding: '8px',
         },
-    })
+    }),
 )
 
 export const NotFoundPage: FC = () => {
     const classes = useStyles()
 
-    return (
-        <Card className={classes.root}>
-            ページが存在しません
-        </Card>
-    )
+    return <Card className={classes.root}>ページが存在しません</Card>
 }

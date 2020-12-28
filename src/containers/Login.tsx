@@ -17,9 +17,9 @@ export const Login: FC = () => {
     const [password, setPassword] = useState<string>('')
 
     const login = () => {
-        dispatch(asyncLogin(email, password)).then(
-            (result) => history.push(`/users/${result.account_id}`)
-        ).catch()
+        dispatch(asyncLogin(email, password))
+            .then(result => history.push(`/users/${result.account_id}`))
+            .catch()
     }
 
     useEffect(() => {

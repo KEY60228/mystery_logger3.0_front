@@ -4,7 +4,13 @@ import { Card, Grid, Typography } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 
-import { Product, Venue, Category, Organizer, Performance } from '../../../@types'
+import {
+    Product,
+    Venue,
+    Category,
+    Organizer,
+    Performance,
+} from '../../../@types'
 import { ProductCardM } from '../../molecules/ProductCardM/'
 
 interface PerformanceWithVenue extends Performance {
@@ -23,20 +29,16 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         card: {
             margin: '8px',
             padding: '8px',
         },
-        text: {
-
-        },
-    })
+        text: {},
+    }),
 )
 
-export const OrganizerProducts: FC<Props> = (props) => {
+export const OrganizerProducts: FC<Props> = props => {
     const classes = useStyles()
     const [open, setOpen] = useState<boolean>(false)
 
@@ -47,23 +49,20 @@ export const OrganizerProducts: FC<Props> = (props) => {
     return (
         <>
             <Card className={classes.card} onClick={onClick}>
-                <Grid container wrap='nowrap' justify='space-between'>
+                <Grid container wrap="nowrap" justify="space-between">
                     <Typography className={classes.text}>作品一覧</Typography>
-                    { !open &&
-                        <ExpandMoreIcon />
-                    }
-                    { open &&
-                        <ExpandLessIcon />
-                    }
+                    {!open && <ExpandMoreIcon />}
+                    {open && <ExpandLessIcon />}
                 </Grid>
             </Card>
-            { open && props.products.map(product =>
-                <ProductCardM
-                    key={product.id}
-                    product={product}
-                    className={{rootMargin: '16px'}}
-                />
-            )}
+            {open &&
+                props.products.map(product => (
+                    <ProductCardM
+                        key={product.id}
+                        product={product}
+                        className={{ rootMargin: '16px' }}
+                    />
+                ))}
         </>
     )
 }

@@ -11,7 +11,13 @@ import {
 } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import { Product, Performance, Venue, Organizer, Category } from '../../../@types'
+import {
+    Product,
+    Performance,
+    Venue,
+    Organizer,
+    Category,
+} from '../../../@types'
 import { Ratings } from '../Ratings'
 
 interface PerformanceWithVenue extends Performance {

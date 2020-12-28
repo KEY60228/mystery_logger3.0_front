@@ -30,4 +30,3 @@ export type RootState = ReturnType<typeof reducer>
 // Dispatchの型定義とカスタムuseDispatch
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = (): AppDispatch => useDispatch()
-

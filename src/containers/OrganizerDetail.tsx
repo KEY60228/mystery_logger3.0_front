@@ -10,7 +10,9 @@ import { CircularLoader } from '../Loader/CircularLoader'
 export const OrganizerDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
     const dispatch = useAppDispatch()
-    const [organizer, setOrganizer] = useState<OrganizerDetailInterface | null>(null)
+    const [organizer, setOrganizer] = useState<OrganizerDetailInterface | null>(
+        null,
+    )
 
     const getOrganizer = () => {
         dispatch(asyncGetOrganizer(id, setOrganizer))
@@ -22,12 +24,8 @@ export const OrganizerDetail: FC = () => {
 
     return (
         <>
-            {organizer &&
-                <OrganizerDetailTemp organizer={organizer} />
-            }
-            {!organizer &&
-                <CircularLoader />
-            }
+            {organizer && <OrganizerDetailTemp organizer={organizer} />}
+            {!organizer && <CircularLoader />}
         </>
     )
 }

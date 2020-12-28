@@ -18,7 +18,5 @@ export const ErrorHandler: FC = () => {
         }
     }, [code])
 
-    return (
-        <Fragment />
-    )
+    return <Fragment />
 }

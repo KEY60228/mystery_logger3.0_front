@@ -46,9 +46,7 @@ export const ReviewDetail: FC<Props> = props => {
 
     return (
         <>
-            { loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             <ProductCardM product={props.review.product} />
             <ReviewCard
                 review={props.review}

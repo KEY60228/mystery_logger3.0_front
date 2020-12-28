@@ -60,22 +60,10 @@ export const PopHandler: FC = () => {
 
     return (
         <>
-            <LoginPop
-                open={loginOpen}
-                setOpen={setLoginOpen}
-            />
-            <LogoutPop
-                open={logoutOpen}
-                setOpen={setLogoutOpen}
-            />
-            <UnauthPop
-                open={unauthOpen}
-                setOpen={setUnauthOpen}
-            />
-            <UndonePop
-                open={undoneOpen}
-                setOpen={setUndoneOpen}
-            />
+            <LoginPop open={loginOpen} setOpen={setLoginOpen} />
+            <LogoutPop open={logoutOpen} setOpen={setLogoutOpen} />
+            <UnauthPop open={unauthOpen} setOpen={setUnauthOpen} />
+            <UndonePop open={undoneOpen} setOpen={setUndoneOpen} />
             <PostedReviewPop
                 open={postedReviewOpen}
                 setOpen={setPostedReviewOpen}
@@ -84,14 +72,8 @@ export const PopHandler: FC = () => {
                 open={deletedReviewOpen}
                 setOpen={setDeletedReviewOpen}
             />
-            <PostedUserPop
-                open={postedUserOpen}
-                setOpen={setPostedUserOpen}
-            />
-            <CommentPop
-                open={commentOpen}
-                setOpen={setCommentOpen}
-            />
+            <PostedUserPop open={postedUserOpen} setOpen={setPostedUserOpen} />
+            <CommentPop open={commentOpen} setOpen={setCommentOpen} />
         </>
     )
 }

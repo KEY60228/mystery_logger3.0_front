@@ -23,7 +23,7 @@ axios.interceptors.response.use(
 )
 
 export const asyncGetAccompanies = (
-    setAccompanies: (value: AccompanyIndex[]) => void
+    setAccompanies: (value: AccompanyIndex[]) => void,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
@@ -39,4 +39,3 @@ export const asyncGetAccompanies = (
         return Promise.reject(response.data)
     }
 }
-

@@ -97,16 +97,20 @@ export const ContentsWithActionArea: FC<Props> = props => {
                         )}
                     </Grid>
                     <Box className={classes.contents}>
-                        { !props.review.spoil &&
+                        {!props.review.spoil && (
                             <Typography variant="body2">
                                 {props.review.exposed_contents}
                             </Typography>
-                        }
-                        { props.review.spoil &&
-                            <Typography variant="body2" onClick={props.getSpoiledContents} className={classes.spoil}>
+                        )}
+                        {props.review.spoil && (
+                            <Typography
+                                variant="body2"
+                                onClick={props.getSpoiledContents}
+                                className={classes.spoil}
+                            >
                                 ※ネタバレを表示する
                             </Typography>
-                        }
+                        )}
                     </Box>
                 </Grid>
                 <NavigateNextIcon />

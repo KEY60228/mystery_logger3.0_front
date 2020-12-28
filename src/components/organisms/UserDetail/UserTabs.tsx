@@ -2,11 +2,7 @@ import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
-import {
-    UserDetail,
-    ReviewDetail,
-    User,
-} from '../../../@types'
+import { UserDetail, ReviewDetail, User } from '../../../@types'
 import { ReviewCard } from '../../molecules/ReviewCard/'
 import { ProductCardS } from '../../molecules/ProductCardS/'
 
@@ -121,10 +117,10 @@ export const UserTabs: FC<Props> = props => {
                 )}
             </TabPanel>
             <TabPanel value={value} index={2}>
-                {props.user.like_reviews_count !== 0 && props.user.review_likes && (
-                    <Box>
-                        {props.user.review_likes.map(
-                            like_review => (
+                {props.user.like_reviews_count !== 0 &&
+                    props.user.review_likes && (
+                        <Box>
+                            {props.user.review_likes.map(like_review => (
                                 <ReviewCard
                                     key={like_review.review.id}
                                     review={like_review.review}
@@ -144,10 +140,9 @@ export const UserTabs: FC<Props> = props => {
                                     open={props.commentOpen}
                                     setOpen={props.setCommentOpen}
                                 />
-                            ),
-                        )}
-                    </Box>
-                )}
+                            ))}
+                        </Box>
+                    )}
                 {props.user.like_reviews_count === 0 && (
                     <Typography>まだLIKEした投稿はありません</Typography>
                 )}

@@ -8,7 +8,7 @@ interface Props {
     organizer: OrganizerDetail
 }
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             margin: '8px',
@@ -20,42 +20,37 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundSize: 'contain',
             margin: '8px auto',
         },
-        title: {
-
-        },
+        title: {},
         company: {
             color: 'grey',
             fontSize: '12px',
             marginLeft: '12px',
-        }
-    })
+        },
+    }),
 )
 
-export const OrganizerCard: FC<Props> = (props) => {
+export const OrganizerCard: FC<Props> = props => {
     const classes = useStyles()
 
     return (
         <Card className={classes.root}>
-            <Grid container direction='column' alignItems="center">
+            <Grid container direction="column" alignItems="center">
                 <CardMedia
                     image={'/organizer_img/noimage.png'} // 仮
                     className={classes.img}
                 />
-                <Typography>
-                    {props.organizer.service_name}
-                </Typography>
-                { props.organizer.company_name &&
+                <Typography>{props.organizer.service_name}</Typography>
+                {props.organizer.company_name && (
                     <Typography>
                         {`produced by ${props.organizer.company_name}`}
                     </Typography>
-                }
-                { props.organizer.website &&
+                )}
+                {props.organizer.website && (
                     <Typography>
                         {`Website: ${props.organizer.website}`}
                     </Typography>
-                }
+                )}
             </Grid>
         </Card>
     )
 }
-

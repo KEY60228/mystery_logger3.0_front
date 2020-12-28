@@ -13,20 +13,16 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         card: {
             margin: '8px',
             padding: '8px',
         },
-        text: {
-
-        },
-    })
+        text: {},
+    }),
 )
 
-export const OrganizerVenues: FC<Props> = (props) => {
+export const OrganizerVenues: FC<Props> = props => {
     const classes = useStyles()
     const [open, setOpen] = useState<boolean>(false)
 
@@ -37,22 +33,16 @@ export const OrganizerVenues: FC<Props> = (props) => {
     return (
         <>
             <Card className={classes.card} onClick={onClick}>
-                <Grid container wrap='nowrap' justify='space-between'>
+                <Grid container wrap="nowrap" justify="space-between">
                     <Typography className={classes.text}>会場一覧</Typography>
-                    { !open &&
-                        <ExpandMoreIcon />
-                    }
-                    { open &&
-                        <ExpandLessIcon />
-                    }
+                    {!open && <ExpandMoreIcon />}
+                    {open && <ExpandLessIcon />}
                 </Grid>
             </Card>
-            { open && props.venues.map((venue: Venue) =>
-                <VenueCard
-                    venue={venue}
-                    key={venue.id}
-                />
-            )}
+            {open &&
+                props.venues.map((venue: Venue) => (
+                    <VenueCard venue={venue} key={venue.id} />
+                ))}
         </>
     )
 }

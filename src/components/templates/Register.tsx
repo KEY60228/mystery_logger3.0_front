@@ -20,9 +20,7 @@ export const Register: FC<Props> = props => {
 
     return (
         <>
-            { loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             <RegisterForm {...props} />
         </>
     )

@@ -224,8 +224,6 @@ export interface CurrentUser {
     like_reviews_id: number[] // LIKEしたレビューのID
 }
 
-
-
 // extends model
 interface PerformanceWithVenue extends Performance {
     venue: Venue
@@ -265,12 +263,14 @@ interface ReviewLikeWithReviewWithProductAndUser extends ReviewLike {
     review: ReviewWithUserAndProduct
 }
 
-interface ProductWithCategoryAndOrganizerAndPerformancesWithVenue extends Product {
+interface ProductWithCategoryAndOrganizerAndPerformancesWithVenue
+    extends Product {
     category: Category
     organizer: Organizer
     performances: PerformanceWithVenue[]
 }
 
-interface PerformanceWithProductWithCategoryAndOrganizerAndPerformancesWithVenue extends Performance {
+interface PerformanceWithProductWithCategoryAndOrganizerAndPerformancesWithVenue
+    extends Performance {
     product: ProductWithCategoryAndOrganizerAndPerformancesWithVenue
 }

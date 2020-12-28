@@ -59,7 +59,10 @@ const App: FC = () => {
                     <Route path="/reviews/:id" children={<ReviewDetail />} />
                     <PrivateRoute path="/timeline" children={<Timeline />} />
                     <Route path="/search" children={<Search />} />
-                    <Route path="/organizers/:id" children={<OrganizerDetail />} />
+                    <Route
+                        path="/organizers/:id"
+                        children={<OrganizerDetail />}
+                    />
                     <Route path="/venues/:id" children={<VenueDetail />} />
                     <Route path="/accompany" children={<Accompanies />} />
                     <Route path="/notifications" children={<Notifications />} />

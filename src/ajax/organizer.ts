@@ -25,12 +25,14 @@ axios.interceptors.response.use(
 
 export const asyncGetOrganizer = (
     organizer_id: string,
-    setOrganizer: (value: OrganizerDetail) => void
+    setOrganizer: (value: OrganizerDetail) => void,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
 
-        const response = await axios.get<OrganizerDetail>(`/v1/organizer/${organizer_id}`)
+        const response = await axios.get<OrganizerDetail>(
+            `/v1/organizer/${organizer_id}`,
+        )
 
         if (response.status === OK) {
             dispatch(setCode(OK))
@@ -47,4 +49,3 @@ export const asyncGetOrganizer = (
         return Promise.reject(response.data)
     }
 }
-

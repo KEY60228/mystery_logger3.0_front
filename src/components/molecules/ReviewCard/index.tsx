@@ -93,16 +93,20 @@ export const ReviewCard: FC<Props> = props => {
         props.setComment(comment)
         if (!comment) {
             if (message) {
-                const errors = Object.assign({}, message.errors, {comment: '入力してください'})
-                dispatch(setMessage({errors: errors}))
+                const errors = Object.assign({}, message.errors, {
+                    comment: '入力してください',
+                })
+                dispatch(setMessage({ errors: errors }))
             } else {
-                dispatch(setMessage({errors: {comment: '入力してください'}}))
+                dispatch(
+                    setMessage({ errors: { comment: '入力してください' } }),
+                )
             }
             return
         }
         if (message) {
-            const errors = Object.assign({}, message.errors, {comment: null})
-            dispatch(setMessage({errors: errors}))
+            const errors = Object.assign({}, message.errors, { comment: null })
+            dispatch(setMessage({ errors: errors }))
         } else {
             dispatch(setMessage(null))
         }
@@ -201,9 +205,7 @@ export const ReviewCard: FC<Props> = props => {
                         helperText={message?.errors?.comment}
                         margin="dense"
                         value={props.comment}
-                        onChange={ev =>
-                            validateComment(ev.currentTarget.value)
-                        }
+                        onChange={ev => validateComment(ev.currentTarget.value)}
                     />
                     <Grid container justify="flex-end">
                         <Button

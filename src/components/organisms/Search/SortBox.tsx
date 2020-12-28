@@ -32,7 +32,7 @@ export const SortBox: FC<Props> = props => {
         {
             id: 0,
             name: 'おすすめ順',
-            onClick: props.sortProductsByRandom
+            onClick: props.sortProductsByRandom,
         },
         {
             id: 1,

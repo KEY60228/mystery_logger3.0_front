@@ -7,8 +7,8 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             width: '100%',
             height: '100vh',
-        }
-    })
+        },
+    }),
 )
 
 export const CircularLoader: FC = () => {
@@ -21,9 +21,7 @@ export const CircularLoader: FC = () => {
             alignItems="center"
             className={classes.root}
         >
-            <CircularProgress
-                size={100}
-            />
+            <CircularProgress size={100} />
         </Grid>
     )
 }

@@ -26,6 +26,4 @@ const slice = createSlice({
 export default slice.reducer
 
 // Action Creatorsをエクスポートする
-export const {
-    setUser,
-} = slice.actions
+export const { setUser } = slice.actions

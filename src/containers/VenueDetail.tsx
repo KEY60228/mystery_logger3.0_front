@@ -9,7 +9,7 @@ import { CircularLoader } from '../Loader/CircularLoader'
 
 export const VenueDetail: FC = () => {
     const dispatch = useAppDispatch()
-    const { id } = useParams<{id: string}>()
+    const { id } = useParams<{ id: string }>()
 
     const [venue, setVenue] = useState<VenueDetailInterface | null>(null)
 
@@ -23,14 +23,8 @@ export const VenueDetail: FC = () => {
 
     return (
         <>
-            { venue &&
-                <VenueDetailTemp
-                    venue={venue}
-                />
-            }
-            { !venue &&
-                <CircularLoader />
-            }
+            {venue && <VenueDetailTemp venue={venue} />}
+            {!venue && <CircularLoader />}
         </>
     )
 }

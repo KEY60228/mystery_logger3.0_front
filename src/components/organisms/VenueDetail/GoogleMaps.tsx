@@ -6,7 +6,7 @@ import RoomIcon from '@material-ui/icons/Room'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 
-import { VenueDetail } from '../../../@types';
+import { VenueDetail } from '../../../@types'
 
 interface Props {
     venue: VenueDetail
@@ -21,10 +21,12 @@ const useStyles = makeStyles((theme: Theme) =>
         card: {
             margin: '8px 16px',
         },
-    })
+    }),
 )
 
-const Pin = ({ lat, lng }: {lat: number, lng: number}) => <RoomIcon color="error" fontSize="large" />
+const Pin = ({ lat, lng }: { lat: number; lng: number }) => (
+    <RoomIcon color="error" fontSize="large" />
+)
 
 export const SimpleMap: FC<Props> = props => {
     const classes = useStyles()
@@ -33,36 +35,48 @@ export const SimpleMap: FC<Props> = props => {
     return (
         <>
             <Card className={classes.root} onClick={() => setOpen(!open)}>
-                <Grid container wrap='nowrap' justify='space-between'>
+                <Grid container wrap="nowrap" justify="space-between">
                     <Typography>アクセス</Typography>
-                    { !open &&
-                        <ExpandMoreIcon />
-                    }
-                    { open &&
-                        <ExpandLessIcon />
-                    }
+                    {!open && <ExpandMoreIcon />}
+                    {open && <ExpandLessIcon />}
                 </Grid>
             </Card>
-            { open &&
+            {open && (
                 <Card className={classes.card}>
                     {/* Important! Always set the container height explicitly */}
                     <div style={{ height: '320px', width: '100%' }}>
                         <GoogleMapReact
-                            bootstrapURLKeys={{ key: process.env.GOOGLE_MAPS_API_KEY || '' /* API KEY */ }}
+                            bootstrapURLKeys={{
+                                key:
+                                    process.env.GOOGLE_MAPS_API_KEY ||
+                                    '' /* API KEY */,
+                            }}
                             defaultCenter={{
-                                lat: props.venue.lat ? parseFloat(props.venue.lat) : 0,
-                                lng: props.venue.long ? parseFloat(props.venue.long) : 0,
+                                lat: props.venue.lat
+                                    ? parseFloat(props.venue.lat)
+                                    : 0,
+                                lng: props.venue.long
+                                    ? parseFloat(props.venue.long)
+                                    : 0,
                             }}
                             defaultZoom={16}
                         >
                             <Pin
-                                lat={props.venue.lat ? parseFloat(props.venue.lat) : 0}
-                                lng={props.venue.long ? parseFloat(props.venue.long) : 0}
+                                lat={
+                                    props.venue.lat
+                                        ? parseFloat(props.venue.lat)
+                                        : 0
+                                }
+                                lng={
+                                    props.venue.long
+                                        ? parseFloat(props.venue.long)
+                                        : 0
+                                }
                             />
                         </GoogleMapReact>
                     </div>
                 </Card>
-            }
+            )}
         </>
     )
 }

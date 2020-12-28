@@ -22,12 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
             color: 'grey',
         },
         tel: {
-            fontSize: '14px'
+            fontSize: '14px',
         },
         address: {
             fontSize: '14px',
         },
-    })
+    }),
 )
 
 export const VenueContents: FC<Props> = props => {
@@ -35,29 +35,24 @@ export const VenueContents: FC<Props> = props => {
 
     return (
         <Card className={classes.root}>
-            <Typography className={classes.name}>
-                {props.venue.name}
-            </Typography>
-            <Grid container justify='flex-end'>
+            <Typography className={classes.name}>{props.venue.name}</Typography>
+            <Grid container justify="flex-end">
                 <Typography className={classes.organizer}>
                     {props.venue.organizer.service_name}
                 </Typography>
             </Grid>
-            {props.venue.zipcode &&
+            {props.venue.zipcode && (
                 <Typography className={classes.address}>
                     {`〒${props.venue.zipcode}`}
                 </Typography>
-            }
+            )}
             <Typography className={classes.address}>
                 {props.venue.addr_prefecture}
                 {props.venue.addr_city}
                 {props.venue.addr_block}
                 {props.venue.addr_building}
             </Typography>
-            <Typography className={classes.tel}>
-                {props.venue.tel}
-            </Typography>
+            <Typography className={classes.tel}>{props.venue.tel}</Typography>
         </Card>
     )
 }
-

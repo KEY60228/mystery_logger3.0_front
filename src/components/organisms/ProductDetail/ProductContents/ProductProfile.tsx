@@ -80,29 +80,19 @@ export const ProductProfile: FC<Props> = props => {
 
     const getLimitTime = (time: number | null) => {
         if (time === null) {
-            return (
-                <>不明</>
-            )
+            return <>不明</>
         } else if (time === 0) {
-            return (
-                <>制限時間なし</>
-            )
+            return <>制限時間なし</>
         } else {
-            return (
-                <>{time}分</>
-            )
+            return <>{time}分</>
         }
     }
 
     const getRequiredTime = (time: number | null) => {
         if (time === null) {
-            return (
-                <>不明</>
-            )
+            return <>不明</>
         } else {
-            return (
-                <>約{time}分(目安)</>
-            )
+            return <>約{time}分(目安)</>
         }
     }
 
@@ -111,8 +101,18 @@ export const ProductProfile: FC<Props> = props => {
             <Typography variant="subtitle1" className={classes.subtitle}>
                 制作会社
             </Typography>
-            <Card onClick={() => history.push(`/organizers/${props.product.organizer.id}`)} className={classes.card}>
-                <Grid container justify='space-between' alignItems='center' wrap="nowrap">
+            <Card
+                onClick={() =>
+                    history.push(`/organizers/${props.product.organizer.id}`)
+                }
+                className={classes.card}
+            >
+                <Grid
+                    container
+                    justify="space-between"
+                    alignItems="center"
+                    wrap="nowrap"
+                >
                     <Typography variant="body1" className={classes.body}>
                         {props.product.organizer.service_name}
                     </Typography>
@@ -123,25 +123,30 @@ export const ProductProfile: FC<Props> = props => {
                 開催地
             </Typography>
             <Grid container direction="column">
-                {props.product.performances.map(
-                    performance => (
-                        <Card
-                            key={performance.id}
-                            onClick={() => history.push(`/venues/${performance.venue_id}`)} 
-                            className={classes.card}
+                {props.product.performances.map(performance => (
+                    <Card
+                        key={performance.id}
+                        onClick={() =>
+                            history.push(`/venues/${performance.venue_id}`)
+                        }
+                        className={classes.card}
+                    >
+                        <Grid
+                            container
+                            justify="space-between"
+                            alignItems="center"
+                            wrap="nowrap"
                         >
-                            <Grid container justify='space-between' alignItems='center' wrap="nowrap">
-                                <Typography
-                                    variant="body1"
-                                    className={classes.body}
-                                >
-                                    {performance.venue.name}
-                                </Typography>
-                                <NavigateNextIcon />
-                            </Grid>
-                        </Card>
-                    ),
-                )}
+                            <Typography
+                                variant="body1"
+                                className={classes.body}
+                            >
+                                {performance.venue.name}
+                            </Typography>
+                            <NavigateNextIcon />
+                        </Grid>
+                    </Card>
+                ))}
             </Grid>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 カテゴリ
@@ -153,7 +158,8 @@ export const ProductProfile: FC<Props> = props => {
                 制限時間 / 所要時間
             </Typography>
             <Typography variant="body1" className={classes.body}>
-                {getLimitTime(props.product.limitTime)} / {getRequiredTime(props.product.requiredTime)}
+                {getLimitTime(props.product.limitTime)} /{' '}
+                {getRequiredTime(props.product.requiredTime)}
             </Typography>
             <Typography variant="subtitle1" className={classes.subtitle}>
                 人数
@@ -174,8 +180,11 @@ export const ProductProfile: FC<Props> = props => {
             <Typography variant="subtitle1" className={classes.subtitle}>
                 募集中の同行者募集
             </Typography>
-            <Card onClick={() => history.push(`/accompany`)} className={classes.card}>
-                <Grid container justify='space-between' alignItems='center'>
+            <Card
+                onClick={() => history.push(`/accompany`)}
+                className={classes.card}
+            >
+                <Grid container justify="space-between" alignItems="center">
                     <Typography variant="body1" className={classes.body}>
                         0件
                     </Typography>

@@ -14,4 +14,3 @@ export const Accompanies: FC<Props> = props => {
         </>
     )
 }
-

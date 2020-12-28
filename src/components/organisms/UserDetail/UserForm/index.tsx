@@ -1,4 +1,11 @@
-import React, { FC, useState, forwardRef, ReactElement, Ref, useEffect } from 'react'
+import React, {
+    FC,
+    useState,
+    forwardRef,
+    ReactElement,
+    Ref,
+    useEffect,
+} from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import {
     Dialog,
@@ -80,7 +87,9 @@ export const UserForm: FC<Props> = props => {
 
     const [preview, setPreview] = useState<any>(null)
 
-    const onFileChange = (ev: React.ChangeEvent<HTMLInputElement>): false|void => {
+    const onFileChange = (
+        ev: React.ChangeEvent<HTMLInputElement>,
+    ): false | void => {
         // 何も選択されていない場合
         if (ev.target.files === null || ev.target.files.length === 0) {
             setPreview('')
@@ -113,28 +122,45 @@ export const UserForm: FC<Props> = props => {
 
     const validateAccountId = (accountId: string) => {
         props.setAccountId(accountId)
-        
+
         if (!accountId) {
             if (message) {
-                const errors = Object.assign({}, message.errors, {account_id: 'Account IDは必須です'})
-                dispatch(setMessage({errors: errors}))
+                const errors = Object.assign({}, message.errors, {
+                    account_id: 'Account IDは必須です',
+                })
+                dispatch(setMessage({ errors: errors }))
             } else {
-                dispatch(setMessage({errors: {account_id: 'Account IDは必須です'}}))
+                dispatch(
+                    setMessage({
+                        errors: { account_id: 'Account IDは必須です' },
+                    }),
+                )
             }
             return
         }
         const regex = /^[0-9a-zA-Z]+$/
         if (!regex.test(accountId)) {
             if (message) {
-                const errors = Object.assign({}, message.errors, {account_id: 'Account IDは半角英数字で入力してください'})
-                dispatch(setMessage({errors: errors}))
+                const errors = Object.assign({}, message.errors, {
+                    account_id: 'Account IDは半角英数字で入力してください',
+                })
+                dispatch(setMessage({ errors: errors }))
             } else {
-                dispatch(setMessage({errors: {account_id: 'Account IDは半角英数字で入力してください'}}))
+                dispatch(
+                    setMessage({
+                        errors: {
+                            account_id:
+                                'Account IDは半角英数字で入力してください',
+                        },
+                    }),
+                )
             }
             return
         }
         if (message) {
-            const errors = Object.assign({}, message.errors, {account_id: null})
+            const errors = Object.assign({}, message.errors, {
+                account_id: null,
+            })
             dispatch(setMessage(errors))
         } else {
             dispatch(setMessage(null))
@@ -145,16 +171,18 @@ export const UserForm: FC<Props> = props => {
         props.setName(name)
         if (!name) {
             if (message) {
-                const errors = Object.assign({}, message.errors, {name: 'Nameは必須です'})
-                dispatch(setMessage({errors: errors}))
+                const errors = Object.assign({}, message.errors, {
+                    name: 'Nameは必須です',
+                })
+                dispatch(setMessage({ errors: errors }))
             } else {
-                dispatch(setMessage({errors: {name: 'Nameは必須です'}}))
+                dispatch(setMessage({ errors: { name: 'Nameは必須です' } }))
             }
             return
         }
         if (message) {
-            const errors = Object.assign({}, message.errors, {name: null})
-            dispatch(setMessage({errors: errors}))
+            const errors = Object.assign({}, message.errors, { name: null })
+            dispatch(setMessage({ errors: errors }))
         } else {
             dispatch(setMessage(null))
         }
@@ -177,9 +205,7 @@ export const UserForm: FC<Props> = props => {
                 onClose={handleClose}
                 update={props.update}
             />
-            { loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             <Card className={classes.root}>
                 <Grid container direction="column" alignItems="center">
                     {preview && (
@@ -195,34 +221,34 @@ export const UserForm: FC<Props> = props => {
                         <Input type="file" onChange={onFileChange} />
                     </FormControl>
                     <FormControl className={classes.form}>
-                        <InputLabel htmlFor='name'>Name</InputLabel>
+                        <InputLabel htmlFor="name">Name</InputLabel>
                         <Input
-                            id='name'
+                            id="name"
                             aria-describedby={'name-helper'}
                             value={props.name}
                             error={!!message?.errors?.name}
                             onChange={ev => validateName(ev.target.value)}
                         />
-                        { message?.errors?.name &&
+                        {message?.errors?.name && (
                             <FormHelperText id={'name-helper'}>
                                 {message.errors.name}
                             </FormHelperText>
-                        }
+                        )}
                     </FormControl>
                     <FormControl className={classes.form}>
-                        <InputLabel htmlFor='account_id'>Account ID</InputLabel>
+                        <InputLabel htmlFor="account_id">Account ID</InputLabel>
                         <Input
-                            id='account_id'
+                            id="account_id"
                             aria-describedby={'account_id-helper'}
                             value={props.accountId}
                             error={!!message?.errors?.account_id}
                             onChange={ev => validateAccountId(ev.target.value)}
                         />
-                        { message?.errors?.account_id &&
+                        {message?.errors?.account_id && (
                             <FormHelperText id={'account_id-helper'}>
                                 {message.errors.account_id}
                             </FormHelperText>
-                        }
+                        )}
                     </FormControl>
                     <FormControl className={classes.form}>
                         <TextField
@@ -238,9 +264,7 @@ export const UserForm: FC<Props> = props => {
                     </FormControl>
                 </Grid>
             </Card>
-            <LogoutButton
-                logout={props.logout}
-            />
+            <LogoutButton logout={props.logout} />
         </Dialog>
     )
 }

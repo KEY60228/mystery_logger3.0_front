@@ -65,8 +65,8 @@ export const Timeline: FC = () => {
                 joined_at?.toISOString() || null,
                 contents,
             ),
-        ).then(
-            () => {
+        )
+            .then(() => {
                 getReviews()
                 setReview(null)
                 setOpen(false)
@@ -74,26 +74,22 @@ export const Timeline: FC = () => {
                 setResult(0)
                 setJoined_at(null)
                 setContents('')
-            }
-        ).catch(
-
-        )
+            })
+            .catch()
     }
 
     const deleteReview = () => {
         if (!review) return false // 仮
-        dispatch(asyncDeleteReview(review.id)).then(
-            () => {
+        dispatch(asyncDeleteReview(review.id))
+            .then(() => {
                 getReviews()
                 setOpen(false)
                 setRating(0)
                 setResult(0)
                 setJoined_at(null)
                 setContents('')
-            }
-        ).catch(
-
-        )
+            })
+            .catch()
     }
 
     const follow = (user: User) => {
@@ -104,13 +100,17 @@ export const Timeline: FC = () => {
         if (!user) return false // 仮
 
         // 楽観的更新
-        dispatch(setUser(Object.assign({}, currentUser, {follows_id: currentUser.follows_id.concat([user.id])})))
-
-        dispatch(asyncFollow(user.id)).then(
-            () => dispatch(asyncGetCurrentUser())
-        ).catch(
-
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    follows_id: currentUser.follows_id.concat([user.id]),
+                }),
+            ),
         )
+
+        dispatch(asyncFollow(user.id))
+            .then(() => dispatch(asyncGetCurrentUser()))
+            .catch()
     }
 
     const unfollow = (user: User) => {
@@ -124,13 +124,13 @@ export const Timeline: FC = () => {
         const follows_id = currentUser.follows_id.filter(el => {
             return el !== user.id
         })
-        dispatch(setUser(Object.assign({}, currentUser, {follows_id: follows_id})))
-
-        dispatch(asyncUnFollow(user.id)).then(
-            () => dispatch(asyncGetCurrentUser())
-        ).catch(
-
+        dispatch(
+            setUser(Object.assign({}, currentUser, { follows_id: follows_id })),
         )
+
+        dispatch(asyncUnFollow(user.id))
+            .then(() => dispatch(asyncGetCurrentUser()))
+            .catch()
     }
 
     const postComment = (review: ReviewIndex) => {
@@ -139,11 +139,9 @@ export const Timeline: FC = () => {
             return false
         }
         if (!review || !comment) return false // 仮
-        dispatch(asyncPostComment(review.id, comment)).then(
-            () => getReviews()
-        ).catch(
-
-        )
+        dispatch(asyncPostComment(review.id, comment))
+            .then(() => getReviews())
+            .catch()
     }
 
     const likeReview = (review: ReviewIndex) => {
@@ -154,24 +152,30 @@ export const Timeline: FC = () => {
         if (!review || !reviews) return false // 仮
 
         // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
-        dispatch(setUser(Object.assign({}, currentUser, {like_reviews_id: currentUser.like_reviews_id.concat([review.id])})))
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    like_reviews_id: currentUser.like_reviews_id.concat([
+                        review.id,
+                    ]),
+                }),
+            ),
+        )
         const tmp = reviews.map(el => {
             if (el.id === review.id) {
                 const num = el.review_likes_count
-                return Object.assign({}, el, {review_likes_count: num + 1})
+                return Object.assign({}, el, { review_likes_count: num + 1 })
             }
             return el
         })
         setReviews(tmp)
 
-        dispatch(asyncLikeReview(review.id)).then(
-            () => {
+        dispatch(asyncLikeReview(review.id))
+            .then(() => {
                 dispatch(asyncGetCurrentUser())
                 getReviews()
-            }
-        ).catch(
-
-        )
+            })
+            .catch()
     }
 
     const unlikeReview = (review: ReviewIndex) => {
@@ -185,24 +189,28 @@ export const Timeline: FC = () => {
         const like_reviews_id = currentUser.like_reviews_id.filter(el => {
             return el !== review.id
         })
-        dispatch(setUser(Object.assign({}, currentUser, {like_reviews_id: like_reviews_id})))
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    like_reviews_id: like_reviews_id,
+                }),
+            ),
+        )
         const tmp = reviews.map(el => {
             if (el.id === review.id) {
                 const num = el.review_likes_count
-                return Object.assign({}, el, {review_likes_count: num - 1})
+                return Object.assign({}, el, { review_likes_count: num - 1 })
             }
             return el
         })
         setReviews(tmp)
 
-        dispatch(asyncUnlikeReview(review.id)).then(
-            () => {
+        dispatch(asyncUnlikeReview(review.id))
+            .then(() => {
                 dispatch(asyncGetCurrentUser())
                 getReviews()
-            }
-        ).catch(
-
-        )
+            })
+            .catch()
     }
 
     useEffect(() => {

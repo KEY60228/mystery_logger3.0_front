@@ -19,32 +19,46 @@ export const Search: FC<Props> = props => {
 
     const search = () => {
         setResults(
-            props.products.filter((product: ProductIndex) => {
-                if (category && product.category_id !== category) return false
-                if (organizer && product.organizer_id !== organizer)
-                    return false
-                if (venue) {
-                    const result = product.performances.find(
-                        (performance: Performance) =>
-                            performance.venue_id === venue,
-                    )
-                    if (result === undefined) return false
-                }
-                // 仮 検索ロジック。もう少し精度あげる方法あるかも…？
-                // 作品名、主催団体サービス名、会場名でフィルター
-                if (
-                    keywords
-                    && product.name.indexOf(keywords) === -1
-                    && product.kana_name.indexOf(keywords) === -1
-                    && product.organizer.service_name.indexOf(keywords) === -1
-                    && product.organizer.kana_service_name.indexOf(keywords) === -1
-                    && product.performances.filter(performance => performance.venue.name.indexOf(keywords) !== -1).length === 0
-                    && product.performances.filter(performance => performance.venue.kana_name.indexOf(keywords) !== -1).length === 0
-                ) {
-                    return false
-                }
-                return true
-            }).slice(0,10)
+            props.products
+                .filter((product: ProductIndex) => {
+                    if (category && product.category_id !== category)
+                        return false
+                    if (organizer && product.organizer_id !== organizer)
+                        return false
+                    if (venue) {
+                        const result = product.performances.find(
+                            (performance: Performance) =>
+                                performance.venue_id === venue,
+                        )
+                        if (result === undefined) return false
+                    }
+                    // 仮 検索ロジック。もう少し精度あげる方法あるかも…？
+                    // 作品名、主催団体サービス名、会場名でフィルター
+                    if (
+                        keywords &&
+                        product.name.indexOf(keywords) === -1 &&
+                        product.kana_name.indexOf(keywords) === -1 &&
+                        product.organizer.service_name.indexOf(keywords) ===
+                            -1 &&
+                        product.organizer.kana_service_name.indexOf(
+                            keywords,
+                        ) === -1 &&
+                        product.performances.filter(
+                            performance =>
+                                performance.venue.name.indexOf(keywords) !== -1,
+                        ).length === 0 &&
+                        product.performances.filter(
+                            performance =>
+                                performance.venue.kana_name.indexOf(
+                                    keywords,
+                                ) !== -1,
+                        ).length === 0
+                    ) {
+                        return false
+                    }
+                    return true
+                })
+                .slice(0, 10),
         )
     }
 
@@ -56,8 +70,12 @@ export const Search: FC<Props> = props => {
         name: string
     }[] = props.products
         .map((product: ProductIndex) => {
-            return {id: product.organizer.id, name: product.organizer.service_name}
-        }).filter((el1, i1, arr) => {
+            return {
+                id: product.organizer.id,
+                name: product.organizer.service_name,
+            }
+        })
+        .filter((el1, i1, arr) => {
             return (
                 arr.findIndex(el2 => {
                     return el1.id === el2.id
@@ -103,9 +121,11 @@ export const Search: FC<Props> = props => {
     const sortProductsByRandom = () => {
         if (!props.products) return
         setResults(
-            props.products.sort((a, b) => {
-                return Math.random() - Math.random()
-            }).slice(0,10)
+            props.products
+                .sort((a, b) => {
+                    return Math.random() - Math.random()
+                })
+                .slice(0, 10),
         )
     }
 
@@ -117,7 +137,7 @@ export const Search: FC<Props> = props => {
                 .sort((a, b) => {
                     return b.reviews_count - a.reviews_count
                 })
-                .slice(0,10)
+                .slice(0, 10),
         )
     }
 
@@ -131,7 +151,7 @@ export const Search: FC<Props> = props => {
                     const avgRatingB = b.avg_rating || 0
                     return avgRatingB - avgRatingA
                 })
-                .slice(0,10)
+                .slice(0, 10),
         )
     }
 
@@ -145,7 +165,7 @@ export const Search: FC<Props> = props => {
                     const successRateB = b.success_rate || 0
                     return successRateB - successRateA
                 })
-                .slice(0,10)
+                .slice(0, 10),
         )
     }
 
@@ -159,7 +179,7 @@ export const Search: FC<Props> = props => {
                     const successRateB = b.success_rate || 0
                     return successRateA - successRateB
                 })
-                .slice(0,10)
+                .slice(0, 10),
         )
     }
 
@@ -171,7 +191,7 @@ export const Search: FC<Props> = props => {
                 .sort((a, b) => {
                     return b.wannas_count - a.wannas_count
                 })
-                .slice(0,10)
+                .slice(0, 10),
         )
     }
 

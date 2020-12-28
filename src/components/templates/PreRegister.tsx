@@ -19,9 +19,7 @@ export const PreRegister: FC<Props> = props => {
 
     return (
         <>
-            { loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             <PreRegisterForm
                 email={props.email}
                 setEmail={props.setEmail}

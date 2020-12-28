@@ -1,6 +1,17 @@
 import React, { FC, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Card, Grid, Typography, Button, FormControl, InputLabel, Input, FormHelperText, InputAdornment, IconButton } from '@material-ui/core'
+import {
+    Card,
+    Grid,
+    Typography,
+    Button,
+    FormControl,
+    InputLabel,
+    Input,
+    FormHelperText,
+    InputAdornment,
+    IconButton,
+} from '@material-ui/core'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
@@ -47,16 +58,22 @@ export const LoginForm: FC<Props> = props => {
         props.setEmail(email)
         if (!email) {
             if (message) {
-                const errors = Object.assign({}, message.errors, {email: 'メールアドレスは必須です'})
-                dispatch(setMessage({errors: errors}))
+                const errors = Object.assign({}, message.errors, {
+                    email: 'メールアドレスは必須です',
+                })
+                dispatch(setMessage({ errors: errors }))
             } else {
-                dispatch(setMessage({errors: {email: 'メールアドレスは必須です'}}))
+                dispatch(
+                    setMessage({
+                        errors: { email: 'メールアドレスは必須です' },
+                    }),
+                )
             }
             return
         }
         if (message) {
-            const errors = Object.assign({}, message.errors, {email: null})
-            dispatch(setMessage({errors: errors}))
+            const errors = Object.assign({}, message.errors, { email: null })
+            dispatch(setMessage({ errors: errors }))
         } else {
             dispatch(setMessage(null))
         }
@@ -66,16 +83,20 @@ export const LoginForm: FC<Props> = props => {
         props.setPassword(password)
         if (!password) {
             if (message) {
-                const errors = Object.assign({}, message.errors, {password: 'Passwordは必須です'})
-                dispatch(setMessage({errors: errors}))
+                const errors = Object.assign({}, message.errors, {
+                    password: 'Passwordは必須です',
+                })
+                dispatch(setMessage({ errors: errors }))
             } else {
-                dispatch(setMessage({errors: {password: 'Passwordは必須です'}}))
+                dispatch(
+                    setMessage({ errors: { password: 'Passwordは必須です' } }),
+                )
             }
             return
         }
         if (message) {
-            const errors = Object.assign({}, message.errors, {password: null})
-            dispatch(setMessage({errors: errors}))
+            const errors = Object.assign({}, message.errors, { password: null })
+            dispatch(setMessage({ errors: errors }))
         } else {
             dispatch(setMessage(null))
         }
@@ -105,19 +126,19 @@ export const LoginForm: FC<Props> = props => {
                         alignItems="center"
                     >
                         <FormControl className={classes.form}>
-                            <InputLabel htmlFor='Email'>Email</InputLabel>
+                            <InputLabel htmlFor="Email">Email</InputLabel>
                             <Input
-                                id='Email'
+                                id="Email"
                                 aria-describedby={'Email-helper'}
                                 value={props.email}
                                 error={!!message?.errors?.email}
                                 onChange={ev => validateEmail(ev.target.value)}
                             />
-                            { message?.errors?.email &&
+                            {message?.errors?.email && (
                                 <FormHelperText id={'Email-helper'}>
                                     {message.errors.email}
                                 </FormHelperText>
-                            }
+                            )}
                         </FormControl>
                         <FormControl className={classes.form}>
                             <InputLabel htmlFor="password">Password</InputLabel>
@@ -127,28 +148,39 @@ export const LoginForm: FC<Props> = props => {
                                 aria-describedby={`password-helper`}
                                 value={props.password}
                                 error={!!message?.errors?.password}
-                                onChange={ev => validatePassword(ev.target.value)}
+                                onChange={ev =>
+                                    validatePassword(ev.target.value)
+                                }
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
-                                            onClick={() => setShowPassword(!showPassword)}
+                                            onClick={() =>
+                                                setShowPassword(!showPassword)
+                                            }
                                         >
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                            {showPassword ? (
+                                                <Visibility />
+                                            ) : (
+                                                <VisibilityOff />
+                                            )}
                                         </IconButton>
                                     </InputAdornment>
                                 }
                             />
-                            { message?.errors?.password &&
+                            {message?.errors?.password && (
                                 <FormHelperText id={`password-helper`}>
                                     {message.errors.password}
                                 </FormHelperText>
-                            }
+                            )}
                         </FormControl>
                         <Button
                             type="submit"
                             variant="contained"
                             color="primary"
-                            disabled={!!message?.errors?.email || !!message?.errors?.password}
+                            disabled={
+                                !!message?.errors?.email ||
+                                !!message?.errors?.password
+                            }
                             onClick={onClick}
                             className={classes.button}
                         >

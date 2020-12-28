@@ -17,17 +17,17 @@ interface Props {
 export const SuccessRateByCategory: FC<Props> = props => {
     // 行った作品をカテゴリーでfilter
     const reviewsCount = (category_id: number): number => {
-        const reviews = props.user.reviews.filter(review => review.product.category_id === category_id)
+        const reviews = props.user.reviews.filter(
+            review => review.product.category_id === category_id,
+        )
         return reviews.length
     }
 
     // 成功した作品をカテゴリーでfilter
     const successReviewsCount = (category_id: number): number => {
-        const reviews = props.user.reviews.filter(
-            review => review.product.category_id === category_id
-        ).filter(
-            review => review.result === 1
-        )
+        const reviews = props.user.reviews
+            .filter(review => review.product.category_id === category_id)
+            .filter(review => review.result === 1)
         return reviews.length
     }
 
@@ -35,7 +35,13 @@ export const SuccessRateByCategory: FC<Props> = props => {
     const maxCount = (): number => {
         // 仮
         // めちゃめちゃイケてないけどパッと思い浮かばなかった…
-        const maxReviewsCount = Math.max(reviewsCount(1), reviewsCount(2), reviewsCount(3), reviewsCount(4), reviewsCount(5))
+        const maxReviewsCount = Math.max(
+            reviewsCount(1),
+            reviewsCount(2),
+            reviewsCount(3),
+            reviewsCount(4),
+            reviewsCount(5),
+        )
         if (maxReviewsCount <= 5) {
             return 5
         } else if (maxReviewsCount >= 5 && maxReviewsCount <= 10) {

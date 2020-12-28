@@ -4,16 +4,12 @@ import { LinearProgress } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-        }
-    })
+        root: {},
+    }),
 )
 
 export const LinearLoader: FC = () => {
     const classes = useStyles()
 
-    return (
-        <LinearProgress
-        />
-    )
+    return <LinearProgress />
 }

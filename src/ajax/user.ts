@@ -2,7 +2,13 @@ import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
 import { UserDetail } from '../@types'
-import { NOT_FOUND, NO_CONTENT, OK, UNAUTHENTICATED, UNPROCESSABLE_ENTITY } from '../util'
+import {
+    NOT_FOUND,
+    NO_CONTENT,
+    OK,
+    UNAUTHENTICATED,
+    UNPROCESSABLE_ENTITY,
+} from '../util'
 import { setCode, setLoading, setMessage, setPopper } from '../stores/error'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
@@ -104,9 +110,7 @@ export const asyncUnFollow = (followed_id: number) => {
     }
 }
 
-export const asyncUpdateUser = (
-    formData: FormData,
-) => {
+export const asyncUpdateUser = (formData: FormData) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
         dispatch(setMessage(null))
@@ -116,8 +120,8 @@ export const asyncUpdateUser = (
         // PHPの仕様でputがFormDataを受け取れないらしいので偽装処理
         const response = await axios.post(`/v1/users`, formData, {
             headers: {
-                'X-HTTP-Method-Override': 'PUT'
-            }
+                'X-HTTP-Method-Override': 'PUT',
+            },
         })
 
         if (response.status === OK) {

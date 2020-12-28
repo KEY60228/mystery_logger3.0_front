@@ -8,13 +8,11 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: '8px',
             padding: '8px',
         },
-    })
+    }),
 )
 
 export const SystemErrorPage: FC = () => {
     const classes = useStyles()
 
-    return (
-        <Card className={classes.root}>システムエラーが発生しました</Card>
-    )
+    return <Card className={classes.root}>システムエラーが発生しました</Card>
 }

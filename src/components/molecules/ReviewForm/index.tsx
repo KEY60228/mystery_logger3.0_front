@@ -107,9 +107,7 @@ export const ReviewForm: FC<Props> = props => {
                 isNew={props.isNew}
                 product={props.product}
             />
-            { loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             <Card className={classes.card}>
                 <Grid container justify="center" wrap="nowrap">
                     <CardMedia

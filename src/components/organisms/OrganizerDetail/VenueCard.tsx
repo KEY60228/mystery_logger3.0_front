@@ -16,10 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: '8px 16px',
             padding: '8px',
         },
-    })
+    }),
 )
 
-export const VenueCard: FC<Props> = (props) => {
+export const VenueCard: FC<Props> = props => {
     const classes = useStyles()
     const history = useHistory()
 
@@ -31,9 +31,7 @@ export const VenueCard: FC<Props> = (props) => {
         <Card className={classes.root} onClick={onClick}>
             <Grid container wrap="nowrap" justify="space-between">
                 <Grid container direction="column">
-                    <Typography>
-                        {props.venue.name}
-                    </Typography>
+                    <Typography>{props.venue.name}</Typography>
                     <Typography>
                         {props.venue.addr_prefecture}
                         {props.venue.addr_city}

@@ -18,9 +18,7 @@ export const Login: FC<Props> = props => {
 
     return (
         <>
-            { loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             <LoginForm {...props} />
         </>
     )

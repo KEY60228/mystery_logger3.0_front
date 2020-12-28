@@ -73,27 +73,26 @@ export const Buttons: FC<Props> = props => {
                     </Grid>
                 </Button>
             )}
-            {currentUser &&
-                currentUser.done_id.includes(props.product.id) && (
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={onClickEdit}
-                        className={classes.button}
+            {currentUser && currentUser.done_id.includes(props.product.id) && (
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={onClickEdit}
+                    className={classes.button}
+                >
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
                     >
-                        <Grid
-                            container
-                            direction="column"
-                            justify="center"
-                            alignItems="center"
-                        >
-                            <DirectionsRunIcon />
-                            <Typography variant="caption">
-                                {props.product.reviews_count}
-                            </Typography>
-                        </Grid>
-                    </Button>
-                )}
+                        <DirectionsRunIcon />
+                        <Typography variant="caption">
+                            {props.product.reviews_count}
+                        </Typography>
+                    </Grid>
+                </Button>
+            )}
             {(!currentUser ||
                 !currentUser.wanna_id.includes(props.product.id)) && (
                 <Button
@@ -115,27 +114,26 @@ export const Buttons: FC<Props> = props => {
                     </Grid>
                 </Button>
             )}
-            {currentUser &&
-                currentUser.wanna_id.includes(props.product.id) && (
-                    <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => props.unwanna(props.product)}
-                        className={classes.button}
+            {currentUser && currentUser.wanna_id.includes(props.product.id) && (
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => props.unwanna(props.product)}
+                    className={classes.button}
+                >
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
                     >
-                        <Grid
-                            container
-                            direction="column"
-                            justify="center"
-                            alignItems="center"
-                        >
-                            <QueueIcon />
-                            <Typography variant="caption">
-                                {props.product.wannas_count}
-                            </Typography>
-                        </Grid>
-                    </Button>
-                )}
+                        <QueueIcon />
+                        <Typography variant="caption">
+                            {props.product.wannas_count}
+                        </Typography>
+                    </Grid>
+                </Button>
+            )}
         </Grid>
     )
 }

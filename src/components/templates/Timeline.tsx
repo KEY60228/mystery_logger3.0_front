@@ -38,16 +38,16 @@ interface Props {
     unlikeReview: (review: ReviewIndex) => void
 }
 
-const useStyles = makeStyles((theme: Theme) => // 仮
+const useStyles = makeStyles((
+    theme: Theme, // 仮
+) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         card: {
             margin: '8px',
             padding: '8px',
         },
-    })
+    }),
 )
 
 export const Timeline: FC<Props> = props => {
@@ -59,9 +59,7 @@ export const Timeline: FC<Props> = props => {
 
     return (
         <>
-            { loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             {props.reviews.map(review => (
                 <ReviewCard
                     key={review.id}
@@ -84,7 +82,9 @@ export const Timeline: FC<Props> = props => {
                     className={{ margin: '8px' }}
                 />
             ))}
-            {!props.reviews.length && <Card className={classes.card}>まだ投稿はありません</Card>}
+            {!props.reviews.length && (
+                <Card className={classes.card}>まだ投稿はありません</Card>
+            )}
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}

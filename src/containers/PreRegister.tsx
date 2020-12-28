@@ -12,9 +12,11 @@ export const PreRegister: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const preRegister = () => {
-        dispatch(asyncPreRegister(email)).then(
-            () => setOpen(true) // 成功時挙動
-        ).catch()
+        dispatch(asyncPreRegister(email))
+            .then(
+                () => setOpen(true), // 成功時挙動
+            )
+            .catch()
     }
 
     useEffect(() => {

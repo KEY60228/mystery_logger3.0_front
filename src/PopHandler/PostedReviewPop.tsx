@@ -16,32 +16,40 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             marginTop: '56px',
         },
-    })
+    }),
 )
 
 export const PostedReviewPop: FC<Props> = props => {
     const classes = useStyles()
     const dispatch = useAppDispatch()
 
-    const handleClose = (ev: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+    const handleClose = (
+        ev: React.SyntheticEvent | React.MouseEvent,
+        reason?: string,
+    ) => {
         props.setOpen(false)
         dispatch(setPopper(null))
     }
 
     return (
         <Snackbar
-            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
             open={props.open}
             autoHideDuration={3000}
             onClose={handleClose}
             className={classes.root}
         >
             <Alert
-                severity='success'
+                severity="success"
                 variant="filled"
                 onClose={handleClose}
                 action={
-                    <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                    <IconButton
+                        size="small"
+                        aria-label="close"
+                        color="inherit"
+                        onClick={handleClose}
+                    >
                         <CloseIcon fontSize="small" />
                     </IconButton>
                 }

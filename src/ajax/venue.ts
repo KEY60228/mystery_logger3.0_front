@@ -25,7 +25,7 @@ axios.interceptors.response.use(
 
 export const asyncGetVenue = (
     venue_id: string,
-    setVenue: (value: VenueDetail) => void
+    setVenue: (value: VenueDetail) => void,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
@@ -47,4 +47,3 @@ export const asyncGetVenue = (
         return Promise.reject(response.data)
     }
 }
-

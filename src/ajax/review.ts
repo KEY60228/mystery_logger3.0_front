@@ -3,7 +3,14 @@ import axios from 'axios'
 import { AppDispatch } from '../stores/index'
 import { ReviewIndex, ReviewDetail } from '../@types'
 import { setCode, setLoading, setPopper } from '../stores/error'
-import { CREATED, NOT_FOUND, NO_CONTENT, OK, UNAUTHENTICATED, UNPROCESSABLE_ENTITY } from '../util'
+import {
+    CREATED,
+    NOT_FOUND,
+    NO_CONTENT,
+    OK,
+    UNAUTHENTICATED,
+    UNPROCESSABLE_ENTITY,
+} from '../util'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -28,7 +35,7 @@ export const asyncGetTimeline = (
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
-    
+
         const response = await axios.get<ReviewIndex[]>('/v1/reviews')
 
         if (response.status === OK) {
@@ -106,13 +113,13 @@ export const asyncPostReview = (
             dispatch(setLoading(false))
             return Promise.reject(response.data)
         }
-        
+
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setLoading(false))
             return Promise.reject(response.data)
         }
-        
+
         dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.data)
@@ -131,7 +138,7 @@ export const asyncUpdateReview = (
         dispatch(setCode(null))
         dispatch(setPopper(null))
         dispatch(setLoading(true))
-        
+
         const response = await axios.put<void>(`/v1/reviews/${review_id}`, {
             spoil: spoil,
             rating: rating,
@@ -139,32 +146,32 @@ export const asyncUpdateReview = (
             joined_at: joined_at,
             contents: contents,
         })
-        
+
         if (response.status === OK) {
             dispatch(setPopper('posted review'))
             dispatch(setLoading(false))
             dispatch(setCode(OK))
             return Promise.resolve()
         }
-        
+
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
             dispatch(setLoading(false))
             return Promise.reject(response.data)
         }
-        
+
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
             dispatch(setLoading(false))
             return Promise.reject(response.data)
         }
-        
+
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setLoading(false))
             return Promise.reject(response.data)
         }
-        
+
         dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.data)
@@ -210,10 +217,7 @@ export const asyncDeleteReview = (review_id: number) => {
     }
 }
 
-export const asyncPostComment = (
-    review_id: number,
-    contents: string,
-) => {
+export const asyncPostComment = (review_id: number, contents: string) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
         dispatch(setPopper(null))
@@ -261,7 +265,7 @@ export const asyncLikeReview = (review_id: number) => {
             dispatch(setCode(UNAUTHENTICATED))
             return Promise.reject(response.data)
         }
-        
+
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             return Promise.reject(response.data)
@@ -304,7 +308,7 @@ export const asyncUnlikeReview = (review_id: number) => {
 
 export const asyncGetSpoiledContents = (
     review_id: number,
-    setReview: (value: ReviewDetail) => void
+    setReview: (value: ReviewDetail) => void,
 ) => {
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))

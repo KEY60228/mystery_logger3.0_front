@@ -40,7 +40,7 @@ export const SearchBox: FC<Props> = props => {
     const onClick = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         ev.preventDefault()
         props.search()
-    } 
+    }
 
     return (
         <>

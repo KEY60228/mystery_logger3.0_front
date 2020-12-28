@@ -56,9 +56,7 @@ export const ProductDetail: FC<Props> = props => {
 
     return (
         <>
-            {loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             <ProductContents
                 product={props.product}
                 currentUser={props.currentUser}

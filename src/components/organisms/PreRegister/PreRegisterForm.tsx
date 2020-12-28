@@ -1,6 +1,15 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Card, Grid, Typography, Button, FormControl, InputLabel, Input, FormHelperText } from '@material-ui/core'
+import {
+    Card,
+    Grid,
+    Typography,
+    Button,
+    FormControl,
+    InputLabel,
+    Input,
+    FormHelperText,
+} from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '../../../stores'
 import { setMessage } from '../../../stores/error'
@@ -45,12 +54,20 @@ export const PreRegisterForm: FC<Props> = props => {
     const validateEmail = (email: string) => {
         props.setEmail(email)
         if (!email) {
-            dispatch(setMessage({errors: {email: 'メールアドレスは必須です'}}))
+            dispatch(
+                setMessage({ errors: { email: 'メールアドレスは必須です' } }),
+            )
             return
         }
         const regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/
         if (!regex.test(email)) {
-            dispatch(setMessage({errors: {email: '正しい形式でメールアドレスを入力してください'}}))
+            dispatch(
+                setMessage({
+                    errors: {
+                        email: '正しい形式でメールアドレスを入力してください',
+                    },
+                }),
+            )
             return
         }
         dispatch(setMessage(null))
@@ -75,19 +92,19 @@ export const PreRegisterForm: FC<Props> = props => {
                         alignItems="center"
                     >
                         <FormControl className={classes.form}>
-                            <InputLabel htmlFor='Email'>Email</InputLabel>
+                            <InputLabel htmlFor="Email">Email</InputLabel>
                             <Input
-                                id='Email'
+                                id="Email"
                                 aria-describedby={'Email-helper'}
                                 value={props.email}
                                 error={!!message?.errors?.email}
                                 onChange={ev => validateEmail(ev.target.value)}
                             />
-                            { message?.errors?.email &&
+                            {message?.errors?.email && (
                                 <FormHelperText id={'Email-helper'}>
                                     {message.errors.email}
                                 </FormHelperText>
-                            }
+                            )}
                         </FormControl>
                         <Button
                             type="submit"

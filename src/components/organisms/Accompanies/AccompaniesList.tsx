@@ -9,16 +9,14 @@ interface Props {
     accompanies: AccompanyIndex[]
 }
 
-const useStyles = makeStyles((theme: Theme) => 
+const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         card: {
             margin: '8px',
             padding: '8px',
-        }
-    })
+        },
+    }),
 )
 
 export const AccompaniesList: FC<Props> = props => {
@@ -26,15 +24,13 @@ export const AccompaniesList: FC<Props> = props => {
 
     return (
         <>
-            { props.accompanies.length !== 0 && props.accompanies.map(accompany =>
-                <AccompanyCard
-                    key={accompany.id}
-                    accompany={accompany}
-                />
-            )}
-            { props.accompanies.length === 0 &&
+            {props.accompanies.length !== 0 &&
+                props.accompanies.map(accompany => (
+                    <AccompanyCard key={accompany.id} accompany={accompany} />
+                ))}
+            {props.accompanies.length === 0 && (
                 <Card className={classes.card}>まだ同行募集はありません</Card>
-            }
+            )}
         </>
     )
 }

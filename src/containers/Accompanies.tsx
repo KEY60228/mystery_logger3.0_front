@@ -8,7 +8,9 @@ import { CircularLoader } from '../Loader/CircularLoader'
 
 export const Accompanies: FC = () => {
     const dispatch = useAppDispatch()
-    const [accompanies, setAccompanies] = useState<AccompanyIndex[] | null>(null)
+    const [accompanies, setAccompanies] = useState<AccompanyIndex[] | null>(
+        null,
+    )
 
     const getAccompanies = () => {
         dispatch(asyncGetAccompanies(setAccompanies))
@@ -20,12 +22,8 @@ export const Accompanies: FC = () => {
 
     return (
         <>
-            { accompanies &&
-                <AccompaniesTemp accompanies={accompanies} />
-            }
-            { !accompanies &&
-                <CircularLoader />
-            }
+            {accompanies && <AccompaniesTemp accompanies={accompanies} />}
+            {!accompanies && <CircularLoader />}
         </>
     )
 }

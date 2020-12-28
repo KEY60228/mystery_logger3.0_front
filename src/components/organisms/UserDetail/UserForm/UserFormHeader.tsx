@@ -44,10 +44,7 @@ export const UserFormHeader: FC<Props> = props => {
                     alignItems="center"
                     wrap="nowrap"
                 >
-                    <IconButton
-                        color="inherit"
-                        onClick={props.onClose}
-                    >
+                    <IconButton color="inherit" onClick={props.onClose}>
                         <CloseIcon />
                     </IconButton>
                     <Typography variant="h6">ユーザー情報編集</Typography>

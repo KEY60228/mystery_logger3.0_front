@@ -1,7 +1,5 @@
 import axios from 'axios'
-import {
-    setUser,
-} from '../stores/auth'
+import { setUser } from '../stores/auth'
 import queryString from 'query-string'
 
 import { AppDispatch } from '../stores/index'
@@ -33,10 +31,9 @@ export const asyncPreRegister = (email: string) => {
         dispatch(setCode(null))
         dispatch(setLoading(true))
 
-        const response = await axios.post<void>(
-            '/v1/preregister',
-            { email: email },
-        )
+        const response = await axios.post<void>('/v1/preregister', {
+            email: email,
+        })
 
         if (response.status === CREATED) {
             dispatch(setCode(CREATED))
@@ -50,7 +47,7 @@ export const asyncPreRegister = (email: string) => {
             dispatch(setMessage(response.data))
             return Promise.reject()
         }
-        
+
         dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.status)
@@ -66,7 +63,10 @@ export const asyncVerify = (
     return async (dispatch: AppDispatch): Promise<void> => {
         dispatch(setCode(null))
 
-        const response = await axios.post<{email: string, pre_register_id: number}>('/v1/register/verify', {
+        const response = await axios.post<{
+            email: string
+            pre_register_id: number
+        }>('/v1/register/verify', {
             token: query.token,
         })
 
@@ -116,14 +116,14 @@ export const asyncRegister = (
             dispatch(setCode(CREATED))
             return Promise.resolve(response.data)
         }
-        
+
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setLoading(false))
             dispatch(setMessage(response.data))
             return Promise.reject()
         }
-        
+
         dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.data)
@@ -149,14 +149,14 @@ export const asyncLogin = (email: string, password: string) => {
             dispatch(setLoading(false))
             return Promise.resolve(response.data)
         }
-        
+
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setMessage(response.data))
             dispatch(setLoading(false))
             return Promise.reject()
         }
-        
+
         dispatch(setCode(response.status))
         dispatch(setLoading(false))
         return Promise.reject(response.data)
@@ -202,7 +202,7 @@ export const asyncLogout = () => {
             dispatch(setLoading(false))
             return Promise.resolve()
         }
-        
+
         dispatch(setLoading(false))
         dispatch(setCode(response.status))
         return Promise.reject(response.data)

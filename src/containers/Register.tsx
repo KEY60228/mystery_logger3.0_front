@@ -16,7 +16,7 @@ export const Register: FC = () => {
     const query = queryString.parse(useLocation().search)
 
     const currentUser = useSelector((state: RootState) => state.auth.user)
-    
+
     const [registerStatus, setRegisterStatus] = useState<boolean | null>(null)
     const [accountId, setAccountId] = useState<string>('')
     const [name, setName] = useState<string>('')
@@ -25,17 +25,15 @@ export const Register: FC = () => {
     const [preRegisterId, setPreRegisterId] = useState<number>(0)
 
     const verify = () => {
-        dispatch(asyncVerify(query, setPreRegisterId, setEmail)).then(
-            () => setRegisterStatus(true)
-        ).catch(
-            () => setRegisterStatus(false)
-        )
+        dispatch(asyncVerify(query, setPreRegisterId, setEmail))
+            .then(() => setRegisterStatus(true))
+            .catch(() => setRegisterStatus(false))
     }
 
     const register = () => {
-        dispatch(asyncRegister(accountId, email, name, password, preRegisterId)).then(
-            (result) => history.push(`/users/${result.account_id}`)
-        ).catch()
+        dispatch(asyncRegister(accountId, email, name, password, preRegisterId))
+            .then(result => history.push(`/users/${result.account_id}`))
+            .catch()
     }
 
     useEffect(() => {

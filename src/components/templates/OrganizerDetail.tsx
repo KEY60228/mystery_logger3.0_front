@@ -10,12 +10,10 @@ interface Props {
     organizer: OrganizerDetailInterface
 }
 
-export const OrganizerDetail: FC<Props> = (props) => {
+export const OrganizerDetail: FC<Props> = props => {
     return (
         <>
-            <OrganizerCard
-                organizer={props.organizer}
-            />
+            <OrganizerCard organizer={props.organizer} />
             <OrganizerVenues venues={props.organizer.venues} />
             <OrganizerProducts products={props.organizer.products} />
             <TempSpace

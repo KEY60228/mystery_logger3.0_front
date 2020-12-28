@@ -12,10 +12,8 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: '8px',
             padding: '8px',
         },
-        button: {
-
-        }
-    })
+        button: {},
+    }),
 )
 
 export const LogoutButton: FC<Props> = props => {

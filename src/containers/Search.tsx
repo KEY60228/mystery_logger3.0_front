@@ -7,7 +7,6 @@ import { Search as SearchTemp } from '../components/templates/Search'
 import { CircularLoader } from '../Loader/CircularLoader'
 
 export const Search: FC = () => {
-    
     const dispatch = useAppDispatch()
     const [products, setProducts] = useState<ProductIndex[] | null>(null)
 

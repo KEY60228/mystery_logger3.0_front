@@ -10,16 +10,14 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        root: {
-
-        },
+        root: {},
         img: {
             minWidth: '80px',
             height: '120px',
             backgroundSize: 'contain',
             margin: '8px',
         },
-    })
+    }),
 )
 
 export const AccompanyCard: FC<Props> = props => {

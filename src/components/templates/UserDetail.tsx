@@ -67,9 +67,7 @@ export const UserDetail: FC<Props> = props => {
 
     return (
         <>
-            { loading &&
-                <LinearLoader />
-            }
+            {loading && <LinearLoader />}
             <UserProfile
                 user={props.user}
                 follow={props.follow}
@@ -78,9 +76,7 @@ export const UserDetail: FC<Props> = props => {
                 setFollowsOpen={setFollowsOpen}
                 setFollowerOpen={setFollowerOpen}
             />
-            <UserStatics
-                user={props.user}
-            />
+            <UserStatics user={props.user} />
             <UserTabs
                 user={props.user}
                 follow={props.follow}

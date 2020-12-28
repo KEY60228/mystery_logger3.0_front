@@ -3,7 +3,13 @@ import axios from 'axios'
 import { AppDispatch } from '../stores/index'
 import { setCode } from '../stores/error'
 import { ProductDetail, ProductIndex } from '../@types'
-import { NOT_FOUND, NO_CONTENT, OK, UNAUTHENTICATED, UNPROCESSABLE_ENTITY } from '../util'
+import {
+    NOT_FOUND,
+    NO_CONTENT,
+    OK,
+    UNAUTHENTICATED,
+    UNPROCESSABLE_ENTITY,
+} from '../util'
 
 // Ajaxリクエストであることを示すヘッダーを付与する
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
