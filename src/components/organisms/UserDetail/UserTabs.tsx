@@ -85,7 +85,7 @@ export const UserTabs: FC<Props> = props => {
                         justify="space-between"
                         className={classes.list}
                     >
-                        {props.user.reviews.map(review => (
+                        {props.user.reviews.slice(0, 12).map(review => (
                             <ProductCardS
                                 key={review.product.id}
                                 product={review.product}
@@ -104,7 +104,7 @@ export const UserTabs: FC<Props> = props => {
                         justify="space-between"
                         className={classes.list}
                     >
-                        {props.user.wannas.map(wanna => (
+                        {props.user.wannas.slice(0, 12).map(wanna => (
                             <ProductCardS
                                 key={wanna.product.id}
                                 product={wanna.product}
@@ -120,7 +120,7 @@ export const UserTabs: FC<Props> = props => {
                 {props.user.like_reviews_count !== 0 &&
                     props.user.review_likes && (
                         <Box>
-                            {props.user.review_likes.map(like_review => (
+                            {props.user.review_likes.slice(0, 12).map(like_review => (
                                 <ReviewCard
                                     key={like_review.review.id}
                                     review={like_review.review}
