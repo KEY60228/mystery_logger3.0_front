@@ -20,7 +20,10 @@ const reducer = combineReducers({
     // message: messageReducer,
 })
 
-const store = configureStore({ reducer })
+const store = configureStore({
+    reducer,
+    devTools: process.env.NODE_ENV !== 'production',
+})
 
 export default store
 

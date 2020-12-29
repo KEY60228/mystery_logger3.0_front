@@ -1,5 +1,3 @@
-// ファイルシステムモジュールの読み込み
-const fs = require('fs')
 // Dotenvモジュールの読み込み
 const Dotenv = require('dotenv-webpack')
 // minifization module
