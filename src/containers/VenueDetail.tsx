@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router'
 
 import { useAppDispatch } from '../stores/index'
@@ -23,6 +24,9 @@ export const VenueDetail: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>会場情報 - なぞログ</title>
+            </Helmet>
             {venue && <VenueDetailTemp venue={venue} />}
             {!venue && <CircularLoader />}
         </>

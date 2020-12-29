@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 
 import { useAppDispatch } from '../stores/index'
@@ -24,6 +25,9 @@ export const OrganizerDetail: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>団体情報 - なぞログ</title>
+            </Helmet>
             {organizer && <OrganizerDetailTemp organizer={organizer} />}
             {!organizer && <CircularLoader />}
         </>

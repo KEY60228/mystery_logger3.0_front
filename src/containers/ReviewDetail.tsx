@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -217,6 +218,9 @@ export const ReviewDetail: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>レビュー - なぞログ</title>
+            </Helmet>
             {review && (
                 <ReviewDetailTemp
                     review={review}

@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 
 import { useAppDispatch } from '../stores/index'
 import { ProductIndex } from '../@types'
@@ -20,6 +21,9 @@ export const Search: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>作品検索</title>
+            </Helmet>
             {products && <SearchTemp products={products} />}
             {!products && <CircularLoader />}
         </>

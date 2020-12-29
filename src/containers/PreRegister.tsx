@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 
 import { asyncPreRegister } from '../ajax/auth'
 import { useAppDispatch } from '../stores/index'
@@ -24,12 +25,17 @@ export const PreRegister: FC = () => {
     }, [])
 
     return (
-        <PreRegisterTemp
-            email={email}
-            setEmail={setEmail}
-            open={open}
-            setOpen={setOpen}
-            preRegister={preRegister}
-        />
+        <>
+            <Helmet>
+                <title>仮登録 - なぞログ</title>
+            </Helmet>
+            <PreRegisterTemp
+                email={email}
+                setEmail={setEmail}
+                open={open}
+                setOpen={setOpen}
+                preRegister={preRegister}
+            />
+        </>
     )
 }

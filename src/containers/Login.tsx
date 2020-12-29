@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -28,6 +29,9 @@ export const Login: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>ログイン - なぞログ</title>
+            </Helmet>
             <LoginTemp
                 email={email}
                 setEmail={setEmail}

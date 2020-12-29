@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -340,6 +341,9 @@ export const ProductDetail: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>作品情報 - なぞログ</title>
+            </Helmet>
             {product && (
                 <>
                     <ProductDetailTemp

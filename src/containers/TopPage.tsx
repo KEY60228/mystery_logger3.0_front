@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 
 import { useAppDispatch } from '../stores/index'
 import { ProductIndex } from '../@types'
@@ -21,6 +22,9 @@ export const TopPage: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>なぞログ</title>
+            </Helmet>
             {products && <TPTemp products={products} />}
             {!products && <CircularLoader />}
         </>

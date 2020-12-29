@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { useParams, useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
@@ -279,6 +280,9 @@ export const UserDetail: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>ユーザー情報 - なぞログ</title>
+            </Helmet>
             {user && (
                 <>
                     <UserDetailTemp

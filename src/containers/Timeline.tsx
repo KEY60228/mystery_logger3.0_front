@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 
 import { ReviewIndex, ReviewDetail, User } from '../@types'
@@ -219,6 +220,9 @@ export const Timeline: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>タイムライン - なぞログ</title>
+            </Helmet>
             {reviews && (
                 <>
                     <TimelineTemp

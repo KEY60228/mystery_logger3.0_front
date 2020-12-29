@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useState } from 'react'
+import { Helmet } from 'react-helmet'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import queryString from 'query-string'
@@ -43,6 +44,9 @@ export const Register: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>本登録 - なぞログ</title>
+            </Helmet>
             {registerStatus === true && (
                 <RegisterTemp
                     accountId={accountId}

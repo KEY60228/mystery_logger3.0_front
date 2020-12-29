@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 
 import { useAppDispatch } from '../stores/index'
 import { AccompanyIndex } from '../@types'
@@ -22,6 +23,9 @@ export const Accompanies: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>同行者募集一覧 - なぞログ</title>
+            </Helmet>
             {accompanies && <AccompaniesTemp accompanies={accompanies} />}
             {!accompanies && <CircularLoader />}
         </>
