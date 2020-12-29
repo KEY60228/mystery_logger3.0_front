@@ -60,7 +60,7 @@ export const VenuePerformances: FC<Props> = props => {
                 </Grid>
             </Card>
             {open &&
-                props.performances.map(performance => (
+                props.performances.slice(0,10).map(performance => (
                     <ProductCardM
                         key={performance.product.id}
                         product={performance.product}

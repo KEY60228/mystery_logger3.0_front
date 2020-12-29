@@ -36,18 +36,13 @@ export const OrganizerCard: FC<Props> = props => {
         <Card className={classes.root}>
             <Grid container direction="column" alignItems="center">
                 <CardMedia
-                    image={'/organizer_img/noimage.png'} // 仮
+                    image={`${process.env.API_BASEURL}${props.organizer.image_name}`} // 仮
                     className={classes.img}
                 />
                 <Typography>{props.organizer.service_name}</Typography>
                 {props.organizer.company_name && (
                     <Typography>
-                        {`produced by ${props.organizer.company_name}`}
-                    </Typography>
-                )}
-                {props.organizer.website && (
-                    <Typography>
-                        {`Website: ${props.organizer.website}`}
+                        produced by <a href={`${props.organizer.website}`}>{`${props.organizer.company_name}`}</a>
                     </Typography>
                 )}
             </Grid>

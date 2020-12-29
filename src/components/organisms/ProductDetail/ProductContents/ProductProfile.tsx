@@ -99,7 +99,7 @@ export const ProductProfile: FC<Props> = props => {
     return (
         <Grid container direction="column" className={classes.root}>
             <Typography variant="subtitle1" className={classes.subtitle}>
-                制作会社
+                主催団体
             </Typography>
             <Card
                 onClick={() =>

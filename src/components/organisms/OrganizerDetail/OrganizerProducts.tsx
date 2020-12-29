@@ -56,7 +56,7 @@ export const OrganizerProducts: FC<Props> = props => {
                 </Grid>
             </Card>
             {open &&
-                props.products.map(product => (
+                props.products.slice(0,10).map(product => (
                     <ProductCardM
                         key={product.id}
                         product={product}
