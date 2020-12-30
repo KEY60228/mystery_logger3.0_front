@@ -7,7 +7,6 @@ import {
     Box,
     CardMedia,
     CardActionArea,
-    Typography,
 } from '@material-ui/core'
 
 import { Review, User, Product } from '../../../../@types'
@@ -54,13 +53,11 @@ const useStyles = makeStyles((theme: Theme) =>
             textDecoration: 'none',
             color: 'black',
             fontSize: '16px',
-            width: '1%',
         },
         userId: {
             textDecoration: 'none',
             color: 'grey',
             fontSize: '12px',
-            width: '1%',
         },
     }),
 )
@@ -83,22 +80,22 @@ export const ReviewerProfile: FC<Props> = props => {
             </CardActionArea>
             <Box className={classes.nameArea}>
                 <Grid container direction="column">
-                    <Typography
-                        variant="body1"
-                        component={Link}
-                        to={`/users/${props.review.user?.account_id}`}
-                        className={classes.userName}
-                    >
-                        {props.review.user?.name}
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        component={Link}
-                        to={`/users/${props.review.user?.account_id}`}
-                        className={classes.userId}
-                    >
-                        @{props.review.user?.account_id}
-                    </Typography>
+                    <Box>
+                        <Link
+                            to={`/users/${props.review.user?.account_id}`}
+                            className={classes.userName}
+                        >
+                            {props.review.user?.name}
+                        </Link>
+                    </Box>
+                    <Box>
+                        <Link
+                            to={`/users/${props.review.user?.account_id}`}
+                            className={classes.userId}
+                        >
+                            @{props.review.user?.account_id}
+                        </Link>
+                    </Box>
                 </Grid>
             </Box>
             {currentUser &&
