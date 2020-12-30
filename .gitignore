@@ -11,3 +11,8 @@ ssl/
 # photos
 dist/product_img/
 dist/user_img/
+dist/organizer_img/
+
+# env
+.env.dev
+.env.prod
