@@ -2,9 +2,10 @@ import React, { FC, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 
-import { useAppDispatch } from '../stores/index'
 import { OrganizerDetail as OrganizerDetailInterface } from '../@types'
+import { useAppDispatch } from '../stores/index'
 import { asyncGetOrganizer } from '../ajax/organizer'
+
 import { OrganizerDetail as OrganizerDetailTemp } from '../components/templates/OrganizerDetail'
 import { CircularLoader } from '../Loader/CircularLoader'
 
@@ -16,7 +17,9 @@ export const OrganizerDetail: FC = () => {
     )
 
     const getOrganizer = () => {
-        dispatch(asyncGetOrganizer(id, setOrganizer))
+        dispatch(asyncGetOrganizer(id)).then(
+            (result) => setOrganizer(result)
+        ).catch(() => {return})
     }
 
     useEffect(() => {
