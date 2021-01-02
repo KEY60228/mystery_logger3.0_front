@@ -22,17 +22,15 @@ axios.interceptors.response.use(
     error => error.response || error,
 )
 
-export const asyncGetAccompanies = (
-    setAccompanies: (value: AccompanyIndex[]) => void,
-) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+export const asyncGetAccompanies = () => {
+    return async (dispatch: AppDispatch): Promise<AccompanyIndex[]> => {
         dispatch(setCode(null))
 
         const response = await axios.get<AccompanyIndex[]>(`/v1/accompanies`)
 
         if (response.status === OK) {
-            setAccompanies(response.data)
             dispatch(setCode(OK))
+            return Promise.resolve(response.data)
         }
 
         dispatch(setCode(response.status))
