@@ -1,22 +1,20 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory, useLocation } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import queryString from 'query-string'
 
 import { asyncRegister, asyncVerify } from '../ajax/auth'
-import { RootState, useAppDispatch } from '../stores/index'
+import { useAppDispatch } from '../stores/index'
+import { setMessage } from '../stores/error'
+
 import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
 import { Register as RegisterTemp } from '../components/templates/Register'
-import { setMessage } from '../stores/error'
 import { CircularLoader } from '../Loader/CircularLoader'
 
 export const Register: FC = () => {
     const history = useHistory()
     const dispatch = useAppDispatch()
     const query = queryString.parse(useLocation().search)
-
-    const currentUser = useSelector((state: RootState) => state.auth.user)
 
     const [registerStatus, setRegisterStatus] = useState<boolean | null>(null)
     const [accountId, setAccountId] = useState<string>('')
@@ -26,15 +24,19 @@ export const Register: FC = () => {
     const [preRegisterId, setPreRegisterId] = useState<number>(0)
 
     const verify = () => {
-        dispatch(asyncVerify(query, setPreRegisterId, setEmail))
-            .then(() => setRegisterStatus(true))
+        dispatch(asyncVerify(query))
+            .then((result) => {
+                setEmail(result.email)
+                setPreRegisterId(result.pre_register_id)
+                setRegisterStatus(true)
+            })
             .catch(() => setRegisterStatus(false))
     }
 
     const register = () => {
         dispatch(asyncRegister(accountId, email, name, password, preRegisterId))
             .then(result => history.push(`/users/${result.account_id}`))
-            .catch()
+            .catch(() => {return})
     }
 
     useEffect(() => {

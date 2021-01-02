@@ -57,10 +57,8 @@ export const asyncPreRegister = (email: string) => {
 // メールアドレス認証処理
 export const asyncVerify = (
     query: queryString.ParsedQuery<string>,
-    setPreRegisterId: (value: number) => void,
-    setEmail: (value: string) => void,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<{email: string, pre_register_id: number}> => {
         dispatch(setCode(null))
 
         const response = await axios.post<{
@@ -71,10 +69,8 @@ export const asyncVerify = (
         })
 
         if (response.status === OK) {
-            setPreRegisterId(response.data.pre_register_id)
-            setEmail(response.data.email)
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
