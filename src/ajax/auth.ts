@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { setUser } from '../stores/auth'
 import queryString from 'query-string'
 
-import { AppDispatch } from '../stores/index'
 import { CurrentUser } from '../@types'
+import { AppDispatch } from '../stores/index'
+import { setUser } from '../stores/auth'
 import { setCode, setLoading, setMessage, setPopper } from '../stores/error'
 import { CREATED, NO_CONTENT, OK, UNPROCESSABLE_ENTITY } from '../util'
 
