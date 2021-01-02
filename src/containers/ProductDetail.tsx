@@ -48,7 +48,7 @@ export const ProductDetail: FC = () => {
     const [isNew, setIsNew] = useState<boolean>(false)
 
     const getProduct = () => {
-        dispatch(asyncGetProduct(id)).then(result => setProduct(result))
+        dispatch(asyncGetProduct(id)).then(result => setProduct(result)).catch(() => {return})
     }
 
     const post = () => {
