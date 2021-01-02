@@ -53,22 +53,20 @@ export const asyncGetTimeline = () => {
 
 export const asyncGetReview = (
     id: string,
-    setReview: (value: ReviewDetail | null) => void,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<ReviewDetail> => {
         dispatch(setCode(null))
 
         const response = await axios.get<ReviewDetail>(`/v1/reviews/${id}`)
 
         if (response.status === OK) {
-            setReview(response.data)
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))

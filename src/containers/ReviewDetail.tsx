@@ -16,10 +16,11 @@ import {
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
-import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 import { setMessage, setPopper } from '../stores/error'
-import { CircularLoader } from '../Loader/CircularLoader'
 import { setUser } from '../stores/auth'
+
+import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
@@ -40,7 +41,9 @@ export const ReviewDetail: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const getReview = () => {
-        dispatch(asyncGetReview(id, setReview))
+        dispatch(asyncGetReview(id)).then(
+            result => setReview(result)
+        ).catch(() => {return})
     }
 
     const follow = (user: User) => {
