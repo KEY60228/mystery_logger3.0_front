@@ -14,10 +14,11 @@ import {
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
-import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 import { setPopper } from '../stores/error'
-import { CircularLoader } from '../Loader/CircularLoader'
 import { setUser } from '../stores/auth'
+
+import { CircularLoader } from '../Loader/CircularLoader'
+import { Timeline as TimelineTemp } from '../components/templates/Timeline'
 
 export const Timeline: FC = () => {
     const dispatch = useAppDispatch()
@@ -37,7 +38,9 @@ export const Timeline: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const getReviews = async () => {
-        dispatch(asyncGetTimeline(setReviews))
+        dispatch(asyncGetTimeline()).then(
+            result => setReviews(result)
+        ).catch(() => {return})
     }
 
     const edit = (review: ReviewDetail) => {

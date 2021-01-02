@@ -30,18 +30,15 @@ axios.interceptors.response.use(
     error => error.response || error,
 )
 
-export const asyncGetTimeline = (
-    setReviews: (value: ReviewIndex[] | null) => void,
-) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+export const asyncGetTimeline = () => {
+    return async (dispatch: AppDispatch): Promise<ReviewIndex[]> => {
         dispatch(setCode(null))
 
         const response = await axios.get<ReviewIndex[]>('/v1/reviews')
 
         if (response.status === OK) {
-            setReviews(response.data)
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === UNAUTHENTICATED) {
