@@ -270,7 +270,7 @@ export const UserDetail: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        dispatch(asyncLogout()).then(() => history.push('/login'))
+        dispatch(asyncLogout()).then(() => history.push('/login')).catch(() => {return})
     }
 
     useEffect(() => {
