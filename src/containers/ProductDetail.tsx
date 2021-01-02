@@ -220,7 +220,7 @@ export const ProductDetail: FC = () => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unwanna = (prod: Product) => {
@@ -248,7 +248,7 @@ export const ProductDetail: FC = () => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const postComment = (review: ReviewDetail) => {
