@@ -114,7 +114,7 @@ export const ReviewDetail: FC = () => {
             ),
         )
             .then(() => history.push(`/products/${review?.product_id}`))
-            .catch()
+            .catch(() => {return})
     }
 
     const deleteReview = () => {

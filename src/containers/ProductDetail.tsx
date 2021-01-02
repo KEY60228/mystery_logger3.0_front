@@ -22,9 +22,10 @@ import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
 import { setPopper } from '../stores/error'
+import { setUser } from '../stores/auth'
+
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 import { CircularLoader } from '../Loader/CircularLoader'
-import { setUser } from '../stores/auth'
 
 export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()
@@ -127,7 +128,7 @@ export const ProductDetail: FC = () => {
                 setContents('')
                 setIsNew(false)
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const deleteReview = () => {

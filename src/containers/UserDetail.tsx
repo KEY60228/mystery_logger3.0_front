@@ -3,13 +3,11 @@ import { Helmet } from 'react-helmet'
 import { useParams, useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { RootState, useAppDispatch } from '../stores/index'
 import {
     ReviewDetail,
     User,
     UserDetail as UserDetailInterface,
 } from '../@types'
-import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import {
     asyncGetUser,
     asyncFollow,
@@ -24,9 +22,12 @@ import {
     asyncUnlikeReview,
     asyncUpdateReview,
 } from '../ajax/review'
+import { RootState, useAppDispatch } from '../stores/index'
 import { setPopper } from '../stores/error'
-import { CircularLoader } from '../Loader/CircularLoader'
 import { setUser as setCurrentUser } from '../stores/auth'
+
+import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
@@ -164,7 +165,7 @@ export const UserDetail: FC = () => {
                 setJoined_at(null)
                 setContents('')
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const deleteReview = () => {
