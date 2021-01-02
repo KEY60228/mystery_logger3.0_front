@@ -1,9 +1,10 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { useAppDispatch } from '../stores/index'
 import { ProductIndex } from '../@types'
+import { useAppDispatch } from '../stores/index'
 import { asyncGetProducts } from '../ajax/product'
+
 import { Search as SearchTemp } from '../components/templates/Search'
 import { CircularLoader } from '../Loader/CircularLoader'
 
@@ -12,7 +13,9 @@ export const Search: FC = () => {
     const [products, setProducts] = useState<ProductIndex[] | null>(null)
 
     const getProducts = () => {
-        dispatch(asyncGetProducts(setProducts))
+        dispatch(asyncGetProducts()).then(
+            result => setProducts(result)
+        ).catch(() => {return})
     }
 
     useEffect(() => {
