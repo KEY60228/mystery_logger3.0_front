@@ -86,7 +86,7 @@ export const UserDetail: FC = () => {
                 getUser()
                 setOpenUserForm(false)
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const follow = (user: User) => {
