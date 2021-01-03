@@ -2,9 +2,10 @@ import React, { FC, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router'
 
-import { useAppDispatch } from '../stores/index'
 import { VenueDetail as VenueDetailInterface } from '../@types'
+import { useAppDispatch } from '../stores/index'
 import { asyncGetVenue } from '../ajax/venue'
+
 import { VenueDetail as VenueDetailTemp } from '../components/templates/VenueDetail'
 import { CircularLoader } from '../Loader/CircularLoader'
 
@@ -15,7 +16,9 @@ export const VenueDetail: FC = () => {
     const [venue, setVenue] = useState<VenueDetailInterface | null>(null)
 
     const getVenue = () => {
-        dispatch(asyncGetVenue(id, setVenue))
+        dispatch(asyncGetVenue(id)).then(
+            result => setVenue(result)
+        ).catch(() => {return})
     }
 
     useEffect(() => {
