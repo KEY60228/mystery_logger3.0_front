@@ -294,7 +294,7 @@ export const ProductDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getProduct()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unlikeReview = (review: ReviewDetail) => {
@@ -329,7 +329,7 @@ export const ProductDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getProduct()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     useEffect(() => {

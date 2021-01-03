@@ -224,7 +224,7 @@ export const UserDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getUser()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unlikeReview = (review: ReviewDetail) => {
@@ -263,7 +263,7 @@ export const UserDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getUser()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const logout = () => {

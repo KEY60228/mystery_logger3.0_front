@@ -179,7 +179,7 @@ export const Timeline: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getReviews()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unlikeReview = (review: ReviewIndex) => {
@@ -214,7 +214,7 @@ export const Timeline: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getReviews()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     useEffect(() => {

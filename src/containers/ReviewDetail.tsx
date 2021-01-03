@@ -167,7 +167,7 @@ export const ReviewDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getReview()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unlikeReview = () => {
@@ -199,7 +199,7 @@ export const ReviewDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getReview()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const getSpoiledContents = () => {
