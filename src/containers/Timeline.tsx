@@ -114,7 +114,7 @@ export const Timeline: FC = () => {
 
         dispatch(asyncFollow(user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const unfollow = (user: User) => {
@@ -134,7 +134,7 @@ export const Timeline: FC = () => {
 
         dispatch(asyncUnFollow(user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const postComment = (review: ReviewIndex) => {

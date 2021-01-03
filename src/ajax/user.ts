@@ -67,12 +67,12 @@ export const asyncFollow = (followed_id: number) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -95,12 +95,12 @@ export const asyncUnFollow = (followed_id: number) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))

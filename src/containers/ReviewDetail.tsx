@@ -64,7 +64,7 @@ export const ReviewDetail: FC = () => {
 
         dispatch(asyncFollow(review.user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const unfollow = (user: User) => {
@@ -84,7 +84,7 @@ export const ReviewDetail: FC = () => {
 
         dispatch(asyncUnFollow(review.user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const edit = () => {

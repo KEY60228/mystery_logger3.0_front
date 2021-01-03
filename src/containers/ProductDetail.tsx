@@ -172,7 +172,7 @@ export const ProductDetail: FC = () => {
 
         dispatch(asyncFollow(user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const unfollow = (user: User) => {
@@ -192,7 +192,7 @@ export const ProductDetail: FC = () => {
 
         dispatch(asyncUnFollow(user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const wanna = (prod: Product) => {
