@@ -57,7 +57,9 @@ export const UserDetail: FC = () => {
     const [comment, setComment] = useState<string | null>('')
 
     const getUser = () => {
-        dispatch(asyncGetUser(account_id, setUser))
+        dispatch(asyncGetUser(account_id)).then(
+            result => setUser(result)
+        ).catch(() => {return})
     }
 
     const editUser = () => {
