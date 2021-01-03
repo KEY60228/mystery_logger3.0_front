@@ -212,7 +212,9 @@ export const ReviewDetail: FC = () => {
             dispatch(setPopper('undone'))
             return false
         }
-        dispatch(asyncGetSpoiledContents(review.id, setReview)).then().catch()
+        dispatch(asyncGetSpoiledContents(review.id)).then(
+            result => setReview(result)
+        ).catch(() => {return})
     }
 
     useEffect(() => {
