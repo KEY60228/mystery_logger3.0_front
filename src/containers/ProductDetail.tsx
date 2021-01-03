@@ -151,7 +151,7 @@ export const ProductDetail: FC = () => {
                 setContents('')
                 setIsNew(false)
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const follow = (user: User) => {

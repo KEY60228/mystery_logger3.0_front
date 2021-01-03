@@ -191,19 +191,19 @@ export const asyncDeleteReview = (review_id: number) => {
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setLoading(false))

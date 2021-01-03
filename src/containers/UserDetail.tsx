@@ -177,7 +177,7 @@ export const UserDetail: FC = () => {
             setResult(0)
             setJoined_at(null)
             setContents('')
-        })
+        }).catch(() => {return})
     }
 
     const postComment = (review: ReviewDetail) => {

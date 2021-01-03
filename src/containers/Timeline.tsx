@@ -93,7 +93,7 @@ export const Timeline: FC = () => {
                 setJoined_at(null)
                 setContents('')
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const follow = (user: User) => {

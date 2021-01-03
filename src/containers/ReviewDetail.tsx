@@ -121,7 +121,7 @@ export const ReviewDetail: FC = () => {
         if (!review) return false // 仮
         dispatch(asyncDeleteReview(review.id))
             .then(() => history.push(`/products/${review?.product_id}`))
-            .catch()
+            .catch(() => {return})
     }
 
     const postComment = () => {
