@@ -260,7 +260,7 @@ export const ProductDetail: FC = () => {
         if (!review || !comment) return false // 仮
         dispatch(asyncPostComment(review.id, comment))
             .then(() => getProduct())
-            .catch()
+            .catch(() => {return})
     }
 
     const likeReview = (review: ReviewDetail) => {

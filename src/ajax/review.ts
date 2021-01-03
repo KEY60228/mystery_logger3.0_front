@@ -230,12 +230,12 @@ export const asyncPostComment = (review_id: number, contents: string) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))

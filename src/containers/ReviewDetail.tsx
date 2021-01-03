@@ -136,7 +136,7 @@ export const ReviewDetail: FC = () => {
         if (!review) return false // 仮
         dispatch(asyncPostComment(review.id, comment))
             .then(() => getReview())
-            .catch()
+            .catch(() => {return})
     }
 
     const likeReview = () => {

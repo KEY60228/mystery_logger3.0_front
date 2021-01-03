@@ -145,7 +145,7 @@ export const Timeline: FC = () => {
         if (!review || !comment) return false // 仮
         dispatch(asyncPostComment(review.id, comment))
             .then(() => getReviews())
-            .catch()
+            .catch(() => {return})
     }
 
     const likeReview = (review: ReviewIndex) => {
