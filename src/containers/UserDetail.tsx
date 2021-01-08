@@ -3,13 +3,11 @@ import { Helmet } from 'react-helmet'
 import { useParams, useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { RootState, useAppDispatch } from '../stores/index'
 import {
     ReviewDetail,
     User,
     UserDetail as UserDetailInterface,
 } from '../@types'
-import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
 import {
     asyncGetUser,
     asyncFollow,
@@ -24,9 +22,12 @@ import {
     asyncUnlikeReview,
     asyncUpdateReview,
 } from '../ajax/review'
+import { RootState, useAppDispatch } from '../stores/index'
 import { setPopper } from '../stores/error'
-import { CircularLoader } from '../Loader/CircularLoader'
 import { setUser as setCurrentUser } from '../stores/auth'
+
+import { UserDetail as UserDetailTemp } from '../components/templates/UserDetail'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
@@ -56,7 +57,9 @@ export const UserDetail: FC = () => {
     const [comment, setComment] = useState<string | null>('')
 
     const getUser = () => {
-        dispatch(asyncGetUser(account_id, setUser))
+        dispatch(asyncGetUser(account_id)).then(
+            result => setUser(result)
+        ).catch(() => {return})
     }
 
     const editUser = () => {
@@ -83,7 +86,7 @@ export const UserDetail: FC = () => {
                 getUser()
                 setOpenUserForm(false)
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const follow = (user: User) => {
@@ -104,7 +107,7 @@ export const UserDetail: FC = () => {
 
         dispatch(asyncFollow(user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const unfollow = (user: User) => {
@@ -126,7 +129,7 @@ export const UserDetail: FC = () => {
 
         dispatch(asyncUnFollow(user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const editReview = (review: ReviewDetail) => {
@@ -164,7 +167,7 @@ export const UserDetail: FC = () => {
                 setJoined_at(null)
                 setContents('')
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const deleteReview = () => {
@@ -176,7 +179,7 @@ export const UserDetail: FC = () => {
             setResult(0)
             setJoined_at(null)
             setContents('')
-        })
+        }).catch(() => {return})
     }
 
     const postComment = (review: ReviewDetail) => {
@@ -185,7 +188,7 @@ export const UserDetail: FC = () => {
             return false
         }
         if (!review || !comment) return false // 仮
-        dispatch(asyncPostComment(review.id, comment)).then(() => getUser())
+        dispatch(asyncPostComment(review.id, comment)).then(() => getUser()).catch(() => {return})
     }
 
     const likeReview = (review: ReviewDetail) => {
@@ -223,7 +226,7 @@ export const UserDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getUser()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unlikeReview = (review: ReviewDetail) => {
@@ -262,7 +265,7 @@ export const UserDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getUser()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const logout = () => {
@@ -270,7 +273,7 @@ export const UserDetail: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        dispatch(asyncLogout()).then(() => history.push('/login'))
+        dispatch(asyncLogout()).then(() => history.push('/login')).catch(() => {return})
     }
 
     useEffect(() => {

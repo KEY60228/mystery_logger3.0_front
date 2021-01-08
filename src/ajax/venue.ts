@@ -25,22 +25,20 @@ axios.interceptors.response.use(
 
 export const asyncGetVenue = (
     venue_id: string,
-    setVenue: (value: VenueDetail) => void,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<VenueDetail> => {
         dispatch(setCode(null))
 
-        const response = await axios.get(`/v1/venues/${venue_id}`)
+        const response = await axios.get<VenueDetail>(`/v1/venues/${venue_id}`)
 
         if (response.status === OK) {
-            setVenue(response.data)
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))

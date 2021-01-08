@@ -22,9 +22,10 @@ import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
 import { setPopper } from '../stores/error'
+import { setUser } from '../stores/auth'
+
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
 import { CircularLoader } from '../Loader/CircularLoader'
-import { setUser } from '../stores/auth'
 
 export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()
@@ -48,7 +49,7 @@ export const ProductDetail: FC = () => {
     const [isNew, setIsNew] = useState<boolean>(false)
 
     const getProduct = () => {
-        dispatch(asyncGetProduct(id)).then(result => setProduct(result))
+        dispatch(asyncGetProduct(id)).then(result => setProduct(result)).catch(() => {return})
     }
 
     const post = () => {
@@ -78,7 +79,7 @@ export const ProductDetail: FC = () => {
                 setContents('')
                 setIsNew(false)
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const edit = () => {
@@ -127,7 +128,7 @@ export const ProductDetail: FC = () => {
                 setContents('')
                 setIsNew(false)
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const deleteReview = () => {
@@ -150,7 +151,7 @@ export const ProductDetail: FC = () => {
                 setContents('')
                 setIsNew(false)
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const follow = (user: User) => {
@@ -171,7 +172,7 @@ export const ProductDetail: FC = () => {
 
         dispatch(asyncFollow(user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const unfollow = (user: User) => {
@@ -191,7 +192,7 @@ export const ProductDetail: FC = () => {
 
         dispatch(asyncUnFollow(user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const wanna = (prod: Product) => {
@@ -220,7 +221,7 @@ export const ProductDetail: FC = () => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unwanna = (prod: Product) => {
@@ -248,7 +249,7 @@ export const ProductDetail: FC = () => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const postComment = (review: ReviewDetail) => {
@@ -259,7 +260,7 @@ export const ProductDetail: FC = () => {
         if (!review || !comment) return false // 仮
         dispatch(asyncPostComment(review.id, comment))
             .then(() => getProduct())
-            .catch()
+            .catch(() => {return})
     }
 
     const likeReview = (review: ReviewDetail) => {
@@ -293,7 +294,7 @@ export const ProductDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getProduct()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unlikeReview = (review: ReviewDetail) => {
@@ -328,7 +329,7 @@ export const ProductDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getProduct()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     useEffect(() => {

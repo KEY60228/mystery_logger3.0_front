@@ -30,18 +30,15 @@ axios.interceptors.response.use(
     error => error.response || error,
 )
 
-export const asyncGetTimeline = (
-    setReviews: (value: ReviewIndex[] | null) => void,
-) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+export const asyncGetTimeline = () => {
+    return async (dispatch: AppDispatch): Promise<ReviewIndex[]> => {
         dispatch(setCode(null))
 
         const response = await axios.get<ReviewIndex[]>('/v1/reviews')
 
         if (response.status === OK) {
-            setReviews(response.data)
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === UNAUTHENTICATED) {
@@ -56,22 +53,20 @@ export const asyncGetTimeline = (
 
 export const asyncGetReview = (
     id: string,
-    setReview: (value: ReviewDetail | null) => void,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<ReviewDetail> => {
         dispatch(setCode(null))
 
         const response = await axios.get<ReviewDetail>(`/v1/reviews/${id}`)
 
         if (response.status === OK) {
-            setReview(response.data)
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -111,13 +106,13 @@ export const asyncPostReview = (
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setLoading(false))
@@ -157,19 +152,19 @@ export const asyncUpdateReview = (
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setLoading(false))
@@ -196,19 +191,19 @@ export const asyncDeleteReview = (review_id: number) => {
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setLoading(false))
@@ -235,12 +230,12 @@ export const asyncPostComment = (review_id: number, contents: string) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -263,12 +258,12 @@ export const asyncLikeReview = (review_id: number) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -293,12 +288,12 @@ export const asyncUnlikeReview = (review_id: number) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -308,37 +303,35 @@ export const asyncUnlikeReview = (review_id: number) => {
 
 export const asyncGetSpoiledContents = (
     review_id: number,
-    setReview: (value: ReviewDetail) => void,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<ReviewDetail> => {
         dispatch(setCode(null))
         dispatch(setLoading(true))
 
-        const response = await axios.get(`/v1/spoil/${review_id}`)
+        const response = await axios.get<ReviewDetail>(`/v1/spoil/${review_id}`)
 
         if (response.status === OK) {
-            setReview(response.data)
             dispatch(setLoading(false))
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setLoading(false))
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setLoading(false))
             dispatch(setCode(NOT_FOUND))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
             dispatch(setLoading(false))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setLoading(false))

@@ -31,22 +31,20 @@ axios.interceptors.response.use(
 
 export const asyncGetUser = (
     account_id: string,
-    setUser: (value: UserDetail) => void,
 ) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+    return async (dispatch: AppDispatch): Promise<UserDetail> => {
         dispatch(setCode(null))
 
-        const response = await axios.get(`/v1/users/${account_id}`)
+        const response = await axios.get<UserDetail>(`/v1/users/${account_id}`)
 
         if (response.status === OK) {
-            setUser(response.data)
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -69,12 +67,12 @@ export const asyncFollow = (followed_id: number) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -97,12 +95,12 @@ export const asyncUnFollow = (followed_id: number) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))

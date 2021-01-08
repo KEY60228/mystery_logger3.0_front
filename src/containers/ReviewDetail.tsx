@@ -16,10 +16,11 @@ import {
 import { asyncFollow, asyncUnFollow } from '../ajax/user'
 import { asyncGetCurrentUser } from '../ajax/auth'
 import { RootState, useAppDispatch } from '../stores/index'
-import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
 import { setMessage, setPopper } from '../stores/error'
-import { CircularLoader } from '../Loader/CircularLoader'
 import { setUser } from '../stores/auth'
+
+import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
+import { CircularLoader } from '../Loader/CircularLoader'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
@@ -40,7 +41,9 @@ export const ReviewDetail: FC = () => {
     const [open, setOpen] = useState<boolean>(false)
 
     const getReview = () => {
-        dispatch(asyncGetReview(id, setReview))
+        dispatch(asyncGetReview(id)).then(
+            result => setReview(result)
+        ).catch(() => {return})
     }
 
     const follow = (user: User) => {
@@ -61,7 +64,7 @@ export const ReviewDetail: FC = () => {
 
         dispatch(asyncFollow(review.user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const unfollow = (user: User) => {
@@ -81,7 +84,7 @@ export const ReviewDetail: FC = () => {
 
         dispatch(asyncUnFollow(review.user.id))
             .then(() => dispatch(asyncGetCurrentUser()))
-            .catch()
+            .catch(() => {return})
     }
 
     const edit = () => {
@@ -111,14 +114,14 @@ export const ReviewDetail: FC = () => {
             ),
         )
             .then(() => history.push(`/products/${review?.product_id}`))
-            .catch()
+            .catch(() => {return})
     }
 
     const deleteReview = () => {
         if (!review) return false // 仮
         dispatch(asyncDeleteReview(review.id))
             .then(() => history.push(`/products/${review?.product_id}`))
-            .catch()
+            .catch(() => {return})
     }
 
     const postComment = () => {
@@ -133,7 +136,7 @@ export const ReviewDetail: FC = () => {
         if (!review) return false // 仮
         dispatch(asyncPostComment(review.id, comment))
             .then(() => getReview())
-            .catch()
+            .catch(() => {return})
     }
 
     const likeReview = () => {
@@ -164,7 +167,7 @@ export const ReviewDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getReview()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const unlikeReview = () => {
@@ -196,7 +199,7 @@ export const ReviewDetail: FC = () => {
                 dispatch(asyncGetCurrentUser())
                 getReview()
             })
-            .catch()
+            .catch(() => {return})
     }
 
     const getSpoiledContents = () => {
@@ -209,7 +212,9 @@ export const ReviewDetail: FC = () => {
             dispatch(setPopper('undone'))
             return false
         }
-        dispatch(asyncGetSpoiledContents(review.id, setReview)).then().catch()
+        dispatch(asyncGetSpoiledContents(review.id)).then(
+            result => setReview(result)
+        ).catch(() => {return})
     }
 
     useEffect(() => {

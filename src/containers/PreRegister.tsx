@@ -3,8 +3,9 @@ import { Helmet } from 'react-helmet'
 
 import { asyncPreRegister } from '../ajax/auth'
 import { useAppDispatch } from '../stores/index'
-import { PreRegister as PreRegisterTemp } from '../components/templates/PreRegister'
 import { setMessage } from '../stores/error'
+
+import { PreRegister as PreRegisterTemp } from '../components/templates/PreRegister'
 
 export const PreRegister: FC = () => {
     const dispatch = useAppDispatch()
@@ -15,9 +16,11 @@ export const PreRegister: FC = () => {
     const preRegister = () => {
         dispatch(asyncPreRegister(email))
             .then(
-                () => setOpen(true), // 成功時挙動
+                () => setOpen(true),
             )
-            .catch()
+            .catch(
+                () => {return}
+            )
     }
 
     useEffect(() => {

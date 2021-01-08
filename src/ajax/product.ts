@@ -29,18 +29,15 @@ axios.interceptors.response.use(
     error => error.response || error,
 )
 
-export const asyncGetProducts = (
-    setProducts: (value: ProductIndex[] | null) => void,
-) => {
-    return async (dispatch: AppDispatch): Promise<void> => {
+export const asyncGetProducts = () => {
+    return async (dispatch: AppDispatch): Promise<ProductIndex[]> => {
         dispatch(setCode(null))
 
         const response = await axios.get<ProductIndex[]>('/v1/products')
 
         if (response.status === OK) {
-            setProducts(response.data)
             dispatch(setCode(OK))
-            return Promise.resolve()
+            return Promise.resolve(response.data)
         }
 
         dispatch(setCode(response.status))
@@ -60,7 +57,7 @@ export const asyncGetProduct = (id: string) => {
 
         if (response.status === NOT_FOUND) {
             dispatch(setCode(NOT_FOUND))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -83,12 +80,12 @@ export const asyncWanna = (product_id: number) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))
@@ -113,12 +110,12 @@ export const asyncUnwanna = (product_id: number) => {
 
         if (response.status === UNAUTHENTICATED) {
             dispatch(setCode(UNAUTHENTICATED))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         if (response.status === UNPROCESSABLE_ENTITY) {
             dispatch(setCode(UNPROCESSABLE_ENTITY))
-            return Promise.reject(response.data)
+            return Promise.reject()
         }
 
         dispatch(setCode(response.status))

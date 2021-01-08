@@ -1,9 +1,10 @@
 import React, { FC, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { useAppDispatch } from '../stores/index'
 import { AccompanyIndex } from '../@types'
+import { useAppDispatch } from '../stores/index'
 import { asyncGetAccompanies } from '../ajax/accompany'
+
 import { Accompanies as AccompaniesTemp } from '../components/templates/Accompanies'
 import { CircularLoader } from '../Loader/CircularLoader'
 
@@ -14,7 +15,11 @@ export const Accompanies: FC = () => {
     )
 
     const getAccompanies = () => {
-        dispatch(asyncGetAccompanies(setAccompanies))
+        dispatch(asyncGetAccompanies()).then(
+            (result: AccompanyIndex[]) => setAccompanies(result)
+        ).then(
+            () => {return}
+        )
     }
 
     useEffect(() => {
