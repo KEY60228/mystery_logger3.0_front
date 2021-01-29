@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
 
 import { OrganizerDetail as OrganizerDetailInterface } from '../../@types'
-import { OrganizerCard } from '../../components/organisms/OrganizerDetail/OrganizerCard'
-import { OrganizerProducts } from '../../components/organisms/OrganizerDetail/OrganizerProducts'
-import { OrganizerVenues } from '../../components/organisms/OrganizerDetail/OrganizerVenues'
+import { OrganizerCard } from '../organisms/OrganizerDetail/OrganizerCard'
+import { OrganizerProducts } from '../organisms/OrganizerDetail/OrganizerProducts'
+import { OrganizerVenues } from '../organisms/OrganizerDetail/OrganizerVenues'
 import { TempSpace } from '../../reusable/TempSpace'
 
 interface Props {
