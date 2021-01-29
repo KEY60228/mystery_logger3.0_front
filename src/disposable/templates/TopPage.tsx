@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import { ProductIndex } from '../../@types'
 import { TempSpace } from '../../reusable/TempSpace'
-import { LinedProducts } from '../organisms/TopPage/LinedProducts'
+import { LinedProducts } from '../../components/organisms/TopPage/LinedProducts'
 
 interface Props {
     products: ProductIndex[]

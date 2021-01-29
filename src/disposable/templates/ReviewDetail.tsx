@@ -1,26 +1,18 @@
 import React, { FC, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import {
-    Product,
-    ProductDetail as ProductDetailInterface,
-    ReviewDetail,
-    CurrentUser,
-    User,
-} from '../../@types'
-import { ProductContents } from '../organisms/ProductDetail/ProductContents/'
-import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
-import { TempSpace } from '../../reusable/TempSpace'
+import { ReviewDetail as ReviewDetailInterface, User } from '../../@types'
+import { ProductCardM } from '../../reusable/ProductCardM'
+import { ReviewCard } from '../../reusable/ReviewCard'
 import { ConfirmDeleteReview } from '../../reusable/ConfirmDeleteReview'
 import { ReviewForm } from '../../reusable/ReviewForm'
+import { ReviewComments } from '../../components/organisms/ReviewDetail/ReviewComments'
+import { TempSpace } from '../../reusable/TempSpace'
 import { LinearLoader } from '../../reusable/Loader/LinearLoader'
-import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
 
 interface Props {
-    currentUser: CurrentUser | null
-    product: ProductDetailInterface
-    isNew: boolean
-    setIsNew: (value: boolean) => void
+    review: ReviewDetailInterface
     open: boolean
     setOpen: (value: boolean) => void
     rating: number
@@ -34,21 +26,19 @@ interface Props {
     contents: string | null
     setContents: (value: string | null) => void
     edit: () => void
-    post: () => void
     update: () => void
-    deleteReview: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
-    wanna: (product: Product) => void
-    unwanna: (product: Product) => void
+    deleteReview: () => void
     comment: string | null
     setComment: (value: string) => void
-    postComment: (review: ReviewDetail) => void
-    likeReview: (review: ReviewDetail) => void
-    unlikeReview: (review: ReviewDetail) => void
+    postComment: () => void
+    likeReview: () => void
+    unlikeReview: () => void
+    getSpoiledContents: () => void
 }
 
-export const ProductDetail: FC<Props> = props => {
+export const ReviewDetail: FC<Props> = props => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
@@ -57,29 +47,27 @@ export const ProductDetail: FC<Props> = props => {
     return (
         <>
             {loading && <LinearLoader />}
-            <ProductContents
-                product={props.product}
-                currentUser={props.currentUser}
-                setModalOpen={props.setOpen}
-                setIsNew={props.setIsNew}
+            <ProductCardM product={props.review.product} />
+            <ReviewCard
+                review={props.review}
+                reviewerProfile
+                productTitle
                 edit={props.edit}
-                wanna={props.wanna}
-                unwanna={props.unwanna}
-            />
-            <ProductReviews
-                product={props.product}
-                edit={props.edit}
-                setConfirmOpen={setConfirmOpen}
                 follow={props.follow}
                 unfollow={props.unfollow}
+                setConfirmOpen={setConfirmOpen}
                 comment={props.comment}
                 setComment={props.setComment}
                 postComment={props.postComment}
                 likeReview={props.likeReview}
                 unlikeReview={props.unlikeReview}
-                commentOpen={commentOpen}
-                setCommentOpen={setCommentOpen}
+                open={commentOpen}
+                setOpen={setCommentOpen}
+                getSpoiledContents={props.getSpoiledContents}
             />
+            {props.review.review_comments && (
+                <ReviewComments comments={props.review.review_comments} />
+            )}
             <TempSpace
                 text="Ad Space"
                 className={{ height: '320px', margin: '12px auto 60px' }}
@@ -97,10 +85,9 @@ export const ProductDetail: FC<Props> = props => {
                 setSpoil={props.setSpoil}
                 contents={props.contents}
                 setContents={props.setContents}
-                post={props.post}
                 update={props.update}
-                isNew={props.isNew}
-                product={props.product}
+                isNew={false}
+                product={props.review.product}
             />
             <ConfirmDeleteReview
                 deleteReview={props.deleteReview}

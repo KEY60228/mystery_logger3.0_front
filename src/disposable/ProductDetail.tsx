@@ -24,7 +24,7 @@ import { RootState, useAppDispatch } from '../stores/index'
 import { setPopper } from '../stores/error'
 import { setUser } from '../stores/auth'
 
-import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
+import { ProductDetail as ProductDetailTemp } from './templates/ProductDetail'
 import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const ProductDetail: FC = () => {

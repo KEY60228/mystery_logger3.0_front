@@ -5,7 +5,7 @@ import { ProductIndex } from '../@types'
 import { useAppDispatch } from '../stores/index'
 import { asyncGetProducts } from '../ajax/product'
 
-import { Search as SearchTemp } from '../components/templates/Search'
+import { Search as SearchTemp } from './templates/Search'
 import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const Search: FC = () => {

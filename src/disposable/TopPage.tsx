@@ -5,7 +5,7 @@ import { ProductIndex } from '../@types'
 import { useAppDispatch } from '../stores/index'
 import { asyncGetProducts } from '../ajax/product'
 
-import { TopPage as TPTemp } from '../components/templates/TopPage'
+import { TopPage as TPTemp } from './templates/TopPage'
 import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const TopPage: FC = () => {

@@ -6,7 +6,7 @@ import { asyncLogin } from '../ajax/auth'
 import { useAppDispatch } from '../stores/index'
 import { setMessage } from '../stores/error'
 
-import { Login as LoginTemp } from '../components/templates/Login'
+import { Login as LoginTemp } from './templates/Login'
 
 export const Login: FC = () => {
     const history = useHistory()

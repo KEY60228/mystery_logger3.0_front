@@ -19,7 +19,7 @@ import { RootState, useAppDispatch } from '../stores/index'
 import { setMessage, setPopper } from '../stores/error'
 import { setUser } from '../stores/auth'
 
-import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
+import { ReviewDetail as ReviewDetailTemp } from './templates/ReviewDetail'
 import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const ReviewDetail: FC = () => {

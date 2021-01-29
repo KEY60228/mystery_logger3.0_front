@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react'
 
 import { ProductIndex, Performance } from '../../@types'
-import { SearchBox } from '../organisms/Search/SearchBox'
-import { SearchResult } from '../organisms/Search/SearchResult'
+import { SearchBox } from '../../components/organisms/Search/SearchBox'
+import { SearchResult } from '../../components/organisms/Search/SearchResult'
 import { TempSpace } from '../../reusable/TempSpace'
-import { SortBox } from '../organisms/Search/SortBox'
+import { SortBox } from '../../components/organisms/Search/SortBox'
 
 interface Props {
     products: ProductIndex[]

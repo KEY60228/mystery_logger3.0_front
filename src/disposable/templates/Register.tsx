@@ -1,25 +1,27 @@
 import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
-
 import { LinearLoader } from '../../reusable/Loader/LinearLoader'
 import { RootState } from '../../stores'
-import { LoginForm } from '../organisms/Login/LoginForm'
+
+import { RegisterForm } from '../../components/organisms/Register/RegisterForm'
 
 interface Props {
-    email: string
-    setEmail: (value: string) => void
+    accountId: string
+    setAccountId: (value: string) => void
+    name: string
+    setName: (value: string) => void
     password: string
     setPassword: (value: string) => void
-    login: () => void
+    register: () => void
 }
 
-export const Login: FC<Props> = props => {
+export const Register: FC<Props> = props => {
     const loading = useSelector((state: RootState) => state.error.loading)
 
     return (
         <>
             {loading && <LinearLoader />}
-            <LoginForm {...props} />
+            <RegisterForm {...props} />
         </>
     )
 }

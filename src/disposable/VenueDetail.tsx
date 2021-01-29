@@ -6,7 +6,7 @@ import { VenueDetail as VenueDetailInterface } from '../@types'
 import { useAppDispatch } from '../stores/index'
 import { asyncGetVenue } from '../ajax/venue'
 
-import { VenueDetail as VenueDetailTemp } from '../components/templates/VenueDetail'
+import { VenueDetail as VenueDetailTemp } from './templates/VenueDetail'
 import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const VenueDetail: FC = () => {

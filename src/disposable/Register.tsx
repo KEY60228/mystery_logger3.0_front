@@ -7,8 +7,8 @@ import { asyncRegister, asyncVerify } from '../ajax/auth'
 import { useAppDispatch } from '../stores/index'
 import { setMessage } from '../stores/error'
 
-import { FailVerify as FailVerifyTemp } from '../components/templates/FailVerify'
-import { Register as RegisterTemp } from '../components/templates/Register'
+import { FailVerify as FailVerifyTemp } from './templates/FailVerify'
+import { Register as RegisterTemp } from './templates/Register'
 import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const Register: FC = () => {

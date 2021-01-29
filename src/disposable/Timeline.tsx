@@ -18,7 +18,7 @@ import { setPopper } from '../stores/error'
 import { setUser } from '../stores/auth'
 
 import { CircularLoader } from '../reusable/Loader/CircularLoader'
-import { Timeline as TimelineTemp } from '../components/templates/Timeline'
+import { Timeline as TimelineTemp } from './templates/Timeline'
 
 export const Timeline: FC = () => {
     const dispatch = useAppDispatch()

@@ -5,7 +5,7 @@ import { AccompanyIndex } from '../@types'
 import { useAppDispatch } from '../stores/index'
 import { asyncGetAccompanies } from '../ajax/accompany'
 
-import { Accompanies as AccompaniesTemp } from '../components/templates/Accompanies'
+import { Accompanies as AccompaniesTemp } from './templates/Accompanies'
 import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const Accompanies: FC = () => {
