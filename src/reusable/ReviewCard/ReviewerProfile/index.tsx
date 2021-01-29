@@ -9,8 +9,8 @@ import {
     CardActionArea,
 } from '@material-ui/core'
 
-import { Review, User, Product } from '../../../../@types'
-import { RootState } from '../../../../stores/index'
+import { Review, User, Product } from '../../../@types'
+import { RootState } from '../../../stores/index'
 import { ReviewerMenu } from './ReviewerMenu'
 import { FollowButton } from '../../FollowButton'
 

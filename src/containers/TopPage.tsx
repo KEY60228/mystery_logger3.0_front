@@ -6,7 +6,7 @@ import { useAppDispatch } from '../stores/index'
 import { asyncGetProducts } from '../ajax/product'
 
 import { TopPage as TPTemp } from '../components/templates/TopPage'
-import { CircularLoader } from '../Loader/CircularLoader'
+import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const TopPage: FC = () => {
     const dispatch = useAppDispatch()

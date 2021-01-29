@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { ProductIndex, Performance } from '../../@types'
 import { SearchBox } from '../organisms/Search/SearchBox'
 import { SearchResult } from '../organisms/Search/SearchResult'
-import { TempSpace } from '../molecules/TempSpace'
+import { TempSpace } from '../../reusable/TempSpace'
 import { SortBox } from '../organisms/Search/SortBox'
 
 interface Props {

@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import { ProductIndex } from '../../@types'
-import { TempSpace } from '../molecules/TempSpace'
+import { TempSpace } from '../../reusable/TempSpace'
 import { LinedProducts } from '../organisms/TopPage/LinedProducts'
 
 interface Props {

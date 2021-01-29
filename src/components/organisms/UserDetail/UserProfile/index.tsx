@@ -5,7 +5,7 @@ import { Card, CardMedia, Grid, Typography, Button } from '@material-ui/core'
 
 import { User } from '../../../../@types'
 import { RootState } from '../../../../stores/index'
-import { FollowButton } from '../../../molecules/FollowButton'
+import { FollowButton } from '../../../../reusable/FollowButton'
 import { UserCounters } from './UserCounters'
 
 interface Props {

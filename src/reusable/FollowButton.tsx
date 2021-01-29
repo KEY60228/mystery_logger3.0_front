@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Button } from '@material-ui/core'
-import { CurrentUser, User } from '../../@types'
+import { CurrentUser, User } from '../@types'
 
 interface Props {
     currentUser: CurrentUser

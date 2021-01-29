@@ -14,11 +14,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
-import { RootState, useAppDispatch } from '../../../stores/index'
-import { Review, User, Product } from '../../../@types'
-import { ReviewerProfile } from './ReviewerProfile/'
-import { ReviewContents } from './ReviewContents/'
-import { setMessage } from '../../../stores/error'
+import { RootState, useAppDispatch } from '../../stores/index'
+import { Review, User, Product } from '../../@types'
+import { ReviewerProfile } from './ReviewerProfile'
+import { ReviewContents } from './ReviewContents'
+import { setMessage } from '../../stores/error'
 
 interface ReviewDetail extends Review {
     user?: User

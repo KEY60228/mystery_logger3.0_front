@@ -5,7 +5,7 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import EqualizerIcon from '@material-ui/icons/Equalizer'
 import StarRateIcon from '@material-ui/icons/StarRate'
 
-import { Product } from '../../../@types'
+import { Product } from '../../@types'
 
 interface Props {
     product: Product

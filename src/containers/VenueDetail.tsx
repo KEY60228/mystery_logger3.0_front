@@ -7,7 +7,7 @@ import { useAppDispatch } from '../stores/index'
 import { asyncGetVenue } from '../ajax/venue'
 
 import { VenueDetail as VenueDetailTemp } from '../components/templates/VenueDetail'
-import { CircularLoader } from '../Loader/CircularLoader'
+import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const VenueDetail: FC = () => {
     const dispatch = useAppDispatch()

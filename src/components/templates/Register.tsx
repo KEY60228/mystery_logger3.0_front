@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
-import { LinearLoader } from '../../Loader/LinearLoader'
+import { LinearLoader } from '../../reusable/Loader/LinearLoader'
 import { RootState } from '../../stores'
 
 import { RegisterForm } from '../organisms/Register/RegisterForm'

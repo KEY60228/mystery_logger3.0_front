@@ -4,7 +4,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { CardActionArea, Grid, Typography, Box } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
-import { Product, Review } from '../../../../../@types'
+import { Product, Review } from '../../../../@types'
 import { Ratings } from '../../../Ratings'
 
 interface ReviewWithProduct extends Review {

@@ -6,7 +6,7 @@ import { useAppDispatch } from '../stores/index'
 import { asyncGetAccompanies } from '../ajax/accompany'
 
 import { Accompanies as AccompaniesTemp } from '../components/templates/Accompanies'
-import { CircularLoader } from '../Loader/CircularLoader'
+import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const Accompanies: FC = () => {
     const dispatch = useAppDispatch()

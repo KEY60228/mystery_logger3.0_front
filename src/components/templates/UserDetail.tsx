@@ -5,15 +5,15 @@ import {
     User,
     ReviewDetail,
 } from '../../@types'
-import { TempSpace } from '../molecules/TempSpace'
+import { TempSpace } from '../../reusable/TempSpace'
 import { UserProfile } from '../organisms/UserDetail/UserProfile/'
 import { UserStatics } from '../organisms/UserDetail/UserStatics/'
 import { UserTabs } from '../organisms/UserDetail/UserTabs'
 import { UserForm } from '../organisms/UserDetail/UserForm/'
 import { FollowList } from '../organisms/UserDetail/FollowList/'
-import { ReviewForm } from '../molecules/ReviewForm'
-import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
-import { LinearLoader } from '../../Loader/LinearLoader'
+import { ReviewForm } from '../../reusable/ReviewForm'
+import { ConfirmDeleteReview } from '../../reusable/ConfirmDeleteReview'
+import { LinearLoader } from '../../reusable/Loader/LinearLoader'
 import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
 

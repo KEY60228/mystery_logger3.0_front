@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Box, Grid } from '@material-ui/core'
 
-import { Review, Product } from '../../../../@types'
+import { Review, Product } from '../../../@types'
 import { ProductCardS } from '../../ProductCardS'
 import { ContentsWithActionArea as WithoutProductCardWithActionArea } from './WithoutProductCard/ContentsWithActionArea'
 import { ContentsWithoutActionArea as WithoutProductCardWithoutActionArea } from './WithoutProductCard/ContentsWithoutActionArea'

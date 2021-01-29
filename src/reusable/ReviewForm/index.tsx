@@ -14,14 +14,14 @@ import {
 } from '@material-ui/core'
 import { TransitionProps } from '@material-ui/core/transitions'
 
-import { Product } from '../../../@types'
+import { Product } from '../../@types'
 import { Calender } from './Calender'
 import { SlideRatings } from './SlideRatings'
 import { ReviewHeader } from './ReviewHeader'
 import { SelectForm } from '../SelectForm'
-import { RootState } from '../../../stores'
+import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
-import { LinearLoader } from '../../../Loader/LinearLoader'
+import { LinearLoader } from '../Loader/LinearLoader'
 
 interface Props {
     open: boolean

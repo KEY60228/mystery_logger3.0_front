@@ -25,7 +25,7 @@ import { setPopper } from '../stores/error'
 import { setUser } from '../stores/auth'
 
 import { ProductDetail as ProductDetailTemp } from '../components/templates/ProductDetail'
-import { CircularLoader } from '../Loader/CircularLoader'
+import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()

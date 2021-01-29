@@ -17,7 +17,7 @@ import {
     Venue,
     Organizer,
     Category,
-} from '../../../@types'
+} from '../../@types'
 import { Ratings } from '../Ratings'
 
 interface PerformanceWithVenue extends Performance {

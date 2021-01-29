@@ -20,7 +20,7 @@ import { setMessage, setPopper } from '../stores/error'
 import { setUser } from '../stores/auth'
 
 import { ReviewDetail as ReviewDetailTemp } from '../components/templates/ReviewDetail'
-import { CircularLoader } from '../Loader/CircularLoader'
+import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()

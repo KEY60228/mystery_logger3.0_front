@@ -3,8 +3,8 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Tabs, Tab, Typography } from '@material-ui/core'
 
 import { UserDetail, ReviewDetail, User } from '../../../@types'
-import { ReviewCard } from '../../molecules/ReviewCard/'
-import { ProductCardS } from '../../molecules/ProductCardS/'
+import { ReviewCard } from '../../../reusable/ReviewCard'
+import { ProductCardS } from '../../../reusable/ProductCardS'
 
 interface Props {
     user: UserDetail

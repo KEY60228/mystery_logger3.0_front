@@ -3,11 +3,11 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles' // ไป
 import { Card } from '@material-ui/core'
 
 import { ReviewDetail, ReviewIndex, User } from '../../@types'
-import { ReviewCard } from '../molecules/ReviewCard'
-import { ConfirmDeleteReview } from '../molecules/ConfirmDeleteReview'
-import { ReviewForm } from '../molecules/ReviewForm/'
-import { TempSpace } from '../molecules/TempSpace'
-import { LinearLoader } from '../../Loader/LinearLoader'
+import { ReviewCard } from '../../reusable/ReviewCard'
+import { ConfirmDeleteReview } from '../../reusable/ConfirmDeleteReview'
+import { ReviewForm } from '../../reusable/ReviewForm'
+import { TempSpace } from '../../reusable/TempSpace'
+import { LinearLoader } from '../../reusable/Loader/LinearLoader'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
 

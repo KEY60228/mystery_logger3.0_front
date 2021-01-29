@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Typography, Box } from '@material-ui/core'
 
 import { ProductIndex } from '../../../@types'
-import { ProductCardS } from '../../molecules/ProductCardS/'
+import { ProductCardS } from '../../../reusable/ProductCardS'
 
 interface Props {
     products: ProductIndex[]

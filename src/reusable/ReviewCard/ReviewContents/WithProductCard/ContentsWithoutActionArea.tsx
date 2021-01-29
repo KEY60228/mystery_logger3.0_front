@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Box, Typography } from '@material-ui/core'
 
-import { Review, Product } from '../../../../../@types'
+import { Review, Product } from '../../../../@types'
 import { Ratings } from '../../../Ratings'
 
 interface ReviewWithProduct extends Review {

@@ -6,7 +6,7 @@ import { useAppDispatch } from '../stores/index'
 import { asyncGetProducts } from '../ajax/product'
 
 import { Search as SearchTemp } from '../components/templates/Search'
-import { CircularLoader } from '../Loader/CircularLoader'
+import { CircularLoader } from '../reusable/Loader/CircularLoader'
 
 export const Search: FC = () => {
     const dispatch = useAppDispatch()

@@ -11,7 +11,7 @@ import {
     Product,
     Venue,
 } from '../../../@types'
-import { ProductCardM } from '../../molecules/ProductCardM'
+import { ProductCardM } from '../../../reusable/ProductCardM'
 
 interface PerformanceWithVenue extends Performance {
     venue: Venue
