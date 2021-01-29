@@ -10,15 +10,39 @@ src/
 
 ├ ajax/             APIを叩く非同期ファンクション
 
-├ components/       見た目を担う
+├ reusable/          複数のページから呼び出されるコンポーネント
 
-│   ├ molecules/    再利用性あり
+│   ├ Header/       ヘッダー
 
-│   ├ organisms/    再利用性なし、Reduxアクセス可
+│   ├ Loader/       ローダー
 
-│   └ templates/    最終的な見た目
+│   ├ ReviewCard/   レビューカード
 
-├ containers/       機能を担う
+│   ├ ProductCard/  作品情報
+
+│
+
+├ disposabe/        単一のページから成るコンポーネント     
+
+│   ├ TopPage/
+
+│   ├ Login/
+
+│   ├ ProductDetail/
+
+│   ├ ReviewDetail/
+
+│   ├ Timeline/
+
+│
+
+├ handlers/         App.tsxから呼ばれるハンドラー
+
+│   ├ ErrorHandler/     エラーハンドリングコンポーネント 
+
+│   ├ PopHandler/       ポッパーハンドリングコンポーネント 
+
+│   └ RouteHandler/     ルートハンドリングコンポーネン 
 
 ├ stores/           Reduxストア
 
@@ -26,7 +50,9 @@ src/
 
 ├ App.tsx           ルーティング
 
-└ index.tsx         入り口
+├ index.tsx         入り口
+
+└ util.ts           定数定義ファイル
 
 ### containers/
 

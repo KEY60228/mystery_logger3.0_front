@@ -2,10 +2,10 @@ import React, { FC, Fragment, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 
-import { RootState, useAppDispatch } from '../stores/index'
-import { setPopper } from '../stores/error'
-import { setUser } from '../stores/auth'
-import { INTERNAL_SERVER_ERROR, NOT_FOUND, UNAUTHENTICATED } from '../util'
+import { RootState, useAppDispatch } from '../../stores/index'
+import { setPopper } from '../../stores/error'
+import { setUser } from '../../stores/auth'
+import { INTERNAL_SERVER_ERROR, NOT_FOUND, UNAUTHENTICATED } from '../../util'
 
 export const ErrorHandler: FC = () => {
     const history = useHistory()

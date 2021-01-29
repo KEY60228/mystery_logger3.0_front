@@ -3,8 +3,8 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Snackbar, IconButton } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
 import CloseIcon from '@material-ui/icons/Close'
-import { setPopper } from '../stores/error'
-import { useAppDispatch } from '../stores'
+import { setPopper } from '../../stores/error'
+import { useAppDispatch } from '../../stores'
 
 interface Props {
     open: boolean
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 )
 
-export const LogoutPop: FC<Props> = props => {
+export const PostedUserPop: FC<Props> = props => {
     const classes = useStyles()
     const dispatch = useAppDispatch()
 
@@ -54,7 +54,7 @@ export const LogoutPop: FC<Props> = props => {
                     </IconButton>
                 }
             >
-                ログアウトしました
+                更新しました
             </Alert>
         </Snackbar>
     )

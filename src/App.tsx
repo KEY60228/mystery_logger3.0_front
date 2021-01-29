@@ -5,8 +5,8 @@ import { CssBaseline } from '@material-ui/core'
 import { useAppDispatch } from './stores/index'
 import { asyncGetCurrentUser } from './ajax/auth'
 
-import { GuestRoute } from './RouteComponents/GuestRoute'
-import { PrivateRoute } from './RouteComponents/PrivateRoute'
+import { GuestRoute } from './handlers/RouteHandler/GuestRoute'
+import { PrivateRoute } from './handlers/RouteHandler/PrivateRoute'
 import { Header } from './components/organisms/Header'
 import { BottomNav } from './components/organisms/BottomNav'
 import { TopPage } from './containers/TopPage'
@@ -23,11 +23,11 @@ import { VenueDetail } from './containers/VenueDetail'
 import { Accompanies } from './containers/Accompanies'
 import { Notifications } from './containers/Notifications'
 
-import { ErrorHandler } from './ErrorHandler/ErrorHandler'
-import { SystemErrorPage } from './ErrorHandler/SystemErrorPage'
-import { NotFoundPage } from './ErrorHandler/NotFoundPage'
+import { ErrorHandler } from './handlers/ErrorHandler/ErrorHandler'
+import { SystemErrorPage } from './handlers/ErrorHandler/SystemErrorPage'
+import { NotFoundPage } from './handlers/ErrorHandler/NotFoundPage'
 
-import { PopHandler } from './PopHandler/PopHandler'
+import { PopHandler } from './handlers/PopHandler/'
 
 const App: FC = () => {
     const dispatch = useAppDispatch()

@@ -3,8 +3,8 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Snackbar, IconButton } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
 import CloseIcon from '@material-ui/icons/Close'
-import { setPopper } from '../stores/error'
-import { useAppDispatch } from '../stores'
+import { setPopper } from '../../stores/error'
+import { useAppDispatch } from '../../stores'
 
 interface Props {
     open: boolean

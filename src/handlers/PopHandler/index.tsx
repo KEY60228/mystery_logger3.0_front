@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { RootState } from '../stores'
+import { RootState } from '../../stores'
 import { DeletedReviewPop } from './DeletedReviewPopper'
 import { LoginPop } from './LoginPop'
 import { LogoutPop } from './LogoutPop'
