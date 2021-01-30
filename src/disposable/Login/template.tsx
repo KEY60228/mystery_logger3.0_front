@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { LinearLoader } from '../../reusable/Loader/LinearLoader'
 import { RootState } from '../../stores'
-import { LoginForm } from '../organisms/Login/LoginForm'
+import { LoginForm } from './components/LoginForm'
 
 interface Props {
     email: string
@@ -13,7 +13,7 @@ interface Props {
     login: () => void
 }
 
-export const Login: FC<Props> = props => {
+export const LoginTemplate: FC<Props> = props => {
     const loading = useSelector((state: RootState) => state.error.loading)
 
     return (

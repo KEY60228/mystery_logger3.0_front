@@ -2,11 +2,11 @@ import React, { FC, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useHistory } from 'react-router-dom'
 
-import { asyncLogin } from '../ajax/auth'
-import { useAppDispatch } from '../stores/index'
-import { setMessage } from '../stores/error'
+import { asyncLogin } from '../../ajax/auth'
+import { useAppDispatch } from '../../stores/index'
+import { setMessage } from '../../stores/error'
 
-import { Login as LoginTemp } from './templates/Login'
+import { LoginTemplate as Template } from './template'
 
 export const Login: FC = () => {
     const history = useHistory()
@@ -30,7 +30,7 @@ export const Login: FC = () => {
             <Helmet>
                 <title>ログイン - なぞログ</title>
             </Helmet>
-            <LoginTemp
+            <Template
                 email={email}
                 setEmail={setEmail}
                 password={password}
