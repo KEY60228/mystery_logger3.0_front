@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { ReviewDetail as ReviewDetailInterface, User } from '../@types'
+import { ReviewDetail as ReviewDetailInterface, User } from '../../@types'
 import {
     asyncDeleteReview,
     asyncGetReview,
@@ -12,15 +12,15 @@ import {
     asyncPostComment,
     asyncUnlikeReview,
     asyncUpdateReview,
-} from '../ajax/review'
-import { asyncFollow, asyncUnFollow } from '../ajax/user'
-import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState, useAppDispatch } from '../stores/index'
-import { setMessage, setPopper } from '../stores/error'
-import { setUser } from '../stores/auth'
+} from '../../ajax/review'
+import { asyncFollow, asyncUnFollow } from '../../ajax/user'
+import { asyncGetCurrentUser } from '../../ajax/auth'
+import { RootState, useAppDispatch } from '../../stores/index'
+import { setMessage, setPopper } from '../../stores/error'
+import { setUser } from '../../stores/auth'
 
-import { ReviewDetail as ReviewDetailTemp } from './templates/ReviewDetail'
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
+import { ReviewDetail as ReviewDetailTemp } from './template'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const ReviewDetail: FC = () => {
     const { id } = useParams<{ id: string }>()
