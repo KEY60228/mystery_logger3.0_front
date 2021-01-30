@@ -1,16 +1,16 @@
 import React, { FC, useEffect, useState } from 'react'
 
 import { ProductIndex, Performance } from '../../@types'
-import { SearchBox } from '../organisms/Search/SearchBox'
-import { SearchResult } from '../organisms/Search/SearchResult'
+import { SearchBox } from './components/SearchBox'
+import { SearchResult } from './components/SearchResult'
 import { TempSpace } from '../../reusable/TempSpace'
-import { SortBox } from '../organisms/Search/SortBox'
+import { SortBox } from './components/SortBox'
 
 interface Props {
     products: ProductIndex[]
 }
 
-export const Search: FC<Props> = props => {
+export const SearchTemplate: FC<Props> = props => {
     const [results, setResults] = useState<ProductIndex[]>([])
     const [keywords, setKeywords] = useState<string>('')
     const [category, setCategory] = useState<number>(0)

@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { ProductIndex } from '../@types'
-import { useAppDispatch } from '../stores/index'
-import { asyncGetProducts } from '../ajax/product'
+import { ProductIndex } from '../../@types'
+import { useAppDispatch } from '../../stores/index'
+import { asyncGetProducts } from '../../ajax/product'
 
-import { Search as SearchTemp } from './templates/Search'
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
+import { SearchTemplate as Template } from './template'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const Search: FC = () => {
     const dispatch = useAppDispatch()
@@ -27,7 +27,7 @@ export const Search: FC = () => {
             <Helmet>
                 <title>作品検索</title>
             </Helmet>
-            {products && <SearchTemp products={products} />}
+            {products && <Template products={products} />}
             {!products && <CircularLoader />}
         </>
     )
