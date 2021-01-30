@@ -1,16 +1,16 @@
 import React, { FC } from 'react'
 
 import { OrganizerDetail as OrganizerDetailInterface } from '../../@types'
-import { OrganizerCard } from '../organisms/OrganizerDetail/OrganizerCard'
-import { OrganizerProducts } from '../organisms/OrganizerDetail/OrganizerProducts'
-import { OrganizerVenues } from '../organisms/OrganizerDetail/OrganizerVenues'
+import { OrganizerCard } from './components/OrganizerCard'
+import { OrganizerProducts } from './components/OrganizerProducts'
+import { OrganizerVenues } from './components/OrganizerVenues'
 import { TempSpace } from '../../reusable/TempSpace'
 
 interface Props {
     organizer: OrganizerDetailInterface
 }
 
-export const OrganizerDetail: FC<Props> = props => {
+export const OrganizerDetailTemplate: FC<Props> = props => {
     return (
         <>
             <OrganizerCard organizer={props.organizer} />
