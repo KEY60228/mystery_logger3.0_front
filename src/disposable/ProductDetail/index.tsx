@@ -8,8 +8,8 @@ import {
     ProductDetail as ProductDetailInterface,
     ReviewDetail,
     User,
-} from '../@types'
-import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../ajax/product'
+} from '../../@types'
+import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../../ajax/product'
 import {
     asyncDeleteReview,
     asyncLikeReview,
@@ -17,15 +17,15 @@ import {
     asyncPostReview,
     asyncUnlikeReview,
     asyncUpdateReview,
-} from '../ajax/review'
-import { asyncFollow, asyncUnFollow } from '../ajax/user'
-import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState, useAppDispatch } from '../stores/index'
-import { setPopper } from '../stores/error'
-import { setUser } from '../stores/auth'
+} from '../../ajax/review'
+import { asyncFollow, asyncUnFollow } from '../../ajax/user'
+import { asyncGetCurrentUser } from '../../ajax/auth'
+import { RootState, useAppDispatch } from '../../stores/index'
+import { setPopper } from '../../stores/error'
+import { setUser } from '../../stores/auth'
 
-import { ProductDetail as ProductDetailTemp } from './templates/ProductDetail'
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
+import { ProductDetailTemplate as Template } from './template'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()
@@ -347,7 +347,7 @@ export const ProductDetail: FC = () => {
             </Helmet>
             {product && (
                 <>
-                    <ProductDetailTemp
+                    <Template
                         currentUser={currentUser}
                         product={product}
                         isNew={isNew}

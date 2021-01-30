@@ -7,8 +7,8 @@ import {
     CurrentUser,
     User,
 } from '../../@types'
-import { ProductContents } from '../organisms/ProductDetail/ProductContents'
-import { ProductReviews } from '../organisms/ProductDetail/ProductReviews'
+import { ProductContents } from './components/ProductContents'
+import { ProductReviews } from './components/ProductReviews'
 import { TempSpace } from '../../reusable/TempSpace'
 import { ConfirmDeleteReview } from '../../reusable/ConfirmDeleteReview'
 import { ReviewForm } from '../../reusable/ReviewForm'
@@ -48,7 +48,7 @@ interface Props {
     unlikeReview: (review: ReviewDetail) => void
 }
 
-export const ProductDetail: FC<Props> = props => {
+export const ProductDetailTemplate: FC<Props> = props => {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [commentOpen, setCommentOpen] = useState<number | false>(false)
 
