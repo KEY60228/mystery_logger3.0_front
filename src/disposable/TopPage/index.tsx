@@ -1,12 +1,12 @@
 import React, { FC, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { ProductIndex } from '../@types'
-import { useAppDispatch } from '../stores/index'
-import { asyncGetProducts } from '../ajax/product'
+import { ProductIndex } from '../../@types'
+import { useAppDispatch } from '../../stores/index'
+import { asyncGetProducts } from '../../ajax/product'
 
-import { TopPage as TPTemp } from './templates/TopPage'
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
+import { TopPageTemplate as Template } from './template'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const TopPage: FC = () => {
     const dispatch = useAppDispatch()
@@ -28,7 +28,7 @@ export const TopPage: FC = () => {
             <Helmet>
                 <title>なぞログ</title>
             </Helmet>
-            {products && <TPTemp products={products} />}
+            {products && <Template products={products} />}
             {!products && <CircularLoader />}
         </>
     )

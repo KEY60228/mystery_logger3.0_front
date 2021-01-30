@@ -2,13 +2,13 @@ import React, { FC } from 'react'
 
 import { ProductIndex } from '../../@types'
 import { TempSpace } from '../../reusable/TempSpace'
-import { LinedProducts } from '../organisms/TopPage/LinedProducts'
+import { LinedProducts } from './components/LinedProducts'
 
 interface Props {
     products: ProductIndex[]
 }
 
-export const TopPage: FC<Props> = props => {
+export const TopPageTemplate: FC<Props> = props => {
     // 名前でソート
     const sortProductsByName = (products: ProductIndex[]) => {
         return products
