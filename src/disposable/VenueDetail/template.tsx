@@ -1,16 +1,16 @@
 import React, { FC } from 'react'
 
 import { VenueDetail as VenueDetailInterface } from '../../@types'
-import { VenueContents } from '../organisms/VenueDetail/VenueContents'
-import { VenuePerformances } from '../organisms/VenueDetail/VenuePerformances'
-import { SimpleMap } from '../organisms/VenueDetail/GoogleMaps'
+import { VenueContents } from './components/VenueContents'
+import { VenuePerformances } from './components/VenuePerformances'
+import { SimpleMap } from './components/GoogleMaps'
 import { TempSpace } from '../../reusable/TempSpace'
 
 interface Props {
     venue: VenueDetailInterface
 }
 
-export const VenueDetail: FC<Props> = props => {
+export const VenueDetailTemplate: FC<Props> = props => {
     return (
         <>
             <VenueContents venue={props.venue} />

@@ -2,12 +2,12 @@ import React, { FC, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router'
 
-import { VenueDetail as VenueDetailInterface } from '../@types'
-import { useAppDispatch } from '../stores/index'
-import { asyncGetVenue } from '../ajax/venue'
+import { VenueDetail as VenueDetailInterface } from '../../@types'
+import { useAppDispatch } from '../../stores/index'
+import { asyncGetVenue } from '../../ajax/venue'
 
-import { VenueDetail as VenueDetailTemp } from './templates/VenueDetail'
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
+import { VenueDetailTemplate as Template } from './template'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const VenueDetail: FC = () => {
     const dispatch = useAppDispatch()
@@ -30,7 +30,7 @@ export const VenueDetail: FC = () => {
             <Helmet>
                 <title>会場情報 - なぞログ</title>
             </Helmet>
-            {venue && <VenueDetailTemp venue={venue} />}
+            {venue && <Template venue={venue} />}
             {!venue && <CircularLoader />}
         </>
     )

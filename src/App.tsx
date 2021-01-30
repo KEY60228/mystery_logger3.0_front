@@ -19,7 +19,7 @@ import { ReviewDetail } from './disposable/ReviewDetail/'
 import { Timeline } from './disposable/Timeline'
 import { Search } from './disposable/Search'
 import { OrganizerDetail } from './disposable/OrganizerDetail/'
-import { VenueDetail } from './disposable/VenueDetail'
+import { VenueDetail } from './disposable/VenueDetail/'
 import { Accompanies } from './disposable/Accompanies'
 import { Notifications } from './disposable/Notifications'
 
