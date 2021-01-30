@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 
-import { ReviewIndex, ReviewDetail, User } from '../@types'
+import { ReviewIndex, ReviewDetail, User } from '../../@types'
 import {
     asyncDeleteReview,
     asyncGetTimeline,
@@ -10,15 +10,15 @@ import {
     asyncPostComment,
     asyncUnlikeReview,
     asyncUpdateReview,
-} from '../ajax/review'
-import { asyncFollow, asyncUnFollow } from '../ajax/user'
-import { asyncGetCurrentUser } from '../ajax/auth'
-import { RootState, useAppDispatch } from '../stores/index'
-import { setPopper } from '../stores/error'
-import { setUser } from '../stores/auth'
+} from '../../ajax/review'
+import { asyncFollow, asyncUnFollow } from '../../ajax/user'
+import { asyncGetCurrentUser } from '../../ajax/auth'
+import { RootState, useAppDispatch } from '../../stores/index'
+import { setPopper } from '../../stores/error'
+import { setUser } from '../../stores/auth'
 
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
-import { Timeline as TimelineTemp } from './templates/Timeline'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
+import { TimelineTemplate as Template } from './template'
 
 export const Timeline: FC = () => {
     const dispatch = useAppDispatch()
@@ -228,7 +228,7 @@ export const Timeline: FC = () => {
             </Helmet>
             {reviews && (
                 <>
-                    <TimelineTemp
+                    <Template
                         reviews={reviews}
                         review={review}
                         open={open}

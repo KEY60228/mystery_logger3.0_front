@@ -50,7 +50,7 @@ const useStyles = makeStyles((
     }),
 )
 
-export const Timeline: FC<Props> = props => {
+export const TimelineTemplate: FC<Props> = props => {
     const classes = useStyles() // 仮
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
     const [openComment, setOpenComment] = useState<number | false>(false)
