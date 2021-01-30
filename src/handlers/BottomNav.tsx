@@ -12,7 +12,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import LockOpenIcon from '@material-ui/icons/LockOpen'
 import PersonIcon from '@material-ui/icons/Person'
 
-import { RootState } from '../../stores/index'
+import { RootState } from '../stores/index'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
