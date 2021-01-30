@@ -7,27 +7,27 @@ import {
     ReviewDetail,
     User,
     UserDetail as UserDetailInterface,
-} from '../@types'
+} from '../../@types'
 import {
     asyncGetUser,
     asyncFollow,
     asyncUnFollow,
     asyncUpdateUser,
-} from '../ajax/user'
-import { asyncGetCurrentUser, asyncLogout } from '../ajax/auth'
+} from '../../ajax/user'
+import { asyncGetCurrentUser, asyncLogout } from '../../ajax/auth'
 import {
     asyncDeleteReview,
     asyncLikeReview,
     asyncPostComment,
     asyncUnlikeReview,
     asyncUpdateReview,
-} from '../ajax/review'
-import { RootState, useAppDispatch } from '../stores/index'
-import { setPopper } from '../stores/error'
-import { setUser as setCurrentUser } from '../stores/auth'
+} from '../../ajax/review'
+import { RootState, useAppDispatch } from '../../stores/index'
+import { setPopper } from '../../stores/error'
+import { setUser as setCurrentUser } from '../../stores/auth'
 
-import { UserDetail as UserDetailTemp } from './templates/UserDetail'
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
+import { UserDetail as UserDetailTemp } from './template'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()
