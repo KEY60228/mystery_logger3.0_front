@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import { LinearLoader } from '../../reusable/Loader/LinearLoader'
 import { RootState } from '../../stores'
 
-import { PreRegisterForm } from '../organisms/PreRegister/PreRegisterForm'
-import { PreRegisterModal } from '../organisms/PreRegister/PreRegisterModal'
+import { PreRegisterForm } from './components/PreRegisterForm'
+import { PreRegisterModal } from './components/PreRegisterModal'
 
 interface Props {
     email: string
@@ -14,7 +14,7 @@ interface Props {
     preRegister: () => void
 }
 
-export const PreRegister: FC<Props> = props => {
+export const PreRegisterTemplate: FC<Props> = props => {
     const loading = useSelector((state: RootState) => state.error.loading)
 
     return (

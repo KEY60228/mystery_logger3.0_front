@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { asyncPreRegister } from '../ajax/auth'
-import { useAppDispatch } from '../stores/index'
-import { setMessage } from '../stores/error'
+import { asyncPreRegister } from '../../ajax/auth'
+import { useAppDispatch } from '../../stores/index'
+import { setMessage } from '../../stores/error'
 
-import { PreRegister as PreRegisterTemp } from './templates/PreRegister'
+import { PreRegisterTemplate as Template } from './template'
 
 export const PreRegister: FC = () => {
     const dispatch = useAppDispatch()
@@ -32,7 +32,7 @@ export const PreRegister: FC = () => {
             <Helmet>
                 <title>仮登録 - なぞログ</title>
             </Helmet>
-            <PreRegisterTemp
+            <Template
                 email={email}
                 setEmail={setEmail}
                 open={open}
