@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
 import { AccompanyIndex } from '../../@types'
-import { AccompaniesList } from '../organisms/Accompanies/AccompaniesList'
+import { AccompaniesList } from './components/AccompaniesList'
 
 interface Props {
     accompanies: AccompanyIndex[]

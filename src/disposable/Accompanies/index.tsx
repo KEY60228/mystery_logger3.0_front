@@ -1,12 +1,12 @@
 import React, { FC, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { AccompanyIndex } from '../@types'
-import { useAppDispatch } from '../stores/index'
-import { asyncGetAccompanies } from '../ajax/accompany'
+import { AccompanyIndex } from '../../@types'
+import { useAppDispatch } from '../../stores/index'
+import { asyncGetAccompanies } from '../../ajax/accompany'
 
-import { Accompanies as AccompaniesTemp } from './templates/Accompanies'
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
+import { Accompanies as AccompaniesTemp } from './template'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const Accompanies: FC = () => {
     const dispatch = useAppDispatch()
