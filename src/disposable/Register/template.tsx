@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { LinearLoader } from '../../reusable/Loader/LinearLoader'
 import { RootState } from '../../stores'
 
-import { RegisterForm } from '../organisms/Register/RegisterForm'
+import { RegisterForm } from './components/RegisterForm'
 
 interface Props {
     accountId: string

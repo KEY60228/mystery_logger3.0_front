@@ -3,13 +3,13 @@ import { Helmet } from 'react-helmet'
 import { useHistory, useLocation } from 'react-router-dom'
 import queryString from 'query-string'
 
-import { asyncRegister, asyncVerify } from '../ajax/auth'
-import { useAppDispatch } from '../stores/index'
-import { setMessage } from '../stores/error'
+import { asyncRegister, asyncVerify } from '../../ajax/auth'
+import { useAppDispatch } from '../../stores/index'
+import { setMessage } from '../../stores/error'
 
-import { FailVerify as FailVerifyTemp } from './templates/FailVerify'
-import { Register as RegisterTemp } from './templates/Register'
-import { CircularLoader } from '../reusable/Loader/CircularLoader'
+import { FailVerify as FailVerifyTemp } from './FailVerify'
+import { Register as RegisterTemp } from './template'
+import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const Register: FC = () => {
     const history = useHistory()
