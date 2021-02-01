@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import { ProductIndex } from '../../@types'
 import { TempSpace } from '../../reusable/TempSpace'
@@ -8,7 +9,19 @@ interface Props {
     products: ProductIndex[]
 }
 
+const useStyles = makeStyles(() =>
+    createStyles({
+        image: {
+            width: '100%',
+            height: '192px',
+            objectFit: 'cover',
+        }
+    })
+)
+
 export const TopPageTemplate: FC<Props> = props => {
+    const classes = useStyles()
+
     // 名前でソート
     const sortProductsByName = (products: ProductIndex[]) => {
         return products
@@ -61,7 +74,7 @@ export const TopPageTemplate: FC<Props> = props => {
 
     return (
         <>
-            <TempSpace text="Banner Space" />
+            <img src="./img/Banner.png" className={classes.image} />
             <LinedProducts
                 products={sortProductsByReviewsCount(props.products)}
                 subtitle="投稿数の多い作品"
