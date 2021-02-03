@@ -8,7 +8,6 @@ import { asyncGetCurrentUser } from './ajax/auth'
 import { GuestRoute } from './handlers/RouteHandler/GuestRoute'
 import { PrivateRoute } from './handlers/RouteHandler/PrivateRoute'
 import { Header } from './handlers/Header'
-import { BottomNav } from './handlers/BottomNav'
 import { TopPage } from './disposable/TopPage/'
 import { Login } from './disposable/Login/'
 import { PreRegister } from './disposable/PreRegister/'
@@ -69,7 +68,6 @@ const App: FC = () => {
                     <Route path="/404" children={<NotFoundPage />} />
                     <Route path="/500" children={<SystemErrorPage />} />
                 </Switch>
-                <BottomNav />
             </BrowserRouter>
         </>
     )
