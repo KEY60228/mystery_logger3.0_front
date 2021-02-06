@@ -7,8 +7,8 @@ import {
     CurrentUser,
     User,
 } from '../../@types'
-import { ProductContents } from './components/ProductContents'
-import { ProductReviews } from './components/ProductReviews'
+import { ProductContents } from './_components/ProductContents'
+import { ProductReviews } from './_components/ProductReviews'
 import { TempSpace } from '../../reusable/TempSpace'
 import { ConfirmDeleteReview } from '../../reusable/ConfirmDeleteReview'
 import { ReviewForm } from '../../reusable/ReviewForm'
