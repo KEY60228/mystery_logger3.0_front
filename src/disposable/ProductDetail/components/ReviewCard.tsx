@@ -129,7 +129,7 @@ export const ReviewCard: FC<Props> = props => {
                         <span className={classes.property}>脱出成功！</span>
                     }
                     { props.review.result === 2 &&
-                        <span className={classes.property}>脱出失敗！</span>
+                        <span className={classes.property}>脱出失敗...</span>
                     }
                 </Box>
                 { props.review.result === 1 &&
