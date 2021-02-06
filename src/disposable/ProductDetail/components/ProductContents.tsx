@@ -182,7 +182,7 @@ export const ProductContents: FC<Props> = props => {
                                 100
                             }%`
                             : '-'}{' '}
-                        ({props.product.success_count}/{props.product.reviews_count})
+                        ({props.product.success_count}/{props.product.reviews_count - props.product.na_count})
                     </p>
                 </Box>
             </Grid>

@@ -16,7 +16,7 @@ export interface Product {
     updated_at: string // 更新時
     avg_rating: number | null // 平均評価 0ならnullが返る
     success_count: number // 成功数
-    na_counr: number // 失敗数
+    na_count: number // 失敗数
     success_rate: number | null // 脱出成功率 有効回答が0ならnullが返る
     reviews_count: number // 投稿数
     wannas_count: number // 「行きたい」数

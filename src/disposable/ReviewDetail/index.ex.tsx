@@ -19,7 +19,7 @@ import { RootState, useAppDispatch } from '../../stores/index'
 import { setMessage, setPopper } from '../../stores/error'
 import { setUser } from '../../stores/auth'
 
-import { ReviewDetail as ReviewDetailTemp } from './layout'
+import { ReviewDetail as ReviewDetailTemp } from './layout.ex'
 import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const ReviewDetail: FC = () => {
@@ -229,6 +229,29 @@ export const ReviewDetail: FC = () => {
             {review && (
                 <ReviewDetailTemp
                     review={review}
+                    open={open}
+                    setOpen={setOpen}
+                    rating={rating}
+                    setRating={setRating}
+                    result={result}
+                    setResult={setResult}
+                    joined_at={joined_at}
+                    setJoined_at={setJoined_at}
+                    spoil={spoil}
+                    setSpoil={setSpoil}
+                    contents={contents}
+                    setContents={setContents}
+                    edit={edit}
+                    update={update}
+                    follow={follow}
+                    unfollow={unfollow}
+                    deleteReview={deleteReview}
+                    comment={comment}
+                    setComment={setComment}
+                    postComment={postComment}
+                    likeReview={likeReview}
+                    unlikeReview={unlikeReview}
+                    getSpoiledContents={getSpoiledContents}
                 />
             )}
             {!review && <CircularLoader />}
