@@ -39,7 +39,7 @@ export const Header: FC = () => {
         <Box className={classes.root}>
             <Button component={Link} to="/" className={classes.titleLink}>
                 <img
-                    src={'./img/TitleLogo.png'}
+                    src={'/img/TitleLogo.png'}
                     className={classes.titleLogo}
                 />
             </Button>
