@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { LinearLoader } from '../../reusable/Loader/LinearLoader'
 import { RootState } from '../../stores'
-import { LoginForm } from './components/LoginForm'
+import { LoginForm } from './_components/LoginForm'
 
 interface Props {
     email: string
