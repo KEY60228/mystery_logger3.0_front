@@ -6,7 +6,7 @@ import { asyncLogin } from '../../ajax/auth'
 import { useAppDispatch } from '../../stores/index'
 import { setMessage } from '../../stores/error'
 
-import { LoginTemplate as Template } from './layout'
+import { LoginTemplate as Template } from './layout.ex'
 
 export const Login: FC = () => {
     const history = useHistory()
@@ -31,6 +31,11 @@ export const Login: FC = () => {
                 <title>ログイン - なぞログ</title>
             </Helmet>
             <Template
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+                login={login}
             />
         </>
     )
