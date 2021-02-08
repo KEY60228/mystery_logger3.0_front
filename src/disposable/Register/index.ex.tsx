@@ -8,7 +8,7 @@ import { useAppDispatch } from '../../stores/index'
 import { setMessage } from '../../stores/error'
 
 import { FailVerify as FailVerifyTemp } from './FailVerify'
-import { RegisterTemplate as Template } from './layout'
+import { Register as RegisterTemp } from './layout.ex'
 import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const Register: FC = () => {
@@ -49,13 +49,19 @@ export const Register: FC = () => {
             <Helmet>
                 <title>本登録 - なぞログ</title>
             </Helmet>
-            {/* {registerStatus === true && (
-                <Template
+            {registerStatus === true && (
+                <RegisterTemp
+                    accountId={accountId}
+                    setAccountId={setAccountId}
+                    name={name}
+                    setName={setName}
+                    password={password}
+                    setPassword={setPassword}
+                    register={register}
                 />
             )}
             {registerStatus === false && <FailVerifyTemp />}
-            {registerStatus === null && <CircularLoader />} */}
-            <Template />
+            {registerStatus === null && <CircularLoader />}
         </>
     )
 }

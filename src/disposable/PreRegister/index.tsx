@@ -33,11 +33,6 @@ export const PreRegister: FC = () => {
                 <title>仮登録 - なぞログ</title>
             </Helmet>
             <Template
-                email={email}
-                setEmail={setEmail}
-                open={open}
-                setOpen={setOpen}
-                preRegister={preRegister}
             />
         </>
     )
