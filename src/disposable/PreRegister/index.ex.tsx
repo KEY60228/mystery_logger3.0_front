@@ -5,7 +5,7 @@ import { asyncPreRegister } from '../../ajax/auth'
 import { useAppDispatch } from '../../stores/index'
 import { setMessage } from '../../stores/error'
 
-import { PreRegisterTemplate as Template } from './layout'
+import { PreRegisterTemplate as Template } from './layout.ex'
 
 export const PreRegister: FC = () => {
     const dispatch = useAppDispatch()
