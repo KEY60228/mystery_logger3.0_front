@@ -26,7 +26,7 @@ import { RootState, useAppDispatch } from '../../stores/index'
 import { setPopper } from '../../stores/error'
 import { setUser as setCurrentUser } from '../../stores/auth'
 
-import { UserDetailTemplate as Template } from './layout'
+import { UserDetail as UserDetailTemp } from './layout.ex'
 import { CircularLoader } from '../../reusable/Loader/CircularLoader'
 
 export const UserDetail: FC = () => {
@@ -288,8 +288,44 @@ export const UserDetail: FC = () => {
             </Helmet>
             {user && (
                 <>
-                    <Template
+                    <UserDetailTemp
                         user={user}
+                        review={review}
+                        openUserForm={openUserForm}
+                        setOpenUserForm={setOpenUserForm}
+                        name={name}
+                        setName={setName}
+                        accountId={accountId}
+                        setAccountId={setAccountId}
+                        profile={profile}
+                        setProfile={setProfile}
+                        image_name={image_name}
+                        setImage_name={setImage_name}
+                        follow={follow}
+                        unfollow={unfollow}
+                        editUser={editUser}
+                        updateUser={updateUser}
+                        openReviewForm={openReviewForm}
+                        setOpenReviewForm={setOpenReviewForm}
+                        editReview={editReview}
+                        updateReview={updateReview}
+                        deleteReview={deleteReview}
+                        rating={rating}
+                        setRating={setRating}
+                        result={result}
+                        setResult={setResult}
+                        joined_at={joined_at}
+                        setJoined_at={setJoined_at}
+                        spoil={spoil}
+                        setSpoil={setSpoil}
+                        contents={contents}
+                        setContents={setContents}
+                        comment={comment}
+                        setComment={setComment}
+                        postComment={postComment}
+                        likeReview={likeReview}
+                        unlikeReview={unlikeReview}
+                        logout={logout}
                     />
                 </>
             )}
