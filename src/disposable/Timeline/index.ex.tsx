@@ -18,7 +18,7 @@ import { setPopper } from '../../stores/error'
 import { setUser } from '../../stores/auth'
 
 import { CircularLoader } from '../../reusable/Loader/CircularLoader'
-import { TimelineTemplate as Template } from './layout'
+import { TimelineTemplate as Template } from './layout.ex'
 
 export const Timeline: FC = () => {
     const dispatch = useAppDispatch()
@@ -230,6 +230,29 @@ export const Timeline: FC = () => {
                 <>
                     <Template
                         reviews={reviews}
+                        review={review}
+                        open={open}
+                        setOpen={setOpen}
+                        rating={rating}
+                        setRating={setRating}
+                        result={result}
+                        setResult={setResult}
+                        joined_at={joined_at}
+                        setJoined_at={setJoined_at}
+                        spoil={spoil}
+                        setSpoil={setSpoil}
+                        contents={contents}
+                        setContents={setContents}
+                        edit={edit}
+                        update={update}
+                        follow={follow}
+                        unfollow={unfollow}
+                        deleteReview={deleteReview}
+                        comment={comment}
+                        setComment={setComment}
+                        postComment={postComment}
+                        likeReview={likeReview}
+                        unlikeReview={unlikeReview}
                     />
                 </>
             )}
