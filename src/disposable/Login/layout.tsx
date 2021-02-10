@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { OutlinedInput, Box, Grid, Button, Divider } from '@material-ui/core'
 
-import { Footer } from '../../reusable/Footer/Footer'
+import { Footer } from '../../reusable/Footer'
 
 const useStyles = makeStyles(theme =>
     createStyles({

@@ -3,7 +3,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Divider } from '@material-ui/core'
 
 import { ReviewDetail as ReviewDetailInterface } from '../../@types'
-import { Footer } from '../../reusable/Footer/Footer'
+import { Footer } from '../../reusable/Footer'
 
 import { ReviewCard } from '../ProductDetail/components/ReviewCard'
 import { ReviewCommentCard } from './components/ReviewCommentCard'

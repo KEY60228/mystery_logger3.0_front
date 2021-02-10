@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import { ProductIndex } from '../../@types'
-import { Footer } from '../../reusable/Footer/Footer'
+import { Footer } from '../../reusable/Footer'
 
 import { ProductRankings } from './components/group/ProductRankings'
 import { SearchBox } from './components/group/SearchBox'

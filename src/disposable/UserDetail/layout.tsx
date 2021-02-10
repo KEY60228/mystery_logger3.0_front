@@ -6,7 +6,7 @@ import { UserDetail } from '../../@types'
 import { UserProfile } from './components/UserProfile'
 import { UserStatics } from './components/UserStatics'
 import { UserTabs } from './components/UserTabs'
-import { Footer } from '../../reusable/Footer/Footer'
+import { Footer } from '../../reusable/Footer'
 
 
 interface Props {

@@ -4,7 +4,7 @@ import { Box, Divider } from '@material-ui/core'
 
 import { ReviewIndex } from '../../@types'
 import { ReviewCard } from './components/ReviewCard'
-import { Footer } from '../../reusable/Footer/Footer'
+import { Footer } from '../../reusable/Footer'
 
 interface Props {
     reviews: ReviewIndex[]
