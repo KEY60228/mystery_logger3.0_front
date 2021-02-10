@@ -10,6 +10,7 @@ import ShareIcon from '@material-ui/icons/Share'
 
 import { Review, User } from '../../../@types'
 import { theme } from '../../../theme'
+import { UserImage } from '../../../reusable/UserImage'
 
 interface ReviewWithUser extends Review {
     user: User
@@ -22,11 +23,6 @@ interface Props {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-        },
-        userImage: {
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
         },
         userName: {
             margin: '0 0 0 8px',
@@ -99,9 +95,9 @@ export const ReviewCard: FC<Props> = props => {
     return (
         <Box>
             <Grid container wrap='nowrap'>
-                <img
-                    src={`${process.env.API_BASEURL}${props.review.user.image_name}`}
-                    className={classes.userImage}
+                <UserImage
+                    user={props.review.user}
+                    className={{ height: '48px', width: '48px' }}
                 />
                 <Grid container direction='column'>
                     <p className={classes.userName}>{props.review.user.name}</p>

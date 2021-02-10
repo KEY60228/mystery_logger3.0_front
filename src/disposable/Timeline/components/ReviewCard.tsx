@@ -12,6 +12,7 @@ import { ReviewIndex } from '../../../@types'
 import { formatData } from '../../../util'
 
 import { ProductImage } from '../../../reusable/ProductImage'
+import { UserImage } from '../../../reusable/UserImage'
 
 interface Props {
     review: ReviewIndex
@@ -21,13 +22,6 @@ const useStyles = makeStyles(theme =>
     createStyles({
         root: {
 
-        },
-        userImage: {
-            height: '48px',
-            width: '48px',
-            borderRadius: '50%',
-            objectFit: 'cover',
-            verticalAlign: 'top',
         },
         reviewerInfo: {
             margin: '0 0 0 8px',
@@ -105,7 +99,10 @@ export const ReviewCard: FC<Props> = props => {
     return (
         <>
             <Grid container wrap='nowrap'>
-                <img src={`${process.env.API_BASEURL}${props.review.user.image_name}`} className={classes.userImage} />
+                <UserImage
+                    user={props.review.user}
+                    className={{ height: '48px', width: '48px' }}
+                />
                 <Box className={classes.reviewerInfo}>
                     <p className={classes.reviewerName}>{props.review.user.name}</p>
                     <p className={classes.reviewerAccountId}>{props.review.user.account_id}</p>

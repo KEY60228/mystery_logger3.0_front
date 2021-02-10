@@ -4,6 +4,7 @@ import { Grid, Button, IconButton } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
 import { UserDetail } from '../../../@types'
+import { UserImage } from '../../../reusable/UserImage'
 
 interface Props {
     user: UserDetail
@@ -77,9 +78,10 @@ export const UserProfile: FC<Props> = props => {
     return (
         <>
             <Grid container wrap='nowrap'>
-                <img
-                    src={`${process.env.API_BASEURL}${props.user.image_name}`}
-                    className={classes.userImage}
+                <UserImage
+                    user={props.user}
+                    transition={false}
+                    className={{ height: '88px', width: '88px' }}
                 />
                 <Grid container direction='column' className={classes.userBox}>
                     <Grid container justify='space-between' wrap='nowrap'>
