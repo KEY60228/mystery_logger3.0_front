@@ -5,6 +5,7 @@ import { Tabs, Tab, Box, Grid } from '@material-ui/core'
 import { UserDetail } from '../../../@types'
 
 import { TabPanel } from '../../TopPage/components/parts/TabPanel'
+import { ProductImage } from '../../../reusable/ProductImage'
 
 interface Props {
     user: UserDetail
@@ -86,10 +87,10 @@ export const UserTabs: FC<Props> = props => {
                         className={classes.list}
                     >
                         {props.user.reviews.slice(0, 12).map(review => (
-                            <img
+                            <ProductImage
                                 key={review.id}
-                                src={`${process.env.API_BASEURL}${review.product.image_name}`}
-                                className={classes.productImage}
+                                product={review.product}
+                                className={{ height: '134.4px', width: '96px' }}
                             />
                         ))}
                     </Grid>
@@ -108,10 +109,10 @@ export const UserTabs: FC<Props> = props => {
                         className={classes.list}
                     >
                         {props.user.wannas.slice(0, 12).map(wanna => (
-                            <img
+                            <ProductImage
                                 key={wanna.id}
-                                src={`${process.env.API_BASEURL}${wanna.product.image_name}`}
-                                className={classes.productImage}
+                                product={wanna.product}
+                                className={{ height: '134.4px', width: '96px' }}
                             />
                         ))}
                     </Grid>

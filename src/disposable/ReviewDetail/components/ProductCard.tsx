@@ -4,6 +4,7 @@ import { Grid, Box } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 
 import { Product, Category, Organizer, Performance, Venue } from '../../../@types'
+import { ProductImage } from '../../../reusable/ProductImage'
 
 interface PerformanceWithVenue extends Performance {
     venue: Venue
@@ -23,15 +24,6 @@ const useStyles = makeStyles(theme =>
     createStyles({
         root: {
 
-        },
-        productImage: {
-            height: '112px',
-            width: '80px',
-            backgroundColor: theme.palette.common.black,
-            objectFit: 'cover',
-            verticalAlign: 'top',
-            borderRadius: '10px',
-            margin: '0 8px',
         },
         productDetail: {
             flexGrow: 1,
@@ -79,9 +71,9 @@ export const ProductCard: FC<Props> = props => {
 
     return (
         <Grid container wrap='nowrap'>
-            <img
-                src={`${process.env.API_BASEURL}${props.product.image_name}`}
-                className={classes.productImage}
+            <ProductImage
+                product={props.product}
+                className={{ height: '112px', width: '80px', margin: '0 8px' }}
             />
             <Box className={classes.productDetail}>
                 <p className={classes.productTitle}>{props.product.name}</p>

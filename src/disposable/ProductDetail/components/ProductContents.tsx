@@ -6,6 +6,7 @@ import DirectionsRunIcon from '@material-ui/icons/DirectionsRun'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 
 import { ProductDetail } from '../../../@types'
+import { ProductImage } from '../../../reusable/ProductImage'
 
 interface Props {
     product: ProductDetail
@@ -41,15 +42,6 @@ const useStyles = makeStyles(theme =>
             lineHeight: '24px',
             fontSize: '12px',
             color: theme.palette.common.black,
-        },
-        productImage: {
-            width: '160px',
-            height: '224px',
-            borderRadius: '10px',
-            marginTop: '8px',
-            objectFit: 'contain',
-            verticalAlign: 'top',
-            backgroundColor: theme.palette.common.black,
         },
         ratings: {
             marginTop: '16px',
@@ -140,9 +132,10 @@ export const ProductContents: FC<Props> = props => {
                 <Box>
                     <p className={classes.descriptionCategory}>Provided by</p>
                     <p className={classes.descriptionLink}>{props.product.organizer.service_name}</p>
-                    <img 
-                        src={`${process.env.API_BASEURL}${props.product.image_name}`}
-                        className={classes.productImage}
+                    <ProductImage 
+                        product={props.product}
+                        transition={false}
+                        className={{ height: '224px', width: '160px', margin: '8px 0 0' }}
                     />
                     <Grid container alignItems='center' className={classes.ratings}>
                         <Rating

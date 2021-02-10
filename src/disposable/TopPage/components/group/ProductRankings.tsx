@@ -4,6 +4,7 @@ import { Box, Tabs, Tab } from '@material-ui/core'
 
 import { ProductIndex } from '../../../../@types'
 import { TabPanel } from '../parts/TabPanel'
+import { ProductImage } from '../../../../reusable/ProductImage'
 
 interface Props {
     products: ProductIndex[]
@@ -37,20 +38,6 @@ const useStyles = makeStyles(() =>
             display: 'inline-block',
             whiteSpace: 'nowrap',
             width: '100%',
-        },
-        productImageBox: {
-            backgroundColor: '#0A0A0A',
-            borderRadius: '10px',
-            width: '200px',
-            height: '12px',
-        },
-        productImage: {
-            height: '168px',
-            width: '120px',
-            objectFit: 'contain',
-            borderRadius: '10px',
-            backgroundColor: '#FEFEFE',
-            margin: '0 4px',
         },
     })
 )
@@ -98,10 +85,10 @@ export const ProductRankings: FC<Props> = (props) => {
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
                         {props.products.map((product: ProductIndex) => (
-                            <img
+                            <ProductImage
                                 key={product.id}
-                                src={`${process.env.API_BASEURL}${product.image_name}`}
-                                className={classes.productImage}
+                                product={product}
+                                className={{height: '168px', width: '120px', margin: '0 4px'}}
                             />
                         ))}
                     </Box>
@@ -111,10 +98,10 @@ export const ProductRankings: FC<Props> = (props) => {
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
                         {props.products.map((product: ProductIndex) => (
-                            <img
+                            <ProductImage
                                 key={product.id}
-                                src={`${process.env.API_BASEURL}${product.image_name}`}
-                                className={classes.productImage}
+                                product={product}
+                                className={{height: '168px', width: '120px', margin: '0 4px'}}
                             />
                         ))}
                     </Box>
@@ -124,10 +111,10 @@ export const ProductRankings: FC<Props> = (props) => {
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
                         {props.products.map((product: ProductIndex) => (
-                            <img
+                            <ProductImage
                                 key={product.id}
-                                src={`${process.env.API_BASEURL}${product.image_name}`}
-                                className={classes.productImage}
+                                product={product}
+                                className={{height: '168px', width: '120px', margin: '0 4px'}}
                             />
                         ))}
                     </Box>

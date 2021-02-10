@@ -11,6 +11,8 @@ import ShareIcon from '@material-ui/icons/Share'
 import { ReviewIndex } from '../../../@types'
 import { formatData } from '../../../util'
 
+import { ProductImage } from '../../../reusable/ProductImage'
+
 interface Props {
     review: ReviewIndex
 }
@@ -77,14 +79,6 @@ const useStyles = makeStyles(theme =>
         rightBox: {
             width: '80px',
         },
-        productImage: {
-            width: '80px',
-            height: '112px',
-            backgroundColor: theme.palette.common.black,
-            objectFit: 'contain',
-            verticalAlign: 'top',
-            borderRadius: '10px',
-        },
         reviewCreateDate: {
             lineHeight: '16px',
             fontSize: '12px',
@@ -146,7 +140,10 @@ export const ReviewCard: FC<Props> = props => {
                     <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
                 </Box>
                 <Grid container direction='column' justify='space-between' className={classes.rightBox}>
-                    <img src={`${process.env.API_BASEURL}${props.review.product.image_name}`} className={classes.productImage} />
+                    <ProductImage
+                        product={props.review.product}
+                        className={{ height: '112px', width: '80px' }}
+                    />
                     <p className={classes.reviewCreateDate}>{formatData(new Date(props.review.created_at))}</p>
                 </Grid>
             </Grid>
