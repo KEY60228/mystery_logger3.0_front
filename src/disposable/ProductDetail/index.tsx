@@ -6,7 +6,7 @@ import { ProductDetail as ProductDetailInterface } from '../../@types'
 import { useAppDispatch, RootState } from '../../stores/index'
 import { asyncGetProduct } from '../../ajax/product'
 import { ProductDetailTemplate as Template } from './layout'
-import { CircularLoader } from '../../reusable/Loader/CircularLoader'
+import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
 
 export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()

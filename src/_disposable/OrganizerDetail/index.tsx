@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../stores/index'
 import { asyncGetOrganizer } from '../../ajax/organizer'
 
 import { OrganizerDetailTemplate as Template } from './template'
-import { CircularLoader } from '../../reusable/Loader/CircularLoader'
+import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
 
 export const OrganizerDetail: FC = () => {
     const { id } = useParams<{ id: string }>()

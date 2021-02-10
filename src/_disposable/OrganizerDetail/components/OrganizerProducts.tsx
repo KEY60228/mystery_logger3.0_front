@@ -11,7 +11,7 @@ import {
     Organizer,
     Performance,
 } from '../../../@types'
-import { ProductCardM } from '../../../reusable/ProductCardM'
+import { ProductCardM } from '../../../_reusable/ProductCardM'
 
 interface PerformanceWithVenue extends Performance {
     venue: Venue

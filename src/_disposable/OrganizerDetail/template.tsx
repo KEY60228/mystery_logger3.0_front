@@ -4,7 +4,7 @@ import { OrganizerDetail as OrganizerDetailInterface } from '../../@types'
 import { OrganizerCard } from './components/OrganizerCard'
 import { OrganizerProducts } from './components/OrganizerProducts'
 import { OrganizerVenues } from './components/OrganizerVenues'
-import { TempSpace } from '../../reusable/TempSpace'
+import { TempSpace } from '../../_reusable/TempSpace'
 
 interface Props {
     organizer: OrganizerDetailInterface

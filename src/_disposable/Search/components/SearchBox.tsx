@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Button, Card, Grid, Input } from '@material-ui/core'
 
-import { SelectForm } from '../../../reusable/SelectForm'
+import { SelectForm } from '../../../_reusable/SelectForm'
 
 interface Props {
     organizers: { id: number; name: string }[]

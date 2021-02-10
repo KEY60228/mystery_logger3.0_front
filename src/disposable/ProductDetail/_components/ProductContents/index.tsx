@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Card, Box, Grid, Typography, CardMedia } from '@material-ui/core'
 
 import { Product, ProductDetail, CurrentUser } from '../../../../@types'
-import { Ratings } from '../../../../reusable/Ratings'
+import { Ratings } from '../../../../_reusable/Ratings'
 import { Buttons } from './Buttons'
 import { ProductProfile } from './ProductProfile'
 

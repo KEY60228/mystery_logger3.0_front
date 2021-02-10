@@ -4,7 +4,7 @@ import { VenueDetail as VenueDetailInterface } from '../../@types'
 import { VenueContents } from './components/VenueContents'
 import { VenuePerformances } from './components/VenuePerformances'
 import { SimpleMap } from './components/GoogleMaps'
-import { TempSpace } from '../../reusable/TempSpace'
+import { TempSpace } from '../../_reusable/TempSpace'
 
 interface Props {
     venue: VenueDetailInterface
