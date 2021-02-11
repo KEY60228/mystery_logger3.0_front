@@ -2,10 +2,9 @@ import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Tabs, Tab } from '@material-ui/core'
 
-import { ProductIndex } from '../../../../@types'
-import { TabPanel } from '../parts/TabPanel'
-
-import { ProductImage } from '../../../../reusable/ProductImage'
+import { ProductIndex } from '../../../@types'
+import { TabPanel } from '../../../reusable/TabPanel'
+import { ProductImage } from '../../../reusable/ProductImage'
 
 interface Props {
     products: ProductIndex[]
@@ -14,9 +13,6 @@ interface Props {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-
-        },
-        tabRoot: {
             marginTop: '40px',
         },
         tabs: {
@@ -46,7 +42,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const ProductsByCategory: FC<Props> = props => {
+export const ProductRankings: FC<Props> = (props) => {
     const classes = useStyles()
 
     const [value, setValue] = useState<number>(0)
@@ -59,28 +55,30 @@ export const ProductsByCategory: FC<Props> = props => {
                 centered
                 indicatorColor='secondary'
                 onChange={tabChange}
-                className={classes.tabs}
+                classes={{
+                    root: classes.tabs,
+                }}
             >
                 <Tab
                     classes={{
                         root: classes.tab,
                         selected: classes.selected,
                     }}
-                    label='主催団体別'
+                    label='評価の高い作品'
                 />
                 <Tab
                     classes={{
                         root: classes.tab,
                         selected: classes.selected,
                     }}
-                    label='地域・会場別'
+                    label='投稿数の多い作品'
                 />
                 <Tab
                     classes={{
                         root: classes.tab,
                         selected: classes.selected,
                     }}
-                    label='カテゴリー別'
+                    label='成功率の低い作品'
                 />
             </Tabs>
             <TabPanel value={value} index={0}>
@@ -90,7 +88,7 @@ export const ProductsByCategory: FC<Props> = props => {
                             <ProductImage
                                 key={product.id}
                                 product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px' }}
+                                className={{height: '168px', width: '120px', margin: '0 4px'}}
                             />
                         ))}
                     </Box>
@@ -103,7 +101,7 @@ export const ProductsByCategory: FC<Props> = props => {
                             <ProductImage
                                 key={product.id}
                                 product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px' }}
+                                className={{height: '168px', width: '120px', margin: '0 4px'}}
                             />
                         ))}
                     </Box>
@@ -116,7 +114,7 @@ export const ProductsByCategory: FC<Props> = props => {
                             <ProductImage
                                 key={product.id}
                                 product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px' }}
+                                className={{height: '168px', width: '120px', margin: '0 4px'}}
                             />
                         ))}
                     </Box>

@@ -3,8 +3,8 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Grid, Box } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 
-import { Product, Category, Organizer, Performance, Venue } from '../../../@types'
-import { ProductImage } from '../../../reusable/ProductImage'
+import { Product, Category, Organizer, Performance, Venue } from '../@types'
+import { ProductImage } from './ProductImage'
 
 interface PerformanceWithVenue extends Performance {
     venue: Venue

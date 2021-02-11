@@ -1,84 +1,77 @@
 import React, { FC } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { Box, Grid, IconButton, Divider } from '@material-ui/core'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import { Box, Divider, Grid, IconButton } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
-import { ReviewIndex } from '../../../@types'
-import { formatData } from '../../../util'
+import { Review, User } from '../@types'
+import { theme } from '../theme'
+import { UserImage } from './UserImage'
 
-import { ProductImage } from '../../../reusable/ProductImage'
-import { UserImage } from '../../../reusable/UserImage'
-
-interface Props {
-    review: ReviewIndex
+interface ReviewWithUser extends Review {
+    user: User
 }
 
-const useStyles = makeStyles(theme =>
+interface Props {
+    review: ReviewWithUser
+}
+
+const useStyles = makeStyles(() =>
     createStyles({
         root: {
-
         },
-        reviewerInfo: {
+        userName: {
             margin: '0 0 0 8px',
-            flexGrow: 1,
-        },
-        reviewerName: {
             lineHeight: '24px',
             fontSize: '15px',
-            margin: '0',
+            flexGrow: 1,
         },
-        reviewerAccountId: {
+        userAccount: {
+            margin: '0 0 0 8px',
             lineHeight: '24px',
             fontSize: '12px',
-            margin: '0',
+            color: '#C0C0C0',
+            flexGrow: 1,
         },
         menuButton: {
             width: '48px',
             height: '48px',
+            padding: '0',
         },
-        leftBox: {
-            margin: '8px 8px 0',
-            flexGrow: 1,
+        reviewProperties: {
+            margin: '16px 0 8px',
         },
-        productName: {
-            lineHeight: '24px',
-            fontSize: '16px',
-            margin: '0',
-        },
-        ratings: {
-            margin: '7px 0 8px',
+        rating: {
+            marginBottom: '2px',
         },
         ratingLabel: {
             margin: '0 4px',
             lineHeight: '18px',
             fontSize: '12px',
         },
-        reviewProperty: {
+        property: {
+            color: '#C0C0C0',
             lineHeight: '16px',
             fontSize: '12px',
-            color: '#C0C0C0',
             marginRight: '16px',
+            display: 'inline-block',
         },
         reviewContents: {
             lineHeight: '24px',
             fontSize: '15px',
-            margin: '8px 0 0',
+            margin: '0',
             whiteSpace: 'pre-wrap',
         },
-        rightBox: {
-            width: '80px',
-        },
-        reviewCreateDate: {
+        postDate: {
+            margin: '0',
+            textAlign: 'right',
             lineHeight: '16px',
             fontSize: '12px',
             color: '#C0C0C0',
-            textAlign: 'right',
-            margin: '0',
         },
         icons: {
             marginTop: '8px',
@@ -87,8 +80,11 @@ const useStyles = makeStyles(theme =>
             fontSize: '12px',
             marginLeft: '4px',
         },
-        divider: {
-            marginTop: '16px',
+        cardDivider: {
+            margin: '16px 0',
+        },
+        resultStamp: {
+            height: '64px',
         },
     })
 )
@@ -97,24 +93,23 @@ export const ReviewCard: FC<Props> = props => {
     const classes = useStyles()
 
     return (
-        <>
+        <Box>
             <Grid container wrap='nowrap'>
                 <UserImage
                     user={props.review.user}
                     className={{ height: '48px', width: '48px' }}
                 />
-                <Box className={classes.reviewerInfo}>
-                    <p className={classes.reviewerName}>{props.review.user.name}</p>
-                    <p className={classes.reviewerAccountId}>{props.review.user.account_id}</p>
-                </Box>
+                <Grid container direction='column'>
+                    <p className={classes.userName}>{props.review.user.name}</p>
+                    <p className={classes.userAccount}>@{props.review.user.account_id}</p>
+                </Grid>
                 <IconButton className={classes.menuButton}>
                     <MoreHorizIcon />
                 </IconButton>
             </Grid>
             <Grid container justify='space-between' wrap='nowrap'>
-                <Box className={classes.leftBox}>
-                    <p className={classes.productName}>{props.review.product.name}</p>
-                    <Grid container alignItems='center' className={classes.ratings}>
+                <Box className={classes.reviewProperties}>
+                    <Grid container alignItems='center' className={classes.rating}>
                         <Rating
                             value={
                                 props.review.rating === 0 || props.review.rating === null ? 0 : parseFloat(props.review.rating.toFixed(1))
@@ -125,25 +120,23 @@ export const ReviewCard: FC<Props> = props => {
                         />
                         <p className={classes.ratingLabel}>{props.review.rating === 0 || props.review.rating === null ? '-' : props.review.rating.toFixed(1)}</p>
                     </Grid>
-                    <Grid container wrap='nowrap'>
-                        <span className={classes.reviewProperty}>参加日: {props.review.joined_at}</span>
-                        {props.review.result === 1 &&
-                            <span className={classes.reviewProperty}>脱出成功！</span>
-                        }
-                        {props.review.result === 2 &&
-                            <span className={classes.reviewProperty}>脱出失敗...</span>
-                        }
-                    </Grid>
-                    <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
+                    <span className={classes.property}>参加日: {props.review.joined_at || '-'}</span>
+                    { props.review.result === 1 &&
+                        <span className={classes.property}>脱出成功！</span>
+                    }
+                    { props.review.result === 2 &&
+                        <span className={classes.property}>脱出失敗...</span>
+                    }
                 </Box>
-                <Grid container direction='column' justify='space-between' className={classes.rightBox}>
-                    <ProductImage
-                        product={props.review.product}
-                        className={{ height: '112px', width: '80px' }}
-                    />
-                    <p className={classes.reviewCreateDate}>{formatData(new Date(props.review.created_at))}</p>
-                </Grid>
+                { props.review.result === 1 &&
+                    <img src='/img/success.jpg' className={classes.resultStamp} />
+                }
+                { props.review.result === 2 &&
+                    <img src='/img/failure.jpg' className={classes.resultStamp} />
+                }
             </Grid>
+            <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
+            <p className={classes.postDate}>{props.review.created_at}</p>
             <Grid container justify="space-around" className={classes.icons}>
                 <IconButton
                     size="small"
@@ -181,7 +174,7 @@ export const ReviewCard: FC<Props> = props => {
                     <ShareIcon color="action" fontSize="small" />
                 </IconButton>
             </Grid>
-            <Divider className={classes.divider} />
-        </>
+            <Divider className={classes.cardDivider} />
+        </Box>
     )
 }

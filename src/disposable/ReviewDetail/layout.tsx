@@ -5,9 +5,9 @@ import { Box, Divider } from '@material-ui/core'
 import { ReviewDetail as ReviewDetailInterface } from '../../@types'
 import { Footer } from '../../reusable/Footer'
 
-import { ReviewCard } from '../ProductDetail/components/ReviewCard'
+import { ReviewCard } from '../../reusable/ReviewCard'
 import { ReviewCommentCard } from './components/ReviewCommentCard'
-import { ProductCard } from './components/ProductCard'
+import { ProductCard } from '../../reusable/ProductCard'
 
 interface Props {
     review: ReviewDetailInterface

@@ -4,7 +4,7 @@ import { Tabs, Tab, Box, Grid } from '@material-ui/core'
 
 import { UserDetail } from '../../../@types'
 
-import { TabPanel } from '../../TopPage/components/parts/TabPanel'
+import { TabPanel } from '../../../reusable/TabPanel'
 import { ProductImage } from '../../../reusable/ProductImage'
 
 interface Props {

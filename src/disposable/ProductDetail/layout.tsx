@@ -4,7 +4,7 @@ import { Box } from '@material-ui/core'
 
 import { ProductDetail } from '../../@types'
 import { ProductContents } from './components/ProductContents'
-import { ReviewCard } from './components/ReviewCard'
+import { ReviewCard } from '../../reusable/ReviewCard'
 import { Footer } from '../../reusable/Footer'
 
 interface Props {

@@ -2,9 +2,8 @@ import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Tabs, Tab } from '@material-ui/core'
 
-import { ProductIndex } from '../../../../@types'
-import { TabPanel } from '../parts/TabPanel'
-import { ProductImage } from '../../../../reusable/ProductImage'
+import { ProductIndex } from '../../../@types'
+import { TabPanel } from '../../../reusable/TabPanel'
 
 interface Props {
     products: ProductIndex[]
@@ -12,7 +11,7 @@ interface Props {
 
 const useStyles = makeStyles(() =>
     createStyles({
-        root: {
+        tabRoot: {
             marginTop: '40px',
         },
         tabs: {
@@ -39,56 +38,60 @@ const useStyles = makeStyles(() =>
             whiteSpace: 'nowrap',
             width: '100%',
         },
+        productImageBox: {
+            backgroundColor: '#0A0A0A',
+            borderRadius: '10px',
+            width: '200px',
+            height: '12px',
+        },
+        userImage: {
+            height: '96px',
+            width: '96px',
+            borderRadius: '50%',
+            objectFit: 'cover',
+            margin: '0 4px',
+        },
     })
 )
 
-export const ProductRankings: FC<Props> = (props) => {
+export const UserRankings: FC<Props> = props => {
     const classes = useStyles()
 
     const [value, setValue] = useState<number>(0)
     const tabChange = (event: React.ChangeEvent, newValue: number) => setValue(newValue)
 
     return (
-        <Box className={classes.root}>
+        <Box className={classes.tabRoot}>
             <Tabs
                 value={value}
                 centered
                 indicatorColor='secondary'
                 onChange={tabChange}
-                classes={{
-                    root: classes.tabs,
-                }}
+                className={classes.tabs}
             >
                 <Tab
                     classes={{
                         root: classes.tab,
                         selected: classes.selected,
                     }}
-                    label='評価の高い作品'
+                    label='参加数が多い人'
                 />
                 <Tab
                     classes={{
                         root: classes.tab,
                         selected: classes.selected,
                     }}
-                    label='投稿数の多い作品'
-                />
-                <Tab
-                    classes={{
-                        root: classes.tab,
-                        selected: classes.selected,
-                    }}
-                    label='成功率の低い作品'
+                    label='脱出率が高い人'
                 />
             </Tabs>
             <TabPanel value={value} index={0}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
                         {props.products.map((product: ProductIndex) => (
-                            <ProductImage
+                            <img
                                 key={product.id}
-                                product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px'}}
+                                src={`${process.env.API_BASEURL}${product.image_name}`}
+                                className={classes.userImage}
                             />
                         ))}
                     </Box>
@@ -98,23 +101,10 @@ export const ProductRankings: FC<Props> = (props) => {
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
                         {props.products.map((product: ProductIndex) => (
-                            <ProductImage
+                            <img
                                 key={product.id}
-                                product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px'}}
-                            />
-                        ))}
-                    </Box>
-                </Box>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <Box className={classes.outerBox}>
-                    <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
-                            <ProductImage
-                                key={product.id}
-                                product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px'}}
+                                src={`${process.env.API_BASEURL}${product.image_name}`}
+                                className={classes.userImage}
                             />
                         ))}
                     </Box>

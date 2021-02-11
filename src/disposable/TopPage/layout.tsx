@@ -4,10 +4,10 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { ProductIndex } from '../../@types'
 import { Footer } from '../../reusable/Footer'
 
-import { ProductRankings } from './components/group/ProductRankings'
-import { SearchBox } from './components/group/SearchBox'
-import { ProductsByCategory } from './components/group/ProductsByCategory'
-import { UserRankings } from './components/group/UserRankings'
+import { ProductRankings } from './components/ProductRankings'
+import { SearchBox } from './components/SearchBox'
+import { ProductsByCategory } from './components/ProductsByCategory'
+import { UserRankings } from './components/UserRankings'
 
 interface Props {
     products: ProductIndex[]
