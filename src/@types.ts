@@ -224,6 +224,12 @@ export interface CurrentUser {
     like_reviews_id: number[] // LIKEしたレビューのID
 }
 
+// For Login
+export interface LoginData {
+    email: string
+    password: string
+}
+
 // extends model
 interface PerformanceWithVenue extends Performance {
     venue: Venue
