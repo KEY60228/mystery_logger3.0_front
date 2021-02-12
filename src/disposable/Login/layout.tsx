@@ -63,7 +63,6 @@ const useStyles = makeStyles(theme =>
         },
         formInputRoot: {
             width: '100%',
-            paddingRight: '8px',
         },
         formInput: {
             padding: '0.4em 0 0.4em 8px',
@@ -197,6 +196,8 @@ export const LoginTemplate: FC<Props> = props => {
                 <form>
                     <FormControl className={classes.form}>
                         <OutlinedInput
+                            id='Email'
+                            aria-describedby={'Email-helper'}
                             color='primary'
                             placeholder='メールアドレス'
                             value={props.loginData.email}

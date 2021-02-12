@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
 import { RootState } from '../../stores'
 
-import { PreRegisterForm } from './components/PreRegisterForm'
-import { PreRegisterModal } from './components/PreRegisterModal'
+import { PreRegisterForm } from './_components/PreRegisterForm'
+import { PreRegisterModal } from './_components/PreRegisterModal'
 
 interface Props {
     email: string
