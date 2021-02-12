@@ -10,6 +10,7 @@ import { ProductImage } from '../../../reusable/ProductImage'
 
 interface Props {
     product: ProductDetail
+    edit: () => void
 }
 
 const useStyles = makeStyles(theme =>
@@ -180,7 +181,7 @@ export const ProductContents: FC<Props> = props => {
                 </Box>
             </Grid>
             <Grid container className={classes.buttons}>
-                <Button color='primary' variant='contained' className={classes.reviewButton}>
+                <Button color='primary' variant='contained' onClick={props.edit} className={classes.reviewButton}>
                     <DirectionsRunIcon />
                     <p className={classes.reviewLabel}>レビューを投稿する ({props.product.reviews_count})</p>
                 </Button>

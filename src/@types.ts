@@ -224,6 +224,15 @@ export interface CurrentUser {
     like_reviews_id: number[] // LIKEしたレビューのID
 }
 
+// For PostReview
+export interface ReviewContents {
+    spoil: boolean
+    rating: number
+    result: number
+    joined_at: Date | null
+    contents: string | null
+}
+
 // extends model
 interface PerformanceWithVenue extends Performance {
     venue: Venue
