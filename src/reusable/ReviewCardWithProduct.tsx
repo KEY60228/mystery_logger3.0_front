@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { Box, Grid, IconButton, Divider } from '@material-ui/core'
+import { Box, Grid, IconButton, Divider, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import { Rating } from '@material-ui/lab'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble'
@@ -13,6 +13,8 @@ import { formatData } from '../util'
 
 import { ProductImage } from './ProductImage'
 import { UserImage } from './UserImage'
+import { useSelector } from 'react-redux'
+import { RootState } from '../stores'
 
 interface Props {
     review: ReviewIndex
@@ -96,6 +98,14 @@ const useStyles = makeStyles(theme =>
 export const ReviewCard: FC<Props> = props => {
     const classes = useStyles()
 
+    const currentUser = useSelector((state: RootState) => state.auth.user)
+
+    const [menu, setMenu] = useState<null | HTMLElement>(null)
+
+    const openMenu = (ev: React.MouseEvent<HTMLButtonElement>) => {
+        setMenu(ev.currentTarget)
+    }
+
     return (
         <>
             <Grid container wrap='nowrap'>
@@ -107,9 +117,30 @@ export const ReviewCard: FC<Props> = props => {
                     <p className={classes.reviewerName}>{props.review.user.name}</p>
                     <p className={classes.reviewerAccountId}>{props.review.user.account_id}</p>
                 </Box>
-                <IconButton className={classes.menuButton}>
+                <IconButton
+                    onClick={openMenu}
+                    className={classes.menuButton}
+                >
                     <MoreHorizIcon />
                 </IconButton>
+                <Menu
+                    anchorEl={menu}
+                    open={Boolean(menu)}
+                    onClose={() => setMenu(null)}
+                >
+                    {currentUser?.account_id !== props.review.user.account_id &&
+                        <>
+                            <MenuItem>@{props.review.user.account_id}をフォローする</MenuItem>
+                            <MenuItem>この投稿を通報する</MenuItem>
+                        </>
+                    }
+                    {currentUser?.account_id === props.review.user.account_id &&
+                        <>
+                            <MenuItem>編集する</MenuItem>
+                            <MenuItem>削除する</MenuItem>
+                        </>
+                    }
+                </Menu>
             </Grid>
             <Grid container justify='space-between' wrap='nowrap'>
                 <Box className={classes.leftBox}>

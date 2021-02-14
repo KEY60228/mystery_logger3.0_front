@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { Box, Divider, Grid, IconButton } from '@material-ui/core'
+import { Box, Divider, Grid, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble'
@@ -9,8 +9,10 @@ import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
 import { Review, User } from '../@types'
-import { theme } from '../theme'
+import { formatData } from '../util'
 import { UserImage } from './UserImage'
+import { RootState } from '../stores'
+import { useSelector } from 'react-redux'
 
 interface ReviewWithUser extends Review {
     user: User
@@ -92,6 +94,14 @@ const useStyles = makeStyles(() =>
 export const ReviewCard: FC<Props> = props => {
     const classes = useStyles()
 
+    const currentUser = useSelector((state: RootState) => state.auth.user)
+
+    const [menu, setMenu] = useState<null | HTMLElement>(null)
+
+    const openMenu = (ev: React.MouseEvent<HTMLButtonElement>) => {
+        setMenu(ev.currentTarget)
+    }
+
     return (
         <Box>
             <Grid container wrap='nowrap'>
@@ -103,9 +113,30 @@ export const ReviewCard: FC<Props> = props => {
                     <p className={classes.userName}>{props.review.user.name}</p>
                     <p className={classes.userAccount}>@{props.review.user.account_id}</p>
                 </Grid>
-                <IconButton className={classes.menuButton}>
+                <IconButton
+                    onClick={openMenu}
+                    className={classes.menuButton}
+                >
                     <MoreHorizIcon />
                 </IconButton>
+                <Menu
+                    anchorEl={menu}
+                    open={Boolean(menu)}
+                    onClose={() => setMenu(null)}
+                >
+                    {currentUser?.account_id !== props.review.user.account_id &&
+                        <>
+                            <MenuItem>@{props.review.user.account_id}をフォローする</MenuItem>
+                            <MenuItem>この投稿を通報する</MenuItem>
+                        </>
+                    }
+                    {currentUser?.account_id === props.review.user.account_id &&
+                        <>
+                            <MenuItem>編集する</MenuItem>
+                            <MenuItem>削除する</MenuItem>
+                        </>
+                    }
+                </Menu>
             </Grid>
             <Grid container justify='space-between' wrap='nowrap'>
                 <Box className={classes.reviewProperties}>
@@ -136,7 +167,7 @@ export const ReviewCard: FC<Props> = props => {
                 }
             </Grid>
             <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
-            <p className={classes.postDate}>{props.review.created_at}</p>
+            <p className={classes.postDate}>{formatData(new Date(props.review.created_at))}</p>
             <Grid container justify="space-around" className={classes.icons}>
                 <IconButton
                     size="small"
