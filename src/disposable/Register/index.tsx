@@ -3,11 +3,11 @@ import { Helmet } from 'react-helmet'
 import { useHistory, useLocation } from 'react-router-dom'
 import queryString from 'query-string'
 
+import { RegisterData } from '../../@types'
 import { asyncRegister, asyncVerify } from '../../ajax/auth'
 import { useAppDispatch } from '../../stores/index'
 import { setMessage } from '../../stores/error'
 
-import { FailVerify as FailVerifyTemp } from './FailVerify'
 import { RegisterTemplate as Template } from './layout'
 import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
 
@@ -16,25 +16,34 @@ export const Register: FC = () => {
     const dispatch = useAppDispatch()
     const query = queryString.parse(useLocation().search)
 
-    const [registerStatus, setRegisterStatus] = useState<boolean | null>(null)
-    const [accountId, setAccountId] = useState<string>('')
-    const [name, setName] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
-    const [email, setEmail] = useState<string>('')
-    const [preRegisterId, setPreRegisterId] = useState<number>(0)
+    const [registerData, setRegisterData] = useState<RegisterData>({
+        accountId: '',
+        name: '',
+        password: '',
+        email: '',
+        preRegisterId: 0,
+    })
 
     const verify = () => {
         dispatch(asyncVerify(query))
             .then((result) => {
-                setEmail(result.email)
-                setPreRegisterId(result.pre_register_id)
-                setRegisterStatus(true)
+                setRegisterData((prev: RegisterData) => ({
+                    ...prev,
+                    email: result.email,
+                    preRegisterId: result.pre_register_id
+                }))
             })
-            .catch(() => setRegisterStatus(false))
+            .catch(() => history.push('/verify-failed'))
     }
 
     const register = () => {
-        dispatch(asyncRegister(accountId, email, name, password, preRegisterId))
+        dispatch(asyncRegister(
+            registerData.accountId,
+            registerData.email,
+            registerData.name,
+            registerData.password,
+            registerData.preRegisterId
+        ))
             .then(result => history.push(`/users/${result.account_id}`))
             .catch(() => {return})
     }
@@ -49,13 +58,14 @@ export const Register: FC = () => {
             <Helmet>
                 <title>本登録 - なぞログ</title>
             </Helmet>
-            {/* {registerStatus === true && (
+            {registerData.preRegisterId !== 0 && (
                 <Template
+                    registerData={registerData}
+                    setRegisterData={setRegisterData}
+                    register={register}
                 />
             )}
-            {registerStatus === false && <FailVerifyTemp />}
-            {registerStatus === null && <CircularLoader />} */}
-            <Template />
+            {registerData.preRegisterId === 0 && <CircularLoader />}
         </>
     )
 }

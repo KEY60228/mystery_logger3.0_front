@@ -16,6 +16,8 @@ import { UserDetail } from './disposable/UserDetail/'
 import { ProductDetail } from './disposable/ProductDetail/'
 import { ReviewDetail } from './disposable/ReviewDetail/'
 import { Timeline } from './disposable/Timeline/'
+import { VerifyFailed } from './disposable/VerifyFailed/'
+
 import { Search } from './_disposable/Search'
 import { OrganizerDetail } from './_disposable/OrganizerDetail'
 import { VenueDetail } from './_disposable/VenueDetail'
@@ -65,8 +67,9 @@ const App: FC = () => {
                     <Route path="/venues/:id" children={<VenueDetail />} />
                     <Route path="/accompany" children={<Accompanies />} />
                     <Route path="/notifications" children={<Notifications />} />
-                    <Route path="/404" children={<NotFoundPage />} />
+                    <Route path="/verify-failed" children={<VerifyFailed />} />
                     <Route path="/500" children={<SystemErrorPage />} />
+                    <Route children={<NotFoundPage />} />
                 </Switch>
             </BrowserRouter>
         </>

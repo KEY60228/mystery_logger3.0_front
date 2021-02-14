@@ -230,6 +230,15 @@ export interface LoginData {
     password: string
 }
 
+// For Register
+export interface RegisterData {
+    name: string
+    accountId: string
+    password: string
+    email: string
+    preRegisterId: number
+}
+
 // extends model
 interface PerformanceWithVenue extends Performance {
     venue: Venue
