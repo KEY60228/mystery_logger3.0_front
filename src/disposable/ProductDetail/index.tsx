@@ -1,13 +1,14 @@
 import React, { FC, useState, useEffect } from 'react'
+import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { ProductDetail as ProductDetailInterface, ReviewContents } from '../../@types'
+import { ProductDetail as ProductDetailInterface, ReviewContents, Review } from '../../@types'
 import { useAppDispatch, RootState } from '../../stores/index'
 import { asyncGetProduct } from '../../ajax/product'
 import { ProductDetailTemplate as Template } from './layout'
 import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
-import { asyncPostReview, asyncUpdateReview } from '../../ajax/review'
+import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../../ajax/review'
 import { asyncGetCurrentUser } from '../../ajax/auth'
 import { setPopper } from '../../stores/error'
 
@@ -33,7 +34,7 @@ export const ProductDetail: FC = () => {
         contents: '',
     })
 
-    const edit = () => {
+    const editReview = () => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
@@ -55,12 +56,12 @@ export const ProductDetail: FC = () => {
         }
     }
 
-    const post = () => {
+    const postReview = () => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!product) return false // 仮
+        if (!product) return false
         const review = product?.reviews?.find(
             review => review.user_id === currentUser.id
         )
@@ -115,6 +116,26 @@ export const ProductDetail: FC = () => {
         }
     }
 
+    const deleteReview = (review: Review) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        dispatch(asyncDeleteReview(review.id))
+            .then(() => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+                setReviewContents({
+                    spoil: false,
+                    rating: 0,
+                    result: 0,
+                    joined_at: null,
+                    contents: '',
+                })
+            })
+            .catch(() => {return})
+    }
+
 
 
     // const [comment, setComment] = useState<string | null>('')
@@ -131,6 +152,9 @@ export const ProductDetail: FC = () => {
 
     return (
         <>
+            <Helmet>
+                <title>作品情報 - なぞログ</title>
+            </Helmet>
             {product && (
                 <Template
                     product={product}
@@ -138,8 +162,9 @@ export const ProductDetail: FC = () => {
                     setFormOpen={setFormOpen}
                     reviewContents={reviewContents}
                     setReviewContents={setReviewContents}
-                    edit={edit}
-                    post={post}
+                    editReview={editReview}
+                    postReview={postReview}
+                    deleteReview={deleteReview}
                 />
             )}
             {!product && <CircularLoader />}

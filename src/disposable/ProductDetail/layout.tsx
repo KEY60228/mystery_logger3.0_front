@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
 
-import { ProductDetail, ReviewContents } from '../../@types'
+import { ProductDetail, ReviewContents, Review } from '../../@types'
 import { ProductContents } from './components/ProductContents'
 import { ReviewCard } from '../../reusable/ReviewCard'
 import { Footer } from '../../reusable/Footer'
@@ -14,8 +14,9 @@ interface Props {
     setFormOpen: (value: boolean) => void
     reviewContents: ReviewContents
     setReviewContents: React.Dispatch<React.SetStateAction<ReviewContents>> 
-    edit: () => void
-    post: () => void
+    editReview: () => void
+    postReview: () => void
+    deleteReview: (review: Review) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -34,10 +35,14 @@ export const ProductDetailTemplate: FC<Props> = props => {
             <Box className={classes.root}>
                 <ProductContents
                     product={props.product}
-                    edit={props.edit}
+                    editReview={props.editReview}
                 />
                 {props.product.reviews.map(review => (
-                    <ReviewCard key={review.id} review={review} />
+                    <ReviewCard
+                        key={review.id}
+                        review={review}
+                        deleteReview={props.deleteReview}
+                    />
                 ))}
             </Box>
             <Footer />
@@ -47,7 +52,7 @@ export const ProductDetailTemplate: FC<Props> = props => {
                 setFormOpen={props.setFormOpen}
                 reviewContents={props.reviewContents}
                 setReviewContents={props.setReviewContents}
-                post={props.post}
+                postReview={props.postReview}
             />
         </>
     )

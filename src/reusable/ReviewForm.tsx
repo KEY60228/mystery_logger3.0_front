@@ -19,7 +19,7 @@ interface Props {
     setFormOpen: (value: boolean) => void
     reviewContents: ReviewContents
     setReviewContents: React.Dispatch<React.SetStateAction<ReviewContents>>  
-    post: () => void
+    postReview: () => void
 }
 
 const useStyles = makeStyles(theme =>
@@ -149,7 +149,7 @@ export const ReviewForm: FC<Props> = props => {
                         <p className={classes.title}>
                             {props.product.name}
                         </p>
-                        <Button color='primary' onClick={props.post} className={classes.postButton}>投稿</Button>
+                        <Button color='primary' onClick={props.postReview} className={classes.postButton}>投稿</Button>
                     </Grid>
                 </Toolbar>
             </AppBar>
