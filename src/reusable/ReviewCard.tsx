@@ -28,9 +28,10 @@ interface Props {
     unfollow: (user: User) => void
     likeReview: (review: Review) => void
     unlikeReview: (review: Review) => void
+    getSpoiledContents?: () => void
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
         },
@@ -75,6 +76,12 @@ const useStyles = makeStyles(() =>
             fontSize: '15px',
             margin: '0',
             whiteSpace: 'pre-wrap',
+        },
+        spoiledContents: {
+            lineHeight: '16px',
+            fontSize: '13px',
+            color: theme.palette.error.main,
+            margin: '0',
         },
         postDate: {
             margin: '0',
@@ -197,7 +204,19 @@ export const ReviewCard: FC<Props> = props => {
                         <img src='/img/failure.jpg' className={classes.resultStamp} />
                     }
                 </Grid>
-                <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
+                {!props.review.spoil &&
+                    <p className={classes.reviewContents}>
+                        {props.review.exposed_contents}
+                    </p>
+                }
+                {props.review.spoil &&
+                    <p
+                        onClick={props.getSpoiledContents}
+                        className={classes.spoiledContents}
+                    >
+                        ※ネタバレを表示する
+                    </p>
+                }
                 <p className={classes.postDate}>{formatDate(new Date(props.review.created_at))}</p>
                 <Grid container justify="space-around" className={classes.icons}>
                     <IconButton

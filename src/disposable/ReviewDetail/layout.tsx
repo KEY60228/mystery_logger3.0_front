@@ -9,6 +9,9 @@ import { ReviewCard } from '../../reusable/ReviewCard'
 import { ReviewCommentCard } from './components/ReviewCommentCard'
 import { ProductCard } from '../../reusable/ProductCard'
 import { ReviewForm } from '../../reusable/ReviewForm'
+import { RootState } from '../../stores'
+import { useSelector } from 'react-redux'
+import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
 
 interface Props {
     review: ReviewDetailInterface
@@ -23,6 +26,7 @@ interface Props {
     unfollow: (user: User) => void
     likeReview: (review: Review) => void
     unlikeReview: (review: Review) => void
+    getSpoiledContents?: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -38,9 +42,11 @@ const useStyles = makeStyles(() =>
 
 export const ReviewDetailTemplate: FC<Props> = props => {
     const classes = useStyles()
+    const loading = useSelector((state: RootState) => state.error.loading)
 
     return (
         <>
+            {loading && <LinearLoader />}
             <Box className={classes.root}>
                 <ProductCard product={props.review.product} />
                 <Divider className={classes.divider} />
@@ -52,6 +58,7 @@ export const ReviewDetailTemplate: FC<Props> = props => {
                     unfollow={props.unfollow}
                     likeReview={props.likeReview}
                     unlikeReview={props.unlikeReview}
+                    getSpoiledContents={props.getSpoiledContents}
                 />
                 { props.review.review_comments.length !== 0 && props.review.review_comments.map(review_comment =>
                     <ReviewCommentCard

@@ -219,20 +219,20 @@ export const ReviewDetail: FC = () => {
             .catch(() => {return})
     }
 
-    // const getSpoiledContents = () => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!review) return false // 仮
-    //     if (!currentUser.done_id.includes(review.product.id)) {
-    //         dispatch(setPopper('undone'))
-    //         return false
-    //     }
-    //     dispatch(asyncGetSpoiledContents(review.id)).then(
-    //         result => setReview(result)
-    //     ).catch(() => {return})
-    // }
+    const getSpoiledContents = () => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false
+        if (!currentUser.done_id.includes(review.product.id)) {
+            dispatch(setPopper('undone'))
+            return false
+        }
+        dispatch(asyncGetSpoiledContents(review.id)).then(
+            result => setReview(result)
+        ).catch(() => {return})
+    }
 
     const getReview = () => {
         dispatch(asyncGetReview(id)).then(
@@ -263,6 +263,7 @@ export const ReviewDetail: FC = () => {
                     unfollow={unfollow}
                     likeReview={likeReview}
                     unlikeReview={unlikeReview}
+                    getSpoiledContents={getSpoiledContents}
                 />
             )}
             {!review && <CircularLoader />}
