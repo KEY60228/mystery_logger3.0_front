@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 import { ProductDetail as ProductDetailInterface, ReviewContents, Review, User } from '../../@types'
 import { useAppDispatch, RootState } from '../../stores/index'
-import { asyncGetProduct } from '../../ajax/product'
+import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../../ajax/product'
 import { ProductDetailTemplate as Template } from './layout'
 import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
 import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../../ajax/review'
@@ -179,7 +179,62 @@ export const ProductDetail: FC = () => {
             .catch(() => {return})
     }
 
+    const wanna = () => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!product) return false
 
+        // 楽観的更新
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    wanna_id: currentUser.wanna_id.concat([product.id]),
+                }),
+            ),
+        )
+        setProduct(
+            Object.assign({}, product, {
+                wannas_count: product.wannas_count + 1,
+            }),
+        )
+
+        dispatch(asyncWanna(product.id))
+            .then(() => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+            })
+            .catch(() => {return})
+    }
+
+    const unwanna = () => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!product) return false
+
+        // 楽観的更新
+        const wanna_id = currentUser.wanna_id.filter(el => {
+            return el !== product.id
+        })
+        dispatch(
+            setUser(Object.assign({}, currentUser, { wanna_id: wanna_id })),
+        )
+        setProduct(
+            Object.assign({}, product, {
+                wannas_count: product.wannas_count - 1,
+            }),
+        )
+
+        dispatch(asyncUnwanna(product.id))
+            .then(() => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+            })
+            .catch(() => {return})
+    }
 
     // const [comment, setComment] = useState<string | null>('')
 
@@ -210,6 +265,8 @@ export const ProductDetail: FC = () => {
                     deleteReview={deleteReview}
                     follow={follow}
                     unfollow={unfollow}
+                    wanna={wanna}
+                    unwanna={unwanna}
                 />
             )}
             {!product && <CircularLoader />}

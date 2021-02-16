@@ -19,6 +19,8 @@ interface Props {
     deleteReview: (review: Review) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
+    wanna: () => void
+    unwanna: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -38,6 +40,8 @@ export const ProductDetailTemplate: FC<Props> = props => {
                 <ProductContents
                     product={props.product}
                     editReview={props.editReview}
+                    wanna={props.wanna}
+                    unwanna={props.unwanna}
                 />
                 {props.product.reviews.map(review => (
                     <ReviewCard
