@@ -91,6 +91,17 @@ export const ReviewDetail: FC = () => {
             .catch(() => {return})
     }
 
+    const deleteReview = () => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false // 仮
+        dispatch(asyncDeleteReview(review.id))
+            .then(() => history.push(`/products/${review?.product_id}`))
+            .catch(() => {return})
+    }
+
     // const follow = (user: User) => {
     //     if (!currentUser) {
     //         dispatch(setPopper('unauthenticated'))
@@ -134,12 +145,6 @@ export const ReviewDetail: FC = () => {
 
 
 
-    // const deleteReview = () => {
-    //     if (!review) return false // 仮
-    //     dispatch(asyncDeleteReview(review.id))
-    //         .then(() => history.push(`/products/${review?.product_id}`))
-    //         .catch(() => {return})
-    // }
 
     // const postComment = () => {
     //     if (!currentUser) {
@@ -258,6 +263,7 @@ export const ReviewDetail: FC = () => {
                     setReviewContents={setReviewContents}
                     editReview={editReview}
                     updateReview={updateReview}
+                    deleteReview={deleteReview}
                 />
             )}
             {!review && <CircularLoader />}

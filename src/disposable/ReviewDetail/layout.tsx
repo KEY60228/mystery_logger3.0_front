@@ -18,6 +18,7 @@ interface Props {
     setReviewContents: React.Dispatch<React.SetStateAction<ReviewContents>>
     editReview: () => void
     updateReview: () => void
+    deleteReview: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -42,7 +43,7 @@ export const ReviewDetailTemplate: FC<Props> = props => {
                 <ReviewCard
                     review={props.review}
                     editReview={props.editReview}
-                    deleteReview={() => console.log() /* 仮 */}
+                    deleteReview={props.deleteReview}
                     follow={() => console.log() /* 仮 */}
                     unfollow={() => console.log() /* 仮 */}
                     likeReview={() => console.log() /* 仮 */}
