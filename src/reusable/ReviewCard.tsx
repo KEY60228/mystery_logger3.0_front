@@ -22,6 +22,7 @@ interface ReviewWithUser extends Review {
 
 interface Props {
     review: ReviewWithUser
+    editReview: () => void
     deleteReview: (review: Review) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
@@ -117,6 +118,11 @@ export const ReviewCard: FC<Props> = props => {
         setConfirmOpen(true)
     }
 
+    const editReview = () => {
+        setMenu(null)
+        props.editReview()
+    }
+
     return (
         <>
             <Box>
@@ -157,7 +163,7 @@ export const ReviewCard: FC<Props> = props => {
                         }
                         {currentUser?.account_id === props.review.user.account_id &&
                             <>
-                                <MenuItem>編集する</MenuItem>
+                                <MenuItem onClick={editReview}>編集する</MenuItem>
                                 <MenuItem onClick={confirmDelete}>削除する</MenuItem>
                             </>
                         }

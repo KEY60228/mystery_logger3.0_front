@@ -49,6 +49,7 @@ export const ProductDetailTemplate: FC<Props> = props => {
                     <ReviewCard
                         key={review.id}
                         review={review}
+                        editReview={props.editReview}
                         deleteReview={props.deleteReview}
                         follow={props.follow}
                         unfollow={props.unfollow}
