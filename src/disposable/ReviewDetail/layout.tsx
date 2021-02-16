@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Divider } from '@material-ui/core'
 
-import { ReviewContents, ReviewDetail as ReviewDetailInterface, User } from '../../@types'
+import { Review, ReviewContents, ReviewDetail as ReviewDetailInterface, User } from '../../@types'
 import { Footer } from '../../reusable/Footer'
 
 import { ReviewCard } from '../../reusable/ReviewCard'
@@ -21,6 +21,8 @@ interface Props {
     deleteReview: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
+    likeReview: (review: Review) => void
+    unlikeReview: (review: Review) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -48,8 +50,8 @@ export const ReviewDetailTemplate: FC<Props> = props => {
                     deleteReview={props.deleteReview}
                     follow={props.follow}
                     unfollow={props.unfollow}
-                    likeReview={() => console.log() /* 仮 */}
-                    unlikeReview={() => console.log() /* 仮 */}
+                    likeReview={props.likeReview}
+                    unlikeReview={props.unlikeReview}
                 />
                 { props.review.review_comments.length !== 0 && props.review.review_comments.map(review_comment =>
                     <ReviewCommentCard

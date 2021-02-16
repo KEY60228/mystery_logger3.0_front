@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { ReviewContents, ReviewDetail as ReviewDetailInterface, User } from '../../@types'
+import { Review, ReviewContents, ReviewDetail as ReviewDetailInterface, User } from '../../@types'
 import {
     asyncDeleteReview,
     asyncGetReview,
@@ -46,7 +46,7 @@ export const ReviewDetail: FC = () => {
     })
 
     // コメントのstate
-    // const [comment, setComment] = useState<string | null>('')
+    const [comment, setComment] = useState<string | null>('')
 
     const editReview = () => {
         if (!review) return false // 仮
@@ -141,9 +141,6 @@ export const ReviewDetail: FC = () => {
             .catch(() => {return})
     }
 
-
-
-
     // const postComment = () => {
     //     if (!currentUser) {
     //         dispatch(setPopper('unauthenticated'))
@@ -153,74 +150,74 @@ export const ReviewDetail: FC = () => {
     //         dispatch(setMessage({ errors: { comment: '入力してください' } }))
     //         return false
     //     }
-    //     if (!review) return false // 仮
+    //     if (!review) return false
     //     dispatch(asyncPostComment(review.id, comment))
     //         .then(() => getReview())
     //         .catch(() => {return})
     // }
 
-    // const likeReview = () => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!review) return false // 仮
+    const likeReview = (target: Review) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false
 
-    //     // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
-    //     dispatch(
-    //         setUser(
-    //             Object.assign({}, currentUser, {
-    //                 like_reviews_id: currentUser.like_reviews_id.concat([
-    //                     review.id,
-    //                 ]),
-    //             }),
-    //         ),
-    //     )
-    //     setReview(
-    //         Object.assign({}, review, {
-    //             review_likes_count: review.review_likes_count + 1,
-    //         }),
-    //     )
+        // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    like_reviews_id: currentUser.like_reviews_id.concat([
+                        review.id,
+                    ]),
+                }),
+            ),
+        )
+        setReview(
+            Object.assign({}, review, {
+                review_likes_count: review.review_likes_count + 1,
+            }),
+        )
 
-    //     dispatch(asyncLikeReview(review.id))
-    //         .then(() => {
-    //             dispatch(asyncGetCurrentUser())
-    //             getReview()
-    //         })
-    //         .catch(() => {return})
-    // }
+        dispatch(asyncLikeReview(review.id))
+            .then(() => {
+                dispatch(asyncGetCurrentUser())
+                getReview()
+            })
+            .catch(() => {return})
+    }
 
-    // const unlikeReview = () => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!review) return false // 仮
+    const unlikeReview = (target: Review) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false
 
-    //     // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
-    //     const like_reviews_id = currentUser.like_reviews_id.filter(el => {
-    //         return el !== review.id
-    //     })
-    //     dispatch(
-    //         setUser(
-    //             Object.assign({}, currentUser, {
-    //                 like_reviews_id: like_reviews_id,
-    //             }),
-    //         ),
-    //     )
-    //     setReview(
-    //         Object.assign({}, review, {
-    //             review_likes_count: review.review_likes_count - 1,
-    //         }),
-    //     )
+        // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
+        const like_reviews_id = currentUser.like_reviews_id.filter(el => {
+            return el !== review.id
+        })
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    like_reviews_id: like_reviews_id,
+                }),
+            ),
+        )
+        setReview(
+            Object.assign({}, review, {
+                review_likes_count: review.review_likes_count - 1,
+            }),
+        )
 
-    //     dispatch(asyncUnlikeReview(review.id))
-    //         .then(() => {
-    //             dispatch(asyncGetCurrentUser())
-    //             getReview()
-    //         })
-    //         .catch(() => {return})
-    // }
+        dispatch(asyncUnlikeReview(review.id))
+            .then(() => {
+                dispatch(asyncGetCurrentUser())
+                getReview()
+            })
+            .catch(() => {return})
+    }
 
     // const getSpoiledContents = () => {
     //     if (!currentUser) {
@@ -264,6 +261,8 @@ export const ReviewDetail: FC = () => {
                     deleteReview={deleteReview}
                     follow={follow}
                     unfollow={unfollow}
+                    likeReview={likeReview}
+                    unlikeReview={unlikeReview}
                 />
             )}
             {!review && <CircularLoader />}

@@ -7,6 +7,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import { ReviewComment, User } from '../../../@types'
 import { RootState } from '../../../stores'
 import { UserImage } from '../../../reusable/UserImage'
+import { formatDate } from '../../../util'
 
 interface ReviewCommentWithUser extends ReviewComment {
     user: User
@@ -111,7 +112,7 @@ export const ReviewCommentCard: FC<Props> = props => {
                 }
             </Grid>
             <p className={classes.comment}>{props.review_comment.contents}</p>
-            <p className={classes.postDate}>{props.review_comment.created_at}</p>
+            <p className={classes.postDate}>{formatDate(new Date(props.review_comment.created_at))}</p>
             <Divider className={classes.divider} />
         </Box>
     )

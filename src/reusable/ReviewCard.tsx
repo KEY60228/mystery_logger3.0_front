@@ -9,7 +9,7 @@ import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
 import { Review, User } from '../@types'
-import { formatData } from '../util'
+import { formatDate } from '../util'
 import { UserImage } from './UserImage'
 import { RootState } from '../stores'
 import { useSelector } from 'react-redux'
@@ -198,7 +198,7 @@ export const ReviewCard: FC<Props> = props => {
                     }
                 </Grid>
                 <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
-                <p className={classes.postDate}>{formatData(new Date(props.review.created_at))}</p>
+                <p className={classes.postDate}>{formatDate(new Date(props.review.created_at))}</p>
                 <Grid container justify="space-around" className={classes.icons}>
                     <IconButton
                         size="small"
