@@ -7,9 +7,14 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 
 import { ProductDetail } from '../../../@types'
 import { ProductImage } from '../../../reusable/ProductImage'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../stores'
 
 interface Props {
     product: ProductDetail
+    editReview: () => void
+    wanna: () => void
+    unwanna: () => void
 }
 
 const useStyles = makeStyles(theme =>
@@ -76,7 +81,7 @@ const useStyles = makeStyles(theme =>
             padding: '0',
             marginLeft: '8px',
             borderRadius: '10px',
-            border: '3px solid'
+            border: '3px solid' + theme.palette.primary.main,
         },
         lastDivider: {
             margin: '24px 0 16px',
@@ -86,6 +91,8 @@ const useStyles = makeStyles(theme =>
 
 export const ProductContents: FC<Props> = props => {
     const classes = useStyles()
+
+    const currentUser = useSelector((state: RootState) => state.auth.user)
 
     const getLimitTime = (time: number | null) => {
         if (time === null) {
@@ -180,13 +187,37 @@ export const ProductContents: FC<Props> = props => {
                 </Box>
             </Grid>
             <Grid container className={classes.buttons}>
-                <Button color='primary' variant='contained' className={classes.reviewButton}>
+                <Button
+                    color='primary'
+                    variant='contained'
+                    onClick={props.editReview}
+                    className={classes.reviewButton}
+                >
                     <DirectionsRunIcon />
-                    <p className={classes.reviewLabel}>レビューを投稿する ({props.product.reviews_count})</p>
+                    <p className={classes.reviewLabel}>
+                        レビューを投稿する ({props.product.reviews_count})
+                    </p>
                 </Button>
-                <Button variant='outlined' color='primary' className={classes.favoriteButton}>
-                    <FavoriteIcon color='error' />
-                </Button>
+                { !currentUser?.wanna_id.includes(props.product.id) &&
+                    <Button
+                        variant='contained'
+                        color='primary'
+                        className={classes.favoriteButton}
+                        onClick={props.wanna}
+                    >
+                        <FavoriteIcon color='action' />
+                    </Button>
+                }
+                { currentUser?.wanna_id.includes(props.product.id) &&
+                    <Button
+                        variant='outlined'
+                        color='primary'
+                        className={classes.favoriteButton}
+                        onClick={props.unwanna}
+                    >
+                        <FavoriteIcon color='error' />
+                    </Button>
+                }
             </Grid>
             <Divider className={classes.lastDivider} />
         </>

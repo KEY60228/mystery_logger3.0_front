@@ -1,6 +1,6 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { Box, Divider, Grid, IconButton } from '@material-ui/core'
+import { Box, Divider, Grid, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble'
@@ -9,8 +9,12 @@ import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
 import { Review, User } from '../@types'
-import { theme } from '../theme'
+import { formatData } from '../util'
 import { UserImage } from './UserImage'
+import { RootState } from '../stores'
+import { useSelector } from 'react-redux'
+
+import { ConfirmDeleteReview } from './ConfirmDeleteReview'
 
 interface ReviewWithUser extends Review {
     user: User
@@ -18,6 +22,11 @@ interface ReviewWithUser extends Review {
 
 interface Props {
     review: ReviewWithUser
+    deleteReview: (review: Review) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
+    likeReview: (review: Review) => void
+    unlikeReview: (review: Review) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -78,7 +87,7 @@ const useStyles = makeStyles(() =>
         },
         iconText: {
             fontSize: '12px',
-            marginLeft: '4px',
+            margin: '0 4px',
         },
         cardDivider: {
             margin: '16px 0',
@@ -92,89 +101,156 @@ const useStyles = makeStyles(() =>
 export const ReviewCard: FC<Props> = props => {
     const classes = useStyles()
 
+    // ログインユーザー
+    const currentUser = useSelector((state: RootState) => state.auth.user)
+
+    // メニューの開閉
+    const [menu, setMenu] = useState<null | HTMLElement>(null)
+    const openMenu = (ev: React.MouseEvent<HTMLButtonElement>) => {
+        setMenu(ev.currentTarget)
+    }
+
+    // レビュー削除確認アラートの開閉
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+    const confirmDelete = () => {
+        setMenu(null)
+        setConfirmOpen(true)
+    }
+
     return (
-        <Box>
-            <Grid container wrap='nowrap'>
-                <UserImage
-                    user={props.review.user}
-                    className={{ height: '48px', width: '48px' }}
-                />
-                <Grid container direction='column'>
-                    <p className={classes.userName}>{props.review.user.name}</p>
-                    <p className={classes.userAccount}>@{props.review.user.account_id}</p>
-                </Grid>
-                <IconButton className={classes.menuButton}>
-                    <MoreHorizIcon />
-                </IconButton>
-            </Grid>
-            <Grid container justify='space-between' wrap='nowrap'>
-                <Box className={classes.reviewProperties}>
-                    <Grid container alignItems='center' className={classes.rating}>
-                        <Rating
-                            value={
-                                props.review.rating === 0 || props.review.rating === null ? 0 : parseFloat(props.review.rating.toFixed(1))
-                            }
-                            precision={0.1}
-                            readOnly
-                            size='small'
-                        />
-                        <p className={classes.ratingLabel}>{props.review.rating === 0 || props.review.rating === null ? '-' : props.review.rating.toFixed(1)}</p>
+        <>
+            <Box>
+                <Grid container wrap='nowrap'>
+                    <UserImage
+                        user={props.review.user}
+                        className={{ height: '48px', width: '48px' }}
+                    />
+                    <Grid container direction='column'>
+                        <p className={classes.userName}>{props.review.user.name}</p>
+                        <p className={classes.userAccount}>@{props.review.user.account_id}</p>
                     </Grid>
-                    <span className={classes.property}>参加日: {props.review.joined_at || '-'}</span>
+                    <IconButton
+                        onClick={openMenu}
+                        className={classes.menuButton}
+                    >
+                        <MoreHorizIcon />
+                    </IconButton>
+                    <Menu
+                        anchorEl={menu}
+                        open={Boolean(menu)}
+                        onClose={() => setMenu(null)}
+                    >
+                        {currentUser?.account_id !== props.review.user.account_id &&
+                            <>
+                                {!currentUser?.follows_id.includes(props.review.user.id) &&
+                                    <MenuItem onClick={() => props.follow(props.review.user)}>
+                                        @{props.review.user.account_id}をフォローする
+                                    </MenuItem>
+                                }
+                                {currentUser?.follows_id.includes(props.review.user.id) &&
+                                    <MenuItem onClick={() => props.unfollow(props.review.user)}>
+                                        @{props.review.user.account_id}のフォローを解除する
+                                    </MenuItem>
+                                }
+                                <MenuItem>この投稿を通報する</MenuItem>
+                            </>
+                        }
+                        {currentUser?.account_id === props.review.user.account_id &&
+                            <>
+                                <MenuItem>編集する</MenuItem>
+                                <MenuItem onClick={confirmDelete}>削除する</MenuItem>
+                            </>
+                        }
+                    </Menu>
+                </Grid>
+                <Grid container justify='space-between' wrap='nowrap'>
+                    <Box className={classes.reviewProperties}>
+                        <Grid container alignItems='center' className={classes.rating}>
+                            <Rating
+                                value={
+                                    props.review.rating === 0 || props.review.rating === null ? 0 : parseFloat(props.review.rating.toFixed(1))
+                                }
+                                precision={0.1}
+                                readOnly
+                                size='small'
+                            />
+                            <p className={classes.ratingLabel}>{props.review.rating === 0 || props.review.rating === null ? '-' : props.review.rating.toFixed(1)}</p>
+                        </Grid>
+                        <span className={classes.property}>参加日: {props.review.joined_at || '-'}</span>
+                        { props.review.result === 1 &&
+                            <span className={classes.property}>脱出成功！</span>
+                        }
+                        { props.review.result === 2 &&
+                            <span className={classes.property}>脱出失敗...</span>
+                        }
+                    </Box>
                     { props.review.result === 1 &&
-                        <span className={classes.property}>脱出成功！</span>
+                        <img src='/img/success.jpg' className={classes.resultStamp} />
                     }
                     { props.review.result === 2 &&
-                        <span className={classes.property}>脱出失敗...</span>
+                        <img src='/img/failure.jpg' className={classes.resultStamp} />
                     }
-                </Box>
-                { props.review.result === 1 &&
-                    <img src='/img/success.jpg' className={classes.resultStamp} />
-                }
-                { props.review.result === 2 &&
-                    <img src='/img/failure.jpg' className={classes.resultStamp} />
-                }
-            </Grid>
-            <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
-            <p className={classes.postDate}>{props.review.created_at}</p>
-            <Grid container justify="space-around" className={classes.icons}>
-                <IconButton
-                    size="small"
-                >
-                    <ChatBubbleIcon color="action" fontSize="small" />
-                    {props.review.review_comments_count !== 0 && (
-                        <p
-                            className={classes.iconText}
-                        >
-                            {props.review.review_comments_count}
-                        </p>
-                    )}
-                </IconButton>
-                <IconButton size="small">
-                    <FavoriteIcon color="error" fontSize="small" />
-                    {props.review.review_likes_count !== 0 && (
-                        <p
-                            className={classes.iconText}
-                        >
-                            {props.review.review_likes_count}
-                        </p>
-                    )}
-                </IconButton>
-                <IconButton size="small">
-                    <RepeatIcon color="disabled" fontSize="small" />
-                    {props.review.retweet_count !== 0 && (
-                        <p
-                            className={classes.iconText}
-                        >
-                            {props.review.retweet_count}
-                        </p>
-                    )}
-                </IconButton>
-                <IconButton size="small">
-                    <ShareIcon color="action" fontSize="small" />
-                </IconButton>
-            </Grid>
-            <Divider className={classes.cardDivider} />
-        </Box>
+                </Grid>
+                <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
+                <p className={classes.postDate}>{formatData(new Date(props.review.created_at))}</p>
+                <Grid container justify="space-around" className={classes.icons}>
+                    <IconButton
+                        size="small"
+                    >
+                        <ChatBubbleIcon color="action" fontSize="small" />
+                        {props.review.review_comments_count !== 0 && (
+                            <p
+                                className={classes.iconText}
+                            >
+                                {props.review.review_comments_count}
+                            </p>
+                        )}
+                    </IconButton>
+                    <IconButton size="small">
+                        {currentUser?.like_reviews_id.includes(props.review.id) &&
+                            <FavoriteIcon
+                                color="error"
+                                fontSize="small"
+                                onClick={() => props.unlikeReview(props.review)}
+                            />
+                        }
+                        {!currentUser?.like_reviews_id.includes(props.review.id) &&
+                            <FavoriteIcon
+                                color='action'
+                                fontSize='small'
+                                onClick={() => props.likeReview(props.review)}
+                            />
+                        }
+                        {props.review.review_likes_count !== 0 && (
+                            <p
+                                className={classes.iconText}
+                            >
+                                {props.review.review_likes_count}
+                            </p>
+                        )}
+                    </IconButton>
+                    <IconButton size="small">
+                        <RepeatIcon color="disabled" fontSize="small" />
+                        {props.review.retweet_count !== 0 && (
+                            <p
+                                className={classes.iconText}
+                            >
+                                {props.review.retweet_count}
+                            </p>
+                        )}
+                    </IconButton>
+                    <IconButton size="small">
+                        <ShareIcon color="action" fontSize="small" />
+                    </IconButton>
+                </Grid>
+                <Divider className={classes.cardDivider} />
+            </Box>
+            <ConfirmDeleteReview
+                review={props.review}
+                deleteReview={props.deleteReview}
+                confirmOpen={confirmOpen}
+                setConfirmOpen={setConfirmOpen}
+            />
+        </>
     )
 }

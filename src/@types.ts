@@ -237,6 +237,13 @@ export interface RegisterData {
     password: string
     email: string
     preRegisterId: number
+// For PostReview
+export interface ReviewContents {
+    spoil: boolean
+    rating: number
+    result: number
+    joined_at: Date | null
+    contents: string | null
 }
 
 // extends model
