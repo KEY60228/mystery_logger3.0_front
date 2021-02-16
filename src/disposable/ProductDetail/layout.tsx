@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
 
-import { ProductDetail, ReviewContents, Review } from '../../@types'
+import { ProductDetail, ReviewContents, Review, User } from '../../@types'
 import { ProductContents } from './components/ProductContents'
 import { ReviewCard } from '../../reusable/ReviewCard'
 import { Footer } from '../../reusable/Footer'
@@ -17,6 +17,8 @@ interface Props {
     editReview: () => void
     postReview: () => void
     deleteReview: (review: Review) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -42,6 +44,8 @@ export const ProductDetailTemplate: FC<Props> = props => {
                         key={review.id}
                         review={review}
                         deleteReview={props.deleteReview}
+                        follow={props.follow}
+                        unfollow={props.unfollow}
                     />
                 ))}
             </Box>

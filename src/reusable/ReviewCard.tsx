@@ -23,6 +23,8 @@ interface ReviewWithUser extends Review {
 interface Props {
     review: ReviewWithUser
     deleteReview: (review: Review) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -138,7 +140,16 @@ export const ReviewCard: FC<Props> = props => {
                     >
                         {currentUser?.account_id !== props.review.user.account_id &&
                             <>
-                                <MenuItem>@{props.review.user.account_id}をフォローする</MenuItem>
+                                {!currentUser?.follows_id.includes(props.review.user.id) &&
+                                    <MenuItem onClick={() => props.follow(props.review.user)}>
+                                        @{props.review.user.account_id}をフォローする
+                                    </MenuItem>
+                                }
+                                {currentUser?.follows_id.includes(props.review.user.id) &&
+                                    <MenuItem onClick={() => props.unfollow(props.review.user)}>
+                                        @{props.review.user.account_id}のフォローを解除する
+                                    </MenuItem>
+                                }
                                 <MenuItem>この投稿を通報する</MenuItem>
                             </>
                         }

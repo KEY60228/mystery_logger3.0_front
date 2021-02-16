@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import { ProductDetail as ProductDetailInterface, ReviewContents, Review } from '../../@types'
+import { ProductDetail as ProductDetailInterface, ReviewContents, Review, User } from '../../@types'
 import { useAppDispatch, RootState } from '../../stores/index'
 import { asyncGetProduct } from '../../ajax/product'
 import { ProductDetailTemplate as Template } from './layout'
@@ -11,6 +11,8 @@ import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
 import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../../ajax/review'
 import { asyncGetCurrentUser } from '../../ajax/auth'
 import { setPopper } from '../../stores/error'
+import { setUser } from '../../stores/auth'
+import { asyncFollow, asyncUnFollow } from '../../ajax/user'
 
 export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()
@@ -136,6 +138,47 @@ export const ProductDetail: FC = () => {
             .catch(() => {return})
     }
 
+    const follow = (user: User) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+
+        // 楽観的更新
+        dispatch(
+            setUser(
+                // 修正余地あり？
+                Object.assign({}, currentUser, {
+                    follows_id: currentUser.follows_id.concat([user.id]),
+                }),
+            ),
+        )
+
+        dispatch(asyncFollow(user.id))
+            .then(() => dispatch(asyncGetCurrentUser()))
+            .catch(() => {return})
+    }
+
+    const unfollow = (user: User) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+
+        // 楽観的更新
+        const follows_id = currentUser.follows_id.filter(el => {
+            return el !== user.id
+        })
+        dispatch(
+            // 修正余地あり？
+            setUser(Object.assign({}, currentUser, { follows_id: follows_id })),
+        )
+
+        dispatch(asyncUnFollow(user.id))
+            .then(() => dispatch(asyncGetCurrentUser()))
+            .catch(() => {return})
+    }
+
 
 
     // const [comment, setComment] = useState<string | null>('')
@@ -165,6 +208,8 @@ export const ProductDetail: FC = () => {
                     editReview={editReview}
                     postReview={postReview}
                     deleteReview={deleteReview}
+                    follow={follow}
+                    unfollow={unfollow}
                 />
             )}
             {!product && <CircularLoader />}
