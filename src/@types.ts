@@ -237,6 +237,8 @@ export interface RegisterData {
     password: string
     email: string
     preRegisterId: number
+}
+
 // For PostReview
 export interface ReviewContents {
     spoil: boolean
