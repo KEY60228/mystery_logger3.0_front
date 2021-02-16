@@ -25,6 +25,8 @@ interface Props {
     deleteReview: (review: Review) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
+    likeReview: (review: Review) => void
+    unlikeReview: (review: Review) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -85,7 +87,7 @@ const useStyles = makeStyles(() =>
         },
         iconText: {
             fontSize: '12px',
-            marginLeft: '4px',
+            margin: '0 4px',
         },
         cardDivider: {
             margin: '16px 0',
@@ -205,7 +207,20 @@ export const ReviewCard: FC<Props> = props => {
                         )}
                     </IconButton>
                     <IconButton size="small">
-                        <FavoriteIcon color="error" fontSize="small" />
+                        {currentUser?.like_reviews_id.includes(props.review.id) &&
+                            <FavoriteIcon
+                                color="error"
+                                fontSize="small"
+                                onClick={() => props.unlikeReview(props.review)}
+                            />
+                        }
+                        {!currentUser?.like_reviews_id.includes(props.review.id) &&
+                            <FavoriteIcon
+                                color='action'
+                                fontSize='small'
+                                onClick={() => props.likeReview(props.review)}
+                            />
+                        }
                         {props.review.review_likes_count !== 0 && (
                             <p
                                 className={classes.iconText}

@@ -8,7 +8,7 @@ import { useAppDispatch, RootState } from '../../stores/index'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../../ajax/product'
 import { ProductDetailTemplate as Template } from './layout'
 import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
-import { asyncDeleteReview, asyncPostReview, asyncUpdateReview } from '../../ajax/review'
+import { asyncDeleteReview, asyncLikeReview, asyncPostReview, asyncUnlikeReview, asyncUpdateReview } from '../../ajax/review'
 import { asyncGetCurrentUser } from '../../ajax/auth'
 import { setPopper } from '../../stores/error'
 import { setUser } from '../../stores/auth'
@@ -236,9 +236,72 @@ export const ProductDetail: FC = () => {
             .catch(() => {return})
     }
 
-    // const [comment, setComment] = useState<string | null>('')
+    const likeReview = (review: Review) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
 
+        // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    like_reviews_id: currentUser.like_reviews_id.concat([
+                        review.id,
+                    ]),
+                }),
+            ),
+        )
+        const reviews = product?.reviews.map(el => {
+            if (el.id === review.id) {
+                const num = el.review_likes_count
+                return Object.assign({}, el, { review_likes_count: num + 1 })
+            }
+            return el
+        })
+        setProduct(Object.assign({}, product, { reviews: reviews }))
 
+        dispatch(asyncLikeReview(review.id))
+            .then(() => {
+                dispatch(asyncGetCurrentUser())
+                getProduct()
+            })
+            .catch(() => {return})
+    }
+
+    const unlikeReview = (review: Review) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+
+        // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
+        const like_reviews_id = currentUser.like_reviews_id.filter(el => {
+            return el !== review.id
+        })
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    like_reviews_id: like_reviews_id,
+                }),
+            ),
+        )
+        const reviews = product?.reviews.map(el => {
+            if (el.id === review.id) {
+                const num = el.review_likes_count
+                return Object.assign({}, el, { review_likes_count: num - 1 })
+            }
+            return el
+        })
+        setProduct(Object.assign({}, product, { reviews: reviews }))
+
+        dispatch(asyncUnlikeReview(review.id))
+            .then(() => {
+                dispatch(asyncGetCurrentUser())
+                getProduct()
+            })
+            .catch(() => {return})
+    }
 
     const getProduct = () => {
         dispatch(asyncGetProduct(id)).then(result => setProduct(result)).catch(() => {return})
@@ -267,6 +330,8 @@ export const ProductDetail: FC = () => {
                     unfollow={unfollow}
                     wanna={wanna}
                     unwanna={unwanna}
+                    likeReview={likeReview}
+                    unlikeReview={unlikeReview}
                 />
             )}
             {!product && <CircularLoader />}
