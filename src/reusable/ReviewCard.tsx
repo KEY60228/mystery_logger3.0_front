@@ -9,7 +9,7 @@ import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
 import { Review, User } from '../@types'
-import { formatData } from '../util'
+import { formatDate } from '../util'
 import { UserImage } from './UserImage'
 import { RootState } from '../stores'
 import { useSelector } from 'react-redux'
@@ -22,14 +22,16 @@ interface ReviewWithUser extends Review {
 
 interface Props {
     review: ReviewWithUser
+    editReview: () => void
     deleteReview: (review: Review) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
     likeReview: (review: Review) => void
     unlikeReview: (review: Review) => void
+    getSpoiledContents?: () => void
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
         },
@@ -75,6 +77,12 @@ const useStyles = makeStyles(() =>
             margin: '0',
             whiteSpace: 'pre-wrap',
         },
+        spoiledContents: {
+            lineHeight: '16px',
+            fontSize: '13px',
+            color: theme.palette.error.main,
+            margin: '0',
+        },
         postDate: {
             margin: '0',
             textAlign: 'right',
@@ -117,6 +125,11 @@ export const ReviewCard: FC<Props> = props => {
         setConfirmOpen(true)
     }
 
+    const editReview = () => {
+        setMenu(null)
+        props.editReview()
+    }
+
     return (
         <>
             <Box>
@@ -157,7 +170,7 @@ export const ReviewCard: FC<Props> = props => {
                         }
                         {currentUser?.account_id === props.review.user.account_id &&
                             <>
-                                <MenuItem>編集する</MenuItem>
+                                <MenuItem onClick={editReview}>編集する</MenuItem>
                                 <MenuItem onClick={confirmDelete}>削除する</MenuItem>
                             </>
                         }
@@ -191,8 +204,20 @@ export const ReviewCard: FC<Props> = props => {
                         <img src='/img/failure.jpg' className={classes.resultStamp} />
                     }
                 </Grid>
-                <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
-                <p className={classes.postDate}>{formatData(new Date(props.review.created_at))}</p>
+                {!props.review.spoil &&
+                    <p className={classes.reviewContents}>
+                        {props.review.exposed_contents}
+                    </p>
+                }
+                {props.review.spoil &&
+                    <p
+                        onClick={props.getSpoiledContents}
+                        className={classes.spoiledContents}
+                    >
+                        ※ネタバレを表示する
+                    </p>
+                }
+                <p className={classes.postDate}>{formatDate(new Date(props.review.created_at))}</p>
                 <Grid container justify="space-around" className={classes.icons}>
                     <IconButton
                         size="small"
