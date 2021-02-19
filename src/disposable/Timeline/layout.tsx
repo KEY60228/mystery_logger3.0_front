@@ -22,6 +22,8 @@ interface Props {
     deleteReview: (review: Review) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
+    likeReview: (review: Review) => void
+    unlikeReview: (review: Review) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -61,6 +63,8 @@ export const TimelineTemplate: FC<Props> = props => {
                         deleteReview={props.deleteReview}
                         follow={props.follow}
                         unfollow={props.unfollow}
+                        likeReview={props.likeReview}
+                        unlikeReview={props.unlikeReview}
                     />
                 )}
             </Box>

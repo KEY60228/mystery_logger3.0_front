@@ -157,76 +157,74 @@ export const Timeline: FC = () => {
     //         .catch(() => {return})
     // }
 
-    // const likeReview = (review: ReviewIndex) => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!review || !reviews) return false // 仮
+    const likeReview = (review: Review) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review || !reviews) return false
 
-    //     // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
-    //     dispatch(
-    //         setUser(
-    //             Object.assign({}, currentUser, {
-    //                 like_reviews_id: currentUser.like_reviews_id.concat([
-    //                     review.id,
-    //                 ]),
-    //             }),
-    //         ),
-    //     )
-    //     const tmp = reviews.map(el => {
-    //         if (el.id === review.id) {
-    //             const num = el.review_likes_count
-    //             return Object.assign({}, el, { review_likes_count: num + 1 })
-    //         }
-    //         return el
-    //     })
-    //     setReviews(tmp)
+        // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    like_reviews_id: currentUser.like_reviews_id.concat([
+                        review.id,
+                    ]),
+                }),
+            ),
+        )
+        const tmp = reviews.map(el => {
+            if (el.id === review.id) {
+                const num = el.review_likes_count
+                return Object.assign({}, el, { review_likes_count: num + 1 })
+            }
+            return el
+        })
+        setReviews(tmp)
 
-    //     dispatch(asyncLikeReview(review.id))
-    //         .then(() => {
-    //             dispatch(asyncGetCurrentUser())
-    //             getReviews()
-    //         })
-    //         .catch(() => {return})
-    // }
+        dispatch(asyncLikeReview(review.id))
+            .then(() => {
+                dispatch(asyncGetCurrentUser())
+                getReviews()
+            })
+            .catch(() => {return})
+    }
 
-    // const unlikeReview = (review: ReviewIndex) => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!review || !reviews) return false // 仮
+    const unlikeReview = (review: Review) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review || !reviews) return false
 
-    //     // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
-    //     const like_reviews_id = currentUser.like_reviews_id.filter(el => {
-    //         return el !== review.id
-    //     })
-    //     dispatch(
-    //         setUser(
-    //             Object.assign({}, currentUser, {
-    //                 like_reviews_id: like_reviews_id,
-    //             }),
-    //         ),
-    //     )
-    //     const tmp = reviews.map(el => {
-    //         if (el.id === review.id) {
-    //             const num = el.review_likes_count
-    //             return Object.assign({}, el, { review_likes_count: num - 1 })
-    //         }
-    //         return el
-    //     })
-    //     setReviews(tmp)
+        // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
+        const like_reviews_id = currentUser.like_reviews_id.filter(el => {
+            return el !== review.id
+        })
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    like_reviews_id: like_reviews_id,
+                }),
+            ),
+        )
+        const tmp = reviews.map(el => {
+            if (el.id === review.id) {
+                const num = el.review_likes_count
+                return Object.assign({}, el, { review_likes_count: num - 1 })
+            }
+            return el
+        })
+        setReviews(tmp)
 
-    //     dispatch(asyncUnlikeReview(review.id))
-    //         .then(() => {
-    //             dispatch(asyncGetCurrentUser())
-    //             getReviews()
-    //         })
-    //         .catch(() => {return})
-    // }
-
-
+        dispatch(asyncUnlikeReview(review.id))
+            .then(() => {
+                dispatch(asyncGetCurrentUser())
+                getReviews()
+            })
+            .catch(() => {return})
+    }
 
     const getReviews = async () => {
         dispatch(asyncGetTimeline()).then(
@@ -257,6 +255,8 @@ export const Timeline: FC = () => {
                         deleteReview={deleteReview}
                         follow={follow }
                         unfollow={unfollow }
+                        likeReview={likeReview}
+                        unlikeReview={unlikeReview}
                     />
                 </>
             )}

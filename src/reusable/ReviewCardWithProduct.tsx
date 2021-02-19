@@ -23,6 +23,8 @@ interface Props {
     deleteReview: (review: Review) => void
     follow: (user: User) => void
     unfollow: (user: User) => void
+    likeReview: (review: Review) => void
+    unlikeReview: (review: Review) => void
 }
 
 const useStyles = makeStyles(theme =>
@@ -43,6 +45,7 @@ const useStyles = makeStyles(theme =>
             lineHeight: '24px',
             fontSize: '12px',
             margin: '0',
+            color: '#C0C0C0',
         },
         menuButton: {
             width: '48px',
@@ -139,7 +142,7 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                 />
                 <Box className={classes.reviewerInfo}>
                     <p className={classes.reviewerName}>{props.review.user.name}</p>
-                    <p className={classes.reviewerAccountId}>{props.review.user.account_id}</p>
+                    <p className={classes.reviewerAccountId}>@{props.review.user.account_id}</p>
                 </Box>
                 <IconButton
                     onClick={openMenu}
@@ -235,7 +238,20 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                     )}
                 </IconButton>
                 <IconButton size="small">
-                    <FavoriteIcon color="error" fontSize="small" />
+                    {currentUser?.like_reviews_id.includes(props.review.id) &&
+                        <FavoriteIcon
+                            color="error"
+                            fontSize="small"
+                            onClick={() => props.unlikeReview(props.review)}
+                        />
+                    }
+                    {!currentUser?.like_reviews_id.includes(props.review.id) &&
+                        <FavoriteIcon
+                            color='action'
+                            fontSize='small'
+                            onClick={() => props.likeReview(props.review)}
+                        />
+                    }
                     {props.review.review_likes_count !== 0 && (
                         <p
                             className={classes.iconText}
