@@ -7,6 +7,9 @@ import { ProductContents } from './components/ProductContents'
 import { ReviewCard } from '../../reusable/ReviewCard'
 import { Footer } from '../../reusable/Footer'
 import { ReviewForm } from '../../reusable/ReviewForm'
+import { RootState } from '../../stores'
+import { useSelector } from 'react-redux'
+import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
 
 interface Props {
     product: ProductDetail
@@ -35,9 +38,11 @@ const useStyles = makeStyles(() =>
 
 export const ProductDetailTemplate: FC<Props> = props => {
     const classes = useStyles()
+    const loading = useSelector((state: RootState) => state.error.loading)
 
     return (
         <>
+            {loading && <LinearLoader />}
             <Box className={classes.root}>
                 <ProductContents
                     product={props.product}

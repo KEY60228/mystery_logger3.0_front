@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 import { useSelector } from 'react-redux'
 
-import { ReviewIndex, ReviewDetail, User } from '../../@types'
+import { ReviewIndex, Review, User, ReviewContents, ReviewDetail } from '../../@types'
 import {
     asyncDeleteReview,
     asyncGetTimeline,
@@ -23,35 +23,42 @@ import { TimelineTemplate as Template } from './layout'
 export const Timeline: FC = () => {
     const dispatch = useAppDispatch()
 
+    // ログインユーザー
     const currentUser = useSelector((state: RootState) => state.auth.user)
+
+    // reviews state
     const [reviews, setReviews] = useState<ReviewIndex[] | null>(null)
+    // 編集対象review state
     const [review, setReview] = useState<ReviewDetail | null>(null)
 
-    const [spoil, setSpoil] = useState<boolean>(false)
-    const [rating, setRating] = useState<number>(0)
-    const [result, setResult] = useState<number>(0)
-    const [joined_at, setJoined_at] = useState<Date | null>(null)
-    const [contents, setContents] = useState<string | null>('')
-    const [comment, setComment] = useState<string | null>('')
+    const [reviewContents, setReviewContents] = useState<ReviewContents>({
+        spoil: false,
+        rating: 0,
+        result: 0,
+        joined_at: null,
+        contents: '',
+    })
+
+    // const [comment, setComment] = useState<string | null>('')
 
     // 投稿フォームの開閉
-    const [open, setOpen] = useState<boolean>(false)
-
-    const getReviews = async () => {
-        dispatch(asyncGetTimeline()).then(
-            result => setReviews(result)
-        ).catch(() => {return})
-    }
+    const [formOpen, setFormOpen] = useState<boolean>(false)
 
     const edit = (review: ReviewDetail) => {
-        if (!review) return false // 仮
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false
         setReview(review)
-        setRating(review.rating)
-        setResult(review.result)
-        setJoined_at(review.joined_at ? new Date(review.joined_at) : null)
-        setSpoil(review.spoil)
-        setContents(review.exposed_contents)
-        setOpen(true)
+        setReviewContents({
+            rating: review.rating,
+            result: review.result,
+            joined_at: review.joined_at ? new Date(review.joined_at) : null,
+            spoil: review.spoil,
+            contents: review.exposed_contents,
+        })
+        setFormOpen(true)
     }
 
     const update = () => {
@@ -59,39 +66,41 @@ export const Timeline: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!review) return false // 仮
+        if (!review) return false
         dispatch(
             asyncUpdateReview(
                 review.id,
-                spoil,
-                rating,
-                result,
-                joined_at?.toISOString() || null,
-                contents,
+                reviewContents.spoil,
+                reviewContents.rating,
+                reviewContents.result,
+                reviewContents.joined_at?.toISOString() || null,
+                reviewContents.contents,
             ),
         )
             .then(() => {
                 getReviews()
-                setReview(null)
-                setOpen(false)
-                setRating(0)
-                setResult(0)
-                setJoined_at(null)
-                setContents('')
+                setFormOpen(false)
+                setReviewContents({
+                    rating: 0,
+                    result: 0,
+                    spoil: false,
+                    joined_at: null,
+                    contents: '',
+                })
             })
             .catch(() => {return})
     }
 
-    const deleteReview = () => {
-        if (!review) return false // 仮
+    const deleteReview = (review: Review) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!review) return false
         dispatch(asyncDeleteReview(review.id))
             .then(() => {
                 getReviews()
-                setOpen(false)
-                setRating(0)
-                setResult(0)
-                setJoined_at(null)
-                setContents('')
+                setFormOpen(false)
             })
             .catch(() => {return})
     }
@@ -101,7 +110,7 @@ export const Timeline: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!user) return false // 仮
+        if (!user) return false
 
         // 楽観的更新
         dispatch(
@@ -122,7 +131,7 @@ export const Timeline: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!user) return false // 仮
+        if (!user) return false
 
         // 楽観的更新
         const follows_id = currentUser.follows_id.filter(el => {
@@ -137,23 +146,23 @@ export const Timeline: FC = () => {
             .catch(() => {return})
     }
 
-    const postComment = (review: ReviewIndex) => {
-        if (!currentUser) {
-            dispatch(setPopper('unauthenticated'))
-            return false
-        }
-        if (!review || !comment) return false // 仮
-        dispatch(asyncPostComment(review.id, comment))
-            .then(() => getReviews())
-            .catch(() => {return})
-    }
+    // const postComment = (review: ReviewIndex) => {
+    //     if (!currentUser) {
+    //         dispatch(setPopper('unauthenticated'))
+    //         return false
+    //     }
+    //     if (!review || !comment) return false // 仮
+    //     dispatch(asyncPostComment(review.id, comment))
+    //         .then(() => getReviews())
+    //         .catch(() => {return})
+    // }
 
-    const likeReview = (review: ReviewIndex) => {
+    const likeReview = (review: Review) => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!review || !reviews) return false // 仮
+        if (!review || !reviews) return false
 
         // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
         dispatch(
@@ -182,12 +191,12 @@ export const Timeline: FC = () => {
             .catch(() => {return})
     }
 
-    const unlikeReview = (review: ReviewIndex) => {
+    const unlikeReview = (review: Review) => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!review || !reviews) return false // 仮
+        if (!review || !reviews) return false
 
         // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
         const like_reviews_id = currentUser.like_reviews_id.filter(el => {
@@ -217,6 +226,12 @@ export const Timeline: FC = () => {
             .catch(() => {return})
     }
 
+    const getReviews = async () => {
+        dispatch(asyncGetTimeline()).then(
+            result => setReviews(result)
+        ).catch(() => {return})
+    }
+
     useEffect(() => {
         getReviews()
     }, [])
@@ -230,6 +245,18 @@ export const Timeline: FC = () => {
                 <>
                     <Template
                         reviews={reviews}
+                        review={review}
+                        formOpen={formOpen}
+                        setFormOpen={setFormOpen}
+                        reviewContents={reviewContents}
+                        setReviewContents={setReviewContents}
+                        editReview={edit}
+                        postReview={update}
+                        deleteReview={deleteReview}
+                        follow={follow }
+                        unfollow={unfollow }
+                        likeReview={likeReview}
+                        unlikeReview={unlikeReview}
                     />
                 </>
             )}

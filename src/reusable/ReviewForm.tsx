@@ -1,4 +1,5 @@
 import React, { FC, forwardRef, ReactElement, Ref } from 'react'
+import { useSelector } from 'react-redux'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Slide, Dialog, AppBar, Toolbar, Grid, IconButton, Button, Box, Slider, Select, MenuItem, Checkbox, OutlinedInput } from '@material-ui/core'
 import DateFnsUtils from '@date-io/date-fns'
@@ -12,6 +13,8 @@ import CloseIcon from '@material-ui/icons/Close'
 
 import { Product, ReviewContents } from '../@types'
 import { ProductImage } from './ProductImage'
+import { RootState } from '../stores'
+import { LinearLoader } from '../_reusable/Loader/LinearLoader'
 
 interface Props {
     product: Product
@@ -119,6 +122,7 @@ const Transition = forwardRef(
 
 export const ReviewForm: FC<Props> = props => {
     const classes = useStyles()
+    const loading = useSelector((state: RootState) => state.error.loading)
 
     const contentsChange = (ev: React.ChangeEvent<{value: string}>) => {
         ev.persist()
@@ -153,6 +157,7 @@ export const ReviewForm: FC<Props> = props => {
                     </Grid>
                 </Toolbar>
             </AppBar>
+            {loading && <LinearLoader />}
             <Box className={classes.reviewBox}>
                 <Grid container wrap='nowrap'>
                     <ProductImage

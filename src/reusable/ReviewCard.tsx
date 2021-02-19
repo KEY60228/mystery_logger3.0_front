@@ -215,6 +215,7 @@ export const ReviewCard: FC<Props> = props => {
                         className={classes.spoiledContents}
                     >
                         ※ネタバレを表示する
+                        <span dangerouslySetInnerHTML={{__html: '<!-- 見いたあなあああ！！！！ -->'}}></span>
                     </p>
                 }
                 <p className={classes.postDate}>{formatDate(new Date(props.review.created_at))}</p>
