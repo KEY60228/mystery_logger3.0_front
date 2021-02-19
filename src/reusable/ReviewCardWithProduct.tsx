@@ -8,16 +8,19 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
-import { ReviewIndex } from '../@types'
-import { formatData } from '../util'
+import { Review, ReviewIndex } from '../@types'
+import { formatDate } from '../util'
 
 import { ProductImage } from './ProductImage'
 import { UserImage } from './UserImage'
 import { useSelector } from 'react-redux'
 import { RootState } from '../stores'
+import { ConfirmDeleteReview } from './ConfirmDeleteReview'
 
 interface Props {
     review: ReviewIndex
+    editReview: (review: Review) => void
+    deleteReview: (review: Review) => void
 }
 
 const useStyles = makeStyles(theme =>
@@ -72,6 +75,12 @@ const useStyles = makeStyles(theme =>
             margin: '8px 0 0',
             whiteSpace: 'pre-wrap',
         },
+        spoiledContents: {
+            lineHeight: '16px',
+            fontSize: '13px',
+            color: theme.palette.error.main,
+            margin: '8px 0 0',
+        },
         rightBox: {
             width: '80px',
         },
@@ -90,7 +99,7 @@ const useStyles = makeStyles(theme =>
             marginLeft: '4px',
         },
         divider: {
-            marginTop: '16px',
+            margin: '16px 0',
         },
     })
 )
@@ -98,12 +107,25 @@ const useStyles = makeStyles(theme =>
 export const ReviewCard: FC<Props> = props => {
     const classes = useStyles()
 
+    // ログインユーザー
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
+    // メニューの開閉
     const [menu, setMenu] = useState<null | HTMLElement>(null)
-
     const openMenu = (ev: React.MouseEvent<HTMLButtonElement>) => {
         setMenu(ev.currentTarget)
+    }
+
+    // レビュー削除確認アラートの開閉
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false)
+    const confirmDelete = () => {
+        setMenu(null)
+        setConfirmOpen(true)
+    }
+
+    const editReview = () => {
+        setMenu(null)
+        props.editReview(props.review)
     }
 
     return (
@@ -136,8 +158,8 @@ export const ReviewCard: FC<Props> = props => {
                     }
                     {currentUser?.account_id === props.review.user.account_id &&
                         <>
-                            <MenuItem>編集する</MenuItem>
-                            <MenuItem>削除する</MenuItem>
+                            <MenuItem onClick={editReview}>編集する</MenuItem>
+                            <MenuItem onClick={confirmDelete}>削除する</MenuItem>
                         </>
                     }
                 </Menu>
@@ -165,14 +187,27 @@ export const ReviewCard: FC<Props> = props => {
                             <span className={classes.reviewProperty}>脱出失敗...</span>
                         }
                     </Grid>
-                    <p className={classes.reviewContents}>{props.review.exposed_contents}</p>
+                    {!props.review.spoil &&
+                        <p className={classes.reviewContents}>
+                            {props.review.exposed_contents}
+                        </p>
+                    }
+                    {props.review.spoil &&
+                        <p
+                            // onClick={props.getSpoiledContents}
+                            className={classes.spoiledContents}
+                        >
+                            ※ネタバレを表示する
+                            <span dangerouslySetInnerHTML={{__html: '<!-- 見いたあなあああ！！！！ -->'}}></span>
+                        </p>
+                    }
                 </Box>
                 <Grid container direction='column' justify='space-between' className={classes.rightBox}>
                     <ProductImage
                         product={props.review.product}
                         className={{ height: '112px', width: '80px' }}
                     />
-                    <p className={classes.reviewCreateDate}>{formatData(new Date(props.review.created_at))}</p>
+                    <p className={classes.reviewCreateDate}>{formatDate(new Date(props.review.created_at))}</p>
                 </Grid>
             </Grid>
             <Grid container justify="space-around" className={classes.icons}>
@@ -213,6 +248,12 @@ export const ReviewCard: FC<Props> = props => {
                 </IconButton>
             </Grid>
             <Divider className={classes.divider} />
+            <ConfirmDeleteReview
+                review={props.review}
+                deleteReview={props.deleteReview}
+                confirmOpen={confirmOpen}
+                setConfirmOpen={setConfirmOpen}
+            />
         </>
     )
 }
