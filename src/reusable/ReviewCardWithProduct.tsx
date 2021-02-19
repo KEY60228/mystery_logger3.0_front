@@ -8,7 +8,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import RepeatIcon from '@material-ui/icons/Repeat'
 import ShareIcon from '@material-ui/icons/Share'
 
-import { Review, ReviewIndex } from '../@types'
+import { Review, ReviewIndex, User } from '../@types'
 import { formatDate } from '../util'
 
 import { ProductImage } from './ProductImage'
@@ -21,6 +21,8 @@ interface Props {
     review: ReviewIndex
     editReview: (review: Review) => void
     deleteReview: (review: Review) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
 }
 
 const useStyles = makeStyles(theme =>
@@ -104,7 +106,7 @@ const useStyles = makeStyles(theme =>
     })
 )
 
-export const ReviewCard: FC<Props> = props => {
+export const ReviewCardWithProduct: FC<Props> = props => {
     const classes = useStyles()
 
     // ログインユーザー
@@ -152,7 +154,16 @@ export const ReviewCard: FC<Props> = props => {
                 >
                     {currentUser?.account_id !== props.review.user.account_id &&
                         <>
-                            <MenuItem>@{props.review.user.account_id}をフォローする</MenuItem>
+                            {!currentUser?.follows_id.includes(props.review.user.id) &&
+                                <MenuItem onClick={() => props.follow(props.review.user)}>
+                                    @{props.review.user.account_id}をフォローする
+                                </MenuItem>
+                            }
+                            {currentUser?.follows_id.includes(props.review.user.id) &&
+                                <MenuItem onClick={() => props.unfollow(props.review.user)}>
+                                    @{props.review.user.account_id}のフォローを解除する
+                                </MenuItem>
+                            }
                             <MenuItem>この投稿を通報する</MenuItem>
                         </>
                     }

@@ -2,8 +2,8 @@ import React, { FC } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Divider } from '@material-ui/core'
 
-import { ReviewIndex, Review, ReviewContents, ReviewDetail } from '../../@types'
-import { ReviewCard } from '../../reusable/ReviewCardWithProduct'
+import { ReviewIndex, Review, ReviewContents, ReviewDetail, User } from '../../@types'
+import { ReviewCardWithProduct } from '../../reusable/ReviewCardWithProduct'
 import { Footer } from '../../reusable/Footer'
 import { ReviewForm } from '../../reusable/ReviewForm'
 import { useSelector } from 'react-redux'
@@ -20,6 +20,8 @@ interface Props {
     editReview: (review: Review) => void
     postReview: () => void
     deleteReview: (review: Review) => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -52,11 +54,13 @@ export const TimelineTemplate: FC<Props> = props => {
             <Divider className={classes.divider} />
             <Box className={classes.root}>
                 {props.reviews.map(review =>
-                    <ReviewCard
+                    <ReviewCardWithProduct
                         key={review.id}
                         review={review}
                         editReview={props.editReview}
                         deleteReview={props.deleteReview}
+                        follow={props.follow}
+                        unfollow={props.unfollow}
                     />
                 )}
             </Box>

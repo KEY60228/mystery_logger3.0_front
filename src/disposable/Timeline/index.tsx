@@ -105,46 +105,46 @@ export const Timeline: FC = () => {
             .catch(() => {return})
     }
 
-    // const follow = (user: User) => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!user) return false // 仮
+    const follow = (user: User) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!user) return false
 
-    //     // 楽観的更新
-    //     dispatch(
-    //         setUser(
-    //             Object.assign({}, currentUser, {
-    //                 follows_id: currentUser.follows_id.concat([user.id]),
-    //             }),
-    //         ),
-    //     )
+        // 楽観的更新
+        dispatch(
+            setUser(
+                Object.assign({}, currentUser, {
+                    follows_id: currentUser.follows_id.concat([user.id]),
+                }),
+            ),
+        )
 
-    //     dispatch(asyncFollow(user.id))
-    //         .then(() => dispatch(asyncGetCurrentUser()))
-    //         .catch(() => {return})
-    // }
+        dispatch(asyncFollow(user.id))
+            .then(() => dispatch(asyncGetCurrentUser()))
+            .catch(() => {return})
+    }
 
-    // const unfollow = (user: User) => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!user) return false // 仮
+    const unfollow = (user: User) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!user) return false
 
-    //     // 楽観的更新
-    //     const follows_id = currentUser.follows_id.filter(el => {
-    //         return el !== user.id
-    //     })
-    //     dispatch(
-    //         setUser(Object.assign({}, currentUser, { follows_id: follows_id })),
-    //     )
+        // 楽観的更新
+        const follows_id = currentUser.follows_id.filter(el => {
+            return el !== user.id
+        })
+        dispatch(
+            setUser(Object.assign({}, currentUser, { follows_id: follows_id })),
+        )
 
-    //     dispatch(asyncUnFollow(user.id))
-    //         .then(() => dispatch(asyncGetCurrentUser()))
-    //         .catch(() => {return})
-    // }
+        dispatch(asyncUnFollow(user.id))
+            .then(() => dispatch(asyncGetCurrentUser()))
+            .catch(() => {return})
+    }
 
     // const postComment = (review: ReviewIndex) => {
     //     if (!currentUser) {
@@ -255,6 +255,8 @@ export const Timeline: FC = () => {
                         editReview={edit}
                         postReview={update}
                         deleteReview={deleteReview}
+                        follow={follow }
+                        unfollow={unfollow }
                     />
                 </>
             )}
