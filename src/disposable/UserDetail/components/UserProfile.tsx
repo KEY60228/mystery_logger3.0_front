@@ -12,6 +12,7 @@ interface Props {
     user: UserDetail
     setFollowsOpen: React.Dispatch<React.SetStateAction<boolean>>
     setFollowersOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editUser: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -88,6 +89,11 @@ export const UserProfile: FC<Props> = props => {
         setMenu(ev.currentTarget)
     }
 
+    const editUser = () => {
+        props.editUser()
+        setMenu(null)
+    }
+
     return (
         <>
             <Grid container wrap='nowrap'>
@@ -139,7 +145,7 @@ export const UserProfile: FC<Props> = props => {
                                 open={Boolean(menu)}
                                 onClose={() => setMenu(null)}
                             >
-                                <MenuItem>プロフィールを編集する</MenuItem>
+                                <MenuItem onClick={editUser}>プロフィールを編集する</MenuItem>
                             </Menu>
                         }
                     </Grid>

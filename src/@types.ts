@@ -248,6 +248,13 @@ export interface ReviewContents {
     contents: string | null
 }
 
+// For User Profiles
+export interface UserContents {
+    name: string
+    account_id: string
+    profile: string
+}
+
 // extends model
 interface PerformanceWithVenue extends Performance {
     venue: Venue

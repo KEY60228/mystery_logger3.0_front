@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import {
     ReviewDetail,
     User,
+    UserContents,
     UserDetail as UserDetailInterface,
 } from '../../@types'
 import {
@@ -39,50 +40,60 @@ export const UserDetail: FC = () => {
     const [user, setUser] = useState<UserDetailInterface | null>(null)
     const [review, setReview] = useState<ReviewDetail | null>(null)
 
-    const [name, setName] = useState<string>('')
-    const [accountId, setAccountId] = useState<string>('')
-    const [profile, setProfile] = useState<string>('')
-    const [image_name, setImage_name] = useState<File | null>(null)
-
-    const [openUserForm, setOpenUserForm] = useState<boolean>(false)
-
-    const [spoil, setSpoil] = useState<boolean>(false)
-    const [rating, setRating] = useState<number>(0)
-    const [result, setResult] = useState<number>(0)
-    const [joined_at, setJoined_at] = useState<Date | null>(null)
-    const [contents, setContents] = useState<string | null>('')
-
-    const [openReviewForm, setOpenReviewForm] = useState<boolean>(false)
-
-    const [comment, setComment] = useState<string | null>('')
+    // ユーザープロフィール
+    const [userFormOpen, setUserFormOpen] = useState<boolean>(false)
+    const [userContents, setUserContents] = useState<UserContents>({
+        name: '',
+        account_id: '',
+        profile: '',
+    })
+    const [image_name, setImage_name] = useState<File|null>(null)
 
 
-    // const editUser = () => {
-    //     if (!user) return false // 仮
-    //     setName(user.name)
-    //     setAccountId(user.account_id)
-    //     setProfile(user.profile || '')
-    //     setOpenUserForm(true)
-    // }
+    // const [spoil, setSpoil] = useState<boolean>(false)
+    // const [rating, setRating] = useState<number>(0)
+    // const [result, setResult] = useState<number>(0)
+    // const [joined_at, setJoined_at] = useState<Date | null>(null)
+    // const [contents, setContents] = useState<string | null>('')
 
-    // const updateUser = () => {
-    //     if (!user) return false // 仮
+    // const [openReviewForm, setOpenReviewForm] = useState<boolean>(false)
 
-    //     const formData = new FormData()
-    //     formData.append('name', name)
-    //     formData.append('account_id', accountId)
-    //     formData.append('profile', profile)
-    //     if (image_name !== null) {
-    //         formData.append('image_name', image_name)
-    //     }
+    // const [comment, setComment] = useState<string | null>('')
 
-    //     dispatch(asyncUpdateUser(formData))
-    //         .then(() => {
-    //             getUser()
-    //             setOpenUserForm(false)
-    //         })
-    //         .catch(() => {return})
-    // }
+    const editUser = () => {
+        if (!user) return false
+        setUserContents({
+            name: user.name,
+            account_id: user.account_id,
+            profile: user.profile || '',
+        })
+        setUserFormOpen(true)
+    }
+
+    const updateUser = () => {
+        if (!user) return false
+
+        const formData = new FormData()
+        formData.append('name', userContents.name)
+        formData.append('account_id', userContents.account_id)
+        formData.append('profile', userContents.profile)
+        if (image_name !== null) {
+            formData.append('image_name', image_name)
+        }
+
+        dispatch(asyncUpdateUser(formData))
+            .then(() => {
+                if (user.account_id === userContents.account_id) {
+                    dispatch(asyncGetCurrentUser())
+                    getUser()
+                } else {
+                    dispatch(asyncGetCurrentUser())
+                    history.push(`/users/${userContents.account_id}`)
+                }
+                setUserFormOpen(false)
+            })
+            .catch(() => {return})
+    }
 
     // const follow = (user: User) => {
     //     if (!currentUser) {
@@ -291,6 +302,14 @@ export const UserDetail: FC = () => {
                 <>
                     <Template
                         user={user}
+                        userFormOpen={userFormOpen}
+                        setUserFormOpen={setUserFormOpen}
+                        userContents={userContents}
+                        setUserContents={setUserContents}
+                        image_name={image_name}
+                        setImage_name={setImage_name}
+                        editUser={editUser}
+                        updateUser={updateUser}
                     />
                 </>
             )}

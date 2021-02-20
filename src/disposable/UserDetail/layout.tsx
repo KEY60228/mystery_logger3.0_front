@@ -2,16 +2,25 @@ import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Divider } from '@material-ui/core'
 
-import { UserDetail } from '../../@types'
+import { UserContents, UserDetail } from '../../@types'
 import { UserProfile } from './components/UserProfile'
 import { UserStatics } from './components/UserStatics'
 import { UserTabs } from './components/UserTabs'
 import { Footer } from '../../reusable/Footer'
 import { FollowList } from './components/FollowList'
+import { UserForm } from './components/UserForm'
 
 
 interface Props {
     user: UserDetail
+    userFormOpen: boolean
+    setUserFormOpen: React.Dispatch<React.SetStateAction<boolean>>
+    userContents: UserContents
+    setUserContents: React.Dispatch<React.SetStateAction<UserContents>>
+    image_name: File | null
+    setImage_name: React.Dispatch<React.SetStateAction<File|null>>
+    editUser: () => void
+    updateUser: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -44,6 +53,7 @@ export const UserDetailTemplate: FC<Props> = props => {
                     user={props.user}
                     setFollowsOpen={setFollowsOpen}
                     setFollowersOpen={setFollowersOpen}
+                    editUser={props.editUser}
                 />
                 <Divider className={classes.divider} />
                 <UserStatics user={props.user} />
@@ -67,6 +77,16 @@ export const UserDetailTemplate: FC<Props> = props => {
                 label='フォロワー'
                 follow={() => console.log()}
                 unfollow={() => console.log()}
+            />
+            <UserForm
+                user={props.user}
+                open={props.userFormOpen}
+                setOpen={props.setUserFormOpen}
+                userContents={props.userContents}
+                setUserContents={props.setUserContents}
+                image_name={props.image_name}
+                setImage_name={props.setImage_name}
+                updateUser={props.updateUser}
             />
         </>
     )
