@@ -7,6 +7,7 @@ import { UserProfile } from './components/UserProfile'
 import { UserStatics } from './components/UserStatics'
 import { UserTabs } from './components/UserTabs'
 import { Footer } from '../../reusable/Footer'
+import { FollowList } from './components/FollowList'
 
 
 interface Props {
@@ -33,11 +34,17 @@ const useStyles = makeStyles(() =>
 export const UserDetailTemplate: FC<Props> = props => {
     const classes = useStyles()
 
+    const [followsOpen, setFollowsOpen] = useState<boolean>(false)
+    const [followersOpen, setFollowersOpen] = useState<boolean>(false)
 
     return (
         <>
             <Box className={classes.root}>
-                <UserProfile user={props.user} />
+                <UserProfile
+                    user={props.user}
+                    setFollowsOpen={setFollowsOpen}
+                    setFollowersOpen={setFollowersOpen}
+                />
                 <Divider className={classes.divider} />
                 <UserStatics user={props.user} />
                 <Divider className={classes.staticDivider} />
@@ -45,6 +52,22 @@ export const UserDetailTemplate: FC<Props> = props => {
                 <Divider className={classes.lastDivider} />
             </Box>
             <Footer />
+            <FollowList
+                users={props.user.follows}
+                open={followsOpen}
+                setOpen={setFollowsOpen}
+                label='フォローしている人'
+                follow={() => console.log()}
+                unfollow={() => console.log()}
+            />
+            <FollowList
+                users={props.user.followers}
+                open={followersOpen}
+                setOpen={setFollowersOpen}
+                label='フォロワー'
+                follow={() => console.log()}
+                unfollow={() => console.log()}
+            />
         </>
     )
 }

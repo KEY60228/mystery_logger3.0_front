@@ -10,6 +10,8 @@ import { UserImage } from '../../../reusable/UserImage'
 
 interface Props {
     user: UserDetail
+    setFollowsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setFollowersOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const useStyles = makeStyles(() =>
@@ -96,11 +98,11 @@ export const UserProfile: FC<Props> = props => {
                 />
                 <Grid container direction='column' className={classes.userBox}>
                     <Grid container justify='space-between' wrap='nowrap'>
-                        <Grid container direction='column'>
+                        <Grid container direction='column' onClick={() => props.setFollowsOpen(true)}>
                             <p className={classes.userProperty}>{props.user.follows_count}</p>
                             <p className={classes.userPropertyLabel}>フォロー</p>
                         </Grid>
-                        <Grid container direction='column'>
+                        <Grid container direction='column' onClick={() => props.setFollowersOpen(true)}>
                             <p className={classes.userProperty}>{props.user.followers_count}</p>
                             <p className={classes.userPropertyLabel}>フォロワー</p>
                         </Grid>
