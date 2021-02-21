@@ -9,6 +9,9 @@ import { UserTabs } from './components/UserTabs'
 import { Footer } from '../../reusable/Footer'
 import { FollowList } from './components/FollowList'
 import { UserForm } from './components/UserForm'
+import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../stores'
 
 
 interface Props {
@@ -23,6 +26,7 @@ interface Props {
     updateUser: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
+    logout: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -45,11 +49,14 @@ const useStyles = makeStyles(() =>
 export const UserDetailTemplate: FC<Props> = props => {
     const classes = useStyles()
 
+    const loading = useSelector((state: RootState) => state.error.loading)
+
     const [followsOpen, setFollowsOpen] = useState<boolean>(false)
     const [followersOpen, setFollowersOpen] = useState<boolean>(false)
 
     return (
         <>
+            {loading && <LinearLoader />}
             <Box className={classes.root}>
                 <UserProfile
                     user={props.user}
@@ -58,6 +65,7 @@ export const UserDetailTemplate: FC<Props> = props => {
                     editUser={props.editUser}
                     follow={props.follow}
                     unfollow={props.unfollow}
+                    logout={props.logout}
                 />
                 <Divider className={classes.divider} />
                 <UserStatics user={props.user} />

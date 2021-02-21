@@ -15,6 +15,7 @@ interface Props {
     editUser: () => void
     follow: (user: User) => void
     unfollow: (user: User) => void
+    logout: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -91,6 +92,16 @@ export const UserProfile: FC<Props> = props => {
         setMenu(ev.currentTarget)
     }
 
+    const editUser = () => {
+        setMenu(null)
+        props.editUser()
+    }
+
+    const logout = () => {
+        setMenu(null)
+        props.logout()
+    }
+
     return (
         <>
             <Grid container wrap='nowrap'>
@@ -146,9 +157,21 @@ export const UserProfile: FC<Props> = props => {
                             </>
                         }
                         {currentUser?.account_id === props.user.account_id &&
-                            <Button variant='contained' color='primary' onClick={props.editUser} className={classes.followButton}>
-                                <p className={classes.followButtonLabel}>プロフィールを変更する</p>
-                            </Button>
+                            <>
+                                <Button variant='contained' color='primary' onClick={editUser} className={classes.followButton}>
+                                    <p className={classes.followButtonLabel}>プロフィールを変更する</p>
+                                </Button>
+                                <IconButton onClick={openMenu} className={classes.menuButton}>
+                                    <MoreHorizIcon />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={menu}
+                                    open={Boolean(menu)}
+                                    onClose={() => setMenu(null)}
+                                >
+                                    <MenuItem onClick={logout}>ログアウト</MenuItem>
+                                </Menu>
+                            </>
                         }
                     </Grid>
                 </Grid>
