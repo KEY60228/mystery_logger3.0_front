@@ -41,7 +41,7 @@ const useStyles = makeStyles(() =>
             margin: '24px 0',
         },
         lastDivider: {
-            margin: '40px 0',
+            margin: '24px 0 40px',
         },
     })
 )
