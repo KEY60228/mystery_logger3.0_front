@@ -1,13 +1,21 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { Grid, Button, IconButton } from '@material-ui/core'
+import { Grid, Button, IconButton, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
-import { UserDetail } from '../../../@types'
+import { UserDetail, User } from '../../../@types'
+import { RootState } from '../../../stores/'
 import { UserImage } from '../../../reusable/UserImage'
 
 interface Props {
     user: UserDetail
+    setFollowsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setFollowersOpen: React.Dispatch<React.SetStateAction<boolean>>
+    editUser: () => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
+    logout: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -75,6 +83,25 @@ const useStyles = makeStyles(() =>
 export const UserProfile: FC<Props> = props => {
     const classes = useStyles()
 
+    // ログインユーザー
+    const currentUser = useSelector((state: RootState) => state.auth.user)
+
+    // メニューの開閉
+    const [menu, setMenu] = useState<null | HTMLElement>(null)
+    const openMenu = (ev: React.MouseEvent<HTMLButtonElement>) => {
+        setMenu(ev.currentTarget)
+    }
+
+    const editUser = () => {
+        setMenu(null)
+        props.editUser()
+    }
+
+    const logout = () => {
+        setMenu(null)
+        props.logout()
+    }
+
     return (
         <>
             <Grid container wrap='nowrap'>
@@ -85,11 +112,11 @@ export const UserProfile: FC<Props> = props => {
                 />
                 <Grid container direction='column' className={classes.userBox}>
                     <Grid container justify='space-between' wrap='nowrap'>
-                        <Grid container direction='column'>
+                        <Grid container direction='column' onClick={() => props.setFollowsOpen(true)}>
                             <p className={classes.userProperty}>{props.user.follows_count}</p>
                             <p className={classes.userPropertyLabel}>フォロー</p>
                         </Grid>
-                        <Grid container direction='column'>
+                        <Grid container direction='column' onClick={() => props.setFollowersOpen(true)}>
                             <p className={classes.userProperty}>{props.user.followers_count}</p>
                             <p className={classes.userPropertyLabel}>フォロワー</p>
                         </Grid>
@@ -104,12 +131,48 @@ export const UserProfile: FC<Props> = props => {
                         </Grid>
                     </Grid>
                     <Grid container wrap='nowrap' className={classes.buttons}>
-                        <Button variant='contained' color='primary' className={classes.followButton}>
-                            <p className={classes.followButtonLabel}>フォロー</p>
-                        </Button>
-                        <IconButton className={classes.menuButton}>
-                            <MoreHorizIcon />
-                        </IconButton>
+                        {currentUser?.account_id !== props.user.account_id &&
+                            <>
+                                {!currentUser?.follows_id.includes(props.user.id) &&
+                                    <Button variant='contained' color='primary' onClick={() => props.follow(props.user)} className={classes.followButton}>
+                                        <p className={classes.followButtonLabel}>フォロー</p>
+                                    </Button>
+                                }
+                                {currentUser?.follows_id.includes(props.user.id) &&
+                                    <Button variant='outlined' color='primary' onClick={() => props.unfollow(props.user)} className={classes.followButton}>
+                                        <p className={classes.followButtonLabel}>フォロー解除</p>
+                                    </Button>
+                                }
+                                <IconButton onClick={openMenu} className={classes.menuButton}>
+                                    <MoreHorizIcon />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={menu}
+                                    open={Boolean(menu)}
+                                    onClose={() => setMenu(null)}
+                                >
+                                    <MenuItem>このユーザーをブロックする</MenuItem>
+                                    <MenuItem>このユーザーを通報する</MenuItem>
+                                </Menu>
+                            </>
+                        }
+                        {currentUser?.account_id === props.user.account_id &&
+                            <>
+                                <Button variant='contained' color='primary' onClick={editUser} className={classes.followButton}>
+                                    <p className={classes.followButtonLabel}>プロフィールを変更する</p>
+                                </Button>
+                                <IconButton onClick={openMenu} className={classes.menuButton}>
+                                    <MoreHorizIcon />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={menu}
+                                    open={Boolean(menu)}
+                                    onClose={() => setMenu(null)}
+                                >
+                                    <MenuItem onClick={logout}>ログアウト</MenuItem>
+                                </Menu>
+                            </>
+                        }
                     </Grid>
                 </Grid>
             </Grid>
