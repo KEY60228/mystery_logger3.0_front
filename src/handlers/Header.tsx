@@ -1,9 +1,10 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Button, IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
+import { SideMenu } from './SideMenu'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -34,23 +35,30 @@ const useStyles = makeStyles(() =>
 
 export const Header: FC = () => {
     const classes = useStyles()
+    const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
     return (
-        <Box className={classes.root}>
-            <Button component={Link} to="/" className={classes.titleLink}>
-                <img
-                    src={'/img/TitleLogo.png'}
-                    className={classes.titleLogo}
-                />
-            </Button>
-            <Box className={classes.buttons}>
-                <IconButton className={classes.button}>
-                    <SearchIcon fontSize="large" />
-                </IconButton>
-                <IconButton className={classes.button}>
-                    <MenuIcon fontSize="large" />
-                </IconButton>
+        <>
+            <Box className={classes.root}>
+                <Button component={Link} to="/" className={classes.titleLink}>
+                    <img
+                        src={'/img/TitleLogo.png'}
+                        className={classes.titleLogo}
+                    />
+                </Button>
+                <Box className={classes.buttons}>
+                    <IconButton className={classes.button}>
+                        <SearchIcon fontSize="large" />
+                    </IconButton>
+                    <IconButton onClick={() => setMenuOpen(true)} className={classes.button}>
+                        <MenuIcon fontSize="large" />
+                    </IconButton>
+                </Box>
             </Box>
-        </Box>
+            <SideMenu
+                open={menuOpen}
+                setOpen={setMenuOpen}
+            />
+        </>
     )
 }
