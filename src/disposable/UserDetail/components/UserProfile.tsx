@@ -4,7 +4,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Grid, Button, IconButton, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 
-import { UserDetail } from '../../../@types'
+import { UserDetail, User } from '../../../@types'
 import { RootState } from '../../../stores/'
 import { UserImage } from '../../../reusable/UserImage'
 
@@ -13,6 +13,8 @@ interface Props {
     setFollowsOpen: React.Dispatch<React.SetStateAction<boolean>>
     setFollowersOpen: React.Dispatch<React.SetStateAction<boolean>>
     editUser: () => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -89,11 +91,6 @@ export const UserProfile: FC<Props> = props => {
         setMenu(ev.currentTarget)
     }
 
-    const editUser = () => {
-        props.editUser()
-        setMenu(null)
-    }
-
     return (
         <>
             <Grid container wrap='nowrap'>
@@ -123,30 +120,35 @@ export const UserProfile: FC<Props> = props => {
                         </Grid>
                     </Grid>
                     <Grid container wrap='nowrap' className={classes.buttons}>
-                        <Button variant='contained' color='primary' className={classes.followButton}>
-                            <p className={classes.followButtonLabel}>フォロー</p>
-                        </Button>
-                        <IconButton onClick={openMenu} className={classes.menuButton}>
-                            <MoreHorizIcon />
-                        </IconButton>
                         {currentUser?.account_id !== props.user.account_id &&
-                            <Menu
-                                anchorEl={menu}
-                                open={Boolean(menu)}
-                                onClose={() => setMenu(null)}
-                            >
-                                <MenuItem>このユーザーをブロックする</MenuItem>
-                                <MenuItem>このユーザーを通報する</MenuItem>
-                            </Menu>
+                            <>
+                                {!currentUser?.follows_id.includes(props.user.id) &&
+                                    <Button variant='contained' color='primary' onClick={() => props.follow(props.user)} className={classes.followButton}>
+                                        <p className={classes.followButtonLabel}>フォロー</p>
+                                    </Button>
+                                }
+                                {currentUser?.follows_id.includes(props.user.id) &&
+                                    <Button variant='outlined' color='primary' onClick={() => props.unfollow(props.user)} className={classes.followButton}>
+                                        <p className={classes.followButtonLabel}>フォロー解除</p>
+                                    </Button>
+                                }
+                                <IconButton onClick={openMenu} className={classes.menuButton}>
+                                    <MoreHorizIcon />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={menu}
+                                    open={Boolean(menu)}
+                                    onClose={() => setMenu(null)}
+                                >
+                                    <MenuItem>このユーザーをブロックする</MenuItem>
+                                    <MenuItem>このユーザーを通報する</MenuItem>
+                                </Menu>
+                            </>
                         }
                         {currentUser?.account_id === props.user.account_id &&
-                            <Menu
-                                anchorEl={menu}
-                                open={Boolean(menu)}
-                                onClose={() => setMenu(null)}
-                            >
-                                <MenuItem onClick={editUser}>プロフィールを編集する</MenuItem>
-                            </Menu>
+                            <Button variant='contained' color='primary' onClick={props.editUser} className={classes.followButton}>
+                                <p className={classes.followButtonLabel}>プロフィールを変更する</p>
+                            </Button>
                         }
                     </Grid>
                 </Grid>

@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Divider } from '@material-ui/core'
 
-import { UserContents, UserDetail } from '../../@types'
+import { User, UserContents, UserDetail } from '../../@types'
 import { UserProfile } from './components/UserProfile'
 import { UserStatics } from './components/UserStatics'
 import { UserTabs } from './components/UserTabs'
@@ -21,6 +21,8 @@ interface Props {
     setImage_name: React.Dispatch<React.SetStateAction<File|null>>
     editUser: () => void
     updateUser: () => void
+    follow: (user: User) => void
+    unfollow: (user: User) => void
 }
 
 const useStyles = makeStyles(() =>
@@ -54,6 +56,8 @@ export const UserDetailTemplate: FC<Props> = props => {
                     setFollowsOpen={setFollowsOpen}
                     setFollowersOpen={setFollowersOpen}
                     editUser={props.editUser}
+                    follow={props.follow}
+                    unfollow={props.unfollow}
                 />
                 <Divider className={classes.divider} />
                 <UserStatics user={props.user} />
@@ -67,16 +71,16 @@ export const UserDetailTemplate: FC<Props> = props => {
                 open={followsOpen}
                 setOpen={setFollowsOpen}
                 label='フォローしている人'
-                follow={() => console.log()}
-                unfollow={() => console.log()}
+                follow={props.follow}
+                unfollow={props.unfollow}
             />
             <FollowList
                 users={props.user.followers}
                 open={followersOpen}
                 setOpen={setFollowersOpen}
                 label='フォロワー'
-                follow={() => console.log()}
-                unfollow={() => console.log()}
+                follow={props.follow}
+                unfollow={props.unfollow}
             />
             <UserForm
                 user={props.user}

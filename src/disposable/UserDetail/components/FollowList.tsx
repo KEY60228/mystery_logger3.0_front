@@ -105,7 +105,12 @@ export const FollowList: FC<Props> = props => {
             <Box className={classes.userList}>
                 {props.users &&
                     props.users.map(user => (
-                        <UserCard key={user.id} user={user} />
+                        <UserCard
+                            key={user.id}
+                            user={user}
+                            follow={props.follow}
+                            unfollow={props.unfollow}
+                        />
                     ))}
                 {!props.users?.length && (
                     <p className={classes.noOne}>まだ{props.label}はいません</p>

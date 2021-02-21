@@ -95,48 +95,60 @@ export const UserDetail: FC = () => {
             .catch(() => {return})
     }
 
-    // const follow = (user: User) => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!user) return false // 仮
+    const follow = (user: User) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!user) return false
 
-    //     // 楽観的更新
-    //     dispatch(
-    //         setCurrentUser(
-    //             Object.assign({}, currentUser, {
-    //                 follows_id: currentUser.follows_id.concat([user.id]),
-    //             }),
-    //         ),
-    //     )
+        // 楽観的更新(currentUser)
+        dispatch(
+            setCurrentUser(
+                Object.assign({}, currentUser, {
+                    follows_id: currentUser.follows_id.concat([user.id]),
+                }),
+            ),
+        )
 
-    //     dispatch(asyncFollow(user.id))
-    //         .then(() => dispatch(asyncGetCurrentUser()))
-    //         .catch(() => {return})
-    // }
+        // 楽観的更新(user)
+        setUser((prev: UserDetailInterface) => ({...prev, followers_count: user.followers_count + 1}))
 
-    // const unfollow = (user: User) => {
-    //     if (!currentUser) {
-    //         dispatch(setPopper('unauthenticated'))
-    //         return false
-    //     }
-    //     if (!user) return false // 仮
+        dispatch(asyncFollow(user.id))
+            .then(() => {
+                getUser()
+                dispatch(asyncGetCurrentUser())
+            })
+            .catch(() => {return})
+    }
 
-    //     // 楽観的更新
-    //     const follows_id = currentUser.follows_id.filter(el => {
-    //         return el !== user.id
-    //     })
-    //     dispatch(
-    //         setCurrentUser(
-    //             Object.assign({}, currentUser, { follows_id: follows_id }),
-    //         ),
-    //     )
+    const unfollow = (user: User) => {
+        if (!currentUser) {
+            dispatch(setPopper('unauthenticated'))
+            return false
+        }
+        if (!user) return false
 
-    //     dispatch(asyncUnFollow(user.id))
-    //         .then(() => dispatch(asyncGetCurrentUser()))
-    //         .catch(() => {return})
-    // }
+        // 楽観的更新(currentUser)
+        const follows_id = currentUser.follows_id.filter(el => {
+            return el !== user.id
+        })
+        dispatch(
+            setCurrentUser(
+                Object.assign({}, currentUser, { follows_id: follows_id }),
+            ),
+        )
+
+        // 楽観的更新(user)
+        setUser((prev: UserDetailInterface) => ({...prev, followers_count: user.followers_count - 1}))
+
+        dispatch(asyncUnFollow(user.id))
+            .then(() => {
+                getUser()
+                dispatch(asyncGetCurrentUser())
+            })
+            .catch(() => {return})
+    }
 
     // const editReview = (review: ReviewDetail) => {
     //     if (!review) return false // 仮
@@ -310,6 +322,8 @@ export const UserDetail: FC = () => {
                         setImage_name={setImage_name}
                         editUser={editUser}
                         updateUser={updateUser}
+                        follow={follow}
+                        unfollow={unfollow}
                     />
                 </>
             )}
