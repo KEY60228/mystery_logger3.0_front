@@ -35,6 +35,8 @@
         "terser-webpack-plugin": "^4.2.3"
     },
     "devDependencies": {
+        "@testing-library/react": "^11.2.5",
+        "@testing-library/user-event": "^12.8.1",
         "@types/axios": "^0.14.0",
         "@types/classnames": "^2.2.10",
         "@types/date-fns": "^2.6.0",
