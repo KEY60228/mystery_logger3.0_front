@@ -3,153 +3,137 @@ import { Helmet } from 'react-helmet'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-import {
-    Product,
-    ProductDetail as ProductDetailInterface,
-    ReviewDetail,
-    User,
-} from '../../@types'
+import { ProductDetail as ProductDetailInterface, ReviewContents, Review, User } from '../../@types'
+import { useAppDispatch, RootState } from '../../stores/index'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../../ajax/product'
-import {
-    asyncDeleteReview,
-    asyncLikeReview,
-    asyncPostComment,
-    asyncPostReview,
-    asyncUnlikeReview,
-    asyncUpdateReview,
-} from '../../ajax/review'
-import { asyncFollow, asyncUnFollow } from '../../ajax/user'
+import { ProductDetailTemplate as Template } from './layout'
+import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
+import { asyncDeleteReview, asyncLikeReview, asyncPostReview, asyncUnlikeReview, asyncUpdateReview } from '../../ajax/review'
 import { asyncGetCurrentUser } from '../../ajax/auth'
-import { RootState, useAppDispatch } from '../../stores/index'
 import { setPopper } from '../../stores/error'
 import { setUser } from '../../stores/auth'
-
-import { ProductDetailTemplate as Template } from './template'
-import { CircularLoader } from '../../reusable/Loader/CircularLoader'
+import { asyncFollow, asyncUnFollow } from '../../ajax/user'
 
 export const ProductDetail: FC = () => {
     const dispatch = useAppDispatch()
     const { id } = useParams<{ id: string }>()
 
+    // ログインユーザー
     const currentUser = useSelector((state: RootState) => state.auth.user)
 
+    // Product state
     const [product, setProduct] = useState<ProductDetailInterface | null>(null)
 
-    const [spoil, setSpoil] = useState<boolean>(false)
-    const [rating, setRating] = useState<number>(0)
-    const [result, setResult] = useState<number>(0)
-    const [joined_at, setJoined_at] = useState<Date | null>(null)
-    const [contents, setContents] = useState<string | null>('')
-    const [comment, setComment] = useState<string | null>('')
-
     // 投稿フォームの開閉
-    const [open, setOpen] = useState<boolean>(false)
+    const [formOpen, setFormOpen] = useState<boolean>(false)
 
-    // 新規投稿 or 編集
-    const [isNew, setIsNew] = useState<boolean>(false)
+    // レビューのstate
+    const [reviewContents, setReviewContents] = useState<ReviewContents>({
+        spoil: false,
+        rating: 0,
+        result: 0,
+        joined_at: null,
+        contents: '',
+    })
 
-    const getProduct = () => {
-        dispatch(asyncGetProduct(id)).then(result => setProduct(result)).catch(() => {return})
-    }
-
-    const post = () => {
-        if (!currentUser) {
-            dispatch(setPopper('unauthenticated'))
-            return false
-        }
-        if (!product) return false // 仮
-        const joined = joined_at?.toISOString() || null
-        dispatch(
-            asyncPostReview(
-                product.id,
-                spoil,
-                rating,
-                result,
-                joined,
-                contents,
-            ),
-        )
-            .then(() => {
-                getProduct()
-                dispatch(asyncGetCurrentUser())
-                setOpen(false)
-                setRating(0)
-                setResult(0)
-                setJoined_at(null)
-                setContents('')
-                setIsNew(false)
-            })
-            .catch(() => {return})
-    }
-
-    const edit = () => {
+    const editReview = () => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
         const review = product?.reviews?.find(
-            (review: ReviewDetail) => review.user_id === currentUser.id,
+            review => review.user_id === currentUser.id,
         )
-        if (!review) return false // 仮
-        setRating(review.rating)
-        setResult(review.result)
-        setJoined_at(review.joined_at ? new Date(review.joined_at) : null)
-        setContents(review.exposed_contents)
-        setSpoil(review.spoil)
-        setOpen(true)
+        if (!review) {
+            setFormOpen(true)
+        } else {
+            setReviewContents({
+                rating: review.rating,
+                result: review.result,
+                joined_at: review.joined_at ? new Date(review.joined_at) : null,
+                contents: review.exposed_contents,
+                spoil: review.spoil,
+            })
+            setFormOpen(true)
+        }
     }
 
-    const update = () => {
+    const postReview = () => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
+        if (!product) return false
         const review = product?.reviews?.find(
-            (review: ReviewDetail) => review.user_id === currentUser.id,
+            review => review.user_id === currentUser.id
         )
-        if (!product || !review) return false // 仮
-        dispatch(
-            asyncUpdateReview(
-                review.id,
-                spoil,
-                rating,
-                result,
-                joined_at?.toISOString() || null,
-                contents,
-            ),
-        )
+        if (!review) {
+            dispatch(
+                asyncPostReview(
+                    product.id,
+                    reviewContents.spoil,
+                    reviewContents.rating,
+                    reviewContents.result,
+                    reviewContents.joined_at?.toISOString() || null,
+                    reviewContents.contents,
+                ),
+            )
             .then(() => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
-                setOpen(false)
-                setRating(0)
-                setResult(0)
-                setJoined_at(null)
-                setContents('')
-                setIsNew(false)
+                setFormOpen(false)
+                setReviewContents({
+                    spoil: false,
+                    rating: 0,
+                    result: 0,
+                    joined_at: null,
+                    contents: '',
+                })
             })
             .catch(() => {return})
+        } else {
+            dispatch(
+                asyncUpdateReview(
+                    review.id,
+                    reviewContents.spoil,
+                    reviewContents.rating,
+                    reviewContents.result,
+                    reviewContents.joined_at?.toISOString() || null,
+                    reviewContents.contents,
+                ),
+            )
+            .then(() => {
+                getProduct()
+                dispatch(asyncGetCurrentUser())
+                setFormOpen(false)
+                setReviewContents({
+                    spoil: false,
+                    rating: 0,
+                    result: 0,
+                    joined_at: null,
+                    contents: '',
+                })
+            })
+            .catch(() => {return})
+        }
     }
 
-    const deleteReview = () => {
+    const deleteReview = (review: Review) => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        const review = product?.reviews?.find((review: ReviewDetail) =>
-            currentUser.done_id.includes(review.product_id),
-        )
-        if (!review) return false // 仮
         dispatch(asyncDeleteReview(review.id))
             .then(() => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
-                setOpen(false)
-                setRating(0)
-                setResult(0)
-                setJoined_at(null)
-                setContents('')
-                setIsNew(false)
+                setReviewContents({
+                    spoil: false,
+                    rating: 0,
+                    result: 0,
+                    joined_at: null,
+                    contents: '',
+                })
             })
             .catch(() => {return})
     }
@@ -159,11 +143,11 @@ export const ProductDetail: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!user) return false // 仮
 
         // 楽観的更新
         dispatch(
             setUser(
+                // 修正余地あり？
                 Object.assign({}, currentUser, {
                     follows_id: currentUser.follows_id.concat([user.id]),
                 }),
@@ -180,13 +164,13 @@ export const ProductDetail: FC = () => {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!user) return false // 仮
 
         // 楽観的更新
         const follows_id = currentUser.follows_id.filter(el => {
             return el !== user.id
         })
         dispatch(
+            // 修正余地あり？
             setUser(Object.assign({}, currentUser, { follows_id: follows_id })),
         )
 
@@ -195,28 +179,28 @@ export const ProductDetail: FC = () => {
             .catch(() => {return})
     }
 
-    const wanna = (prod: Product) => {
+    const wanna = () => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!prod) return false // 仮
+        if (!product) return false
 
         // 楽観的更新
         dispatch(
             setUser(
                 Object.assign({}, currentUser, {
-                    wanna_id: currentUser.wanna_id.concat([prod.id]),
+                    wanna_id: currentUser.wanna_id.concat([product.id]),
                 }),
             ),
         )
         setProduct(
             Object.assign({}, product, {
-                wannas_count: product!.wannas_count + 1,
+                wannas_count: product.wannas_count + 1,
             }),
         )
 
-        dispatch(asyncWanna(prod.id))
+        dispatch(asyncWanna(product.id))
             .then(() => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
@@ -224,27 +208,27 @@ export const ProductDetail: FC = () => {
             .catch(() => {return})
     }
 
-    const unwanna = (prod: Product) => {
+    const unwanna = () => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!prod) return false // 仮
+        if (!product) return false
 
         // 楽観的更新
         const wanna_id = currentUser.wanna_id.filter(el => {
-            return el !== prod.id
+            return el !== product.id
         })
         dispatch(
             setUser(Object.assign({}, currentUser, { wanna_id: wanna_id })),
         )
         setProduct(
             Object.assign({}, product, {
-                wannas_count: product!.wannas_count - 1,
+                wannas_count: product.wannas_count - 1,
             }),
         )
 
-        dispatch(asyncUnwanna(prod.id))
+        dispatch(asyncUnwanna(product.id))
             .then(() => {
                 getProduct()
                 dispatch(asyncGetCurrentUser())
@@ -252,23 +236,11 @@ export const ProductDetail: FC = () => {
             .catch(() => {return})
     }
 
-    const postComment = (review: ReviewDetail) => {
+    const likeReview = (review: Review) => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!review || !comment) return false // 仮
-        dispatch(asyncPostComment(review.id, comment))
-            .then(() => getProduct())
-            .catch(() => {return})
-    }
-
-    const likeReview = (review: ReviewDetail) => {
-        if (!currentUser) {
-            dispatch(setPopper('unauthenticated'))
-            return false
-        }
-        if (!review) return false // 仮
 
         // 楽観的更新 (currentUser.like_reviews_idにプラス&該当のreview.review_likes_countに+1)
         dispatch(
@@ -297,12 +269,11 @@ export const ProductDetail: FC = () => {
             .catch(() => {return})
     }
 
-    const unlikeReview = (review: ReviewDetail) => {
+    const unlikeReview = (review: Review) => {
         if (!currentUser) {
             dispatch(setPopper('unauthenticated'))
             return false
         }
-        if (!review) return false // 仮
 
         // 楽観的更新 (currentUser.like_reviews_idから削除&該当のreview.review_likes_countに-1)
         const like_reviews_id = currentUser.like_reviews_id.filter(el => {
@@ -332,12 +303,12 @@ export const ProductDetail: FC = () => {
             .catch(() => {return})
     }
 
+    const getProduct = () => {
+        dispatch(asyncGetProduct(id)).then(result => setProduct(result)).catch(() => {return})
+    }
+
     useEffect(() => {
         getProduct()
-
-        return () => {
-            setProduct(null)
-        }
     }, [])
 
     return (
@@ -346,39 +317,22 @@ export const ProductDetail: FC = () => {
                 <title>作品情報 - なぞログ</title>
             </Helmet>
             {product && (
-                <>
-                    <Template
-                        currentUser={currentUser}
-                        product={product}
-                        isNew={isNew}
-                        setIsNew={setIsNew}
-                        open={open}
-                        setOpen={setOpen}
-                        rating={rating}
-                        setRating={setRating}
-                        result={result}
-                        setResult={setResult}
-                        joined_at={joined_at}
-                        setJoined_at={setJoined_at}
-                        spoil={spoil}
-                        setSpoil={setSpoil}
-                        contents={contents}
-                        setContents={setContents}
-                        edit={edit}
-                        post={post}
-                        update={update}
-                        deleteReview={deleteReview}
-                        follow={follow}
-                        unfollow={unfollow}
-                        wanna={wanna}
-                        unwanna={unwanna}
-                        comment={comment}
-                        setComment={setComment}
-                        postComment={postComment}
-                        likeReview={likeReview}
-                        unlikeReview={unlikeReview}
-                    />
-                </>
+                <Template
+                    product={product}
+                    formOpen={formOpen}
+                    setFormOpen={setFormOpen}
+                    reviewContents={reviewContents}
+                    setReviewContents={setReviewContents}
+                    editReview={editReview}
+                    postReview={postReview}
+                    deleteReview={deleteReview}
+                    follow={follow}
+                    unfollow={unfollow}
+                    wanna={wanna}
+                    unwanna={unwanna}
+                    likeReview={likeReview}
+                    unlikeReview={unlikeReview}
+                />
             )}
             {!product && <CircularLoader />}
         </>

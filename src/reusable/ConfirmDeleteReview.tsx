@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
 import {
     Button,
     Dialog,
@@ -7,39 +7,27 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    Slide,
 } from '@material-ui/core'
-import { TransitionProps } from '@material-ui/core/transitions'
+import { Review } from '../@types'
 
 interface Props {
-    deleteReview: () => void
+    review: Review
+    deleteReview: (review: Review) => void
     confirmOpen: boolean
     setConfirmOpen: (value: boolean) => void
-    className?: ClassProps
 }
 
-interface ClassProps {
-    width?: string
-}
-
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         root: {},
     }),
 )
 
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & { children?: React.ReactElement<any, any> },
-    ref: React.Ref<unknown>,
-) {
-    return <Slide direction="up" ref={ref} {...props} />
-})
-
 export const ConfirmDeleteReview: FC<Props> = props => {
-    const classes = useStyles(props.className)
+    const classes = useStyles()
 
     const confirmDelete = () => {
-        props.deleteReview()
+        props.deleteReview(props.review)
         props.setConfirmOpen(false)
     }
 
@@ -50,7 +38,6 @@ export const ConfirmDeleteReview: FC<Props> = props => {
     return (
         <Dialog
             open={props.confirmOpen}
-            TransitionComponent={Transition}
             keepMounted
             onClose={cancelDelete}
             aria-labelledby="alert-dialog-slide-title"

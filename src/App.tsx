@@ -8,7 +8,6 @@ import { asyncGetCurrentUser } from './ajax/auth'
 import { GuestRoute } from './handlers/RouteHandler/GuestRoute'
 import { PrivateRoute } from './handlers/RouteHandler/PrivateRoute'
 import { Header } from './handlers/Header'
-import { BottomNav } from './handlers/BottomNav'
 import { TopPage } from './disposable/TopPage/'
 import { Login } from './disposable/Login/'
 import { PreRegister } from './disposable/PreRegister/'
@@ -17,11 +16,13 @@ import { UserDetail } from './disposable/UserDetail/'
 import { ProductDetail } from './disposable/ProductDetail/'
 import { ReviewDetail } from './disposable/ReviewDetail/'
 import { Timeline } from './disposable/Timeline/'
-import { Search } from './disposable/Search/'
-import { OrganizerDetail } from './disposable/OrganizerDetail/'
-import { VenueDetail } from './disposable/VenueDetail/'
-import { Accompanies } from './disposable/Accompanies/'
-import { Notifications } from './disposable/Notifications/'
+import { VerifyFailed } from './disposable/VerifyFailed/'
+
+import { Search } from './_disposable/Search'
+import { OrganizerDetail } from './_disposable/OrganizerDetail'
+import { VenueDetail } from './_disposable/VenueDetail'
+import { Accompanies } from './_disposable/Accompanies'
+import { Notifications } from './_disposable/Notifications'
 
 import { ErrorHandler } from './handlers/ErrorHandler/ErrorHandler'
 import { SystemErrorPage } from './handlers/ErrorHandler/SystemErrorPage'
@@ -66,10 +67,10 @@ const App: FC = () => {
                     <Route path="/venues/:id" children={<VenueDetail />} />
                     <Route path="/accompany" children={<Accompanies />} />
                     <Route path="/notifications" children={<Notifications />} />
-                    <Route path="/404" children={<NotFoundPage />} />
+                    <Route path="/verify-failed" children={<VerifyFailed />} />
                     <Route path="/500" children={<SystemErrorPage />} />
+                    <Route children={<NotFoundPage />} />
                 </Switch>
-                <BottomNav />
             </BrowserRouter>
         </>
     )

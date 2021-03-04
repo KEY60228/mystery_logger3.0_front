@@ -16,7 +16,7 @@ export interface Product {
     updated_at: string // 更新時
     avg_rating: number | null // 平均評価 0ならnullが返る
     success_count: number // 成功数
-    na_counr: number // 失敗数
+    na_count: number // 失敗数
     success_rate: number | null // 脱出成功率 有効回答が0ならnullが返る
     reviews_count: number // 投稿数
     wannas_count: number // 「行きたい」数
@@ -222,6 +222,37 @@ export interface CurrentUser {
     done_id: number[] // 行った作品のID
     wanna_id: number[] // 「行きたい」作品のID
     like_reviews_id: number[] // LIKEしたレビューのID
+}
+
+// For Login
+export interface LoginData {
+    email: string
+    password: string
+}
+
+// For Register
+export interface RegisterData {
+    name: string
+    accountId: string
+    password: string
+    email: string
+    preRegisterId: number
+}
+
+// For PostReview
+export interface ReviewContents {
+    spoil: boolean
+    rating: number
+    result: number
+    joined_at: Date | null
+    contents: string | null
+}
+
+// For User Profiles
+export interface UserContents {
+    name: string
+    account_id: string
+    profile: string
 }
 
 // extends model
