@@ -13,7 +13,7 @@ const useStyes = makeStyles(() =>
 export const VerifyFailedTemplate: FC = () => {
     return (
         <Box>
-            <p>認証に失敗しました</p>
+            <p data-testid='failed'>認証に失敗しました</p>
         </Box>
     )
 }
