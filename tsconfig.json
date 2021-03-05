@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "es5",
         "module": "es2015",
-        "types":["node"],
+        "types":["node", "jest"],
         "lib": [
             "esnext",
             "dom",
@@ -17,6 +17,7 @@
         "jsx": "react",
         "allowSyntheticDefaultImports": true,
         "moduleResolution": "node",
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "esModuleInterop": true // for testing-library
     }
 }
