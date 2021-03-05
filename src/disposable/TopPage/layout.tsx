@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 
-import { ProductIndex } from '../../@types'
+import { ProductIndex, PropsForTopPage } from '../../@types'
 import { Footer } from '../../reusable/Footer'
 
 import { ProductRankings } from './components/ProductRankings'
@@ -10,7 +10,7 @@ import { ProductsByCategory } from './components/ProductsByCategory'
 import { UserRankings } from './components/UserRankings'
 
 interface Props {
-    products: ProductIndex[]
+    products: PropsForTopPage
 }
 
 const useStyles = makeStyles(() =>
@@ -38,10 +38,10 @@ export const TopPageTemplate: FC<Props> = props => {
     return (
         <>
             <img src="./img/Banner.png" className={classes.image} />
-            <ProductRankings products={sortProductsByReviewsCount(props.products)} />
+            <ProductRankings products={props.products} />
             <SearchBox />
             <ProductsByCategory products={props.products} />
-            <UserRankings products={props.products} />
+            <UserRankings users={props.products} />
             <Footer />
         </>
     )

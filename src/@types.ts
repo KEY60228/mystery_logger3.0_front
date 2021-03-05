@@ -224,6 +224,30 @@ export interface CurrentUser {
     like_reviews_id: number[] // LIKEしたレビューのID
 }
 
+// For TopPage
+interface withOrganizerName extends Product {
+    organizer_name: string
+}
+
+interface withVenuePrefecture extends Product {
+    addr_prefecture: string
+}
+
+interface withCategoryName extends Product {
+    category_name: string
+}
+
+export interface PropsForTopPage {
+    products_sortby_ratings: Product[]
+    products_sortby_reviews_count: Product[]
+    products_sortby_success_rate: Product[]
+    products_categorizeby_organizer: withOrganizerName[]
+    products_categorizeby_venue: withVenuePrefecture[]
+    products_categorizeby_category: withCategoryName[]
+    users_sortby_reviews_count: User[]
+    users_sortby_success_rate: User[]
+}
+
 // For Login
 export interface LoginData {
     email: string

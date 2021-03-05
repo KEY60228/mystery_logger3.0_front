@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 
-import { ProductIndex } from '../../@types'
+import { PropsForTopPage } from '../../@types'
 import { useAppDispatch } from '../../stores/index'
 import { asyncGetProducts } from '../../ajax/product'
 
@@ -11,7 +11,7 @@ import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
 export const TopPage: FC = () => {
     const dispatch = useAppDispatch()
 
-    const [products, setProducts] = useState<ProductIndex[] | null>(null)
+    const [products, setProducts] = useState<PropsForTopPage | null>(null)
 
     const getProducts = () => {
         dispatch(asyncGetProducts()).then(
