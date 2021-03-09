@@ -2,11 +2,12 @@ import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Tabs, Tab } from '@material-ui/core'
 
-import { ProductIndex } from '../../../@types'
+import { PropsForTopPage } from '../../../@types'
 import { TabPanel } from '../../../reusable/TabPanel'
+import { UserImage } from '../../../reusable/UserImage'
 
 interface Props {
-    products: ProductIndex[]
+    users: PropsForTopPage
 }
 
 const useStyles = makeStyles(() =>
@@ -44,12 +45,20 @@ const useStyles = makeStyles(() =>
             width: '200px',
             height: '12px',
         },
-        userImage: {
-            height: '96px',
+        images: {
             width: '96px',
-            borderRadius: '50%',
-            objectFit: 'cover',
             margin: '0 4px',
+            display: 'inline-block',
+        },
+        label: {
+            lineHeight: '16px',
+            fontSize: '12px',
+            margin: '8px 0 0',
+            width: '96px',
+            textAlign: 'center',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
         },
     })
 )
@@ -87,12 +96,14 @@ export const UserRankings: FC<Props> = props => {
             <TabPanel value={value} index={0}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
-                            <img
-                                key={product.id}
-                                src={`${process.env.API_BASEURL}${product.image_name}`}
-                                className={classes.userImage}
-                            />
+                        {props.users.users_sortby_reviews_count.map(user => (
+                            <Box key={user.id} className={classes.images}>
+                                <UserImage
+                                    user={user}
+                                    className={{height: '96px', width: '96px'}}
+                                />
+                                <p className={classes.label}>{user.name}</p>
+                            </Box>
                         ))}
                     </Box>
                 </Box>
@@ -100,12 +111,14 @@ export const UserRankings: FC<Props> = props => {
             <TabPanel value={value} index={1}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
-                            <img
-                                key={product.id}
-                                src={`${process.env.API_BASEURL}${product.image_name}`}
-                                className={classes.userImage}
-                            />
+                        {props.users.users_sortby_success_rate.map(user => (
+                            <Box key={user.id} className={classes.images}>
+                                <UserImage
+                                    user={user}
+                                    className={{height: '96px', width: '96px'}}
+                                />
+                                <p className={classes.label}>{user.name}</p>
+                            </Box>
                         ))}
                     </Box>
                 </Box>

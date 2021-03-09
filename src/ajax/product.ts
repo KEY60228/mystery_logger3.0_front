@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { AppDispatch } from '../stores/index'
 import { setCode } from '../stores/error'
-import { ProductDetail, ProductIndex } from '../@types'
+import { ProductDetail, ProductIndex, PropsForTopPage } from '../@types'
 import {
     NOT_FOUND,
     NO_CONTENT,
@@ -30,10 +30,10 @@ axios.interceptors.response.use(
 )
 
 export const asyncGetProducts = () => {
-    return async (dispatch: AppDispatch): Promise<ProductIndex[]> => {
+    return async (dispatch: AppDispatch): Promise<PropsForTopPage> => {
         dispatch(setCode(null))
 
-        const response = await axios.get<ProductIndex[]>('/v1/products')
+        const response = await axios.get<PropsForTopPage>('/v1/products')
 
         if (response.status === OK) {
             dispatch(setCode(OK))

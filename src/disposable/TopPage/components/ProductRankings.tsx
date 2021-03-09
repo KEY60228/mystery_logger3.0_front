@@ -2,12 +2,12 @@ import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Tabs, Tab } from '@material-ui/core'
 
-import { ProductIndex } from '../../../@types'
+import { PropsForTopPage } from '../../../@types'
 import { TabPanel } from '../../../reusable/TabPanel'
 import { ProductImage } from '../../../reusable/ProductImage'
 
 interface Props {
-    products: ProductIndex[]
+    products: PropsForTopPage
 }
 
 const useStyles = makeStyles(() =>
@@ -84,7 +84,7 @@ export const ProductRankings: FC<Props> = (props) => {
             <TabPanel value={value} index={0}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
+                        {props.products.products_sortby_ratings.map(product => (
                             <ProductImage
                                 key={product.id}
                                 product={product}
@@ -97,7 +97,7 @@ export const ProductRankings: FC<Props> = (props) => {
             <TabPanel value={value} index={1}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
+                        {props.products.products_sortby_reviews_count.map(product => (
                             <ProductImage
                                 key={product.id}
                                 product={product}
@@ -110,7 +110,7 @@ export const ProductRankings: FC<Props> = (props) => {
             <TabPanel value={value} index={2}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
+                        {props.products.products_sortby_success_rate.map(product => (
                             <ProductImage
                                 key={product.id}
                                 product={product}

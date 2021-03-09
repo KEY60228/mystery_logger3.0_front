@@ -2,13 +2,13 @@ import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Tabs, Tab } from '@material-ui/core'
 
-import { ProductIndex } from '../../../@types'
+import { PropsForTopPage } from '../../../@types'
 import { TabPanel } from '../../../reusable/TabPanel'
 
 import { ProductImage } from '../../../reusable/ProductImage'
 
 interface Props {
-    products: ProductIndex[]
+    products: PropsForTopPage
 }
 
 const useStyles = makeStyles(() =>
@@ -42,6 +42,21 @@ const useStyles = makeStyles(() =>
             display: 'inline-block',
             whiteSpace: 'nowrap',
             width: '100%',
+        },
+        images: {
+            width: '120px',
+            margin: '0 4px',
+            display: 'inline-block',
+        },
+        label: {
+            lineHeight: '16px',
+            fontSize: '12px',
+            margin: '8px 0 0',
+            width: '120px',
+            textAlign: 'center',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
         },
     })
 )
@@ -86,12 +101,14 @@ export const ProductsByCategory: FC<Props> = props => {
             <TabPanel value={value} index={0}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
-                            <ProductImage
-                                key={product.id}
-                                product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px' }}
-                            />
+                        {props.products.products_categorizeby_organizer.map(product => (
+                            <Box key={product.id} className={classes.images}>
+                                <ProductImage
+                                    product={product}
+                                    className={{height: '168px', width: '120px'}}
+                                />
+                                <p className={classes.label}>{product.organizer_name}</p>
+                            </Box>
                         ))}
                     </Box>
                 </Box>
@@ -99,12 +116,14 @@ export const ProductsByCategory: FC<Props> = props => {
             <TabPanel value={value} index={1}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
-                            <ProductImage
-                                key={product.id}
-                                product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px' }}
-                            />
+                        {props.products.products_categorizeby_venue.map(product => (
+                            <Box key={product.id} className={classes.images}>
+                                <ProductImage
+                                    product={product}
+                                    className={{height: '168px', width: '120px', margin: '0 4px' }}
+                                />
+                                <p className={classes.label}>{product.addr_prefecture}</p>
+                            </Box>
                         ))}
                     </Box>
                 </Box>
@@ -112,12 +131,14 @@ export const ProductsByCategory: FC<Props> = props => {
             <TabPanel value={value} index={2}>
                 <Box className={classes.outerBox}>
                     <Box className={classes.innerBox}>
-                        {props.products.map((product: ProductIndex) => (
-                            <ProductImage
-                                key={product.id}
-                                product={product}
-                                className={{height: '168px', width: '120px', margin: '0 4px' }}
-                            />
+                        {props.products.products_categorizeby_category.map(product => (
+                            <Box key={product.id} className={classes.images}>
+                                <ProductImage
+                                    product={product}
+                                    className={{height: '168px', width: '120px', margin: '0 4px' }}
+                                />
+                                <p className={classes.label}>{product.category_name}</p>
+                            </Box>
                         ))}
                     </Box>
                 </Box>
