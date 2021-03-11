@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
 
 import { PropsForTopPage } from '../../@types'
-import { Footer } from '../../reusable/Footer'
 
 import { Banner } from './components/Banner'
 import { ProductRankings } from './components/ProductRankings'
-import { SearchBox } from './components/SearchBox'
 import { ProductsByCategory } from './components/ProductsByCategory'
 import { UserRankings } from './components/UserRankings'
+import { SearchBox } from '../../reusable/SearchBox'
+import { Footer } from '../../reusable/Footer'
 
 interface Props {
     products: PropsForTopPage

@@ -3,35 +3,46 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, OutlinedInput, InputAdornment, IconButton } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
 
+interface Props {
+    className?: ClassProps
+}
+
+interface ClassProps {
+    height?: string
+    margin?: string
+    padding?: string
+    fontSize?: string
+}
+
 const useStyles = makeStyles(() =>
     createStyles({
-        search: {
-            margin: '40px 0',
-            padding: '0 44px',
-        },
-        searchBox: {
+        search: (className: ClassProps) => ({
+            margin: className.margin || '40px 0',
+            padding: className.padding || '0 44px',
+        }),
+        searchBox: (className: ClassProps) => ({
             padding: '0',
             width: '100%',
-            height: '24px',
+            height: className.height || '24px',
             boxShadow: '1px 1px #0A0A0A',
-        },
-        searchInput: {
+        }),
+        searchInput: (className: ClassProps) => ({
             padding: '0 0 0 8px',
-            lineHeight: '24px',
-            fontSize: '12px',
-        },
-        searchIcon: {
-            width: '24px',
-            height: '24px',
-        },
+            lineHeight: className.height || '24px',
+            fontSize: className.fontSize || '12px',
+        }),
+        searchIcon: (className: ClassProps) => ({
+            width: className.height || '24px',
+            height: className.height || '24px',
+        }),
         searchIconButton: {
             padding: '0px',
         },
     })
 )
 
-export const SearchBox: FC = () => {
-    const classes = useStyles()
+export const SearchBox: FC<Props> = props => {
+    const classes = useStyles(props.className)
 
     return (
         <Box className={classes.search}>
