@@ -76,7 +76,13 @@ export const SearchByOrganizersTemplate: FC<Props> = props => {
                 <Divider className={classes.titleDivider} />
                 { props.organizers.map(organizer => (
                     <Box key={organizer.id}>
-                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                        <Grid
+                            container
+                            justify='space-between'
+                            alignItems='center'
+                            wrap='nowrap'
+                            onClick={() => history.push(`/search?organizer=${organizer.id}`)}
+                        >
                             <p className={classes.serviceLabel}>
                                 {organizer.service_name}
                                 {organizer.company_name &&

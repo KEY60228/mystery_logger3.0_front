@@ -58,35 +58,65 @@ export const SearchByRankingsTemplate: FC = () => {
                 <p className={classes.title}>ランキングから探す</p>
                 <Divider className={classes.titleDivider} />
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push('/search?ranking=1')}
+                    >
                         <p className={classes.ranksLabel}>評価の高い作品</p>
                         <NavigateNextIcon />
                     </Grid>
                     <Divider />
                 </Box>
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push('/search?ranking=2')}
+                    >
                         <p className={classes.ranksLabel}>投稿数の多い作品</p>
                         <NavigateNextIcon />
                     </Grid>
                     <Divider />
                 </Box>
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push('/search?ranking=3')}
+                    >
                         <p className={classes.ranksLabel}>成功率の低い作品</p>
                         <NavigateNextIcon />
                     </Grid>
                     <Divider />
                 </Box>
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push('/search?ranking=4')}
+                    >
                         <p className={classes.ranksLabel}>成功率の高い作品</p>
                         <NavigateNextIcon />
                     </Grid>
                     <Divider />
                 </Box>
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push('/search?ranking=5')}
+                    >
                         <p className={classes.ranksLabel}>Likeの多い作品</p>
                         <NavigateNextIcon />
                     </Grid>

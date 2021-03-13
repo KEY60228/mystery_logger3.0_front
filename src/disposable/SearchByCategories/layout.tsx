@@ -58,35 +58,65 @@ export const SearchByCategoriesTemplate: FC = () => {
                 <p className={classes.title}>カテゴリーから探す</p>
                 <Divider className={classes.titleDivider} />
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push(`/search?category=1`)}
+                    >
                         <p className={classes.categoryLabel}>ルームタイプの作品</p>
                         <NavigateNextIcon />
                     </Grid>
                     <Divider />
                 </Box>
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push(`/search?category=2`)}
+                    >
                         <p className={classes.categoryLabel}>ホールタイプの作品</p>
                         <NavigateNextIcon />
                     </Grid>
                     <Divider />
                 </Box>
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push(`/search?category=3`)}
+                    >
                         <p className={classes.categoryLabel}>キット配布タイプの作品</p>
                         <NavigateNextIcon />
                     </Grid>
                     <Divider />
                 </Box>
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push(`/search?category=4`)}
+                    >
                         <p className={classes.categoryLabel}>オンラインの作品</p>
                         <NavigateNextIcon />
                     </Grid>
                     <Divider />
                 </Box>
                 <Box>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                    <Grid
+                        container
+                        justify='space-between'
+                        alignItems='center'
+                        wrap='nowrap'
+                        onClick={() => history.push(`/search?category=5`)}
+                    >
                         <p className={classes.categoryLabel}>その他の作品</p>
                         <NavigateNextIcon />
                     </Grid>

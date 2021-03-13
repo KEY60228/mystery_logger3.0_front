@@ -105,7 +105,7 @@ export const SearchByVenuesTemplate: FC<Props> = props => {
                         </Grid>
                         <Divider />
                         {open === venues[0].addr_pref_id && venues.map(venue => (
-                            <Box key={venue.id} className={classes.venueBox}>
+                            <Box key={venue.id} className={classes.venueBox} onClick={() => history.push(`/search?venue=${venue.id}`)}>
                                 <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                                     <p className={classes.venueLabel}>{venue.name}<span className={classes.serviceLabel}> By {venue.service_name}</span></p>
                                     <NavigateNextIcon />
