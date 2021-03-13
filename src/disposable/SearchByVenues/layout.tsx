@@ -91,7 +91,12 @@ export const SearchByVenuesTemplate: FC<Props> = props => {
                 <p className={classes.title}>開催場所から探す</p>
                 <Divider className={classes.titleDivider} />
                 { props.venues.map(venues => (
-                    <Box key={venues[0].id} onClick={() => open === venues[0].addr_pref_id ? console.log('仮') : setOpen(venues[0].addr_pref_id)}>
+                    <Box
+                        key={venues[0].id}
+                        onClick={() => 
+                            open === venues[0].addr_pref_id ? history.push(`/search?pref=${venues[0].addr_pref_id}`) : setOpen(venues[0].addr_pref_id)
+                        }
+                    >
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.prefLabel}>
                                 {venues[0].addr_prefecture || 'その他'}

@@ -23,6 +23,7 @@ export const SearchResult: FC = () => {
         if (query.ranking) url += `ranking=${query.ranking}&`
         if (query.organizer) url += `organizer=${query.organizer}&`
         if (query.venue) url += `venue=${query.venue}&`
+        if (query.pref) url += `pref=${query.pref}&`
         if (query.category) url += `category=${query.category}&`
         const response = await axios.get(`${process.env.API_BASEURL}${url}`)
         return response.data
