@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import { ProductIndex } from '../../@types'
+import { Search } from '../../@types'
 import { SearchResultTemplate as Template } from './layout'
 
 import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
@@ -12,7 +12,7 @@ import queryString from 'query-string'
 export const SearchResult: FC = () => {
     const search = useLocation().search
     const query = queryString.parse(useLocation().search)
-    const [results, setResults] = useState<ProductIndex[]|null>(null)
+    const [results, setResults] = useState<Search|null>(null)
     const [reloading, setReloading] = useState<boolean>(false)
 
     const [keywords, setKeywords] = useState<string>('')
@@ -25,7 +25,8 @@ export const SearchResult: FC = () => {
         if (query.venue) url += `venue=${query.venue}&`
         if (query.pref) url += `pref=${query.pref}&`
         if (query.category) url += `category=${query.category}&`
-        const response = await axios.get(`${process.env.API_BASEURL}${url}`)
+        if (query.page) url += `page=${query.page}`
+        const response = await axios.get<Search>(`${process.env.API_BASEURL}${url}`)
         return response.data
     }
 
@@ -35,6 +36,7 @@ export const SearchResult: FC = () => {
             setResults(result)
             setReloading(false)
         })
+        if (query.keywords && !Array.isArray(query.keywords)) setKeywords(query.keywords)
     }, [search])
 
     return (
@@ -44,6 +46,7 @@ export const SearchResult: FC = () => {
             </Helmet>
             {(results && !reloading) &&
                 <Template
+                    search={search}
                     results={results}
                     keywords={keywords}
                     setKeywords={setKeywords}
