@@ -1,9 +1,14 @@
 import React, { FC } from 'react'
+import { useHistory } from 'react-router'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { Box, OutlinedInput, InputAdornment, IconButton } from '@material-ui/core'
+import { Box, OutlinedInput, InputAdornment, IconButton, FormControl } from '@material-ui/core'
 import SearchIcon from '@material-ui/icons/Search'
+import { setPopper } from '../stores/error'
+import { useAppDispatch } from '../stores'
 
 interface Props {
+    keywords: string
+    setKeywords: React.Dispatch<React.SetStateAction<string>>
     className?: ClassProps
 }
 
@@ -20,6 +25,9 @@ const useStyles = makeStyles(() =>
             margin: className.margin || '40px 0',
             padding: className.padding || '0 44px',
         }),
+        form: {
+            width: '100%',
+        },
         searchBox: (className: ClassProps) => ({
             padding: '0',
             width: '100%',
@@ -43,24 +51,45 @@ const useStyles = makeStyles(() =>
 
 export const SearchBox: FC<Props> = props => {
     const classes = useStyles(props.className)
+    const history = useHistory()
+    const dispatch = useAppDispatch()
+
+    const search = (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        ev.preventDefault()
+        if (props.keywords) {
+            history.push(`/search?keywords=${props.keywords}`)
+        } else {
+            dispatch(setPopper('keywords are blank'))
+        }
+    }
 
     return (
         <Box className={classes.search}>
-            <OutlinedInput
-                placeholder="作品名、会場名、キーワードで検索"
-                color="primary"
-                endAdornment={(
-                    <InputAdornment position="end" className={classes.searchIcon}>
-                        <IconButton className={classes.searchIconButton}>
-                            <SearchIcon color="primary" />
-                        </IconButton>
-                    </InputAdornment>
-                )}
-                classes={{
-                    root: classes.searchBox,
-                    input: classes.searchInput,
-                }}
-            />
+            <form>
+                <FormControl className={classes.form}>
+                    <OutlinedInput
+                        placeholder="作品名、会場名、キーワードで検索"
+                        color="primary"
+                        endAdornment={(
+                            <InputAdornment position="end" className={classes.searchIcon}>
+                                <IconButton
+                                    type='submit'
+                                    onClick={search}
+                                    className={classes.searchIconButton}
+                                >
+                                    <SearchIcon color="primary" />
+                                </IconButton>
+                            </InputAdornment>
+                        )}
+                        value={props.keywords}
+                        onChange={ev => props.setKeywords(ev.target.value)}
+                        classes={{
+                            root: classes.searchBox,
+                            input: classes.searchInput,
+                        }}
+                    />
+                </FormControl>
+            </form>
         </Box>
     )
 }

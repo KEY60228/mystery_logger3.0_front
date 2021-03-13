@@ -10,8 +10,12 @@ import axios from 'axios'
 import queryString from 'query-string'
 
 export const SearchResult: FC = () => {
+    const search = useLocation().search
     const query = queryString.parse(useLocation().search)
     const [results, setResults] = useState<ProductIndex[]|null>(null)
+    const [reloading, setReloading] = useState<boolean>(false)
+
+    const [keywords, setKeywords] = useState<string>('')
 
     const getResults = async() => {
         let url = '/v1/search?'
@@ -25,18 +29,26 @@ export const SearchResult: FC = () => {
     }
 
     useEffect(() => {
-        getResults().then(result => setResults(result)) 
-    }, [])
+        setReloading(true)
+        getResults().then((result) => {
+            setResults(result)
+            setReloading(false)
+        })
+    }, [search])
 
     return (
         <>
             <Helmet>
                 <title>検索結果 - なぞログ</title>
             </Helmet>
-            {results &&
-                <Template results={results} />
+            {(results && !reloading) &&
+                <Template
+                    results={results}
+                    keywords={keywords}
+                    setKeywords={setKeywords}
+                />
             }
-            {!results && <CircularLoader />}
+            {(!results || reloading) && <CircularLoader />}
         </>
     )
 }

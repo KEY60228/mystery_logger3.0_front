@@ -7,6 +7,11 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { SearchBox } from '../../reusable/SearchBox'
 import { Footer } from '../../reusable/Footer'
 
+interface Props {
+    keywords: string
+    setKeywords: React.Dispatch<React.SetStateAction<string>>
+}
+
 const useStyles = makeStyles(() =>
     createStyles({
         upperBox: {
@@ -44,7 +49,7 @@ const useStyles = makeStyles(() =>
     })
 )
 
-export const SearchByKeywordsTemplate: FC = () => {
+export const SearchByKeywordsTemplate: FC<Props> = props => {
     const classes = useStyles()
     const history = useHistory()
 
@@ -53,7 +58,11 @@ export const SearchByKeywordsTemplate: FC = () => {
             <Box className={classes.upperBox}>
                 <p className={classes.title}>キーワードから探す</p>
                 <Divider className={classes.titleDivider} />
-                <SearchBox className={{margin: '0 0 40px', padding: '0 8px', height: '36px', fontSize: '14px'}}/>
+                <SearchBox
+                    keywords={props.keywords}
+                    setKeywords={props.setKeywords}
+                    className={{margin: '0 0 40px', padding: '0 8px', height: '36px', fontSize: '14px'}}
+                />
             </Box>
             <Divider className={classes.categoryDivider} />
             <Box className={classes.bottomBox}>

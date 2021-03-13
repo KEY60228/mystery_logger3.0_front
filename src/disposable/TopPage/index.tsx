@@ -12,6 +12,7 @@ export const TopPage: FC = () => {
     const dispatch = useAppDispatch()
 
     const [products, setProducts] = useState<PropsForTopPage | null>(null)
+    const [keywords, setKeywords] = useState<string>('')
 
     const getProducts = () => {
         dispatch(asyncGetProducts()).then(
@@ -28,7 +29,13 @@ export const TopPage: FC = () => {
             <Helmet>
                 <title>なぞログ</title>
             </Helmet>
-            {products && <Template products={products} />}
+            {products &&
+                <Template
+                    products={products}
+                    keywords={keywords}
+                    setKeywords={setKeywords}
+                />
+            }
             {!products && <CircularLoader />}
         </>
     )

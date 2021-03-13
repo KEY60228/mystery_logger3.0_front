@@ -11,6 +11,8 @@ import { Footer } from '../../reusable/Footer'
 
 interface Props {
     products: PropsForTopPage
+    keywords: string
+    setKeywords: React.Dispatch<React.SetStateAction<string>>
 }
 
 
@@ -19,7 +21,10 @@ export const TopPageTemplate: FC<Props> = props => {
         <>
             <Banner />
             <ProductRankings products={props.products} />
-            <SearchBox />
+            <SearchBox
+                keywords={props.keywords}
+                setKeywords={props.setKeywords}
+            />
             <ProductsByCategory products={props.products} />
             <UserRankings users={props.products} />
             <Footer />

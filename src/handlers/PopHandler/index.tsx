@@ -11,6 +11,7 @@ import { UndonePop } from './UndonePop'
 import { PostedUserPop } from './PostedUserPop'
 import { CommentPop } from './CommentPop'
 import { SessionoutPop } from './SessionoutPop'
+import { KeywordsBlankPop } from './KeywordsBlankPop'
 
 export const PopHandler: FC = () => {
     const popper = useSelector((state: RootState) => state.error.popper)
@@ -24,6 +25,7 @@ export const PopHandler: FC = () => {
     const [postedUserOpen, setPostedUserOpen] = useState<boolean>(false)
     const [commentOpen, setCommentOpen] = useState<boolean>(false)
     const [sessionoutOpen, setSessionoutOpen] = useState<boolean>(false)
+    const [keywordsBlankOpen, setKeywordsBlankOpen] = useState<boolean>(false)
     const [badRequestOpen, setBadRequestOpen] = useState<boolean>(false)
 
     useEffect(() => {
@@ -58,6 +60,9 @@ export const PopHandler: FC = () => {
             case 'session out':
                 setSessionoutOpen(true)
                 break
+            case 'keywords are blank':
+                setKeywordsBlankOpen(true)
+                break
             default:
                 break
         }
@@ -80,6 +85,7 @@ export const PopHandler: FC = () => {
             <PostedUserPop open={postedUserOpen} setOpen={setPostedUserOpen} />
             <CommentPop open={commentOpen} setOpen={setCommentOpen} />
             <SessionoutPop open={sessionoutOpen} setOpen={setSessionoutOpen} />
+            <KeywordsBlankPop open={keywordsBlankOpen} setOpen={setKeywordsBlankOpen} />
         </>
     )
 }

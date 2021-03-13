@@ -11,6 +11,8 @@ import { Footer } from '../../reusable/Footer'
 
 interface Props {
     results: ProductIndex[]
+    keywords: string
+    setKeywords: React.Dispatch<React.SetStateAction<string>>
 }
 
 const useStyles = makeStyles(() =>
@@ -53,9 +55,19 @@ export const SearchResultTemplate: FC<Props> = props => {
     return (
         <>
             <Box className={classes.root}>
-                <SearchBox className={{margin: '0 0 16px', padding: '0'}} />
+                <SearchBox
+                    keywords={props.keywords}
+                    setKeywords={props.setKeywords}
+                    className={{margin: '0 0 16px', padding: '0'}}
+                />
                 <Grid container justify='space-between' wrap='nowrap' className={classes.properties}>
-                    <p className={classes.label}>1-20件 / {props.results.length}件中</p>
+                    <p className={classes.label}>
+                        {props.results.length ? (
+                            `1-${props.results.length > 10 ? 10 : props.results.length}件 / ${props.results.length}件中`
+                        ) : (
+                            '0件'
+                        )}
+                    </p>
                     <Box className={classes.filters}>
                         <IconButton className={classes.icon} >
                             <FilterListIcon />
