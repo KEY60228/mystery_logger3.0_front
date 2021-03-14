@@ -16,6 +16,8 @@ export const SearchResult: FC = () => {
     const [reloading, setReloading] = useState<boolean>(false)
 
     const [keywords, setKeywords] = useState<string>('')
+    const [sortOpen, setSortOpen] = useState<boolean>(false)
+    const [filterOpen, setFilterOpen] = useState<boolean>(false)
 
     const getResults = async() => {
         let url = '/v1/search?'
@@ -50,6 +52,8 @@ export const SearchResult: FC = () => {
                     results={results}
                     keywords={keywords}
                     setKeywords={setKeywords}
+                    sortOpen={sortOpen}
+                    setSortOpen={setSortOpen}
                 />
             }
             {(!results || reloading) && <CircularLoader />}
