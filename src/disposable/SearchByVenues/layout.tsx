@@ -91,24 +91,25 @@ export const SearchByVenuesTemplate: FC<Props> = props => {
                 <p className={classes.title}>開催場所から探す</p>
                 <Divider className={classes.titleDivider} />
                 { props.venues.map(venues => (
-                    <Box
-                        key={venues[0].id}
-                        onClick={() => 
-                            open === venues[0].addr_pref_id ? history.push(`/search?pref=${venues[0].addr_pref_id}`) : setOpen(venues[0].addr_pref_id)
-                        }
-                    >
-                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                            <p className={classes.prefLabel}>
-                                {venues[0].addr_prefecture || 'その他'}
-                            </p>
-                            {open !== venues[0].addr_pref_id &&
-                                <ExpandMoreIcon />
+                    <React.Fragment key={venues[0].id}>
+                        <Box
+                            onClick={() => 
+                                open === venues[0].addr_pref_id ? history.push(`/search?pref=${venues[0].addr_pref_id}`) : setOpen(venues[0].addr_pref_id)
                             }
-                            {open === venues[0].addr_pref_id &&
-                                <NavigateNextIcon />
-                            }
-                        </Grid>
-                        <Divider />
+                        >
+                            <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                                <p className={classes.prefLabel}>
+                                    {venues[0].addr_prefecture || 'その他'}
+                                </p>
+                                {open !== venues[0].addr_pref_id &&
+                                    <ExpandMoreIcon />
+                                }
+                                {open === venues[0].addr_pref_id &&
+                                    <NavigateNextIcon />
+                                }
+                            </Grid>
+                            <Divider />
+                        </Box>
                         {open === venues[0].addr_pref_id && venues.map(venue => (
                             <Box key={venue.id} className={classes.venueBox} onClick={() => history.push(`/search?venue=${venue.id}`)}>
                                 <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
@@ -118,7 +119,7 @@ export const SearchByVenuesTemplate: FC<Props> = props => {
                                 <Divider />
                             </Box>
                         ))}
-                    </Box>
+                    </React.Fragment>
                 ))}
             </Box>
             <Divider className={classes.categoryDivider} />
