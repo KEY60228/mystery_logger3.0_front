@@ -80,6 +80,23 @@ const useStyles = makeStyles(theme =>
             color: '#C0C0C0',
             textAlign: 'center',
         },
+        choices: {
+            margin: '16px',
+            lineHeight: '16px',
+            fontSize: '14px',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+        },
+        remarks: {
+            lineHeight: '16px',
+            fontSize: '14px',
+            color: '#C0C0C0',
+        },
+        venueBox: {
+            width: '90%',
+            margin: '0 auto'
+        },
     })
 )
 
@@ -250,7 +267,7 @@ export const FilterDialog: FC<Props> = props => {
                             <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                                 <p className={classes.label}>開催場所</p>
                                 { (props.venues && props.pref) &&
-                                    <span className={classes.selectedLabel}>{props.venues.find(pref => String(pref[0].addr_pref_id) === props.pref)![0].addr_prefecture}</span>
+                                    <span className={classes.selectedLabel}>{props.venues.find(pref => String(pref[0].addr_pref_id) === props.pref)?.[0].addr_prefecture}</span>
                                 }
                                 { (props.venues && props.venue) &&
                                     <span className={classes.selectedLabel}>{props.venues.find(pref => pref.find(venue => String(venue.id) === props.venue))?.find(venue => String(venue.id) === props.venue)?.name}</span>
@@ -301,10 +318,10 @@ export const FilterDialog: FC<Props> = props => {
                                 wrap='nowrap'
                                 onClick={() => selectOrganizer(organizer)}
                             >
-                                <p>
+                                <p className={classes.choices}>
                                     {organizer.service_name}
                                     {organizer.company_name &&
-                                        <span> / {organizer.company_name}</span>
+                                        <span className={classes.remarks}> / {organizer.company_name}</span>
                                     }
                                 </p>
                                 <NavigateNextIcon />
@@ -324,7 +341,7 @@ export const FilterDialog: FC<Props> = props => {
                                 }
                             >
                                 <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                                    <p>
+                                    <p className={classes.choices}>
                                         {venues[0].addr_prefecture || 'その他'}
                                     </p>
                                     {venuePrefOpen !== venues[0].addr_pref_id &&
@@ -337,9 +354,9 @@ export const FilterDialog: FC<Props> = props => {
                                 <Divider />
                             </Box>
                             {venuePrefOpen === venues[0].addr_pref_id && venues.map(venue => (
-                                <Box key={venue.id} onClick={() => selectVenue(venue)}>
+                                <Box key={venue.id} onClick={() => selectVenue(venue)} className={classes.venueBox}>
                                     <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                                        <p>{venue.name}<span> By {venue.service_name}</span></p>
+                                        <p className={classes.choices}>{venue.name}<span className={classes.remarks}> By {venue.service_name}</span></p>
                                         <NavigateNextIcon />
                                     </Grid>
                                     <Divider />
@@ -359,7 +376,7 @@ export const FilterDialog: FC<Props> = props => {
                             wrap='nowrap'
                             onClick={() => selectCategory({id: 1, name: 'ルームタイプ'})}
                         >
-                            <p>ルームタイプ</p>
+                            <p className={classes.choices}>ルームタイプ</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
@@ -372,7 +389,7 @@ export const FilterDialog: FC<Props> = props => {
                             wrap='nowrap'
                             onClick={() => selectCategory({id: 3, name: 'ホールタイプ'})}
                         >
-                            <p>ホールタイプ</p>
+                            <p className={classes.choices}>ホールタイプ</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
@@ -385,7 +402,7 @@ export const FilterDialog: FC<Props> = props => {
                             wrap='nowrap'
                             onClick={() => selectCategory({id: 3, name: 'キット配布タイプ'})}
                         >
-                            <p>キット配布タイプ</p>
+                            <p className={classes.choices}>キット配布タイプ</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
@@ -398,7 +415,7 @@ export const FilterDialog: FC<Props> = props => {
                             wrap='nowrap'
                             onClick={() => selectCategory({id: 4, name: 'オンライン'})}
                         >
-                            <p>オンライン</p>
+                            <p className={classes.choices}>オンライン</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
@@ -411,7 +428,7 @@ export const FilterDialog: FC<Props> = props => {
                             wrap='nowrap'
                             onClick={() => selectCategory({id: 5, name: 'その他'})}
                         >
-                            <p>その他</p>
+                            <p className={classes.choices}>その他</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
