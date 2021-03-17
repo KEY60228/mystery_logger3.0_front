@@ -48,12 +48,36 @@ const useStyles = makeStyles(theme =>
             height: '48px',
             width: '48px',
         },
-        label: {
+        title: {
             color: theme.palette.primary.main,
-            marginLeft: '16px',
             lineHeight: '24px',
-            fontSize: '14px',
+            fontSize: '16px',
             fontWeight: 'bold',
+            textAlign: 'center',
+        },
+        label: {
+            margin: '16px',
+            lineHeight: '16px',
+            fontSize: '14px',
+        },
+        selectedLabel: {
+            lineHeight: '16px',
+            fontSize: '14px',
+            color: '#C0C0C0',
+        },
+        nextIcon: {
+            margin: '0 16px',
+        },
+        searchButton: {
+            display: 'block',
+            margin: '16px auto',
+            width: '280px',
+            height: '40px',
+        },
+        clearButton: {
+            lineHeight: '16px',
+            fontSize: '14px',
+            color: '#C0C0C0',
             textAlign: 'center',
         },
     })
@@ -188,7 +212,7 @@ export const FilterDialog: FC<Props> = props => {
                         { (!organizerOpen && !venueOpen && !categoryOpen) &&
                             <div className={classes.fake} />
                         }
-                        <p className={classes.label}>絞り込み</p>
+                        <p className={classes.title}>絞り込み</p>
                         <IconButton onClick={closeDialog}>
                             <CloseIcon color='primary' />
                         </IconButton>
@@ -205,11 +229,13 @@ export const FilterDialog: FC<Props> = props => {
                             wrap='nowrap'
                             onClick={() => setOrganizerOpen(true)}
                         >
-                            <p>主催団体</p>
-                            { (props.organizers && props.organizer) &&
-                                <span>{props.organizers.find(organizer => String(organizer.id) === props.organizer)?.service_name}</span>
-                            }
-                            <NavigateNextIcon />
+                            <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                                <p className={classes.label}>主催団体</p>
+                                { (props.organizers && props.organizer) &&
+                                    <span className={classes.selectedLabel}>{props.organizers.find(organizer => String(organizer.id) === props.organizer)?.service_name}</span>
+                                }
+                            </Grid>
+                            <NavigateNextIcon className={classes.nextIcon} />
                         </Grid>
                         <Divider />
                     </Box>
@@ -221,14 +247,16 @@ export const FilterDialog: FC<Props> = props => {
                             wrap='nowrap'
                             onClick={() => setVenueOpen(true)}
                         >
-                            <p>開催場所</p>
-                            { (props.venues && props.pref) &&
-                                <span>{props.venues.find(pref => String(pref[0].addr_pref_id) === props.pref)![0].addr_prefecture}</span>
-                            }
-                            { (props.venues && props.venue) &&
-                                <span>{props.venues.find(pref => pref.find(venue => String(venue.id) === props.venue))?.find(venue => String(venue.id) === props.venue)?.name}</span>
-                            }
-                            <NavigateNextIcon />
+                            <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                                <p className={classes.label}>開催場所</p>
+                                { (props.venues && props.pref) &&
+                                    <span className={classes.selectedLabel}>{props.venues.find(pref => String(pref[0].addr_pref_id) === props.pref)![0].addr_prefecture}</span>
+                                }
+                                { (props.venues && props.venue) &&
+                                    <span className={classes.selectedLabel}>{props.venues.find(pref => pref.find(venue => String(venue.id) === props.venue))?.find(venue => String(venue.id) === props.venue)?.name}</span>
+                                }
+                            </Grid>
+                            <NavigateNextIcon className={classes.nextIcon} />
                         </Grid>
                         <Divider />
                     </Box>
@@ -240,11 +268,13 @@ export const FilterDialog: FC<Props> = props => {
                             wrap='nowrap'
                             onClick={() => setCategoryOpen(true)}
                         >
-                            <p>カテゴリー</p>
-                            { props.category &&
-                                categoryList.find(category => String(category.id) === props.category)?.name
-                            }
-                            <NavigateNextIcon />
+                            <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                                <p className={classes.label}>カテゴリー</p>
+                                { props.category &&
+                                    <span className={classes.selectedLabel}>{categoryList.find(category => String(category.id) === props.category)?.name}</span>
+                                }
+                            </Grid>
+                            <NavigateNextIcon className={classes.nextIcon} />
                         </Grid>
                         <Divider />
                     </Box>
@@ -252,10 +282,11 @@ export const FilterDialog: FC<Props> = props => {
                         color='primary'
                         variant='outlined'
                         onClick={filter}
+                        className={classes.searchButton}
                     >
                         この条件で検索
                     </Button>
-                    <p onClick={clearConditions}>条件をクリア</p>
+                    <p onClick={clearConditions} className={classes.clearButton}>条件をクリア</p>
                 </Box>
             }
             {organizerOpen &&
