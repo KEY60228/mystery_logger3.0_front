@@ -13,6 +13,7 @@ import { Search } from '../../@types'
 import { ProductCard } from '../../reusable/ProductCard'
 import { SearchBox } from '../../reusable/SearchBox'
 import { Footer } from '../../reusable/Footer'
+import { FilterDialog } from './components/FilterDialog'
 
 interface Props {
     search: string
@@ -21,6 +22,32 @@ interface Props {
     setKeywords: React.Dispatch<React.SetStateAction<string>>
     sortOpen: boolean
     setSortOpen: React.Dispatch<React.SetStateAction<boolean>>
+    filterOpen: boolean
+    setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>
+    organizers: OrganizerProp[]|null
+    venues: VenueProp[][]|null
+    organizer: string
+    setOrganizer: React.Dispatch<React.SetStateAction<string>>
+    venue: string
+    setVenue: React.Dispatch<React.SetStateAction<string>>
+    pref: string
+    setPref: React.Dispatch<React.SetStateAction<string>>
+    category: string
+    setCategory: React.Dispatch<React.SetStateAction<string>>
+}
+
+// 後ほどリファクタリング対象か
+interface OrganizerProp {
+    id: number
+    service_name: string
+    company_name: string
+}
+interface VenueProp {
+    id: number
+    name: string
+    addr_pref_id: number
+    addr_prefecture: string
+    service_name: string
 }
 
 const useStyles = makeStyles(theme =>
@@ -59,6 +86,13 @@ const useStyles = makeStyles(theme =>
         },
         paginationRoot: {
             display: 'inline-block',
+        },
+        drawerLabel: {
+            color: theme.palette.primary.main,
+            marginLeft: '16px',
+            lineHeight: '24px',
+            fontSize: '14px',
+            fontWeight: 'bold',
         },
         drawer: {
             backgroundColor: theme.palette.common.black,
@@ -125,7 +159,7 @@ export const SearchResultTemplate: FC<Props> = props => {
                     setKeywords={props.setKeywords}
                     className={{margin: '0 0 16px', padding: '0'}}
                 />
-                <Grid container justify='space-between' wrap='nowrap' className={classes.properties}>
+                <Grid container justify='space-between' alignItems='center' wrap='nowrap' className={classes.properties}>
                     <p className={classes.label}>
                         {props.results.data.length ? (
                             `${props.results.from}-${props.results.to}件 / ${props.results.total}件中`
@@ -134,7 +168,7 @@ export const SearchResultTemplate: FC<Props> = props => {
                         )}
                     </p>
                     <Box className={classes.filters}>
-                        <IconButton className={classes.icon} >
+                        <IconButton onClick={() => props.setFilterOpen(true)} className={classes.icon} >
                             <FilterListIcon />
                             <p className={classes.label}>絞り込み</p>
                         </IconButton>
@@ -174,9 +208,12 @@ export const SearchResultTemplate: FC<Props> = props => {
                 onClose={() => props.setSortOpen(false)}
             >
                 <Box className={classes.drawer}>
-                    <IconButton onClick={() => props.setSortOpen(false)} className={classes.closeButton}>
-                        <CloseIcon color='primary' />
-                    </IconButton>
+                    <Grid container justify='space-between' wrap='nowrap'>
+                        <p className={classes.drawerLabel}>並び替え</p>
+                        <IconButton onClick={() => props.setSortOpen(false)} className={classes.closeButton}>
+                            <CloseIcon color='primary' />
+                        </IconButton>
+                    </Grid>
                 </Box>
                 <Grid container wrap='nowrap' onClick={() => sort(1)}>
                     {query.ranking === '1' &&
@@ -238,6 +275,21 @@ export const SearchResultTemplate: FC<Props> = props => {
                     }
                 </Grid>
             </Drawer>
+            <FilterDialog
+                open={props.filterOpen}
+                setOpen={props.setFilterOpen}
+                organizers={props.organizers}
+                venues={props.venues}
+                organizer={props.organizer}
+                setOrganizer={props.setOrganizer}
+                venue={props.venue}
+                setVenue={props.setVenue}
+                pref={props.pref}
+                setPref={props.setPref}
+                category={props.category}
+                setCategory={props.setCategory}
+                search={props.search}
+            />
         </>
     )
 }

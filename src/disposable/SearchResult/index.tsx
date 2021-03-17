@@ -15,9 +15,14 @@ export const SearchResult: FC = () => {
     const [results, setResults] = useState<Search|null>(null)
     const [reloading, setReloading] = useState<boolean>(false)
 
-    const [keywords, setKeywords] = useState<string>('')
     const [sortOpen, setSortOpen] = useState<boolean>(false)
     const [filterOpen, setFilterOpen] = useState<boolean>(false)
+
+    const [keywords, setKeywords] = useState<string>('')
+    const [organizer, setOrganizer] = useState<string>('')
+    const [venue, setVenue] = useState<string>('')
+    const [pref, setPref] = useState<string>('')
+    const [category, setCategory] = useState<string>('')
 
     const getResults = async() => {
         let url = '/v1/search?'
@@ -39,7 +44,42 @@ export const SearchResult: FC = () => {
             setReloading(false)
         })
         if (query.keywords && !Array.isArray(query.keywords)) setKeywords(query.keywords)
+        if (query.organizer && !Array.isArray(query.organizer)) setOrganizer(query.organizer)
+        if (query.venue && !Array.isArray(query.venue)) setVenue(query.venue)
+        if (query.pref && !Array.isArray(query.pref)) setPref(query.pref)
+        if (query.category && !Array.isArray(query.category)) setCategory(query.category)
     }, [search])
+
+    // 後ほど分離 (SearchByOrganizerも)
+    interface OrganizerProp {
+        id: number
+        service_name: string
+        company_name: string
+    }
+    const [organizers, setOrganizers] = useState<OrganizerProp[]|null>(null)
+    const getOrganizers = async() => {
+        const response = await axios.get<OrganizerProp[]>(`${process.env.API_BASEURL}/v1/search/organizers`)
+        return response.data
+    }
+
+    // 後ほど分離 (SearchByVenueも)
+    interface VenueProp {
+        id: number
+        name: string
+        addr_pref_id: number
+        addr_prefecture: string
+        service_name: string
+    }
+    const [venues, setVenues] = useState<VenueProp[][]|null>(null)
+    const getVenues = async() => {
+        const response = await axios.get<VenueProp[][]>(`${process.env.API_BASEURL}/v1/search/venues`)
+        return response.data
+    }
+
+    useEffect(() => {
+        getOrganizers().then(result => setOrganizers(result))
+        getVenues().then(result => setVenues(result))
+    }, [])
 
     return (
         <>
@@ -54,6 +94,18 @@ export const SearchResult: FC = () => {
                     setKeywords={setKeywords}
                     sortOpen={sortOpen}
                     setSortOpen={setSortOpen}
+                    filterOpen={filterOpen}
+                    setFilterOpen={setFilterOpen}
+                    organizers={organizers}
+                    venues={venues}
+                    organizer={organizer}
+                    setOrganizer={setOrganizer}
+                    venue={venue}
+                    setVenue={setVenue}
+                    pref={pref}
+                    setPref={setPref}
+                    category={category}
+                    setCategory={setCategory}
                 />
             }
             {(!results || reloading) && <CircularLoader />}
