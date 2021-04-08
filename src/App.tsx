@@ -17,12 +17,12 @@ import { ProductDetail } from './disposable/ProductDetail/'
 import { ReviewDetail } from './disposable/ReviewDetail/'
 import { Timeline } from './disposable/Timeline/'
 import { VerifyFailed } from './disposable/VerifyFailed/'
-
-import { Search } from './_disposable/Search'
-import { OrganizerDetail } from './_disposable/OrganizerDetail'
-import { VenueDetail } from './_disposable/VenueDetail'
-import { Accompanies } from './_disposable/Accompanies'
-import { Notifications } from './_disposable/Notifications'
+import { SearchByKeywords } from './disposable/SearchByKeywords/'
+import { SearchByRankings } from './disposable/SearchByRankings/'
+import { SearchByCategories } from './disposable/SearchByCategories/'
+import { SearchByOrganizers } from './disposable/SearchByOrganizers'
+import { SearchByVenues } from './disposable/SearchByVenues'
+import { SearchResult } from './disposable/SearchResult'
 
 import { ErrorHandler } from './handlers/ErrorHandler/ErrorHandler'
 import { SystemErrorPage } from './handlers/ErrorHandler/SystemErrorPage'
@@ -59,14 +59,12 @@ const App: FC = () => {
                     <Route path="/products/:id" children={<ProductDetail />} />
                     <Route path="/reviews/:id" children={<ReviewDetail />} />
                     <PrivateRoute path="/timeline" children={<Timeline />} />
-                    <Route path="/search" children={<Search />} />
-                    <Route
-                        path="/organizers/:id"
-                        children={<OrganizerDetail />}
-                    />
-                    <Route path="/venues/:id" children={<VenueDetail />} />
-                    <Route path="/accompany" children={<Accompanies />} />
-                    <Route path="/notifications" children={<Notifications />} />
+                    <Route path="/search/keywords" children={<SearchByKeywords />} />
+                    <Route path="/search/rankings" children={<SearchByRankings />} />
+                    <Route path="/search/organizers" children={<SearchByOrganizers />} />
+                    <Route path="/search/venues" children={<SearchByVenues />} />
+                    <Route path="/search/categories" children={<SearchByCategories />} />
+                    <Route path="/search" children={<SearchResult />} />
                     <Route path="/verify-failed" children={<VerifyFailed />} />
                     <Route path="/500" children={<SystemErrorPage />} />
                     <Route children={<NotFoundPage />} />

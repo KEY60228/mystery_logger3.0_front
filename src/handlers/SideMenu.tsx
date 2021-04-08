@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Button, Divider, Drawer, IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import { useSelector } from 'react-redux'
+
 import { RootState } from '../stores'
-import { useHistory } from 'react-router'
 
 interface Props {
     open: boolean
@@ -95,11 +96,11 @@ export const SideMenu: FC<Props> = props => {
                     </Button>
                 }
                 <Divider className={classes.divider} />
-                <p className={classes.listItem}>キーワードから探す</p>
-                <p className={classes.listItem}>ランキングから探す</p>
-                <p className={classes.listItem}>主催団体から探す</p>
-                <p className={classes.listItem}>開催場所から探す</p>
-                <p className={classes.listItem}>カテゴリーから探す</p>
+                <p onClick={() => {props.setOpen(false); history.push('/search/keywords')}} className={classes.listItem}>キーワードから探す</p>
+                <p onClick={() => {props.setOpen(false); history.push('/search/rankings')}} className={classes.listItem}>ランキングから探す</p>
+                <p onClick={() => {props.setOpen(false); history.push('/search/organizers')}} className={classes.listItem}>主催団体から探す</p>
+                <p onClick={() => {props.setOpen(false); history.push('/search/venues')}} className={classes.listItem}>開催場所から探す</p>
+                <p onClick={() => {props.setOpen(false); history.push('/search/categories')}} className={classes.listItem}>カテゴリーから探す</p>
                 <Divider className={classes.divider} />
                 <p className={classes.listItem}>新着レビューを見る</p>
                 <p className={classes.listItem}>人気のレビューを見る</p>

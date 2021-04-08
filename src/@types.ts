@@ -248,6 +248,19 @@ export interface PropsForTopPage {
     users_sortby_success_rate: User[]
 }
 
+// For Search
+export interface Search {
+    total: number
+    per_page: number
+    current_page: number
+    last_page: number
+    next_page_url: string
+    prev_page_url: string
+    from: number
+    to: number
+    data: ProductIndex[]
+}
+
 // For Login
 export interface LoginData {
     email: string

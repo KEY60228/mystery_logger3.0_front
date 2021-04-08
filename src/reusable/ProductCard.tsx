@@ -18,20 +18,29 @@ interface ExtendsProduct extends Product {
 
 interface Props {
     product: ExtendsProduct
+    className?: ClassProps
+}
+
+interface ClassProps {
+    margin?: string
 }
 
 const useStyles = makeStyles(theme =>
     createStyles({
-        root: {
-
-        },
+        root: (className: ClassProps) => ({
+            margin: className.margin || '0',
+        }),
         productDetail: {
             flexGrow: 1,
+            overflow: 'hidden',
         },
         productTitle: {
             lineHeight: '24px',
             fontSize: '16px',
             margin: '0',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
         },
         organizer: {
             lineHeight: '16px',
@@ -67,10 +76,10 @@ const useStyles = makeStyles(theme =>
 )
 
 export const ProductCard: FC<Props> = props => {
-    const classes = useStyles()
+    const classes = useStyles(props.className)
 
     return (
-        <Grid container wrap='nowrap'>
+        <Grid container wrap='nowrap' className={classes.root}>
             <ProductImage
                 product={props.product}
                 className={{ height: '112px', width: '80px', margin: '0 8px' }}
