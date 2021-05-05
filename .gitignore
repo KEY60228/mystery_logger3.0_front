@@ -12,7 +12,9 @@ ssl/
 dist/product_img/
 dist/user_img/
 dist/organizer_img/
+dist/img
+dist/favicon.ico
 
 # env
-.env.dev
-.env.prod
+# .env.dev
+# .env.prod
