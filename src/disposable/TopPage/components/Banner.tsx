@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme =>
             verticalAlign: 'top',
         },
         banner: {
-            backgroundImage: 'url(./img/Banner.jpg)',
+            backgroundImage: 'url(img/Banner.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             width: '100%',
