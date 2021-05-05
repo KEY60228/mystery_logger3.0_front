@@ -42,7 +42,7 @@ export const ProductImage: FC<Props> = props => {
 
     return (
         <img
-            src={`${process.env.API_BASEURL}${props.product.image_name}`}
+            src={`${process.env.IMAGES_BASEURL}${props.product.image_name}`}
             onClick={transition}
             className={classes.root}
         />

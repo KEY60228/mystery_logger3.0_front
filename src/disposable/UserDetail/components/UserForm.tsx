@@ -275,7 +275,7 @@ export const UserForm: FC<Props> = props => {
                     )}
                     {!preview && (
                         <img
-                            src={`${process.env.API_BASEURL}${props.user.image_name}`}
+                            src={`${process.env.IMAGES_BASEURL}${props.user.image_name}`}
                             className={classes.media}
                         />
                     )}
