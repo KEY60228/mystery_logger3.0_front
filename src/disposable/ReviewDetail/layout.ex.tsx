@@ -8,7 +8,7 @@ import { ConfirmDeleteReview } from '../../_reusable/ConfirmDeleteReview'
 import { ReviewForm } from '../../_reusable/ReviewForm'
 import { ReviewComments } from './_components/ReviewComments'
 import { TempSpace } from '../../_reusable/TempSpace'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { RootState } from '../../stores'
 
 interface Props {

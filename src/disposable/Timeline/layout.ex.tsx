@@ -7,7 +7,7 @@ import { ReviewCard } from '../../_reusable/ReviewCard'
 import { ConfirmDeleteReview } from '../../_reusable/ConfirmDeleteReview'
 import { ReviewForm } from '../../_reusable/ReviewForm'
 import { TempSpace } from '../../_reusable/TempSpace'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
 

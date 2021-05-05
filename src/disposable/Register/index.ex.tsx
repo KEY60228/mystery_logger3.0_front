@@ -9,7 +9,7 @@ import { setMessage } from '../../stores/error'
 
 import { FailVerify as FailVerifyTemp } from './FailVerify'
 import { Register as RegisterTemp } from './layout.ex'
-import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
+import { CircularLoader } from '../../handlers/Loader/CircularLoader'
 
 export const Register: FC = () => {
     const history = useHistory()

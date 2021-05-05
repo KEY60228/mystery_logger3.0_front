@@ -9,7 +9,7 @@ import { UserTabs } from './components/UserTabs'
 import { Footer } from '../../reusable/Footer'
 import { FollowList } from './components/FollowList'
 import { UserForm } from './components/UserForm'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
 

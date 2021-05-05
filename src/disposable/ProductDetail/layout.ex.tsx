@@ -12,7 +12,7 @@ import { ProductReviews } from './_components/ProductReviews'
 import { TempSpace } from '../../_reusable/TempSpace'
 import { ConfirmDeleteReview } from '../../_reusable/ConfirmDeleteReview'
 import { ReviewForm } from '../../_reusable/ReviewForm'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
 

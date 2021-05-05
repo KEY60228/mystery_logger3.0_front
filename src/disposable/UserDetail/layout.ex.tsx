@@ -13,7 +13,7 @@ import { UserForm } from './_components/UserForm'
 import { FollowList } from './_components/FollowList'
 import { ReviewForm } from '../../_reusable/ReviewForm'
 import { ConfirmDeleteReview } from '../../_reusable/ConfirmDeleteReview'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
 

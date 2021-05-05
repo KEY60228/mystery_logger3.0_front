@@ -8,7 +8,7 @@ import { Footer } from '../../reusable/Footer'
 import { ReviewForm } from '../../reusable/ReviewForm'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 
 interface Props {
     reviews: ReviewIndex[]

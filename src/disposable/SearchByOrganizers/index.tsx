@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
 
 import { SearchByOrganizersTemplate as Template } from './layout'
-import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
+import { CircularLoader } from '../../handlers/Loader/CircularLoader'
 
 import axios from 'axios'
 

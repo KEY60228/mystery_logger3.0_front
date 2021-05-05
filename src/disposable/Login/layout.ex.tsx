@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { useSelector } from 'react-redux'
 
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { RootState } from '../../stores'
 import { LoginForm } from './_components/LoginForm'
 

@@ -21,7 +21,7 @@ import { ReviewHeader } from './ReviewHeader'
 import { SelectForm } from '../SelectForm'
 import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
-import { LinearLoader } from '../Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 
 interface Props {
     open: boolean
