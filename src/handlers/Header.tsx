@@ -6,11 +6,15 @@ import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import { SideMenu } from './SideMenu'
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
             height: '72px',
-            borderBottom: 'solid #C0C0C0 1px'
+            width: '100%',
+            borderBottom: 'solid #C0C0C0 1px',
+            position: 'fixed',
+            backgroundColor: theme.palette.common.white,
+            zIndex: 1000,
         },
         titleLink: {
             height: '40px',
@@ -29,7 +33,10 @@ const useStyles = makeStyles(() =>
             width: '40px',
             padding: '0',
             marginLeft: '8px',
-        }
+        },
+        fake: {
+            height: '72px',
+        },
     }),
 )
 
@@ -56,6 +63,7 @@ export const Header: FC = () => {
                     </IconButton>
                 </Box>
             </Box>
+            <Box className={classes.fake} />
             <SideMenu
                 open={menuOpen}
                 setOpen={setMenuOpen}

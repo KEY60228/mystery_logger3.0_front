@@ -153,26 +153,26 @@ export const ReviewCard: FC<Props> = props => {
                         open={Boolean(menu)}
                         onClose={() => setMenu(null)}
                     >
+                        {(currentUser?.account_id !== props.review.user.account_id &&
+                            !currentUser?.follows_id.includes(props.review.user.id)) &&
+                                <MenuItem onClick={() => props.follow(props.review.user)}>
+                                    @{props.review.user.account_id}をフォローする
+                                </MenuItem>
+                        }
+                        {(currentUser?.account_id !== props.review.user.account_id &&
+                            currentUser?.follows_id.includes(props.review.user.id)) &&
+                                <MenuItem onClick={() => props.unfollow(props.review.user)}>
+                                    @{props.review.user.account_id}のフォローを解除する
+                                </MenuItem>
+                        }
                         {currentUser?.account_id !== props.review.user.account_id &&
-                            <>
-                                {!currentUser?.follows_id.includes(props.review.user.id) &&
-                                    <MenuItem onClick={() => props.follow(props.review.user)}>
-                                        @{props.review.user.account_id}をフォローする
-                                    </MenuItem>
-                                }
-                                {currentUser?.follows_id.includes(props.review.user.id) &&
-                                    <MenuItem onClick={() => props.unfollow(props.review.user)}>
-                                        @{props.review.user.account_id}のフォローを解除する
-                                    </MenuItem>
-                                }
-                                <MenuItem>この投稿を通報する</MenuItem>
-                            </>
+                            <MenuItem>この投稿を通報する</MenuItem>
                         }
                         {currentUser?.account_id === props.review.user.account_id &&
-                            <>
-                                <MenuItem onClick={editReview}>編集する</MenuItem>
-                                <MenuItem onClick={confirmDelete}>削除する</MenuItem>
-                            </>
+                            <MenuItem onClick={editReview}>編集する</MenuItem>
+                        }
+                        {currentUser?.account_id === props.review.user.account_id &&
+                            <MenuItem onClick={confirmDelete}>削除する</MenuItem>
                         }
                     </Menu>
                 </Grid>
@@ -232,29 +232,36 @@ export const ReviewCard: FC<Props> = props => {
                             </p>
                         )}
                     </IconButton>
-                    <IconButton size="small">
-                        {currentUser?.like_reviews_id.includes(props.review.id) &&
+                    {currentUser?.like_reviews_id.includes(props.review.id) &&
+                        <IconButton size="small" onClick={() => props.unlikeReview(props.review)}>
                             <FavoriteIcon
                                 color="error"
                                 fontSize="small"
-                                onClick={() => props.unlikeReview(props.review)}
                             />
-                        }
-                        {!currentUser?.like_reviews_id.includes(props.review.id) &&
+                            {props.review.review_likes_count !== 0 && (
+                                <p
+                                    className={classes.iconText}
+                                >
+                                    {props.review.review_likes_count}
+                                </p>
+                            )}
+                        </IconButton>
+                    }
+                    {!currentUser?.like_reviews_id.includes(props.review.id) &&
+                        <IconButton size="small" onClick={() => props.likeReview(props.review)}>
                             <FavoriteIcon
                                 color='action'
                                 fontSize='small'
-                                onClick={() => props.likeReview(props.review)}
                             />
-                        }
-                        {props.review.review_likes_count !== 0 && (
-                            <p
-                                className={classes.iconText}
-                            >
-                                {props.review.review_likes_count}
-                            </p>
-                        )}
-                    </IconButton>
+                            {props.review.review_likes_count !== 0 && (
+                                <p
+                                    className={classes.iconText}
+                                >
+                                    {props.review.review_likes_count}
+                                </p>
+                            )}
+                        </IconButton>
+                    }
                     <IconButton size="small">
                         <RepeatIcon color="disabled" fontSize="small" />
                         {props.review.retweet_count !== 0 && (

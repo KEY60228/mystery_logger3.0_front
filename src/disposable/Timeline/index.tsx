@@ -17,7 +17,7 @@ import { RootState, useAppDispatch } from '../../stores/index'
 import { setPopper } from '../../stores/error'
 import { setUser } from '../../stores/auth'
 
-import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
+import { CircularLoader } from '../../handlers/Loader/CircularLoader'
 import { TimelineTemplate as Template } from './layout'
 
 export const Timeline: FC = () => {

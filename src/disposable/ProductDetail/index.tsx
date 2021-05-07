@@ -7,7 +7,7 @@ import { ProductDetail as ProductDetailInterface, ReviewContents, Review, User }
 import { useAppDispatch, RootState } from '../../stores/index'
 import { asyncGetProduct, asyncUnwanna, asyncWanna } from '../../ajax/product'
 import { ProductDetailTemplate as Template } from './layout'
-import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
+import { CircularLoader } from '../../handlers/Loader/CircularLoader'
 import { asyncDeleteReview, asyncLikeReview, asyncPostReview, asyncUnlikeReview, asyncUpdateReview } from '../../ajax/review'
 import { asyncGetCurrentUser } from '../../ajax/auth'
 import { setPopper } from '../../stores/error'

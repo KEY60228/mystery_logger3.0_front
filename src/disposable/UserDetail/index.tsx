@@ -28,7 +28,7 @@ import { setPopper } from '../../stores/error'
 import { setUser as setCurrentUser } from '../../stores/auth'
 
 import { UserDetailTemplate as Template } from './layout'
-import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
+import { CircularLoader } from '../../handlers/Loader/CircularLoader'
 
 export const UserDetail: FC = () => {
     const { account_id } = useParams<{ account_id: string }>()

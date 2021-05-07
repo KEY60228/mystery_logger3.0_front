@@ -96,7 +96,12 @@ export const ProductCard: FC<Props> = props => {
                     <Box>
                         <p className={classes.productProperty}>{props.product.category.name}</p>
                         <p className={classes.productProperty}>{props.product.reviews_count}</p>
-                        <p className={classes.productProperty}>{props.product.success_rate} ({props.product.success_count}/{props.product.reviews_count - props.product.na_count})</p>
+                        <p className={classes.productProperty}>
+                            {props.product.success_rate ?
+                                `${props.product.success_rate * 100}%` :
+                                '0%'
+                            } ({props.product.success_count}/{props.product.reviews_count - props.product.na_count})
+                        </p>
                     </Box>
                 </Grid>
                 <Grid container alignItems='center' className={classes.ratings}>

@@ -9,7 +9,7 @@ import { Footer } from '../../reusable/Footer'
 import { ReviewForm } from '../../reusable/ReviewForm'
 import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 
 interface Props {
     product: ProductDetail

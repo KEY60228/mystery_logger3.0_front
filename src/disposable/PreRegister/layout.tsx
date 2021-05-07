@@ -6,9 +6,9 @@ import { Box, OutlinedInput, Divider, Button, FormHelperText, FormControl } from
 
 import { Footer } from '../../reusable/Footer'
 import { RootState, useAppDispatch } from '../../stores'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { setMessage } from '../../stores/error'
-import { PreRegisterModal } from './_components/PreRegisterModal'
+import { PreRegisteredModal } from './components/PreRegisteredModal'
 
 interface Props {
     email: string
@@ -172,7 +172,7 @@ export const PreRegisterTemplate: FC<Props> = props => {
                 </form>
             </Box>
             <Footer />
-            <PreRegisterModal
+            <PreRegisteredModal
                 open={props.open}
                 setOpen={props.setOpen}
                 setEmail={props.setEmail}
