@@ -11,7 +11,9 @@ interface Props {
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
         },
         innerBox: {
             position: 'absolute',

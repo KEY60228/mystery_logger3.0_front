@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { User, UserContents } from '../../../@types'
 import { setMessage } from '../../../stores/error'
 import { RootState, useAppDispatch } from '../../../stores'
-import { LinearLoader } from '../../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../../handlers/Loader/LinearLoader'
 
 interface Props {
     user: User
@@ -275,7 +275,7 @@ export const UserForm: FC<Props> = props => {
                     )}
                     {!preview && (
                         <img
-                            src={`${process.env.API_BASEURL}${props.user.image_name}`}
+                            src={`${process.env.IMAGES_BASEURL}${props.user.image_name}`}
                             className={classes.media}
                         />
                     )}

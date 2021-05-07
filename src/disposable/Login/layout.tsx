@@ -10,7 +10,7 @@ import { Footer } from '../../reusable/Footer'
 import { RootState, useAppDispatch } from '../../stores'
 import { useSelector } from 'react-redux'
 import { setMessage } from '../../stores/error'
-import { LinearLoader } from '../../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 
 interface Props {
     login: () => void

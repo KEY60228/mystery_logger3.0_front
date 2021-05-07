@@ -41,7 +41,7 @@ export const UserImage: FC<Props> = props => {
 
     return (
         <img
-            src={`${process.env.API_BASEURL}${props.user.image_name}`}
+            src={`${process.env.IMAGES_BASEURL}${props.user.image_name}`}
             onClick={transition}
             className={classes.root}
         />

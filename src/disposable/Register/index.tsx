@@ -9,7 +9,7 @@ import { useAppDispatch } from '../../stores/index'
 import { setMessage } from '../../stores/error'
 
 import { RegisterTemplate as Template } from './layout'
-import { CircularLoader } from '../../_reusable/Loader/CircularLoader'
+import { CircularLoader } from '../../handlers/Loader/CircularLoader'
 
 export const Register: FC = () => {
     const history = useHistory()

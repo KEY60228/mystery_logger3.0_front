@@ -14,7 +14,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { Product, ReviewContents } from '../@types'
 import { ProductImage } from './ProductImage'
 import { RootState } from '../stores'
-import { LinearLoader } from '../_reusable/Loader/LinearLoader'
+import { LinearLoader } from '../handlers/Loader/LinearLoader'
 
 interface Props {
     product: Product
