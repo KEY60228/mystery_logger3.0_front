@@ -1,0 +1,73 @@
+version: 2.1
+
+orbs:
+  aws-s3: circleci/aws-s3@2.0.0
+  slack: circleci/slack@4.4.2
+
+executors:
+  default:
+    docker:
+      - image: circleci/node:14.16
+
+commands:
+  yarn-install:
+    steps:
+      - restore_cache:
+          key: yarn-cache-{{ checksum "package.json" }}
+      - run:
+          name: install yarn
+          command: yarn install
+      - save_cache:
+          key: yarn-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+  lint:
+    steps:
+      - run:
+          name: eslint
+          command: yarn lint
+  yarn-test:
+    steps:
+      - run:
+          name: test
+          command: yarn test
+  build:
+    steps:
+      - run:
+          name: yarn run build
+          command: yarn build-prod
+  deploy:
+    steps:
+      - aws-s3/sync:
+          from: dist
+          to: s3://nazolog-front
+          overwrite: true
+      - slack/status:
+          success_message: ':circleci-pass: FRONT:$CIRCLE_BRANCHのデプロイが完了しました\n:github_octocat: User:$CIRCLECI_USERNAME'
+          failure_message: ':circleci-fail: FRONT:$CIRCLE_BRANCHのデプロイが失敗しました\n:github_octocat: User:$CIRCLECI_USERNAME'
+          webhook: '${SLACK_WEBHOOK}'
+
+jobs:
+  test:
+    executor: 
+      name: default
+    steps:
+      - checkout
+      - yarn-install
+      - lint
+      # - yarn-test
+  deploy:
+    executor: 
+      name: default
+    steps:
+      - checkout
+      - yarn-install
+      - lint
+      - build
+      - deploy
+
+workflows:
+  version: 2
+  cd:
+    jobs:
+      - deploy
