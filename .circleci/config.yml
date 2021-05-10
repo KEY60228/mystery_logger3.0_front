@@ -39,13 +39,16 @@ commands:
   deploy:
     steps:
       - aws-s3/sync:
+          aws-region: AWS_DEFAULT_REGION
           from: dist
           to: s3://nazolog-front
-          overwrite: true
-      - slack/status:
-          success_message: ':circleci-pass: FRONT:$CIRCLE_BRANCHのデプロイが完了しました\n:github_octocat: User:$CIRCLECI_USERNAME'
-          failure_message: ':circleci-fail: FRONT:$CIRCLE_BRANCHのデプロイが失敗しました\n:github_octocat: User:$CIRCLECI_USERNAME'
-          webhook: '${SLACK_WEBHOOK}'
+      - slack/notify:
+          event: fail
+          mentions: '@やまぐち'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 jobs:
   test:
@@ -68,6 +71,12 @@ jobs:
 
 workflows:
   version: 2
+  ci:
+    jobs:
+      - test
   cd:
     jobs:
-      - deploy
+      - deploy:
+          filters:
+            branches:
+              only: master
