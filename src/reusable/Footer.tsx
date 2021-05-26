@@ -7,26 +7,34 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             backgroundColor: '#0A0A0A',
-            height: '168px',
+            height: '240px',
             marginTop: '40px',
-            paddingTop: '24px',
+            paddingTop: '40px',
         },
         guide: {
-            marginBottom: '8px',
+            // marginBottom: '16px',
         },
         guideText: {
             color: '#FFAC00',
             lineHeight: '16px',
             fontSize: '12px',
-            margin: '0 8px',
+            margin: '0 8px 16px',
+            textDecoration: 'none',
         },
         titleLogo: {
             height: '40px',
-            margin: '16px auto 8px',
+            margin: '16px auto',
             paddingRight: '8px',
             backgroundColor: '#FEFEFE',
             verticalAlign: 'top',
             display: 'block',
+        },
+        copyright: {
+            color: '#FFAC00',
+            lineHeight: '16px',
+            fontSize: '12px',
+            textDecoration: 'none',
+            margin: '4px 0',
         },
     })
 )
@@ -37,21 +45,21 @@ export const Footer: FC = () => {
     return (
         <Box className={classes.root}>
             <Grid container justify="center" alignItems="center" className={classes.guide}>
-                <p className={classes.guideText}>利用規約</p>
-                <p className={classes.guideText}>コミュニティガイドライン</p>
+                <Link to="/kiyaku" className={classes.guideText}>利用規約</Link>
+                <Link to="/guideline" className={classes.guideText}>コミュニティガイドライン</Link>
             </Grid>
             <Grid container justify="center" alignItems="center" className={classes.guide}>
-                <p className={classes.guideText}>プライバシーポリシー</p>
-                <p className={classes.guideText}>運営団体</p>
-                <p className={classes.guideText}>お問い合わせ</p>
+                <Link to="/policy" className={classes.guideText}>プライバシーポリシー</Link>
+                <Link to="/about" className={classes.guideText}>なぞログについて</Link>
+                <Link to="/contact" className={classes.guideText}>お問い合わせ</Link>
             </Grid>
             <img
                 src={'/img/TitleLogo.png'}
                 className={classes.titleLogo}
             />
             <Grid container direction="column" justify="center" alignItems="center">
-                <p className={classes.guideText}>Copyright 2021 @key60228</p>
-                <p className={classes.guideText}>All Rights Reserved.</p>
+                <p className={classes.copyright}>Copyright 2021 @key60228</p>
+                <p className={classes.copyright}>All Rights Reserved.</p>
             </Grid>
         </Box>
     )
