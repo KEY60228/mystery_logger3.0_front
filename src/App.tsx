@@ -23,6 +23,10 @@ import { SearchByCategories } from './disposable/SearchByCategories/'
 import { SearchByOrganizers } from './disposable/SearchByOrganizers'
 import { SearchByVenues } from './disposable/SearchByVenues'
 import { SearchResult } from './disposable/SearchResult'
+import { About } from './disposable/About'
+import { Policy } from './disposable/Policy'
+import { Kiyaku } from './disposable/Kiyaku'
+import { Guideline } from './disposable/Guideline'
 
 import { ErrorHandler } from './handlers/ErrorHandler/ErrorHandler'
 import { SystemErrorPage } from './handlers/ErrorHandler/SystemErrorPage'
@@ -65,6 +69,10 @@ const App: FC = () => {
                     <Route path="/search/venues" children={<SearchByVenues />} />
                     <Route path="/search/categories" children={<SearchByCategories />} />
                     <Route path="/search" children={<SearchResult />} />
+                    <Route path="/about" children={<About />} />
+                    <Route path="/policy" children={<Policy />} />
+                    <Route path="/kiyaku" children={<Kiyaku />} />
+                    <Route path="/guideline" children={<Guideline />} />
                     <Route path="/verify-failed" children={<VerifyFailed />} />
                     <Route path="/500" children={<SystemErrorPage />} />
                     <Route children={<NotFoundPage />} />
