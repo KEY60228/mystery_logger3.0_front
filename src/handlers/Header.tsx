@@ -1,10 +1,13 @@
 import React, { FC, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Button, IconButton } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
+
 import { SideMenu } from './SideMenu'
+import { RootState } from '../stores'
 
 const useStyles = makeStyles(theme =>
     createStyles({
@@ -44,16 +47,27 @@ export const Header: FC = () => {
     const classes = useStyles()
     const history = useHistory()
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
+    const currentUser = useSelector((state: RootState) => state.auth.user)
 
     return (
         <>
             <Box className={classes.root}>
-                <Button component={Link} to="/" className={classes.titleLink}>
-                    <img
-                        src={'/img/TitleLogo.png'}
-                        className={classes.titleLogo}
-                    />
-                </Button>
+                { currentUser &&
+                    <Button component={Link} to="/timeline" className={classes.titleLink}>
+                        <img
+                            src={'/img/TitleLogo.png'}
+                            className={classes.titleLogo}
+                        />
+                    </Button>
+                }
+                { !currentUser &&
+                    <Button component={Link} to="/" className={classes.titleLink}>
+                        <img
+                            src={'/img/TitleLogo.png'}
+                            className={classes.titleLogo}
+                        />
+                    </Button>
+                }
                 <Box className={classes.buttons}>
                     <IconButton onClick={() => history.push('/search/keywords')} className={classes.button}>
                         <SearchIcon fontSize="large" />
