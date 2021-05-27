@@ -78,12 +78,15 @@ export const SideMenu: FC<Props> = props => {
                 </IconButton>
                 <Divider className={classes.topDivider} />
                 {currentUser &&
-                    <p
-                        className={classes.listItem}
-                        onClick={() => link(`/users/${currentUser.account_id}`)}
-                    >
-                        マイページ
-                    </p>
+                    <>
+                        <p
+                            className={classes.listItem}
+                            onClick={() => link(`/users/${currentUser.account_id}`)}
+                        >
+                            マイページ
+                        </p>
+                        <p onClick={() => link('/timeline')} className={classes.listItem}>タイムライン</p>
+                    </>
                 }
                 {!currentUser &&
                     <Button
@@ -96,18 +99,25 @@ export const SideMenu: FC<Props> = props => {
                     </Button>
                 }
                 <Divider className={classes.divider} />
-                <p onClick={() => {props.setOpen(false); history.push('/search/keywords')}} className={classes.listItem}>キーワードから探す</p>
-                <p onClick={() => {props.setOpen(false); history.push('/search/rankings')}} className={classes.listItem}>ランキングから探す</p>
-                <p onClick={() => {props.setOpen(false); history.push('/search/organizers')}} className={classes.listItem}>主催団体から探す</p>
-                <p onClick={() => {props.setOpen(false); history.push('/search/venues')}} className={classes.listItem}>開催場所から探す</p>
-                <p onClick={() => {props.setOpen(false); history.push('/search/categories')}} className={classes.listItem}>カテゴリーから探す</p>
+                <p onClick={() => link('/search/keywords')} className={classes.listItem}>キーワードから探す</p>
+                <p onClick={() => link('/search/rankings')} className={classes.listItem}>ランキングから探す</p>
+                <p onClick={() => link('/search/organizers')} className={classes.listItem}>主催団体から探す</p>
+                <p onClick={() => link('/search/venues')} className={classes.listItem}>開催場所から探す</p>
+                <p onClick={() => link('/search/categories')} className={classes.listItem}>カテゴリーから探す</p>
                 <Divider className={classes.divider} />
-                <p className={classes.listItem}>新着レビューを見る</p>
+                {/* <p className={classes.listItem}>新着レビューを見る</p>
                 <p className={classes.listItem}>人気のレビューを見る</p>
                 <p className={classes.listItem}>人気のユーザーを見る</p>
+                <Divider className={classes.divider} /> */}
+                {currentUser &&
+                    <p onClick={() => link('/')} className={classes.listItem}>トップページ</p>
+                }
+                <p onClick={() => link('/about')} className={classes.listItem}>なぞログについて</p>
+                <p onClick={() => link('/contact')} className={classes.listItem}>お問い合わせ</p>
                 <Divider className={classes.divider} />
-                <p className={classes.listItem}>運営団体</p>
-                <p className={classes.listItem}>お問い合わせ</p>
+                <p onClick={() => link('/kiyaku')} className={classes.listItem}>利用規約</p>
+                <p onClick={() => link('/guideline')} className={classes.listItem}>コミュニティガイドライン</p>
+                <p onClick={() => link('/policy')} className={classes.listItem}>プライバシーポリシー</p>
             </Box>
         </Drawer>
     )
