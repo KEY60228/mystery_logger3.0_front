@@ -6,6 +6,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import { Footer } from '../../reusable/Footer'
+import { headerHeight, footerHeight } from '../../util'
 
 interface Props {
     venues: Prop[][]
@@ -21,6 +22,9 @@ interface Prop {
 
 const useStyles = makeStyles(() =>
     createStyles({
+        root: {
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight})`,
+        },
         upperBox: {
             margin: '16px 20px 0',
         },
@@ -87,72 +91,74 @@ export const SearchByVenuesTemplate: FC<Props> = props => {
 
     return (
         <>
-            <Box className={classes.upperBox}>
-                <p className={classes.title}>開催場所から探す</p>
-                <Divider className={classes.titleDivider} />
-                { props.venues.map(venues => (
-                    <React.Fragment key={venues[0].id}>
-                        <Box
-                            onClick={() => 
-                                open === venues[0].addr_pref_id ? history.push(`/search?pref=${venues[0].addr_pref_id}`) : setOpen(venues[0].addr_pref_id)
-                            }
-                        >
-                            <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                                <p className={classes.prefLabel}>
-                                    {venues[0].addr_prefecture || 'その他'}
-                                </p>
-                                {open !== venues[0].addr_pref_id &&
-                                    <ExpandMoreIcon />
+            <Box className={classes.root}>
+                <Box className={classes.upperBox}>
+                    <p className={classes.title}>開催場所から探す</p>
+                    <Divider className={classes.titleDivider} />
+                    { props.venues.map(venues => (
+                        <React.Fragment key={venues[0].id}>
+                            <Box
+                                onClick={() => 
+                                    open === venues[0].addr_pref_id ? history.push(`/search?pref=${venues[0].addr_pref_id}`) : setOpen(venues[0].addr_pref_id)
                                 }
-                                {open === venues[0].addr_pref_id &&
-                                    <NavigateNextIcon />
-                                }
-                            </Grid>
-                            <Divider />
-                        </Box>
-                        {open === venues[0].addr_pref_id && venues.map(venue => (
-                            <Box key={venue.id} className={classes.venueBox} onClick={() => history.push(`/search?venue=${venue.id}`)}>
+                            >
                                 <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                                    <p className={classes.venueLabel}>{venue.name}<span className={classes.serviceLabel}> By {venue.service_name}</span></p>
-                                    <NavigateNextIcon />
+                                    <p className={classes.prefLabel}>
+                                        {venues[0].addr_prefecture || 'その他'}
+                                    </p>
+                                    {open !== venues[0].addr_pref_id &&
+                                        <ExpandMoreIcon />
+                                    }
+                                    {open === venues[0].addr_pref_id &&
+                                        <NavigateNextIcon />
+                                    }
                                 </Grid>
                                 <Divider />
                             </Box>
-                        ))}
-                    </React.Fragment>
-                ))}
-            </Box>
-            <Divider className={classes.categoryDivider} />
-            <Box className={classes.bottomBox}>
-                <p className={classes.subtitle}>他から探す</p>
-                <Divider className={classes.titleDivider} />
-                <Box onClick={() => history.push('/search/keywords')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>キーワードから探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
+                            {open === venues[0].addr_pref_id && venues.map(venue => (
+                                <Box key={venue.id} className={classes.venueBox} onClick={() => history.push(`/search?venue=${venue.id}`)}>
+                                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                                        <p className={classes.venueLabel}>{venue.name}<span className={classes.serviceLabel}> By {venue.service_name}</span></p>
+                                        <NavigateNextIcon />
+                                    </Grid>
+                                    <Divider />
+                                </Box>
+                            ))}
+                        </React.Fragment>
+                    ))}
                 </Box>
-                <Box onClick={() => history.push('/search/rankings')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>ランキングから探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box onClick={() => history.push('/search/organizers')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>主催団体から探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box onClick={() => history.push('/search/categories')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>カテゴリーから探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
+                <Divider className={classes.categoryDivider} />
+                <Box className={classes.bottomBox}>
+                    <p className={classes.subtitle}>他から探す</p>
+                    <Divider className={classes.titleDivider} />
+                    <Box onClick={() => history.push('/search/keywords')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>キーワードから探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/rankings')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>ランキングから探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/organizers')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>主催団体から探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/categories')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>カテゴリーから探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
                 </Box>
             </Box>
             <Footer />

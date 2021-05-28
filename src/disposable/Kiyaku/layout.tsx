@@ -3,11 +3,13 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box } from '@material-ui/core'
 
 import { Footer } from '../../reusable/Footer'
+import { footerHeight, headerHeight } from '../../util'
 
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            margin: '8px',
+            margin: '8px 8px 40px',
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 48px)`,
         },
         link: {
             color: theme.palette.primary.main,

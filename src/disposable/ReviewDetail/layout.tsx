@@ -12,6 +12,7 @@ import { ReviewForm } from '../../reusable/ReviewForm'
 import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
 import { LinearLoader } from '../../handlers/Loader/LinearLoader'
+import { headerHeight, footerHeight } from '../../util'
 
 interface Props {
     review: ReviewDetailInterface
@@ -32,7 +33,8 @@ interface Props {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            margin: '16px 20px 24px',
+            margin: '16px 20px 40px',
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 56px)`,
         },
         divider: {
             margin: '16px 0',

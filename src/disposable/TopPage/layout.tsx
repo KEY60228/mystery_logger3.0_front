@@ -1,4 +1,6 @@
 import React, { FC } from 'react'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
+import { Box } from '@material-ui/core'
 
 import { PropsForTopPage } from '../../@types'
 
@@ -8,6 +10,7 @@ import { ProductsByCategory } from './components/ProductsByCategory'
 import { UserRankings } from './components/UserRankings'
 import { SearchBox } from '../../reusable/SearchBox'
 import { Footer } from '../../reusable/Footer'
+import { headerHeight, footerHeight } from '../../util'
 
 interface Props {
     products: PropsForTopPage
@@ -15,18 +18,30 @@ interface Props {
     setKeywords: React.Dispatch<React.SetStateAction<string>>
 }
 
+const useStyles = makeStyles(theme =>
+    createStyles({
+        root: {
+            margin: '0 0 40px',
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight})`,
+        },
+    })
+)
 
 export const TopPageTemplate: FC<Props> = props => {
+    const classes = useStyles()
+
     return (
         <>
-            <Banner />
-            <ProductRankings products={props.products} />
-            <SearchBox
-                keywords={props.keywords}
-                setKeywords={props.setKeywords}
-            />
-            <ProductsByCategory products={props.products} />
-            <UserRankings users={props.products} />
+            <Box className={classes.root}>
+                <Banner />
+                <ProductRankings products={props.products} />
+                <SearchBox
+                    keywords={props.keywords}
+                    setKeywords={props.setKeywords}
+                />
+                <ProductsByCategory products={props.products} />
+                <UserRankings users={props.products} />
+            </Box>
             <Footer />
         </>
     )

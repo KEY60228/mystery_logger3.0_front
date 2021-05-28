@@ -10,7 +10,6 @@ const useStyles = makeStyles(() =>
         root: {
             backgroundColor: '#0A0A0A',
             height: footerHeight,
-            marginTop: '40px',
             paddingTop: '40px',
         },
         guideText: {

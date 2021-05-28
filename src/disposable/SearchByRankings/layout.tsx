@@ -5,9 +5,13 @@ import { Box, Divider, Grid } from '@material-ui/core'
 import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { Footer } from '../../reusable/Footer'
+import { headerHeight, footerHeight } from '../../util'
 
 const useStyles = makeStyles(() =>
     createStyles({
+        root: {
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight})`,
+        },
         upperBox: {
             margin: '16px 20px 0',
         },
@@ -54,106 +58,108 @@ export const SearchByRankingsTemplate: FC = () => {
 
     return (
         <>
-            <Box className={classes.upperBox}>
-                <p className={classes.title}>ランキングから探す</p>
-                <Divider className={classes.titleDivider} />
-                <Box>
-                    <Grid
-                        container
-                        justify='space-between'
-                        alignItems='center'
-                        wrap='nowrap'
-                        onClick={() => history.push('/search?ranking=1')}
-                    >
-                        <p className={classes.ranksLabel}>評価の高い作品</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
+            <Box className={classes.root}>
+                <Box className={classes.upperBox}>
+                    <p className={classes.title}>ランキングから探す</p>
+                    <Divider className={classes.titleDivider} />
+                    <Box>
+                        <Grid
+                            container
+                            justify='space-between'
+                            alignItems='center'
+                            wrap='nowrap'
+                            onClick={() => history.push('/search?ranking=1')}
+                        >
+                            <p className={classes.ranksLabel}>評価の高い作品</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box>
+                        <Grid
+                            container
+                            justify='space-between'
+                            alignItems='center'
+                            wrap='nowrap'
+                            onClick={() => history.push('/search?ranking=2')}
+                        >
+                            <p className={classes.ranksLabel}>投稿数の多い作品</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box>
+                        <Grid
+                            container
+                            justify='space-between'
+                            alignItems='center'
+                            wrap='nowrap'
+                            onClick={() => history.push('/search?ranking=3')}
+                        >
+                            <p className={classes.ranksLabel}>成功率の低い作品</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box>
+                        <Grid
+                            container
+                            justify='space-between'
+                            alignItems='center'
+                            wrap='nowrap'
+                            onClick={() => history.push('/search?ranking=4')}
+                        >
+                            <p className={classes.ranksLabel}>成功率の高い作品</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box>
+                        <Grid
+                            container
+                            justify='space-between'
+                            alignItems='center'
+                            wrap='nowrap'
+                            onClick={() => history.push('/search?ranking=5')}
+                        >
+                            <p className={classes.ranksLabel}>Likeの多い作品</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
                 </Box>
-                <Box>
-                    <Grid
-                        container
-                        justify='space-between'
-                        alignItems='center'
-                        wrap='nowrap'
-                        onClick={() => history.push('/search?ranking=2')}
-                    >
-                        <p className={classes.ranksLabel}>投稿数の多い作品</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box>
-                    <Grid
-                        container
-                        justify='space-between'
-                        alignItems='center'
-                        wrap='nowrap'
-                        onClick={() => history.push('/search?ranking=3')}
-                    >
-                        <p className={classes.ranksLabel}>成功率の低い作品</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box>
-                    <Grid
-                        container
-                        justify='space-between'
-                        alignItems='center'
-                        wrap='nowrap'
-                        onClick={() => history.push('/search?ranking=4')}
-                    >
-                        <p className={classes.ranksLabel}>成功率の高い作品</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box>
-                    <Grid
-                        container
-                        justify='space-between'
-                        alignItems='center'
-                        wrap='nowrap'
-                        onClick={() => history.push('/search?ranking=5')}
-                    >
-                        <p className={classes.ranksLabel}>Likeの多い作品</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-            </Box>
-            <Divider className={classes.categoryDivider} />
-            <Box className={classes.bottomBox}>
-                <p className={classes.subtitle}>他から探す</p>
-                <Divider className={classes.titleDivider} />
-                <Box onClick={() => history.push('/search/keywords')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>キーワードから探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box onClick={() => history.push('/search/organizers')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>主催団体から探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box onClick={() => history.push('/search/venues')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>開催場所から探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box onClick={() => history.push('/search/categories')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>カテゴリーから探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
+                <Divider className={classes.categoryDivider} />
+                <Box className={classes.bottomBox}>
+                    <p className={classes.subtitle}>他から探す</p>
+                    <Divider className={classes.titleDivider} />
+                    <Box onClick={() => history.push('/search/keywords')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>キーワードから探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/organizers')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>主催団体から探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/venues')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>開催場所から探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/categories')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>カテゴリーから探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
                 </Box>
             </Box>
             <Footer />

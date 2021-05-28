@@ -9,6 +9,7 @@ import { RootState, useAppDispatch } from '../../stores'
 import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { setMessage } from '../../stores/error'
 import { PreRegisteredModal } from './components/PreRegisteredModal'
+import { footerHeight, headerHeight } from '../../util'
 
 interface Props {
     email: string
@@ -21,7 +22,8 @@ interface Props {
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            margin: '24px 20px',
+            margin: '24px 20px 40px',
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 64px)`,
         },
         loginLabel: {
             margin: '0',
