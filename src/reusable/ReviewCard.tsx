@@ -223,7 +223,7 @@ export const ReviewCard: FC<Props> = props => {
                     <IconButton
                         size="small"
                     >
-                        <ChatBubbleIcon color="action" fontSize="small" />
+                        <ChatBubbleIcon color="disabled" fontSize="small" />
                         {props.review.review_comments_count !== 0 && (
                             <p
                                 className={classes.iconText}
@@ -273,7 +273,7 @@ export const ReviewCard: FC<Props> = props => {
                         )}
                     </IconButton>
                     <IconButton size="small">
-                        <ShareIcon color="action" fontSize="small" />
+                        <ShareIcon color="disabled" fontSize="small" />
                     </IconButton>
                 </Grid>
                 <Divider className={classes.cardDivider} />
