@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Tabs, Tab, Box, Grid } from '@material-ui/core'
 
-import { UserDetail } from '../../../@types'
+import { UserDetail, } from '../../../@types'
 
 import { TabPanel } from '../../../reusable/TabPanel'
 import { ProductImage } from '../../../reusable/ProductImage'
@@ -29,17 +29,10 @@ const useStyles = makeStyles(theme =>
         selected: {
             color: '#FFAC00',
         },
-        list: {
-            '&::after': {
-                content: "''",
-                flex: 'auto',
-            },
-        },
-        productImage: {
+        fakeBox: {
             width: '96px',
-            height: '134.4px',
-            backgroundColor: theme.palette.common.black,
-            borderRadius: '10px',
+            height: '0',
+            margin: '0 8px',
         },
         emptyBox: {
             height: '135px',
@@ -84,14 +77,17 @@ export const UserTabs: FC<Props> = props => {
                     <Grid
                         container
                         justify="space-between"
-                        className={classes.list}
                     >
                         {props.user.reviews.slice(0, 12).map(review => (
                             <ProductImage
                                 key={review.id}
                                 product={review.product}
-                                className={{ height: '134.4px', width: '96px', margin: '0 7px 16px' }}
+                                className={{ height: '134.4px', width: '96px', margin: '0 8px 16px' }}
                             />
+                        ))}
+                        {/* FlexBox最終行対策 */}
+                        {props.user.reviews.slice(0, 12).map(() => (
+                            <Box className={classes.fakeBox}></Box>
                         ))}
                     </Grid>
                 )}
@@ -106,14 +102,17 @@ export const UserTabs: FC<Props> = props => {
                     <Grid
                         container
                         justify="space-between"
-                        className={classes.list}
                     >
                         {props.user.wannas.slice(0, 12).map(wanna => (
                             <ProductImage
                                 key={wanna.id}
                                 product={wanna.product}
-                                className={{ height: '134.4px', width: '96px', margin: '0 7px 16px'}}
+                                className={{ height: '134.4px', width: '96px', margin: '0 8px 16px'}}
                             />
+                        ))}
+                        {/* FlexBox最終行対策 */}
+                        {props.user.wannas.slice(0, 12).map(() => (
+                            <Box className={classes.fakeBox}></Box>
                         ))}
                     </Grid>
                 )}
