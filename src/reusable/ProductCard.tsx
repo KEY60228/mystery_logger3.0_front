@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Grid, Box } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
@@ -77,6 +78,7 @@ const useStyles = makeStyles(theme =>
 
 export const ProductCard: FC<Props> = props => {
     const classes = useStyles(props.className)
+    const history = useHistory()
 
     return (
         <Grid container wrap='nowrap' className={classes.root}>
@@ -84,7 +86,7 @@ export const ProductCard: FC<Props> = props => {
                 product={props.product}
                 className={{ height: '112px', width: '80px', margin: '0 8px' }}
             />
-            <Box className={classes.productDetail}>
+            <Box className={classes.productDetail} onClick={() => history.push(`/products/${props.product.id}`)}>
                 <p className={classes.productTitle}>{props.product.name}</p>
                 <p className={classes.organizer}><span className={classes.providedBy}>Provided by</span>{props.product.organizer.service_name}</p>
                 <Grid container>
