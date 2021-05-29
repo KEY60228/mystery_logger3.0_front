@@ -27,7 +27,7 @@ interface Props {
     unfollow: (user: User) => void
     likeReview: (review: Review) => void
     unlikeReview: (review: Review) => void
-    getSpoiledContents?: () => void
+    getSpoiledContents: () => void
 }
 
 const useStyles = makeStyles(() =>
@@ -61,6 +61,7 @@ export const ReviewDetailTemplate: FC<Props> = props => {
                     likeReview={props.likeReview}
                     unlikeReview={props.unlikeReview}
                     getSpoiledContents={props.getSpoiledContents}
+                    link={false}
                 />
                 { props.review.review_comments.length !== 0 && props.review.review_comments.map(review_comment =>
                     <ReviewCommentCard

@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Divider, Grid, IconButton, Menu, MenuItem } from '@material-ui/core'
 import { Rating } from '@material-ui/lab'
@@ -28,25 +29,28 @@ interface Props {
     unfollow: (user: User) => void
     likeReview: (review: Review) => void
     unlikeReview: (review: Review) => void
-    getSpoiledContents?: () => void
+    getSpoiledContents: () => void
+    link: boolean
 }
 
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
         },
-        userName: {
+        reviewerInfo: {
             margin: '0 0 0 8px',
-            lineHeight: '24px',
-            fontSize: '15px',
             flexGrow: 1,
         },
-        userAccount: {
-            margin: '0 0 0 8px',
+        reviewerName: {
+            lineHeight: '24px',
+            fontSize: '15px',
+            margin: '0',
+        },
+        reviewerAccountId: {
             lineHeight: '24px',
             fontSize: '12px',
             color: '#C0C0C0',
-            flexGrow: 1,
+            margin: '0',
         },
         menuButton: {
             width: '48px',
@@ -108,6 +112,7 @@ const useStyles = makeStyles(theme =>
 
 export const ReviewCard: FC<Props> = props => {
     const classes = useStyles()
+    const history = useHistory()
 
     // ログインユーザー
     const currentUser = useSelector((state: RootState) => state.auth.user)
@@ -138,9 +143,9 @@ export const ReviewCard: FC<Props> = props => {
                         user={props.review.user}
                         className={{ height: '48px', width: '48px' }}
                     />
-                    <Grid container direction='column'>
-                        <p className={classes.userName}>{props.review.user.name}</p>
-                        <p className={classes.userAccount}>@{props.review.user.account_id}</p>
+                    <Grid container direction='column' className={classes.reviewerInfo}>
+                        <p className={classes.reviewerName}>{props.review.user.name}</p>
+                        <p className={classes.reviewerAccountId}>@{props.review.user.account_id}</p>
                     </Grid>
                     <IconButton
                         onClick={openMenu}
@@ -176,49 +181,51 @@ export const ReviewCard: FC<Props> = props => {
                         }
                     </Menu>
                 </Grid>
-                <Grid container justify='space-between' wrap='nowrap'>
-                    <Box className={classes.reviewProperties}>
-                        <Grid container alignItems='center' className={classes.rating}>
-                            <Rating
-                                value={
-                                    props.review.rating === 0 || props.review.rating === null ? 0 : parseFloat(props.review.rating.toFixed(1))
-                                }
-                                precision={0.1}
-                                readOnly
-                                size='small'
-                            />
-                            <p className={classes.ratingLabel}>{props.review.rating === 0 || props.review.rating === null ? '-' : props.review.rating.toFixed(1)}</p>
-                        </Grid>
-                        <span className={classes.property}>参加日: {props.review.joined_at || '-'}</span>
+                <Box onClick={props.link ? () => history.push(`/reviews/${props.review.id}`) : () => false}>
+                    <Grid container justify='space-between' wrap='nowrap'>
+                        <Box className={classes.reviewProperties}>
+                            <Grid container alignItems='center' className={classes.rating}>
+                                <Rating
+                                    value={
+                                        props.review.rating === 0 || props.review.rating === null ? 0 : parseFloat(props.review.rating.toFixed(1))
+                                    }
+                                    precision={0.1}
+                                    readOnly
+                                    size='small'
+                                />
+                                <p className={classes.ratingLabel}>{props.review.rating === 0 || props.review.rating === null ? '-' : props.review.rating.toFixed(1)}</p>
+                            </Grid>
+                            <span className={classes.property}>参加日: {props.review.joined_at || '-'}</span>
+                            { props.review.result === 1 &&
+                                <span className={classes.property}>脱出成功！</span>
+                            }
+                            { props.review.result === 2 &&
+                                <span className={classes.property}>脱出失敗...</span>
+                            }
+                        </Box>
                         { props.review.result === 1 &&
-                            <span className={classes.property}>脱出成功！</span>
+                            <img src='/img/success.jpg' className={classes.resultStamp} />
                         }
                         { props.review.result === 2 &&
-                            <span className={classes.property}>脱出失敗...</span>
+                            <img src='/img/failure.jpg' className={classes.resultStamp} />
                         }
-                    </Box>
-                    { props.review.result === 1 &&
-                        <img src='/img/success.jpg' className={classes.resultStamp} />
+                    </Grid>
+                    {!props.review.spoil &&
+                        <p className={classes.reviewContents}>
+                            {props.review.exposed_contents}
+                        </p>
                     }
-                    { props.review.result === 2 &&
-                        <img src='/img/failure.jpg' className={classes.resultStamp} />
+                    {props.review.spoil &&
+                        <p
+                            onClick={props.getSpoiledContents}
+                            className={classes.spoiledContents}
+                        >
+                            ※ネタバレを表示する
+                            <span dangerouslySetInnerHTML={{__html: '<!-- 見いたあなあああ！！！！ -->'}}></span>
+                        </p>
                     }
-                </Grid>
-                {!props.review.spoil &&
-                    <p className={classes.reviewContents}>
-                        {props.review.exposed_contents}
-                    </p>
-                }
-                {props.review.spoil &&
-                    <p
-                        onClick={props.getSpoiledContents}
-                        className={classes.spoiledContents}
-                    >
-                        ※ネタバレを表示する
-                        <span dangerouslySetInnerHTML={{__html: '<!-- 見いたあなあああ！！！！ -->'}}></span>
-                    </p>
-                }
-                <p className={classes.postDate}>{formatDate(new Date(props.review.created_at))}</p>
+                    <p className={classes.postDate}>{formatDate(new Date(props.review.created_at))}</p>
+                </Box>
                 <Grid container justify="space-around" className={classes.icons}>
                     <IconButton
                         size="small"

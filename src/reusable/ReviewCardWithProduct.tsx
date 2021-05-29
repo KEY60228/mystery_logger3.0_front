@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Grid, IconButton, Divider, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
@@ -111,6 +112,7 @@ const useStyles = makeStyles(theme =>
 
 export const ReviewCardWithProduct: FC<Props> = props => {
     const classes = useStyles()
+    const history = useHistory()
 
     // ログインユーザー
     const currentUser = useSelector((state: RootState) => state.auth.user)
@@ -181,7 +183,7 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                 </Menu>
             </Grid>
             <Grid container justify='space-between' wrap='nowrap'>
-                <Box className={classes.leftBox}>
+                <Box className={classes.leftBox} onClick={() => history.push(`/reviews/${props.review.id}`)}>
                     <p className={classes.productName}>{props.review.product.name}</p>
                     <Grid container alignItems='center' className={classes.ratings}>
                         <Rating
@@ -210,7 +212,6 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                     }
                     {props.review.spoil &&
                         <p
-                            // onClick={props.getSpoiledContents}
                             className={classes.spoiledContents}
                         >
                             ※ネタバレを表示する

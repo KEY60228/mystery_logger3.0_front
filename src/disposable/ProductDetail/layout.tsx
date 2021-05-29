@@ -62,6 +62,8 @@ export const ProductDetailTemplate: FC<Props> = props => {
                         unfollow={props.unfollow}
                         likeReview={props.likeReview}
                         unlikeReview={props.unlikeReview}
+                        getSpoiledContents={() => false}
+                        link={true}
                     />
                 ))}
             </Box>
