@@ -224,7 +224,7 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                         product={props.review.product}
                         className={{ height: '112px', width: '80px' }}
                     />
-                    <p className={classes.reviewCreateDate}>{formatDate(new Date(props.review.created_at))}</p>
+                    <p className={classes.reviewCreateDate}>{formatDate(new Date(props.review.created_at.replace(/-/g, "/")))}</p>
                 </Grid>
             </Grid>
             <Grid container justify="space-around" className={classes.icons}>

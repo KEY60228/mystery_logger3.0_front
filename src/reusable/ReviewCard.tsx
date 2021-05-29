@@ -224,7 +224,7 @@ export const ReviewCard: FC<Props> = props => {
                             <span dangerouslySetInnerHTML={{__html: '<!-- 見いたあなあああ！！！！ -->'}}></span>
                         </p>
                     }
-                    <p className={classes.postDate}>{formatDate(new Date(props.review.created_at))}</p>
+                    <p className={classes.postDate}>{formatDate(new Date(props.review.created_at.replace(/-/g, "/")))}</p>
                 </Box>
                 <Grid container justify="space-around" className={classes.icons}>
                     <IconButton
