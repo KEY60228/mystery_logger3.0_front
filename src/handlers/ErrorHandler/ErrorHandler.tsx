@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 
@@ -26,5 +26,5 @@ export const ErrorHandler: FC = () => {
         }
     }, [code])
 
-    return <Fragment />
+    return null
 }
