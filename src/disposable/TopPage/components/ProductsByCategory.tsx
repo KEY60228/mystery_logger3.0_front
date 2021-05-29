@@ -1,17 +1,16 @@
 import React, { FC, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Tabs, Tab } from '@material-ui/core'
 
 import { PropsForTopPage } from '../../../@types'
 import { TabPanel } from '../../../reusable/TabPanel'
 
-import { ProductImage } from '../../../reusable/ProductImage'
-
 interface Props {
     products: PropsForTopPage
 }
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles(theme =>
     createStyles({
         root: {
 
@@ -48,6 +47,15 @@ const useStyles = makeStyles(() =>
             margin: '0 4px',
             display: 'inline-block',
         },
+        image: {
+            height: '168px',
+            width: '120px',
+            margin: '0 4px',
+            backgroundColor: theme.palette.common.black,
+            objectFit: 'contain',
+            borderRadius: '10px',
+            verticalAlign: 'top',
+        },
         label: {
             lineHeight: '16px',
             fontSize: '12px',
@@ -63,6 +71,7 @@ const useStyles = makeStyles(() =>
 
 export const ProductsByCategory: FC<Props> = props => {
     const classes = useStyles()
+    const history = useHistory()
 
     const [value, setValue] = useState<number>(0)
     const tabChange = (event: React.ChangeEvent, newValue: number) => setValue(newValue)
@@ -103,9 +112,10 @@ export const ProductsByCategory: FC<Props> = props => {
                     <Box className={classes.innerBox}>
                         {props.products.products_categorizeby_organizer.map(product => (
                             <Box key={product.id} className={classes.images}>
-                                <ProductImage
-                                    product={product}
-                                    className={{height: '168px', width: '120px'}}
+                                <img
+                                    src={`${process.env.IMAGES_BASEURL}${product.image_name}`}
+                                    onClick={() => history.push(`/search?organizer=${product.organizer_id}`)}
+                                    className={classes.image}
                                 />
                                 <p className={classes.label}>{product.organizer_name}</p>
                             </Box>
@@ -118,9 +128,10 @@ export const ProductsByCategory: FC<Props> = props => {
                     <Box className={classes.innerBox}>
                         {props.products.products_categorizeby_venue.map(product => (
                             <Box key={product.id} className={classes.images}>
-                                <ProductImage
-                                    product={product}
-                                    className={{height: '168px', width: '120px', margin: '0 4px' }}
+                                <img
+                                    src={`${process.env.IMAGES_BASEURL}${product.image_name}`}
+                                    onClick={() => history.push(`/search?pref=${product.addr_pref_id}`)}
+                                    className={classes.image}
                                 />
                                 <p className={classes.label}>{product.addr_prefecture}</p>
                             </Box>
@@ -133,9 +144,10 @@ export const ProductsByCategory: FC<Props> = props => {
                     <Box className={classes.innerBox}>
                         {props.products.products_categorizeby_category.map(product => (
                             <Box key={product.id} className={classes.images}>
-                                <ProductImage
-                                    product={product}
-                                    className={{height: '168px', width: '120px', margin: '0 4px' }}
+                                <img
+                                    src={`${process.env.IMAGES_BASEURL}${product.image_name}`}
+                                    onClick={() => history.push(`/search?category=${product.category_id}`)}
+                                    className={classes.image}
                                 />
                                 <p className={classes.label}>{product.category_name}</p>
                             </Box>
