@@ -7,6 +7,7 @@ import {
     PolarAngleAxis,
     PolarRadiusAxis,
 } from 'recharts'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
 
 import { UserDetail } from '../../../@types'
 
@@ -14,7 +15,15 @@ interface Props {
     user: UserDetail
 }
 
+const useStyles = makeStyles(createStyles({
+    root: {
+        margin: '0 auto',
+    }
+}))
+
 export const UserStatics: FC<Props> = props => {
+    const classes = useStyles()
+
     // 行った作品をカテゴリーでfilter
     const reviewsCount = (category_id: number): number => {
         const reviews = props.user.reviews.filter(
@@ -89,7 +98,7 @@ export const UserStatics: FC<Props> = props => {
     ]
 
     return (
-        <RadarChart width={330} height={288} outerRadius={'70%'} data={data}>
+        <RadarChart width={330} height={288} outerRadius={'70%'} data={data} className={classes.root}>
             <PolarGrid />
             <PolarAngleAxis dataKey="subject" />
             <PolarRadiusAxis angle={90} domain={[0, maxCount()]} />
