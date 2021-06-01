@@ -8,11 +8,12 @@ import SearchIcon from '@material-ui/icons/Search'
 
 import { SideMenu } from './SideMenu'
 import { RootState } from '../stores'
+import { headerHeight } from '../util'
 
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            height: '72px',
+            height: headerHeight,
             width: '100%',
             borderBottom: 'solid #C0C0C0 1px',
             position: 'fixed',
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme =>
             marginLeft: '8px',
         },
         fake: {
-            height: '72px',
+            height: headerHeight,
         },
     }),
 )

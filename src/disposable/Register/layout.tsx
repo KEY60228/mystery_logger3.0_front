@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '../../stores'
 import { setMessage } from '../../stores/error'
 import { LinearLoader } from '../../handlers/Loader/LinearLoader'
+import { footerHeight, headerHeight } from '../../util'
 
 interface Props {
     registerData: RegisterData
@@ -20,7 +21,8 @@ interface Props {
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            margin: '24px 20px',
+            margin: '24px 20px 40px',
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 64px)`,
         },
         registerLabel: {
             margin: '0',

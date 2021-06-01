@@ -86,6 +86,7 @@ export interface Venue {
     name: string // 会場名
     kana_name: string // 会場名読み
     zipcode: string | null // 郵便番号
+    addr_pref_id: number | null
     addr_prefecture: string | null // 都道府県
     addr_city: string | null // 市区町村
     addr_block: string | null // 町域以下
@@ -230,6 +231,7 @@ interface withOrganizerName extends Product {
 }
 
 interface withVenuePrefecture extends Product {
+    addr_pref_id: number
     addr_prefecture: string
 }
 

@@ -28,6 +28,8 @@ import { Policy } from './disposable/Policy'
 import { Kiyaku } from './disposable/Kiyaku'
 import { Guideline } from './disposable/Guideline'
 
+import { ScrollToTop } from './handlers/ScrollHandler/ScrollToTop'
+
 import { ErrorHandler } from './handlers/ErrorHandler/ErrorHandler'
 import { SystemErrorPage } from './handlers/ErrorHandler/SystemErrorPage'
 import { NotFoundPage } from './handlers/ErrorHandler/NotFoundPage'
@@ -45,6 +47,7 @@ const App: FC = () => {
         <>
             <CssBaseline />
             <BrowserRouter>
+                <ScrollToTop />
                 <ErrorHandler />
                 <Header />
                 <PopHandler />

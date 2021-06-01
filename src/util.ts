@@ -13,3 +13,6 @@ export const formatDate = (dt: Date): string => {
     const d = ('00' + dt.getDate()).slice(-2);
     return (y + '/' + m + '/' + d);
 }
+
+export const headerHeight = '72px'
+export const footerHeight = '240px'

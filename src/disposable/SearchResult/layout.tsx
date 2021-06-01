@@ -14,6 +14,7 @@ import { ProductCard } from '../../reusable/ProductCard'
 import { SearchBox } from '../../reusable/SearchBox'
 import { Footer } from '../../reusable/Footer'
 import { FilterDialog } from './components/FilterDialog'
+import { headerHeight, footerHeight } from '../../util'
 
 interface Props {
     search: string
@@ -53,7 +54,8 @@ interface VenueProp {
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            margin: '24px 20px',
+            margin: '24px 20px 40px',
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 64px)`,
         },
         searchBox: {
             margin: '0 0 16px',

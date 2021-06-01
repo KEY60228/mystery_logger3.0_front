@@ -6,6 +6,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { SearchBox } from '../../reusable/SearchBox'
 import { Footer } from '../../reusable/Footer'
+import { headerHeight, footerHeight } from '../../util'
 
 interface Props {
     keywords: string
@@ -14,6 +15,9 @@ interface Props {
 
 const useStyles = makeStyles(() =>
     createStyles({
+        root: {
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight})`,
+        },
         upperBox: {
             margin: '16px 20px 0',
         },
@@ -55,46 +59,48 @@ export const SearchByKeywordsTemplate: FC<Props> = props => {
 
     return (
         <>
-            <Box className={classes.upperBox}>
-                <p className={classes.title}>キーワードから探す</p>
-                <Divider className={classes.titleDivider} />
-                <SearchBox
-                    keywords={props.keywords}
-                    setKeywords={props.setKeywords}
-                    className={{margin: '0 0 40px', padding: '0 8px', height: '36px', fontSize: '14px'}}
-                />
-            </Box>
-            <Divider className={classes.categoryDivider} />
-            <Box className={classes.bottomBox}>
-                <p className={classes.subtitle}>他から探す</p>
-                <Divider className={classes.titleDivider} />
-                <Box onClick={() => history.push('/search/rankings')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>ランキングから探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
+            <Box className={classes.root}>
+                <Box className={classes.upperBox}>
+                    <p className={classes.title}>キーワードから探す</p>
+                    <Divider className={classes.titleDivider} />
+                    <SearchBox
+                        keywords={props.keywords}
+                        setKeywords={props.setKeywords}
+                        className={{margin: '0 0 40px', padding: '0 8px', height: '36px', fontSize: '14px'}}
+                    />
                 </Box>
-                <Box onClick={() => history.push('/search/organizers')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>主催団体から探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box onClick={() => history.push('/search/venues')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>開催場所から探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
-                </Box>
-                <Box onClick={() => history.push('/search/categories')}>
-                    <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
-                        <p className={classes.label}>カテゴリーから探す</p>
-                        <NavigateNextIcon />
-                    </Grid>
-                    <Divider />
+                <Divider className={classes.categoryDivider} />
+                <Box className={classes.bottomBox}>
+                    <p className={classes.subtitle}>他から探す</p>
+                    <Divider className={classes.titleDivider} />
+                    <Box onClick={() => history.push('/search/rankings')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>ランキングから探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/organizers')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>主催団体から探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/venues')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>開催場所から探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
+                    <Box onClick={() => history.push('/search/categories')}>
+                        <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+                            <p className={classes.label}>カテゴリーから探す</p>
+                            <NavigateNextIcon />
+                        </Grid>
+                        <Divider />
+                    </Box>
                 </Box>
             </Box>
             <Footer />

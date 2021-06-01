@@ -12,6 +12,7 @@ import { ReviewForm } from '../../reusable/ReviewForm'
 import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
 import { LinearLoader } from '../../handlers/Loader/LinearLoader'
+import { headerHeight, footerHeight } from '../../util'
 
 interface Props {
     review: ReviewDetailInterface
@@ -26,13 +27,14 @@ interface Props {
     unfollow: (user: User) => void
     likeReview: (review: Review) => void
     unlikeReview: (review: Review) => void
-    getSpoiledContents?: () => void
+    getSpoiledContents: () => void
 }
 
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            margin: '16px 20px 24px',
+            margin: '16px 20px 40px',
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 56px)`,
         },
         divider: {
             margin: '16px 0',
@@ -59,6 +61,7 @@ export const ReviewDetailTemplate: FC<Props> = props => {
                     likeReview={props.likeReview}
                     unlikeReview={props.unlikeReview}
                     getSpoiledContents={props.getSpoiledContents}
+                    link={false}
                 />
                 { props.review.review_comments.length !== 0 && props.review.review_comments.map(review_comment =>
                     <ReviewCommentCard

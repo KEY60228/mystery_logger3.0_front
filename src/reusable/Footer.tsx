@@ -3,16 +3,14 @@ import { Link } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Grid } from '@material-ui/core'
 
+import { footerHeight } from '../util'
+
 const useStyles = makeStyles(() => 
     createStyles({
         root: {
             backgroundColor: '#0A0A0A',
-            height: '240px',
-            marginTop: '40px',
+            height: footerHeight,
             paddingTop: '40px',
-        },
-        guide: {
-            // marginBottom: '16px',
         },
         guideText: {
             color: '#FFAC00',
@@ -44,11 +42,11 @@ export const Footer: FC = () => {
 
     return (
         <Box className={classes.root}>
-            <Grid container justify="center" alignItems="center" className={classes.guide}>
+            <Grid container justify="center" alignItems="center">
                 <Link to="/kiyaku" className={classes.guideText}>利用規約</Link>
                 <Link to="/guideline" className={classes.guideText}>コミュニティガイドライン</Link>
             </Grid>
-            <Grid container justify="center" alignItems="center" className={classes.guide}>
+            <Grid container justify="center" alignItems="center">
                 <Link to="/policy" className={classes.guideText}>プライバシーポリシー</Link>
                 <Link to="/about" className={classes.guideText}>なぞログについて</Link>
                 <Link to="/contact" className={classes.guideText}>お問い合わせ</Link>

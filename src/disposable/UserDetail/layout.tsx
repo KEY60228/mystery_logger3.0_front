@@ -12,7 +12,7 @@ import { UserForm } from './components/UserForm'
 import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
-
+import { headerHeight, footerHeight } from '../../util'
 
 interface Props {
     user: UserDetail
@@ -33,6 +33,7 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             margin: '16px 20px 24px',
+            minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 40px)`,
         },
         divider: {
             marginTop: '16px',

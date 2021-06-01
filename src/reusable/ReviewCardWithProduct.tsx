@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { Box, Grid, IconButton, Divider, Menu, MenuItem } from '@material-ui/core'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
@@ -111,6 +112,7 @@ const useStyles = makeStyles(theme =>
 
 export const ReviewCardWithProduct: FC<Props> = props => {
     const classes = useStyles()
+    const history = useHistory()
 
     // ログインユーザー
     const currentUser = useSelector((state: RootState) => state.auth.user)
@@ -181,7 +183,7 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                 </Menu>
             </Grid>
             <Grid container justify='space-between' wrap='nowrap'>
-                <Box className={classes.leftBox}>
+                <Box className={classes.leftBox} onClick={() => history.push(`/reviews/${props.review.id}`)}>
                     <p className={classes.productName}>{props.review.product.name}</p>
                     <Grid container alignItems='center' className={classes.ratings}>
                         <Rating
@@ -210,7 +212,6 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                     }
                     {props.review.spoil &&
                         <p
-                            // onClick={props.getSpoiledContents}
                             className={classes.spoiledContents}
                         >
                             ※ネタバレを表示する
@@ -223,14 +224,14 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                         product={props.review.product}
                         className={{ height: '112px', width: '80px' }}
                     />
-                    <p className={classes.reviewCreateDate}>{formatDate(new Date(props.review.created_at))}</p>
+                    <p className={classes.reviewCreateDate}>{formatDate(new Date(props.review.created_at.replace(/-/g, "/")))}</p>
                 </Grid>
             </Grid>
             <Grid container justify="space-around" className={classes.icons}>
                 <IconButton
                     size="small"
                 >
-                    <ChatBubbleIcon color="action" fontSize="small" />
+                    <ChatBubbleIcon color="disabled" fontSize="small" />
                     {props.review.review_comments_count !== 0 && (
                         <p
                             className={classes.iconText}
@@ -280,7 +281,7 @@ export const ReviewCardWithProduct: FC<Props> = props => {
                     )}
                 </IconButton>
                 <IconButton size="small">
-                    <ShareIcon color="action" fontSize="small" />
+                    <ShareIcon color="disabled" fontSize="small" />
                 </IconButton>
             </Grid>
             <Divider className={classes.divider} />
