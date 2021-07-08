@@ -79,6 +79,9 @@ const useStyles = makeStyles(theme =>
             fontSize: '14px',
             color: '#C0C0C0',
             textAlign: 'center',
+            '&:hover': {
+                cursor: 'pointer',
+            },
         },
         choices: {
             margin: '16px',

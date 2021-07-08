@@ -55,6 +55,9 @@ const useStyles = makeStyles(theme =>
         leftBox: {
             margin: '8px 8px 0',
             flexGrow: 1,
+            '&:hover': {
+                cursor: 'pointer',
+            },
         },
         productName: {
             lineHeight: '24px',
@@ -86,6 +89,9 @@ const useStyles = makeStyles(theme =>
             fontSize: '13px',
             color: theme.palette.error.main,
             margin: '8px 0 0',
+            '&:hover': {
+                cursor: 'pointer',
+            }
         },
         rightBox: {
             width: '80px',

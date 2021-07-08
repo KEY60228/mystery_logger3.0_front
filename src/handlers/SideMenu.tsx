@@ -46,6 +46,9 @@ const useStyles = makeStyles(theme =>
             color: theme.palette.primary.main,
             textAlign: 'right',
             margin: '24px 0 0',
+            '&:hover': {
+                cursor: 'pointer',
+            },
         },
         divider: {
             margin: '24px 0 0',

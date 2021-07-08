@@ -18,7 +18,19 @@ interface ClassProps {
 
 const useStyles = makeStyles(theme =>
     createStyles({
-        root: (className: ClassProps) => ({
+        tran: (className: ClassProps) => ({
+            height: className.height,
+            width: className.width,
+            margin: className.margin || '0',
+            backgroundColor: theme.palette.common.black,
+            objectFit: 'contain',
+            borderRadius: '10px',
+            verticalAlign: 'top',
+            '&:hover': {
+                cursor: 'pointer',
+            },
+        }),
+        notTran: (className: ClassProps) => ({
             height: className.height,
             width: className.width,
             margin: className.margin || '0',
@@ -44,7 +56,7 @@ export const ProductImage: FC<Props> = props => {
         <img
             src={`${process.env.IMAGES_BASEURL}${props.product.image_name}`}
             onClick={transition}
-            className={classes.root}
+            className={props.transition || props.transition === undefined ? classes.tran : classes.notTran}
         />
     )
 }

@@ -28,6 +28,11 @@ const useStyles = makeStyles(() =>
             width: '160px',
             margin: '0 auto 24px',
         },
+        tran: {
+            '&:hover': {
+                cursor: 'pointer',
+            },
+        },
         categoryLabel: {
             lineHeight: '24px',
             fontSize: '16px',
@@ -71,6 +76,7 @@ export const SearchByCategoriesTemplate: FC = () => {
                             alignItems='center'
                             wrap='nowrap'
                             onClick={() => history.push(`/search?category=1`)}
+                            className={classes.tran}
                         >
                             <p className={classes.categoryLabel}>ルームタイプの作品</p>
                             <NavigateNextIcon />
@@ -84,6 +90,7 @@ export const SearchByCategoriesTemplate: FC = () => {
                             alignItems='center'
                             wrap='nowrap'
                             onClick={() => history.push(`/search?category=2`)}
+                            className={classes.tran}
                         >
                             <p className={classes.categoryLabel}>ホールタイプの作品</p>
                             <NavigateNextIcon />
@@ -97,6 +104,7 @@ export const SearchByCategoriesTemplate: FC = () => {
                             alignItems='center'
                             wrap='nowrap'
                             onClick={() => history.push(`/search?category=3`)}
+                            className={classes.tran}
                         >
                             <p className={classes.categoryLabel}>キット配布タイプの作品</p>
                             <NavigateNextIcon />
@@ -110,6 +118,7 @@ export const SearchByCategoriesTemplate: FC = () => {
                             alignItems='center'
                             wrap='nowrap'
                             onClick={() => history.push(`/search?category=4`)}
+                            className={classes.tran}
                         >
                             <p className={classes.categoryLabel}>オンラインの作品</p>
                             <NavigateNextIcon />
@@ -123,6 +132,7 @@ export const SearchByCategoriesTemplate: FC = () => {
                             alignItems='center'
                             wrap='nowrap'
                             onClick={() => history.push(`/search?category=5`)}
+                            className={classes.tran}
                         >
                             <p className={classes.categoryLabel}>その他の作品</p>
                             <NavigateNextIcon />
@@ -134,28 +144,28 @@ export const SearchByCategoriesTemplate: FC = () => {
                 <Box className={classes.bottomBox}>
                     <p className={classes.subtitle}>他から探す</p>
                     <Divider className={classes.titleDivider} />
-                    <Box onClick={() => history.push('/search/keywords')}>
+                    <Box onClick={() => history.push('/search/keywords')} className={classes.tran}>
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.label}>キーワードから探す</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
                     </Box>
-                    <Box onClick={() => history.push('/search/rankings')}>
+                    <Box onClick={() => history.push('/search/rankings')} className={classes.tran}>
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.label}>ランキングから探す</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
                     </Box>
-                    <Box onClick={() => history.push('/search/organizers')}>
+                    <Box onClick={() => history.push('/search/organizers')} className={classes.tran}>
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.label}>主催団体から探す</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
                     </Box>
-                    <Box onClick={() => history.push('/search/venues')}>
+                    <Box onClick={() => history.push('/search/venues')} className={classes.tran}>
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.label}>開催場所から探す</p>
                             <NavigateNextIcon />

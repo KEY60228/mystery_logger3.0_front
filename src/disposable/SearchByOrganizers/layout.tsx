@@ -50,6 +50,11 @@ const useStyles = makeStyles(() =>
             width: '160px',
             margin: '0 auto 24px',
         },
+        tran: {
+            '&:hover': {
+                cursor: 'pointer',
+            },
+        },
         categoryDivider: {
             margin: '40px 0 24px',
         },
@@ -89,6 +94,7 @@ export const SearchByOrganizersTemplate: FC<Props> = props => {
                                 alignItems='center'
                                 wrap='nowrap'
                                 onClick={() => history.push(`/search?organizer=${organizer.id}`)}
+                                className={classes.tran}
                             >
                                 <p className={classes.serviceLabel}>
                                     {organizer.service_name}
@@ -106,28 +112,28 @@ export const SearchByOrganizersTemplate: FC<Props> = props => {
                 <Box className={classes.bottomBox}>
                     <p className={classes.subtitle}>他から探す</p>
                     <Divider className={classes.titleDivider} />
-                    <Box onClick={() => history.push('/search/keywords')}>
+                    <Box onClick={() => history.push('/search/keywords')} className={classes.tran}>
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.label}>キーワードから探す</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
                     </Box>
-                    <Box onClick={() => history.push('/search/rankings')}>
+                    <Box onClick={() => history.push('/search/rankings')} className={classes.tran}>
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.label}>ランキングから探す</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
                     </Box>
-                    <Box onClick={() => history.push('/search/venues')}>
+                    <Box onClick={() => history.push('/search/venues')} className={classes.tran}>
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.label}>開催場所から探す</p>
                             <NavigateNextIcon />
                         </Grid>
                         <Divider />
                     </Box>
-                    <Box onClick={() => history.push('/search/categories')}>
+                    <Box onClick={() => history.push('/search/categories')} className={classes.tran}>
                         <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
                             <p className={classes.label}>カテゴリーから探す</p>
                             <NavigateNextIcon />

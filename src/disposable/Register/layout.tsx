@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { OutlinedInput, Box, Button, Divider, FormControl, FormHelperText, InputAdornment, IconButton } from '@material-ui/core'
 import { Visibility, VisibilityOff } from '@material-ui/icons'
@@ -110,7 +110,6 @@ const useStyles = makeStyles(theme =>
 export const RegisterTemplate: FC<Props> = props => {
     const classes = useStyles()
     const dispatch = useAppDispatch()
-    const history = useHistory()
 
     const loading = useSelector((state: RootState) => state.error.loading)
     const message = useSelector((state: RootState) => state.error.message)
@@ -322,9 +321,9 @@ export const RegisterTemplate: FC<Props> = props => {
                     </FormControl>
                     <p className={classes.attention}>
                         ご登録の前に必ず
-                        <span onClick={() => history.push('/kiyaku')} className={classes.link}>利用規約</span>、
-                        <span onClick={() => history.push('/guideline')} className={classes.link}>コミュニティガイドライン</span>、
-                        <span onClick={() => history.push('/policy')} className={classes.link}>プライバシーポリシー</span>
+                        <Link to="/kiyaku" className={classes.link}>利用規約</Link>、
+                        <Link to="/guideline" className={classes.link}>コミュニティガイドライン</Link>、
+                        <Link to="/policy" className={classes.link}>プライバシーポリシー</Link>
                         をご確認ください
                     </p>
                     <Button
