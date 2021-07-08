@@ -24,6 +24,8 @@ const useStyles = makeStyles(() =>
     createStyles({
         root: {
             minHeight: `calc(100vh - ${headerHeight} - ${footerHeight})`,
+            maxWidth: '600px',
+            margin: '0 auto',
         },
         upperBox: {
             margin: '16px 20px 0',

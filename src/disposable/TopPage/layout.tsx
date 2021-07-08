@@ -21,8 +21,9 @@ interface Props {
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            margin: '0 0 40px',
+            margin: '0 auto 40px',
             minHeight: `calc(100vh - ${headerHeight} - ${footerHeight})`,
+            maxWidth: '600px',
         },
     })
 )

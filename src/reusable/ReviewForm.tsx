@@ -61,7 +61,8 @@ const useStyles = makeStyles(theme =>
             padding: '0',
         },
         reviewBox: {
-            margin: '32px 20px',
+            margin: '32px auto',
+            maxWidth: '600px',
         },
         rightBox: {
             flexGrow: 1,

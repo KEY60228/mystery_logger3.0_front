@@ -54,8 +54,12 @@ interface VenueProp {
 const useStyles = makeStyles(theme =>
     createStyles({
         root: {
-            margin: '24px 20px 40px',
+            margin: '24px auto 40px',
             minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 64px)`,
+            maxWidth: '600px',
+        },
+        innerBox: {
+            margin: '0 20px',
         },
         searchBox: {
             margin: '0 0 16px',
@@ -156,51 +160,53 @@ export const SearchResultTemplate: FC<Props> = props => {
     return (
         <>
             <Box className={classes.root}>
-                <SearchBox
-                    keywords={props.keywords}
-                    setKeywords={props.setKeywords}
-                    className={{margin: '0 0 16px', padding: '0'}}
-                />
-                <Grid container justify='space-between' alignItems='center' wrap='nowrap' className={classes.properties}>
-                    <p className={classes.label}>
-                        {props.results.data.length ? (
-                            `${props.results.from}-${props.results.to}件 / ${props.results.total}件中`
-                        ) : (
-                            '0件'
-                        )}
-                    </p>
-                    <Box className={classes.filters}>
-                        <IconButton onClick={() => props.setFilterOpen(true)} className={classes.icon} >
-                            <FilterListIcon />
-                            <p className={classes.label}>絞り込み</p>
-                        </IconButton>
-                        <IconButton onClick={() => props.setSortOpen(true)} className={classes.icon}>
-                            <SortIcon />
-                            <p className={classes.label}>並び替え</p>
-                        </IconButton>
-                    </Box>
-                </Grid>
-                <Divider className={classes.divider} />
-                {props.results.total !== 0 && props.results.data.map(product => (
-                    <Box key={product.id}>
-                        <ProductCard product={product} className={{margin: '0 0 24px'}}/>
-                        <Divider className={classes.divider} />
-                    </Box>
-                ))} 
-                {props.results.total === 0 &&
-                    <div>該当の作品はありません。</div>
-                }
-                <Box className={classes.paginationBox}>
-                    <Pagination
-                        color='primary'
-                        variant='outlined'
-                        shape='rounded'
-                        size='small'
-                        page={props.results.current_page}
-                        count={props.results.last_page}
-                        onChange={(ev, page) => paginate(ev, page)}
-                        classes={{root: classes.paginationRoot}}
+                <Box className={classes.innerBox}>
+                    <SearchBox
+                        keywords={props.keywords}
+                        setKeywords={props.setKeywords}
+                        className={{margin: '0 0 16px', padding: '0'}}
                     />
+                    <Grid container justify='space-between' alignItems='center' wrap='nowrap' className={classes.properties}>
+                        <p className={classes.label}>
+                            {props.results.data.length ? (
+                                `${props.results.from}-${props.results.to}件 / ${props.results.total}件中`
+                            ) : (
+                                '0件'
+                            )}
+                        </p>
+                        <Box className={classes.filters}>
+                            <IconButton onClick={() => props.setFilterOpen(true)} className={classes.icon} >
+                                <FilterListIcon />
+                                <p className={classes.label}>絞り込み</p>
+                            </IconButton>
+                            <IconButton onClick={() => props.setSortOpen(true)} className={classes.icon}>
+                                <SortIcon />
+                                <p className={classes.label}>並び替え</p>
+                            </IconButton>
+                        </Box>
+                    </Grid>
+                    <Divider className={classes.divider} />
+                    {props.results.total !== 0 && props.results.data.map(product => (
+                        <Box key={product.id}>
+                            <ProductCard product={product} className={{margin: '0 0 24px'}}/>
+                            <Divider className={classes.divider} />
+                        </Box>
+                    ))} 
+                    {props.results.total === 0 &&
+                        <div>該当の作品はありません。</div>
+                    }
+                    <Box className={classes.paginationBox}>
+                        <Pagination
+                            color='primary'
+                            variant='outlined'
+                            shape='rounded'
+                            size='small'
+                            page={props.results.current_page}
+                            count={props.results.last_page}
+                            onChange={(ev, page) => paginate(ev, page)}
+                            classes={{root: classes.paginationRoot}}
+                        />
+                    </Box>
                 </Box>
             </Box>
             <Footer />

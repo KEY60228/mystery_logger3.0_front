@@ -30,8 +30,12 @@ interface Props {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            margin: '0 20px 40px',
+            margin: '0 auto 40px',
             minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 40px)`,
+            maxWidth: '600px',
+        },
+        innerBox: {
+            margin: '0 20px',
         },
         title: {
             lineHeight: '32px',
@@ -57,18 +61,20 @@ export const TimelineTemplate: FC<Props> = props => {
             <p className={classes.title}>タイムライン</p>
             <Divider className={classes.divider} />
             <Box className={classes.root}>
-                {props.reviews.map(review =>
-                    <ReviewCardWithProduct
-                        key={review.id}
-                        review={review}
-                        editReview={props.editReview}
-                        deleteReview={props.deleteReview}
-                        follow={props.follow}
-                        unfollow={props.unfollow}
-                        likeReview={props.likeReview}
-                        unlikeReview={props.unlikeReview}
-                    />
-                )}
+                <Box className={classes.innerBox}>
+                    {props.reviews.map(review =>
+                        <ReviewCardWithProduct
+                            key={review.id}
+                            review={review}
+                            editReview={props.editReview}
+                            deleteReview={props.deleteReview}
+                            follow={props.follow}
+                            unfollow={props.unfollow}
+                            likeReview={props.likeReview}
+                            unlikeReview={props.unlikeReview}
+                        />
+                    )}
+                </Box>
             </Box>
             <Footer />
             {props.review &&

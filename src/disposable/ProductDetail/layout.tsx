@@ -32,8 +32,12 @@ interface Props {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            margin: '16px 20px 40px',
+            margin: '16px auto 40px',
             minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 56px)`,
+            maxWidth: '600px',
+        },
+        innerBox: {
+            margin: '0 20px',
         },
     })
 )
@@ -46,26 +50,28 @@ export const ProductDetailTemplate: FC<Props> = props => {
         <>
             {loading && <LinearLoader />}
             <Box className={classes.root}>
-                <ProductContents
-                    product={props.product}
-                    editReview={props.editReview}
-                    wanna={props.wanna}
-                    unwanna={props.unwanna}
-                />
-                {props.product.reviews.map(review => (
-                    <ReviewCard
-                        key={review.id}
-                        review={review}
+                <Box className={classes.innerBox}>
+                    <ProductContents
+                        product={props.product}
                         editReview={props.editReview}
-                        deleteReview={props.deleteReview}
-                        follow={props.follow}
-                        unfollow={props.unfollow}
-                        likeReview={props.likeReview}
-                        unlikeReview={props.unlikeReview}
-                        getSpoiledContents={() => false}
-                        link={true}
+                        wanna={props.wanna}
+                        unwanna={props.unwanna}
                     />
-                ))}
+                    {props.product.reviews.map(review => (
+                        <ReviewCard
+                            key={review.id}
+                            review={review}
+                            editReview={props.editReview}
+                            deleteReview={props.deleteReview}
+                            follow={props.follow}
+                            unfollow={props.unfollow}
+                            likeReview={props.likeReview}
+                            unlikeReview={props.unlikeReview}
+                            getSpoiledContents={() => false}
+                            link={true}
+                        />
+                    ))}
+                </Box>
             </Box>
             <Footer />
             <ReviewForm

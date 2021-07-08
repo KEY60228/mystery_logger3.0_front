@@ -32,8 +32,12 @@ interface Props {
 const useStyles = makeStyles(() =>
     createStyles({
         root: {
-            margin: '16px 20px 24px',
+            margin: '16px auto 24px',
             minHeight: `calc(100vh - ${headerHeight} - ${footerHeight} - 40px)`,
+            maxWidth: '600px',
+        },
+        innerBox: {
+            margin: '0 20px',
         },
         divider: {
             marginTop: '16px',
@@ -59,20 +63,22 @@ export const UserDetailTemplate: FC<Props> = props => {
         <>
             {loading && <LinearLoader />}
             <Box className={classes.root}>
-                <UserProfile
-                    user={props.user}
-                    setFollowsOpen={setFollowsOpen}
-                    setFollowersOpen={setFollowersOpen}
-                    editUser={props.editUser}
-                    follow={props.follow}
-                    unfollow={props.unfollow}
-                    logout={props.logout}
-                />
-                <Divider className={classes.divider} />
-                <UserStatics user={props.user} />
-                <Divider className={classes.staticDivider} />
-                <UserTabs user={props.user} />
-                <Divider className={classes.lastDivider} />
+                <Box className={classes.innerBox}>
+                    <UserProfile
+                        user={props.user}
+                        setFollowsOpen={setFollowsOpen}
+                        setFollowersOpen={setFollowersOpen}
+                        editUser={props.editUser}
+                        follow={props.follow}
+                        unfollow={props.unfollow}
+                        logout={props.logout}
+                    />
+                    <Divider className={classes.divider} />
+                    <UserStatics user={props.user} />
+                    <Divider className={classes.staticDivider} />
+                    <UserTabs user={props.user} />
+                    <Divider className={classes.lastDivider} />
+                </Box>
             </Box>
             <Footer />
             <FollowList
