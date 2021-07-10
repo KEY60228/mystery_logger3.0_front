@@ -57,6 +57,11 @@ const useStyles = makeStyles(theme =>
             height: '48px',
             padding: '0',
         },
+        tran: {
+            '&:hover': {
+                cursor: 'pointer',
+            },
+        },
         reviewProperties: {
             margin: '16px 0 8px',
         },
@@ -86,6 +91,9 @@ const useStyles = makeStyles(theme =>
             fontSize: '13px',
             color: theme.palette.error.main,
             margin: '0',
+            '&:hover': {
+                cursor: 'pointer',
+            }
         },
         postDate: {
             margin: '0',
@@ -181,7 +189,10 @@ export const ReviewCard: FC<Props> = props => {
                         }
                     </Menu>
                 </Grid>
-                <Box onClick={props.link ? () => history.push(`/reviews/${props.review.id}`) : () => false}>
+                <Box
+                    onClick={props.link ? () => history.push(`/reviews/${props.review.id}`) : () => false}
+                    className={props.link ? classes.tran : ''}
+                >
                     <Grid container justify='space-between' wrap='nowrap'>
                         <Box className={classes.reviewProperties}>
                             <Grid container alignItems='center' className={classes.rating}>

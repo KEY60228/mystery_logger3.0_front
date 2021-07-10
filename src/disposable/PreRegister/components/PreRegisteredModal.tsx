@@ -52,12 +52,9 @@ export const PreRegisteredModal: FC<Props> = props => {
         >
             <Fade in={props.open}>
                 <Box className={classes.innerBox}>
-                    <p className={classes.text}>
-                        ご登録のアドレス宛にメールを送信しました。
-                    </p>
-                    <p className={classes.text}>
-                        アドレスに記載されているURLから本登録を進めてください。
-                    </p>
+                    <p className={classes.text}>ご登録のアドレス宛にメールを送信しました。</p>
+                    <p className={classes.text}>アドレスに記載されているURLから本登録を進めてください。</p>
+                    <p className={classes.text}>メールが届かない場合はお手数ですが再度アドレスをお確かめの上登録してください。</p>
                 </Box>
             </Fade>
         </Modal>

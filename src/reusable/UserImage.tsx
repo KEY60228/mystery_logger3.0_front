@@ -18,14 +18,25 @@ interface ClassProps {
 
 const useStyles = makeStyles(theme =>
     createStyles({
-        root: (className: ClassProps) => ({
+        tran: (className: ClassProps) => ({
             height: className.height,
             width: className.width,
             margin: className.margin || '0',
             borderRadius: '50%',
             objectFit: 'cover',
             verticalAlign: 'top',
-        })
+            '&:hover': {
+                cursor: 'pointer'
+            },
+        }),
+        notTran: (className: ClassProps) => ({
+            height: className.height,
+            width: className.width,
+            margin: className.margin || '0',
+            borderRadius: '50%',
+            objectFit: 'cover',
+            verticalAlign: 'top',
+        }),
     })
 )
 
@@ -43,7 +54,7 @@ export const UserImage: FC<Props> = props => {
         <img
             src={`${process.env.IMAGES_BASEURL}${props.user.image_name}`}
             onClick={transition}
-            className={classes.root}
+            className={props.transition || props.transition === undefined ? classes.tran : classes.notTran}
         />
     )
 }

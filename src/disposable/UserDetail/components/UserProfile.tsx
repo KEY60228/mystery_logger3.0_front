@@ -77,6 +77,11 @@ const useStyles = makeStyles(() =>
             fontSize: '12px',
             margin: '8px 8px 0',
         },
+        tran: {
+            '&:hover': {
+                cursor: 'pointer',
+            },
+        },
     })
 )
 
@@ -112,11 +117,11 @@ export const UserProfile: FC<Props> = props => {
                 />
                 <Grid container direction='column' className={classes.userBox}>
                     <Grid container justify='space-between' wrap='nowrap'>
-                        <Grid container direction='column' onClick={() => props.setFollowsOpen(true)}>
+                        <Grid container direction='column' onClick={() => props.setFollowsOpen(true)} className={classes.tran}>
                             <p className={classes.userProperty}>{props.user.follows_count}</p>
                             <p className={classes.userPropertyLabel}>フォロー</p>
                         </Grid>
-                        <Grid container direction='column' onClick={() => props.setFollowersOpen(true)}>
+                        <Grid container direction='column' onClick={() => props.setFollowersOpen(true)} className={classes.tran}>
                             <p className={classes.userProperty}>{props.user.followers_count}</p>
                             <p className={classes.userPropertyLabel}>フォロワー</p>
                         </Grid>

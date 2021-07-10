@@ -82,7 +82,7 @@ export const UserTabs: FC<Props> = props => {
                             <ProductImage
                                 key={review.id}
                                 product={review.product}
-                                className={{ height: '134.4px', width: '96px', margin: '0 8px 16px' }}
+                                className={{ height: '134.4px', width: '96px', margin: '0 4px 16px' }}
                             />
                         ))}
                         {/* FlexBox最終行対策 */}

@@ -34,6 +34,9 @@ const useStyles = makeStyles(theme =>
         productDetail: {
             flexGrow: 1,
             overflow: 'hidden',
+            '&:hover': {
+                cursor: 'pointer',
+            },
         },
         productTitle: {
             lineHeight: '24px',
