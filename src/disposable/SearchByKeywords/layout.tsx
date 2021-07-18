@@ -7,6 +7,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import { SearchBox } from '../../reusable/SearchBox'
 import { Footer } from '../../reusable/Footer'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
 
 interface Props {
     keywords: string
@@ -109,6 +110,7 @@ export const SearchByKeywordsTemplate: FC<Props> = props => {
                         <Divider />
                     </Box>
                 </Box>
+                <DisplayAdsCard />
             </Box>
             <Footer />
         </>

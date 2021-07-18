@@ -11,6 +11,8 @@ import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
 import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { footerHeight, headerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
+import { ReviewAdsCard } from '../../reusable/ReviewAdsCard'
 
 interface Props {
     product: ProductDetail
@@ -57,19 +59,24 @@ export const ProductDetailTemplate: FC<Props> = props => {
                         wanna={props.wanna}
                         unwanna={props.unwanna}
                     />
-                    {props.product.reviews.map(review => (
-                        <ReviewCard
-                            key={review.id}
-                            review={review}
-                            editReview={props.editReview}
-                            deleteReview={props.deleteReview}
-                            follow={props.follow}
-                            unfollow={props.unfollow}
-                            likeReview={props.likeReview}
-                            unlikeReview={props.unlikeReview}
-                            getSpoiledContents={() => false}
-                            link={true}
-                        />
+                    <DisplayAdsCard />
+                    {props.product.reviews.map((review, index) => (
+                        <React.Fragment key={review.id}>
+                            {(index !== 0 && index % 3 === 0) &&
+                                <ReviewAdsCard />
+                            }
+                            <ReviewCard
+                                review={review}
+                                editReview={props.editReview}
+                                deleteReview={props.deleteReview}
+                                follow={props.follow}
+                                unfollow={props.unfollow}
+                                likeReview={props.likeReview}
+                                unlikeReview={props.unlikeReview}
+                                getSpoiledContents={() => false}
+                                link={true}
+                            />
+                        </React.Fragment>
                     ))}
                 </Box>
             </Box>

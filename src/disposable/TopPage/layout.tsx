@@ -11,6 +11,7 @@ import { UserRankings } from './components/UserRankings'
 import { SearchBox } from '../../reusable/SearchBox'
 import { Footer } from '../../reusable/Footer'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
 
 interface Props {
     products: PropsForTopPage
@@ -42,6 +43,7 @@ export const TopPageTemplate: FC<Props> = props => {
                 />
                 <ProductsByCategory products={props.products} />
                 <UserRankings users={props.products} />
+                <DisplayAdsCard />
             </Box>
             <Footer />
         </>

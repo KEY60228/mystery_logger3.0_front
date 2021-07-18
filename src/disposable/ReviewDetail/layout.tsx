@@ -13,6 +13,7 @@ import { RootState } from '../../stores'
 import { useSelector } from 'react-redux'
 import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
 
 interface Props {
     review: ReviewDetailInterface
@@ -75,6 +76,7 @@ export const ReviewDetailTemplate: FC<Props> = props => {
                             unfollow={props.unfollow}
                         />
                     )}
+                    <DisplayAdsCard />
                 </Box>
             </Box>
             <Footer />

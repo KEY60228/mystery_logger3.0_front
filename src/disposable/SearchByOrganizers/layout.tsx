@@ -6,6 +6,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { Footer } from '../../reusable/Footer'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
 
 interface Props {
     organizers: Prop[]
@@ -141,6 +142,7 @@ export const SearchByOrganizersTemplate: FC<Props> = props => {
                         <Divider />
                     </Box>
                 </Box>
+                <DisplayAdsCard />
             </Box>
             <Footer />
         </>

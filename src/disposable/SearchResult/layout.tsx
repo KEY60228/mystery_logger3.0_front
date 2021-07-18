@@ -14,6 +14,8 @@ import { Footer } from '../../reusable/Footer'
 import { SortDialog } from './components/SortDialog'
 import { FilterDialog } from './components/FilterDialog'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
+import { ReviewAdsCard } from '../../reusable/ReviewAdsCard'
 
 interface Props {
     search: string
@@ -140,11 +142,16 @@ export const SearchResultTemplate: FC<Props> = props => {
                         </Box>
                     </Grid>
                     <Divider className={classes.divider} />
-                    {props.results.total !== 0 && props.results.data.map(product => (
-                        <Box key={product.id}>
-                            <ProductCard product={product} className={{margin: '0 0 24px'}}/>
-                            <Divider className={classes.divider} />
-                        </Box>
+                    {props.results.total !== 0 && props.results.data.map((product, index) => (
+                        <React.Fragment key={product.id}>
+                            {(index !== 0 && index % 5 == 0) &&
+                                <ReviewAdsCard/>
+                            }
+                            <Box>
+                                <ProductCard product={product} className={{margin: '0 0 24px'}}/>
+                                <Divider className={classes.divider} />
+                            </Box>
+                        </React.Fragment>
                     ))} 
                     {props.results.total === 0 &&
                         <div>該当の作品はありません。</div>
@@ -161,6 +168,7 @@ export const SearchResultTemplate: FC<Props> = props => {
                             classes={{root: classes.paginationRoot}}
                         />
                     </Box>
+                    <DisplayAdsCard />
                 </Box>
             </Box>
             <Footer />
