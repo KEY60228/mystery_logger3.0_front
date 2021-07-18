@@ -17,7 +17,7 @@ export const DisplayAdsCard: FC = () => {
 
     return (
         <ins
-            className="adsbygogle"
+            className="adsbygoogle"
             style={{ "display": "block" }}
             data-ad-client={process.env.DATA_AD_CLIENT}
             data-ad-slot="5605932049"
