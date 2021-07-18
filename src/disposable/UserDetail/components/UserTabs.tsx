@@ -86,8 +86,8 @@ export const UserTabs: FC<Props> = props => {
                             />
                         ))}
                         {/* FlexBox最終行対策 */}
-                        {props.user.reviews.slice(0, 12).map(() => (
-                            <Box className={classes.fakeBox}></Box>
+                        {props.user.reviews.slice(0, 12).map((review, index) => (
+                            <Box key={index} className={classes.fakeBox}></Box>
                         ))}
                     </Grid>
                 )}
@@ -111,8 +111,8 @@ export const UserTabs: FC<Props> = props => {
                             />
                         ))}
                         {/* FlexBox最終行対策 */}
-                        {props.user.wannas.slice(0, 12).map(() => (
-                            <Box className={classes.fakeBox}></Box>
+                        {props.user.wannas.slice(0, 12).map((review, index) => (
+                            <Box key={index} className={classes.fakeBox}></Box>
                         ))}
                     </Grid>
                 )}

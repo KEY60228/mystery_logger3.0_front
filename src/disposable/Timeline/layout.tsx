@@ -10,6 +10,8 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
 import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
+import { ReviewAdsCard } from '../../reusable/ReviewAdsCard'
 
 interface Props {
     reviews: ReviewIndex[]
@@ -62,18 +64,23 @@ export const TimelineTemplate: FC<Props> = props => {
             <Divider className={classes.divider} />
             <Box className={classes.root}>
                 <Box className={classes.innerBox}>
-                    {props.reviews.map(review =>
-                        <ReviewCardWithProduct
-                            key={review.id}
-                            review={review}
-                            editReview={props.editReview}
-                            deleteReview={props.deleteReview}
-                            follow={props.follow}
-                            unfollow={props.unfollow}
-                            likeReview={props.likeReview}
-                            unlikeReview={props.unlikeReview}
-                        />
+                    {props.reviews.map((review, index) =>
+                        <React.Fragment key={review.id}>
+                            {(index !== 0 && index % 5 === 0) &&
+                                <ReviewAdsCard />
+                            }
+                            <ReviewCardWithProduct
+                                review={review}
+                                editReview={props.editReview}
+                                deleteReview={props.deleteReview}
+                                follow={props.follow}
+                                unfollow={props.unfollow}
+                                likeReview={props.likeReview}
+                                unlikeReview={props.unlikeReview}
+                            />
+                        </React.Fragment>
                     )}
+                <DisplayAdsCard />
                 </Box>
             </Box>
             <Footer />

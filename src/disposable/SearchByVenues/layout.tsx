@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import { Footer } from '../../reusable/Footer'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
 
 interface Props {
     venues: Prop[][]
@@ -171,6 +172,7 @@ export const SearchByVenuesTemplate: FC<Props> = props => {
                         <Divider />
                     </Box>
                 </Box>
+                <DisplayAdsCard />
             </Box>
             <Footer />
         </>

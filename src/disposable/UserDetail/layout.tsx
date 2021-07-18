@@ -13,6 +13,7 @@ import { LinearLoader } from '../../handlers/Loader/LinearLoader'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../stores'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
 
 interface Props {
     user: UserDetail
@@ -78,6 +79,7 @@ export const UserDetailTemplate: FC<Props> = props => {
                     <Divider className={classes.staticDivider} />
                     <UserTabs user={props.user} />
                     <Divider className={classes.lastDivider} />
+                    <DisplayAdsCard />
                 </Box>
             </Box>
             <Footer />

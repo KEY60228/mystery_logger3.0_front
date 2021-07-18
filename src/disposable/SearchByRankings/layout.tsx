@@ -6,6 +6,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 
 import { Footer } from '../../reusable/Footer'
 import { headerHeight, footerHeight } from '../../util'
+import { DisplayAdsCard } from '../../reusable/DisplayAdsCard'
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -173,6 +174,7 @@ export const SearchByRankingsTemplate: FC = () => {
                         <Divider />
                     </Box>
                 </Box>
+                <DisplayAdsCard />
             </Box>
             <Footer />
         </>
