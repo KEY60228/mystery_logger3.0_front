@@ -1,91 +1,77 @@
-# 実装方針
+# なぞログ (https://mystery-logger.com)
 
-まずはゴリゴリ進めよう！
+## 概要
+謎解き、リアル脱出ゲーム<sup id="a1">[1](#f1)</sup>ユーザー用SNS
 
-細かいところとデザインは後々やればOK！
+行った作品のレビューや行きたい作品のブックマークが出来るほか、気になる作品の評価を確認したり、行きたい作品の検索をすることが出来ます。
 
-## ディレクトリ構成
+## 作ろうと思ったきっかけ
+### 自分が「あったら嬉しい」と思ったから
+謎解きやリアル脱出ゲーム<sup id="a2">[1](#f1)</sup>はその性質上ネタバレ厳禁とされ、オープンに感想共有や議論が出来る場がありませんでした。
 
-src/
+そこで、
 
-├ ajax/             APIを叩く非同期ファンクション
+- 意図せずネタバレされるリスクなく
+- 今まで交わることのなかったような人たちと
+- オープンに議論ができ、
+- 戦績や評価も可視化できる
 
-├ reusable/          複数のページから呼び出されるコンポーネント
+そんなサービスがあったら嬉しいな、と考えたことが「なぞログ」を制作したきっかけの一つです。
 
-│   ├ Header/       ヘッダー
+### 新しい技術に触れてみたかったから
 
-│   ├ Loader/       ローダー
+業務では15年来のサービスを担当しており、PHPとSQL以外の言語について触れることは稀でした。
 
-│   ├ ReviewCard/   レビューカード
+また、今後サービス刷新、リプレイス等も予定されていないため、業務で新しい技術に触れられる機会はほぼない状態でした。
 
-│   ├ ProductCard/  作品情報
+そこで、それならプライベートで新しい技術に触れ、プロダクトを作ってみれば良いのでは、と考えたこともきっかけの一つです。
 
-│
+## 使用技術
 
-├ disposabe/        単一のページから成るコンポーネント     
+開発環境アーキテクチャ図
+![開発環境アーキテクチャ図](https://images.mystery-logger.com/development_arch.PNG)
 
-│   ├ TopPage/
+本番環境アーキテクチャ図
+![本番環境アーキテクチャ図](https://images.mystery-logger.com/production_arch.PNG)
 
-│   ├ Login/
+### バックエンド
 
-│   ├ ProductDetail/
+- PHP 7.4 (Laravel 6.18)
+- Go 1.16
 
-│   ├ ReviewDetail/
+### フロントエンド
 
-│   ├ Timeline/
+- TypeScript 4.0.2 (React 16.13.1)
 
-│
+### インフラ
 
-├ handlers/         App.tsxから呼ばれるハンドラー
+- Docker
+- Circle CI
+- Terraform 0.14.9
+- Amazon Web Services
+  - CloudFront, Route53
+  - ACM, KMS, CloudWatch, IAM, CloudTrail, SSM, ECS, ECR, SMS, Lambda, SES
+  - ELB, EC2, RDS, ElastiCache
 
-│   ├ ErrorHandler/     エラーハンドリングコンポーネント 
+### その他のツール
 
-│   ├ PopHandler/       ポッパーハンドリングコンポーネント 
+- Figma
+- Swagger Editor
+- Swagger Codegen
+- Postman
 
-│   └ RouteHandler/     ルートハンドリングコンポーネン 
+Figmaデザイン1
+![Figmaデザイン1](https://images.mystery-logger.com/Figma1.PNG)
 
-├ stores/           Reduxストア
+Figmaデザイン2
+![Figmaデザイン2](https://images.mystery-logger.com/Figma2.PNG)
 
-├ @types.ts         型定義ファイル
+## テストユーザー
 
-├ App.tsx           ルーティング
+ID: guest@guest.com
 
-├ index.tsx         入り口
+Pass: guestguest
 
-└ util.ts           定数定義ファイル
+---
 
-### containers/
-
-- ルーティング単位
-- APIを叩く
-
-### templates/
-
-- ページ単位
-- 検索やソート等、データ加工を担う
-- useStyles不要
-- 認証失敗ページや404ページはtemplates/
-- 投稿フォームのmodal等はフルスクリーンでもtemplates/以下
-- modalのopen/setOpen等、見た目に関係するstateはuseStateで所有可能
-
-### organisms/
-
-- 再利用しないコンポーネント
-- Reduxストアにアクセス可能
-- スタイルは自身でもつ。propsにclassNameは不要
-- modalのopen/setOpen等、見た目に関係するstateはuseStateで所有可能
-- 少し気持ち悪いけどHeader, BottomNavはここに
-
-### molecules/
-
-- 再利用するコンポーネント
-- Reduxストアにアクセス可能
-- modalのopen/setOpen等、見た目に関係するstateはuseStateで所有可能
-
-### その他
-
-- templates/ではuseStyles使わない
-- ログインしているユーザーはcurrentUserで統一
-- apiStatusは使わない。各statusを使う
-- フォームはとりあえずRedux使わない。containerでuseStateする
-- とりあえず今はレスポンシブデザインは考えない
+<b id="f1">1</b>: 「リアル脱出ゲーム」は株式会社SCRUPの登録商標です。[↩](#a1)
